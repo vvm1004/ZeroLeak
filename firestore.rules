@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Policy Collection
+    // Read: Public/Authenticated extensions and dashboard
+    // Write: Admin dashboard only
+    match /policies/{policyId} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasAll(['version', 'mode', 'enabledTypes', 'protectedDomains']);
+    }
+
+    // 2. Zero-Knowledge Telemetry Events Collection
+    // Read: Dashboard admin
+    // Create: Extensions reporting incidents
+    // STRICT RULE: Original sensitive values (CCCD, cards, keys) MUST NEVER be stored.
+    match /telemetry_events/{eventId} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasAll(['id', 'timestamp', 'targetDomain', 'actionTaken', 'detectedTypes', 'matchCount', 'scanLatencyMs'])
+                    && !('originalValue' in request.resource.data)
+                    && !('rawText' in request.resource.data);
+      allow update, delete: if false; // Immutable audit log
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "zeroleak-phishguard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hybrid Edge-Cloud Security Platform (ZeroLeak On-Device DLP & PhishGuard Visual Phishing Sandbox)",
+  "packageManager": "pnpm@11.8.0",
+  "scripts": {
+    "dev:extension": "pnpm --filter @zeroleak/extension dev",
+    "dev:sandbox": "pnpm --filter @zeroleak/sandbox-api dev",
+    "dev:dashboard": "pnpm --filter @zeroleak/dashboard dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  }
+}

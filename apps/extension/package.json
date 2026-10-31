@@ -1,0 +1,30 @@
+{
+  "name": "@zeroleak/extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ZeroLeak & PhishGuard Chrome Extension (WXT, Manifest V3)",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@zeroleak/firebase-config": "workspace:*",
+    "@zeroleak/shared-types": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.304",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "wxt": "^0.19.24"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@zeroleak/firebase-config",
+  "version": "1.0.0",
+  "description": "Firebase Firestore Realtime Client and Policy Sync for ZeroLeak & PhishGuard",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@zeroleak/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "firebase": "^11.3.0",
+    "typescript": "^5.7.3"
+  }
+}
