@@ -69,7 +69,8 @@ export function isEditableElement(el: Element | null): boolean {
     const type = el.type.toLowerCase();
     return !['checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'image'].includes(type);
   }
-  if ((el as HTMLElement).isContentEditable) return true;
+  const ce = (el as HTMLElement).getAttribute?.('contenteditable');
+  if ((el as HTMLElement).isContentEditable || (ce !== null && ce !== undefined && ce !== 'false')) return true;
   if (el.getAttribute('role') === 'textbox') return true;
   return false;
 }

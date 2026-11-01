@@ -60,31 +60,31 @@
 
 ### 1.2. Động cơ Quét DLP Cục bộ Đa tầng (Dev 3)
 
-* \[ \] 🔴 **\[P0\]** Cài đặt bộ lọc **Tầng 1 (Deterministic Filter)** trong `utils/deterministic-dlp.ts`:
+* [x] 🔴 **[P0]** Cài đặt bộ lọc **Tầng 1 (Deterministic Filter)** trong `utils/deterministic-dlp.ts`:
 
-  * \[ \] Regex nhận diện **CCCD Việt Nam 12 số** (kiểm tra mã tỉnh hợp lệ `001`–`096`).
+  * [x] Regex nhận diện **CCCD Việt Nam 12 số** (kiểm tra mã tỉnh hợp lệ `001`–`096`).
 
-  * \[ \] Regex nhận diện **Số điện thoại Việt Nam** (`+84` hoặc `03/05/07/08/09`).
+  * [x] Regex nhận diện **Số điện thoại Việt Nam** (`+84` hoặc `03/05/07/08/09`).
 
-  * \[ \] Regex nhận diện thẻ ngân hàng kết hợp thuật toán kiểm tra **Luhn Checksum** (`isValidLuhn`).
+  * [x] Regex nhận diện thẻ ngân hàng kết hợp thuật toán kiểm tra **Luhn Checksum** (`isValidLuhn`).
 
-  * \[ \] Regex nhận diện tiền tố **API Key** (`AIza...`, `sk-...`, `ghp_...`, `AKIA...`) kết hợp hàm đo độ hỗn loạn **Shannon Entropy** ($H(X) > 4.5$).
+  * [x] Regex nhận diện tiền tố **API Key** (`AIza...`, `sk-...`, `ghp_...`, `AKIA...`) kết hợp hàm đo độ hỗn loạn **Shannon Entropy** ($H(X) > 4.5$).
 
-* \[ \] 🟡 **\[P1\]** Đóng gói bộ quét vào **Web Worker** (`workers/dlp.worker.ts`) để không làm khựng giao diện khi người dùng dán văn bản dài.
+* [x] 🟡 **[P1]** Đóng gói bộ quét vào **Web Worker** (`workers/dlp.worker.ts`) để không làm khựng giao diện khi người dùng dán văn bản dài.
 
-* \[ \] 🟡 **\[P1\]** Tích hợp **Tầng 2 (Contextual AI)** nhận diện Tên người (`PER`) và Tổ chức (`ORG`) bằng **Transformers.js (ONNX Quantized NER)** hoặc **Chrome Built-in AI (`window.ai` / Gemini Nano)** với cơ chế fallback mượt mà nếu trình duyệt chưa bật cờ AI.
+* [x] 🟡 **[P1]** Tích hợp **Tầng 2 (Contextual AI)** nhận diện Tên người (`PER`) và Tổ chức (`ORG`) bằng **Contextual Heuristics + Chrome Built-in AI (`window.ai` / Gemini Nano)** với cơ chế fallback mượt mà nếu trình duyệt chưa bật cờ AI.
 
 ### 1.3. Mã hóa Hai chiều Cục bộ — Reversible Tokenization (Dev 1)
 
-* \[ \] 🔴 **\[P0\]** Xây dựng `utils/reversible-vault.ts` lưu trữ cặp ánh xạ `[VN_CCCD_01]` $\leftrightarrow$ `"048099001234"` trong bộ nhớ phiên (`Map` + `sessionStorage`).
+* [x] 🔴 **[P0]** Xây dựng `utils/reversible-vault.ts` lưu trữ cặp ánh xạ `[VN_CCCD_01]` $\leftrightarrow$ `"048099001234"` trong bộ nhớ phiên (`Map` + `sessionStorage`).
 
-* \[ \] 🔴 **\[P0\]** Viết `MutationObserver` theo dõi luồng câu trả lời (streaming response) của ChatGPT/Gemini:
+* [x] 🔴 **[P0]** Viết `MutationObserver` theo dõi luồng câu trả lời (streaming response) của ChatGPT/Gemini:
 
-  * \[ \] Tự động phát hiện các nhãn `[PER_01]`, `[VN_CCCD_01]`, `[API_SECRET_01]` ngay khi AI vừa sinh ra.
+  * [x] Tự động phát hiện các nhãn `[PER_01]`, `[VN_CCCD_01]`, `[API_SECRET_01]` ngay khi AI vừa sinh ra.
 
-  * \[ \] Thay thế tức thì bằng giá trị thật trên màn hình người dùng kèm thẻ badge màu xanh lá có tooltip *"Đã khôi phục cục bộ bởi ZeroLeak"*.
+  * [x] Thay thế tức thì bằng giá trị thật trên màn hình người dùng kèm thẻ badge màu xanh lá có tooltip *"Đã khôi phục cục bộ bởi ZeroLeak"*.
 
-  * \[ \] Đảm bảo `MutationObserver` bỏ qua vùng ô nhập liệu để không làm lộ dữ liệu thật ở lượt gửi tiếp theo.
+  * [x] Đảm bảo `MutationObserver` bỏ qua vùng ô nhập liệu để không làm lộ dữ liệu thật ở lượt gửi tiếp theo.
 
 ### 1.4. Giao diện Cảnh báo Shadow DOM & Quét Mã QR (Dev 1 & Dev 3)
 

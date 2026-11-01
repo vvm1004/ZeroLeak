@@ -37,3 +37,4 @@ self.onmessage = async (e: MessageEvent<DlpWorkerRequest>) => {
     });
   }
 };
+

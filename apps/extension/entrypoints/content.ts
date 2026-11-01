@@ -7,6 +7,7 @@ import { dlpClient } from '../utils/dlp-worker-client';
 import { tokenVault } from '../utils/reversible-vault';
 import { getStoredPolicy, isDomainProtected } from '../utils/policy-store';
 import { NotificationToast, type ToastMessage } from '../components/NotificationToast';
+import { streamRestorer } from '../utils/dom-observer';
 
 export default defineContentScript({
   matches: ['<all_urls>'],
@@ -72,6 +73,20 @@ export default defineContentScript({
     }
 
     mountShadowToast();
+
+    // 3. Initialize Reversible Stream Response Restorer (MutationObserver)
+    const initRestorer = () => {
+      const root = document.body || document.documentElement;
+      if (root) {
+        streamRestorer.start(root);
+      }
+    };
+
+    if (document.body) {
+      initRestorer();
+    } else {
+      window.addEventListener('DOMContentLoaded', initRestorer, { once: true });
+    }
 
     function showToast(msg: ToastMessage) {
       if (toastUpdater) {
@@ -155,6 +170,9 @@ export default defineContentScript({
       if (activePolicy.mode === 'AUTO_TOKENIZE') {
         // Store mappings locally in the reversible vault
         tokenVault.storeMatches(result.matches);
+        if (document.body) {
+          streamRestorer.sweep(document.body);
+        }
 
         // Replace content in editable target
         const replaced = replaceSelectionInEditableElement(result.sanitizedText);
@@ -226,6 +244,9 @@ export default defineContentScript({
 
       if (activePolicy.mode === 'AUTO_TOKENIZE') {
         tokenVault.storeMatches(result.matches);
+        if (document.body) {
+          streamRestorer.sweep(document.body);
+        }
         replaceSelectionInEditableElement(result.sanitizedText);
         showToast({
           id: String(Date.now()),
@@ -278,6 +299,7 @@ export default defineContentScript({
     window.addEventListener('keydown', handleKeyDown, true);
 
     ctx.onInvalidated(() => {
+      streamRestorer.stop();
       window.removeEventListener('paste', handlePaste, true);
       window.removeEventListener('drop', handleDrop, true);
       window.removeEventListener('keydown', handleKeyDown, true);

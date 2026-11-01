@@ -32,6 +32,17 @@ export interface DlpDetectionMatch {
   confidence: number;
 }
 
+/**
+ * Cặp ánh xạ mã giả và dữ liệu thật lưu cục bộ trong Reversible Vault
+ * Strict Guardrail: 100% On-Device, tuyệt đối không gửi lên Server.
+ */
+export interface TokenVaultEntry {
+  token: string;
+  originalValue: string;
+  type: SensitiveDataType;
+  createdAt: number;
+}
+
 export interface DlpScanResult {
   sanitizedText: string;
   matches: DlpDetectionMatch[];
