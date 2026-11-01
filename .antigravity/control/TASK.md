@@ -46,17 +46,17 @@
 
 ### 1.1. Khung Extension & Chặn Sự kiện DOM (Dev 1)
 
-* \[ \] 🔴 **\[P0\]** Khởi tạo project Browser Extension Manifest V3 bằng **WXT Framework** (React 19 + TypeScript + TailwindCSS).
+* [x] 🔴 **[P0]** Khởi tạo project Browser Extension Manifest V3 bằng **WXT Framework** (React 19 + TypeScript + TailwindCSS).
 
-* \[ \] 🔴 **\[P0\]** Viết `entrypoints/content.ts` đăng ký lắng nghe sự kiện `paste` và `drop` ở **Capture Phase** (`window.addEventListener('paste', handler, true)`).
+* [x] 🔴 **[P0]** Viết `entrypoints/content.ts` đăng ký lắng nghe sự kiện `paste` và `drop` ở **Capture Phase** (`window.addEventListener('paste', handler, true)`).
 
-* \[ \] 🔴 **\[P0\]** Xử lý hàm ghi đè văn bản đã làm sạch (`replaceSelectionInEditableElement`) tương thích với:
+* [x] 🔴 **[P0]** Xử lý hàm ghi đè văn bản đã làm sạch (`replaceSelectionInEditableElement`) tương thích với:
 
-  * \[ \] Ô `<textarea>` và `<input>` truyền thống.
+  * [x] Ô `<textarea>` và `<input>` truyền thống.
 
-  * \[ \] Vùng soạn thảo `[contenteditable="true"]` / `ProseMirror` trên **ChatGPT**, **Claude**, **Gemini** và **Gmail**.
+  * [x] Vùng soạn thảo `[contenteditable="true"]` / `ProseMirror` trên **ChatGPT**, **Claude**, **Gemini** và **Gmail**.
 
-* \[ \] 🟡 **\[P1\]** Chặn sự kiện bấm nút gửi hoặc phím `Enter` khi chính sách của doanh nghiệp đang ở chế độ `STRICT_BLOCK`.
+* [x] 🟡 **[P1]** Chặn sự kiện bấm nút gửi hoặc phím `Enter` khi chính sách của doanh nghiệp đang ở chế độ `STRICT_BLOCK`.
 
 ### 1.2. Động cơ Quét DLP Cục bộ Đa tầng (Dev 3)
 
