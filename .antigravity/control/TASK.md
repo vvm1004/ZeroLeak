@@ -118,9 +118,9 @@
 
   * \[ \] Chụp ảnh màn hình trang web nén sang định dạng **WebP Base64** nhẹ.
 
-### 2.2. Phân tích Giả mạo Thị giác với Gemini 2.5 Flash
+### 2.2. Phân tích Giả mạo Thị giác với Gemini 3.5 Flash Lite
 
-* \[ \] 🔴 **\[P0\]** Viết mô-đun `gemini-analyzer.ts` sử dụng `@google/genai` SDK gọi mô hình `gemini-2.5-flash`.
+* \[ \] 🔴 **\[P0\]** Viết mô-đun `gemini-analyzer.ts` sử dụng `@google/genai` SDK gọi mô hình `gemini-3.5-flash-lite`.
 
 * \[ \] 🔴 **\[P0\]** Cấu hình **Structured Outputs (`responseSchema`)** ép kết quả trả về đúng chuẩn JSON: `riskScore` ($0\text{–}100$), `verdict` (`SAFE` | `SUSPICIOUS` | `MALICIOUS`), `impersonatedBrand`, và danh sách `indicators` bằng tiếng Việt rõ ràng.
 
@@ -174,7 +174,7 @@
 
 * \[ \] 🔴 **\[Test 2 - Reversible Vault\]** ChatGPT phản hồi văn bản có chứa `[VN_CCCD_01]` và `[PER_01]` $\rightarrow$ Giao diện tự động khôi phục lại tên và số CCCD thật màu xanh lá.
 
-* \[ \] 🔴 **\[Test 3 - QR & Visual Phishing\]** Khoanh vùng mã QR trong email mẫu $\rightarrow$ Hiển thị ảnh chụp từ Playwright Sandbox + Cảnh báo đỏ của Gemini 2.5 Flash (`Risk Score >= 90`) trong $< 2.5\text{ s}$.
+* \[ \] 🔴 **\[Test 3 - QR & Visual Phishing\]** Khoanh vùng mã QR trong email mẫu $\rightarrow$ Hiển thị ảnh chụp từ Playwright Sandbox + Cảnh báo đỏ của Gemini 3.5 Flash Lite (`Risk Score >= 90`) trong $< 2.5\text{ s}$.
 
 * \[ \] 🔴 **\[Test 4 - Realtime Policy Sync\]** Bật chế độ `STRICT_BLOCK` trên Dashboard $\rightarrow$ Quay sang tab ChatGPT dán thử API Key bị khóa cứng ngay lập tức mà không cần tải lại trang.
 
@@ -194,7 +194,7 @@
 
   * \[ \] Trang 3: Chiều sâu kỹ thuật 1 — **On-Device DLP & Reversible Tokenization**.
 
-  * \[ \] Trang 4: Chiều sâu kỹ thuật 2 — **Playwright Cloud Sandbox & Gemini 2.5 Flash Visual Phishing**.
+  * \[ \] Trang 4: Chiều sâu kỹ thuật 2 — **Playwright Cloud Sandbox & Gemini 3.5 Flash Lite Visual Phishing**.
 
   * \[ \] Trang 5: **Live Demo trực tiếp trên sân khấu**.
 

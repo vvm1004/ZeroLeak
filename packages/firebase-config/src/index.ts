@@ -124,3 +124,4 @@ export function getFirebaseConfig(): FirebaseConfigOptions {
   }
   return {};
 }
+

@@ -8,7 +8,7 @@
 
 1. `apps/extension`: Browser Extension (Manifest V3, WXT Framework, React 19, TypeScript) thực hiện **On-Device DLP** và **Reversible Tokenization**.
 
-2. `apps/sandbox-api`: Cloud Sandbox (Node.js, Hono, Playwright Chromium trên Google Cloud Run) kết hợp **Gemini 2.5 Flash** để phát hiện **Visual Phishing** từ URL/QR Code.
+2. `apps/sandbox-api`: Cloud Sandbox (Node.js, Hono, Playwright Chromium trên Google Cloud Run) kết hợp **Gemini 3.5 Flash Lite** để phát hiện **Visual Phishing** từ URL/QR Code.
 
 3. `apps/dashboard`: Trang quản trị chính sách thời gian thực (Next.js App Router, Shadcn UI, Firebase Firestore / Supabase Realtime) và trang Demo Phishing giả lập.
 
@@ -92,7 +92,7 @@ export interface ZeroKnowledgeTelemetryEvent {
 }
 
 /**
- * Kết quả trả về từ Cloud Sandbox + Gemini 2.5 Flash
+ * Kết quả trả về từ Cloud Sandbox + Gemini 3.5 Flash Lite
  */
 export interface PhishingAnalysisResponse {
   url: string;
@@ -215,9 +215,9 @@ export function replaceSelectionInEditableElement(sanitizedText: string): void {
 
 * Khi AI trả lời có chứa chuỗi dạng `\[[A-Z_]+_\d{2}\]` (ví dụ: `[VN_CCCD_01]`), `MutationObserver` chỉ quét các `TextNode` nằm bên trong vùng hiển thị câu trả lời của AI (không quét bên trong ô nhập liệu của người dùng để tránh gửi nhầm dữ liệu thật ở lượt chat tiếp theo).
 
-### 4.4. Cấu hình Gemini 2.5 Flash Structured Output (`apps/sandbox-api/src/gemini-analyzer.ts`)
+### 4.4. Cấu hình Gemini 3.5 Flash Lite Structured Output (`apps/sandbox-api/src/gemini-analyzer.ts`)
 
-Sử dụng SDK chính thức `@google/genai` với `responseMimeType: "application/json"` và `responseSchema` để đảm bảo Gemini 2.5 Flash luôn trả về JSON khớp 100% với `PhishingAnalysisResponse`:
+Sử dụng SDK chính thức `@google/genai` với `responseMimeType: "application/json"` và `responseSchema` để đảm bảo Gemini 3.5 Flash Lite luôn trả về JSON khớp 100% với `PhishingAnalysisResponse`:
 
 ```
 import { GoogleGenAI, Type } from '@google/genai';
@@ -232,7 +232,7 @@ export async function analyzeVisualPhishing(params: {
   screenshotBase64: string;
 }) {
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3.5-flash-lite',
     contents: [
       {
         inlineData: {
@@ -281,7 +281,7 @@ Khi AI Agent hoàn thành một tính năng, hãy đối chiếu với 5 bài ki
 
 * \[ \] **Test 2 (Reversible Restoration):** Khi ChatGPT sinh văn bản phản hồi chứa `[VN_CCCD_01]`, giao diện tự động đổi lại thành số CCCD thật được bọc trong nhãn màu xanh lá có hiệu ứng hover.
 
-* \[ \] **Test 3 (QR Phishing Sandbox):** Quét mã QR dẫn tới trang Demo Phishing ngân hàng $\rightarrow$ Trả về ảnh chụp màn hình từ Playwright + Điểm rủi ro $\ge 90$ từ Gemini 2.5 Flash trong $< 2.5\text{ s}$.
+* \[ \] **Test 3 (QR Phishing Sandbox):** Quét mã QR dẫn tới trang Demo Phishing ngân hàng $\rightarrow$ Trả về ảnh chụp màn hình từ Playwright + Điểm rủi ro $\ge 90$ từ Gemini 3.5 Flash Lite trong $< 2.5\text{ s}$.
 
 * \[ \] **Test 4 (Realtime Policy Sync):** Đổi chế độ từ `AUTO_TOKENIZE` sang `STRICT_BLOCK` trên Dashboard $\rightarrow$ Extension nhận luật mới ngay lập tức mà không cần F5 trang web.
 

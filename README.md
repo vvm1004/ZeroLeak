@@ -16,7 +16,7 @@
 2. **PhishGuard (Isolated Cloud Sandbox & Visual Phishing Detection):**
    * Phát hiện lừa đảo qua đường dẫn (URL) và mã QR theo thời gian thực.
    * Mở liên kết đáng ngờ trong môi trường cô lập **Playwright Headless Chromium** trên **Google Cloud Run**, thu thập ảnh chụp màn hình WebP và cấu trúc DOM form/input.
-   * Đối chiếu giao diện và thương hiệu bằng **Gemini 2.5 Flash Multimodal** nhằm phát hiện các trang mạo danh ngân hàng và cổng dịch vụ công (Visual Brand Impersonation) chưa có trong danh sách đen (Zero-day).
+   * Đối chiếu giao diện và thương hiệu bằng **Gemini 3.5 Flash Lite Multimodal** nhằm phát hiện các trang mạo danh ngân hàng và cổng dịch vụ công (Visual Brand Impersonation) chưa có trong danh sách đen (Zero-day).
 
 ---
 
@@ -26,7 +26,7 @@
 MirageSec/
 ├── apps/
 │   ├── extension/          # Browser Extension Manifest V3 (WXT + React 19 + TypeScript)
-│   ├── sandbox-api/        # Cloud Sandbox API (Hono + Playwright + Gemini 2.5 Flash)
+│   ├── sandbox-api/        # Cloud Sandbox API (Hono + Playwright + Gemini 3.5 Flash Lite)
 │   └── dashboard/          # Realtime Operations Dashboard (Next.js 15 App Router + TailwindCSS)
 ├── packages/
 │   ├── shared-types/       # Hợp đồng dữ liệu chung (Data Contracts)
@@ -65,3 +65,4 @@ pnpm dev:dashboard
 # Kiểm tra kiểu dữ liệu TypeScript toàn bộ workspace
 pnpm typecheck
 ```
+

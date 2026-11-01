@@ -54,7 +54,7 @@ export interface ZeroKnowledgeTelemetryEvent {
 }
 
 /**
- * Kết quả trả về từ Cloud Sandbox + Gemini 2.5 Flash
+ * Kết quả trả về từ Cloud Sandbox + Gemini 3.5 Flash Lite
  */
 export interface PhishingAnalysisResponse {
   url: string;
@@ -130,3 +130,4 @@ export const DEFAULT_SECURITY_POLICY: SecurityPolicy = {
   ],
   protectedDomains: DEFAULT_PROTECTED_DOMAINS,
 };
+

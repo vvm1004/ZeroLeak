@@ -11,7 +11,7 @@
 **ZeroLeak & PhishGuard** là nền tảng bảo mật lai (Hybrid Edge-Cloud Security) bảo vệ người dùng cá nhân và doanh nghiệp trước 2 rủi ro lớn nhất trong môi trường số hiện nay:
 
 1. **ZeroLeak (On-Device DLP):** Chặn rò rỉ dữ liệu nhạy cảm (CCCD, thẻ ngân hàng, API Key, mã nguồn, tên khách hàng) ngay trên trình duyệt bằng cơ chế **Reversible Tokenization** (mã hóa hai chiều cục bộ) trước khi dữ liệu được gửi lên các công cụ AI (ChatGPT, Claude, Gemini) hoặc biểu mẫu web.
-2. **PhishGuard (Isolated Cloud Sandbox):** Phát hiện lừa đảo qua đường dẫn (URL) và mã QR theo thời gian thực bằng cách mở trang đích trong trình duyệt ảo cô lập (**Playwright trên Google Cloud Run**) và dùng **Gemini 2.5 Flash Multimodal** đối chiếu giao diện giả mạo thương hiệu (Visual Brand Impersonation).
+2. **PhishGuard (Isolated Cloud Sandbox):** Phát hiện lừa đảo qua đường dẫn (URL) và mã QR theo thời gian thực bằng cách mở trang đích trong trình duyệt ảo cô lập (**Playwright trên Google Cloud Run**) và dùng **Gemini 3.5 Flash Lite Multimodal** đối chiếu giao diện giả mạo thương hiệu (Visual Brand Impersonation).
 
 ### Các chỉ số kỹ thuật mục tiêu (System Benchmarks để trình chiếu)
 
@@ -29,7 +29,7 @@
    $$\text{User Paste/Submit} \rightarrow \text{Content Script Interceptor} \rightarrow \text{Web Worker (Regex/Luhn + ONNX NER)} \rightarrow \text{Reversible Tokenizer } (\text{Lưu SessionStorage}) \rightarrow \text{Web/AI nhận dữ liệu ẩn danh} \rightarrow \text{DOM Observer khôi phục dữ liệu thật trên màn hình}$$
 
 2. **Luồng Cloud Phishing Sandbox (Cô lập trên Đám mây):**
-   $$\text{Click Link / Quét QR} \rightarrow \text{Cloud Run (Playwright Headless)} \rightarrow \text{Chụp Screenshot + Bóc tách DOM/SSL} \rightarrow \text{Gemini 2.5 Flash + Google Web Risk API} \rightarrow \text{Trả về Risk Score \& Chặn truy cập}$$
+   $$\text{Click Link / Quét QR} \rightarrow \text{Cloud Run (Playwright Headless)} \rightarrow \text{Chụp Screenshot + Bóc tách DOM/SSL} \rightarrow \text{Gemini 3.5 Flash Lite + Google Web Risk API} \rightarrow \text{Trả về Risk Score \& Chặn truy cập}$$
 
 3. **Luồng Đồng bộ Chính sách (Realtime Policy Engine):**
    $$\text{Admin bật/tắt quy tắc trên Dashboard} \rightarrow \text{Firebase Firestore / Supabase Realtime} \rightarrow \text{Đẩy WebSocket xuống toàn bộ Browser Extension trong } < 500\text{ ms}$$
@@ -41,7 +41,7 @@
 | **Browser Extension** | **WXT Framework** (hoặc **Plasmo**), React 19, TypeScript, TailwindCSS (Manifest V3) | Hỗ trợ Hot-Reload cực nhanh, cấu hình sẵn Content Script UI (Shadow DOM không bị vỡ CSS trên trang đích). |
 | **On-Device DLP Engine** | **RegExp + Luhn + Entropy**, **Transformers.js (ONNX Web)** hoặc **Gemini Nano (`window.ai`)**, **jsQR** | Xử lý cực nhanh trong Web Worker, không làm đơ giao diện trình duyệt. |
 | **Cloud Sandbox API** | **Node.js (Hono/Fastify)** + **Playwright Chromium** đóng gói **Docker** trên **Google Cloud Run** | Cô lập hoàn toàn mã độc, chụp ảnh trang web thực tế và trích xuất cây DOM chuẩn xác. |
-| **AI & Threat Intel** | **Gemini 2.5 Flash API** (Structured Outputs) + **Google Web Risk API** | Gemini 2.5 Flash có tốc độ phản hồi nhanh, hỗ trợ nhìn ảnh chụp màn hình để bắt các trang giả mạo ngân hàng/cổng dịch vụ công. |
+| **AI & Threat Intel** | **Gemini 3.5 Flash Lite API** (Structured Outputs) + **Google Web Risk API** | Gemini 3.5 Flash Lite có tốc độ phản hồi cực nhanh, hỗ trợ nhìn ảnh chụp màn hình để bắt các trang giả mạo ngân hàng/cổng dịch vụ công. |
 | **Admin Dashboard & DB** | **Next.js (App Router)**, **Shadcn UI**, **Recharts**, **Firebase Firestore** (hoặc **Supabase**) | Dựng giao diện quản trị đẹp trong 3 giờ, hỗ trợ lắng nghe thay đổi dữ liệu theo thời gian thực (Realtime Listener). |
 
 ---
@@ -68,7 +68,7 @@ zeroleak-phishguard/
 │   │   ├── src/
 │   │   │   ├── index.ts           # API Server (Hono / Fastify)
 │   │   │   ├── playwright.ts      # Mở trang trong Headless Browser, chụp ảnh & lấy DOM
-│   │   │   ├── gemini-analyzer.ts # Gửi ảnh + DOM sang Gemini 2.5 Flash chấm điểm rủi ro
+│   │   │   ├── gemini-analyzer.ts # Gửi ảnh + DOM sang Gemini 3.5 Flash Lite chấm điểm rủi ro
 │   │   │   └── webrisk.ts         # Tích hợp Google Web Risk API
 │   │   └── Dockerfile             # Image mcr.microsoft.com/playwright:v1.50.0-noble
 │   │
@@ -109,7 +109,7 @@ Khi người dùng bấm chuột phải chọn **"Kiểm tra an toàn bằng Phi
 1. **Playwright** mở URL trong môi trường cô lập, chặn tải file thực thi, đợi `domcontentloaded` (tối đa $2000\text{ ms}$), thu thập:
    * Ảnh chụp màn hình định dạng WebP nén nhẹ (Base64).
    * Tiêu đề trang, danh sách các thẻ `<form>`, `<input type="password">`, chứng chỉ SSL và chuỗi chuyển hướng (Redirect chain).
-2. **Gemini 2.5 Flash Structured Prompt:**
+2. **Gemini 3.5 Flash Lite Structured Prompt:**
    * Yêu cầu trả về JSON nghiêm ngặt theo Schema:
      ```json
      {
@@ -146,7 +146,7 @@ Khi người dùng bấm chuột phải chọn **"Kiểm tra an toàn bằng Phi
 | Vai trò | Thành viên phụ trách | Nhiệm vụ cốt lõi (Deliverables) |
 | :--- | :--- | :--- |
 | **Role 1: Extension & Edge DLP Lead** | Dev 1 (Frontend/TS mạnh) | Khởi tạo WXT Extension, viết DOM Interceptor bắt sự kiện `paste`/`submit` trên ChatGPT/Gmail, cài đặt Reversible Tokenizer và `MutationObserver` khôi phục dữ liệu. |
-| **Role 2: AI & Cloud Sandbox Lead** | Dev 2 (Backend/Cloud) | Viết API Playwright chụp ảnh/bóc tách DOM, tích hợp Gemini 2.5 Flash Structured Output & Google Web Risk API, đóng gói Docker đẩy lên Google Cloud Run. |
+| **Role 2: AI & Cloud Sandbox Lead** | Dev 2 (Backend/Cloud) | Viết API Playwright chụp ảnh/bóc tách DOM, tích hợp Gemini 3.5 Flash Lite Structured Output & Google Web Risk API, đóng gói Docker đẩy lên Google Cloud Run. |
 | **Role 3: Security Engine & QR Lead** | Dev 3 (Thuật toán/AI) | Viết bộ lọc Regex + Luhn + Shannon Entropy + ONNX NER trong Web Worker, tích hợp `jsQR` quét mã QR trực tiếp trên màn hình trình duyệt. |
 | **Role 4: Dashboard, Demo & Pitch** | Dev 4 (Fullstack/UI) *(Nếu nhóm 3 người thì gộp vào Dev 1 & 2)* | Dựng Next.js Admin Dashboard với Shadcn UI + Firebase Realtime, tạo **trang web giả mạo ngân hàng (Demo Phishing Page)** để test trực tiếp trên sân khấu, chuẩn bị Slide. |
 
@@ -159,7 +159,7 @@ Khi người dùng bấm chuột phải chọn **"Kiểm tra an toàn bằng Phi
 * **Giờ 04–08:**
   * *Extension:* Chặn thành công sự kiện `paste` trên khung nhập liệu web, chạy bộ lọc Regex + Luhn + Entropy thay thế CCCD/API Key thành `[ID_01]`, `[KEY_01]`.
   * *Backend:* Playwright mở được URL bất kỳ, trả về ảnh chụp màn hình Base64 và danh sách thẻ `<input>`.
-* **Giờ 09–12 (Mốc kiểm tra MVP 1):** Tích hợp Gemini 2.5 Flash chấm điểm ảnh chụp màn hình. Hoàn thành tính năng khôi phục hai chiều (`[PER_01]` $\rightarrow$ Tên thật) trên giao diện ChatGPT.
+* **Giờ 09–12 (Mốc kiểm tra MVP 1):** Tích hợp Gemini 3.5 Flash Lite chấm điểm ảnh chụp màn hình. Hoàn thành tính năng khôi phục hai chiều (`[PER_01]` $\rightarrow$ Tên thật) trên giao diện ChatGPT.
 
 ### Giai đoạn 2: Tính năng Nâng cao & Đồng bộ Realtime (Giờ 13 – Giờ 24)
 * **Giờ 13–18:**
@@ -205,6 +205,6 @@ Giám khảo đánh giá rất cao các đội có thiết kế hệ thống ch�
   * Hiệu ứng: Ngay lập tức, khung cảnh báo của **ZeroLeak** bật lên hiển thị thời gian quét `12ms`, tự động biến toàn bộ thông tin nhạy cảm thành `[PER_01]`, `[CCCD_01]`, `[SECRET_01]` rồi gửi đi. Khi ChatGPT trả lời lại bản tóm tắt hợp đồng, trên màn hình người dùng các nhãn `[PER_01]` tự động biến đổi ngược lại thành tên thật màu xanh lá!
 * **Phút 2 – Demo PhishGuard (QR & Visual Phishing Sandbox):**
   * Chuyển sang Tab 2 (Email lừa đảo chứa mã QR): Dùng công cụ quét của Extension khoanh vùng mã QR ngay trên màn hình.
-  * Hệ thống gửi URL ẩn trong QR lên **Playwright Cloud Sandbox**. Sau 2 giây, màn hình hiện lên ảnh chụp trang web bên trong Sandbox (giao diện giống hệt trang đăng nhập ngân hàng) kèm cảnh báo đỏ từ **Gemini 2.5 Flash**: *"Phát hiện giả mạo thương hiệu Vietcombank (Risk Score: 96/100) – Tên miền thực tế không khớp với nhận diện thị giác"*.
+  * Hệ thống gửi URL ẩn trong QR lên **Playwright Cloud Sandbox**. Sau 2 giây, màn hình hiện lên ảnh chụp trang web bên trong Sandbox (giao diện giống hệt trang đăng nhập ngân hàng) kèm cảnh báo đỏ từ **Gemini 3.5 Flash Lite**: *"Phát hiện giả mạo thương hiệu Vietcombank (Risk Score: 96/100) – Tên miền thực tế không khớp với nhận diện thị giác"*.
 * **Phút 3 – Demo Realtime Policy & Chốt Điểm Kỹ thuật:**
   * Mở Tab 3 (Admin Dashboard), chỉ vào nhật ký vừa nhảy lên theo thời gian thực (chỉ lưu loại vi phạm, không lưu dữ liệu thô). Bấm nút gạt chuyển chính sách sang **Chặn Nghiêm ngặt (Strict Block)** $\rightarrow$ Quay lại Tab 1 dán thử API Key, hệ thống khóa cứng nút gửi ngay lập tức.

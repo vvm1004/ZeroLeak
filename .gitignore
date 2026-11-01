@@ -47,3 +47,4 @@ playwright/.cache/
 # Firebase Cache
 .firebase/
 .firebaserc.local
+

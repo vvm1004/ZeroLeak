@@ -39,7 +39,7 @@ export default function DashboardHome() {
             <Eye className="w-4 h-4 text-cyan-400" />
           </div>
           <div className="text-2xl font-bold text-white">Ready</div>
-          <p className="text-xs text-slate-500 mt-1">Gemini 2.5 Flash + Playwright Sandbox</p>
+          <p className="text-xs text-slate-500 mt-1">Gemini 3.5 Flash Lite + Playwright Sandbox</p>
         </div>
 
         <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
@@ -54,3 +54,4 @@ export default function DashboardHome() {
     </main>
   );
 }
+
