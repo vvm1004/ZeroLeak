@@ -42,10 +42,15 @@ export function isDomainProtected(hostname: string, policy: SecurityPolicy): boo
   if (!policy.protectedDomains || policy.protectedDomains.length === 0) {
     return true; // Default protect all if unspecified
   }
-  const cleanHost = hostname.toLowerCase();
+  const cleanHost = hostname ? hostname.toLowerCase() : '';
+
+  // Always protect local test playgrounds, localhost, 127.0.0.1, and local files
+  if (!cleanHost || cleanHost === 'localhost' || cleanHost === '127.0.0.1') {
+    return true;
+  }
+
   return policy.protectedDomains.some((domain) => {
     const cleanDomain = domain.toLowerCase();
-    return cleanHost === cleanDomain || cleanHost.endsWith('.' + cleanDomain);
+    return cleanDomain === '*' || cleanHost === cleanDomain || cleanHost.endsWith('.' + cleanDomain);
   });
 }
-
