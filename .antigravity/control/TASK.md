@@ -88,17 +88,17 @@
 
 ### 1.4. Giao diện Cảnh báo Shadow DOM & Quét Mã QR (Dev 1 & Dev 3)
 
-* \[ \] 🔴 **\[P0\]** Tạo **Shadow DOM Toast / Telemetry Badge** (`createShadowRootUi`) ở góc dưới màn hình hiển thị trực tiếp:
+* [x] 🔴 **[P0]** Tạo **Shadow DOM Toast / Telemetry Badge** (`createShadowRootUi`) ở góc dưới màn hình hiển thị trực tiếp:
 
-  * \[ \] Thời gian quét cục bộ (ví dụ: `Edge DLP Latency: 11ms`).
+  * [x] Thời gian quét cục bộ (ví dụ: `Edge DLP Latency: 11ms`).
 
-  * \[ \] Số lượng thông tin nhạy cảm vừa được ẩn danh.
+  * [x] Số lượng thông tin nhạy cảm vừa được ẩn danh.
 
-* \[ \] 🔴 **\[P0\]** Tạo Context Menu chuột phải: *"Kiểm tra liên kết an toàn với PhishGuard"*.
+* [x] 🔴 **[P0]** Tạo Context Menu chuột phải: *"Kiểm tra liên kết an toàn với PhishGuard"*.
 
-* \[ \] 🟡 **\[P1\]** Tích hợp công cụ chụp vùng màn hình và giải mã **QR Code** bằng thư viện `jsQR` (`utils/qr-scanner.ts`), tự động gửi URL trích xuất được lên Cloud Sandbox.
+* [x] 🟡 **[P1]** Tích hợp công cụ chụp vùng màn hình và giải mã **QR Code** bằng thư viện `jsQR` (`utils/qr-scanner.ts`), tự động gửi URL trích xuất được lên Cloud Sandbox.
 
-* \[ \] 🟢 **\[P2\]** Thiết kế giao diện Popup của Extension hiển thị trạng thái kết nối Policy, chế độ bảo vệ hiện tại và bộ đếm số vụ rò rỉ đã chặn trong ngày.
+* [x] 🟢 **[P2]** Thiết kế giao diện Popup của Extension hiển thị trạng thái kết nối Policy, chế độ bảo vệ hiện tại và bộ đếm số vụ rò rỉ đã chặn trong ngày.
 
 ## ☁️ Epic 2: Cloud Phishing Sandbox & Multimodal AI (`apps/sandbox-api`)
 

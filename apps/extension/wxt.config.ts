@@ -16,6 +16,7 @@ export default defineConfig({
       'contextMenus',
       'scripting',
       'notifications',
+      'tabs',
     ],
     host_permissions: ['<all_urls>'],
     action: {

@@ -15,11 +15,13 @@
     "typecheck": "tsc --noEmit",
     "test:dlp": "tsx test-dlp.ts",
     "test:vault": "tsx test-vault-restoration.ts",
-    "test": "pnpm test:dlp && pnpm test:vault"
+    "test:phishing": "tsx test-phishing-qr.ts",
+    "test": "pnpm test:dlp && pnpm test:vault && pnpm test:phishing"
   },
   "dependencies": {
     "@zeroleak/firebase-config": "workspace:*",
     "@zeroleak/shared-types": "workspace:*",
+    "jsqr": "^1.4.0",
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

@@ -1,13 +1,24 @@
 import { defineContentScript } from 'wxt/sandbox';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import type { ZeroKnowledgeTelemetryEvent } from '@zeroleak/shared-types';
+import type {
+  ZeroKnowledgeTelemetryEvent,
+  PhishingAnalysisResponse,
+  PolicyActionMode,
+} from '@zeroleak/shared-types';
 import { replaceSelectionInEditableElement, isEditableElement } from '../utils/dom-replacer';
 import { dlpClient } from '../utils/dlp-worker-client';
 import { tokenVault } from '../utils/reversible-vault';
 import { getStoredPolicy, isDomainProtected } from '../utils/policy-store';
 import { NotificationToast, type ToastMessage } from '../components/NotificationToast';
+import { TelemetryBadge } from '../components/TelemetryBadge';
+import { PhishingModal } from '../components/PhishingModal';
 import { streamRestorer } from '../utils/dom-observer';
+import {
+  activateInteractiveQrSnipper,
+  decodeQrFromCrop,
+} from '../utils/qr-scanner';
+import { analyzeUrlWithSandbox } from '../utils/phishing-client';
 
 export default defineContentScript({
   matches: ['<all_urls>'],
@@ -18,23 +29,29 @@ export default defineContentScript({
 
     let activePolicy = null as Awaited<ReturnType<typeof getStoredPolicy>> | null;
     let toastUpdater: ((msg: ToastMessage | null) => void) | null = null;
+    let latencyUpdater: ((latency: number | null) => void) | null = null;
+    let countUpdater: ((count: number) => void) | null = null;
+    let modeUpdater: ((mode: PolicyActionMode) => void) | null = null;
+    let modalUpdater: ((modal: PhishingAnalysisResponse | null) => void) | null = null;
 
     // 1. Initialize Policy
     getStoredPolicy().then((policy) => {
       activePolicy = policy;
+      if (modeUpdater) modeUpdater(policy.mode);
     });
 
     // Listen for policy updates broadcast from background service worker
     chrome.runtime.onMessage.addListener((message) => {
       if (message?.type === 'POLICY_UPDATED') {
         activePolicy = message.policy;
+        if (modeUpdater && activePolicy) modeUpdater(activePolicy.mode);
         console.log('[ZeroLeak] Live policy updated:', activePolicy?.mode);
       }
     });
 
-    // 2. Mount Shadow DOM UI for isolated toasts
-    function mountShadowToast() {
-      const host = document.createElement('zeroleak-toast-host');
+    // 2. Mount Shadow DOM Root for Complete Style Isolation (Strict Guardrail 3)
+    function mountShadowRootUi() {
+      const host = document.createElement('zeroleak-shadow-host');
       host.style.position = 'fixed';
       host.style.zIndex = '2147483647';
       host.style.pointerEvents = 'none';
@@ -45,19 +62,65 @@ export default defineContentScript({
 
       const shadow = host.attachShadow({ mode: 'open' });
       const mountPoint = document.createElement('div');
+      mountPoint.style.width = '100%';
+      mountPoint.style.height = '100%';
+      mountPoint.style.pointerEvents = 'none';
       shadow.appendChild(mountPoint);
 
-      const ToastWrapper = () => {
+      const UnifiedShadowApp = () => {
         const [toast, setToast] = React.useState<ToastMessage | null>(null);
+        const [lastLatency, setLastLatency] = React.useState<number | null>(null);
+        const [shieldedCount, setShieldedCount] = React.useState<number>(tokenVault.size());
+        const [currentMode, setCurrentMode] = React.useState<PolicyActionMode>(
+          activePolicy?.mode || 'AUTO_TOKENIZE'
+        );
+        const [analysisModal, setAnalysisModal] = React.useState<PhishingAnalysisResponse | null>(null);
+
         toastUpdater = setToast;
-        return React.createElement(NotificationToast, {
-          message: toast,
-          onDismiss: () => setToast(null),
-        });
+        latencyUpdater = setLastLatency;
+        countUpdater = setShieldedCount;
+        modeUpdater = setCurrentMode;
+        modalUpdater = setAnalysisModal;
+
+        React.useEffect(() => {
+          const unsubscribe = tokenVault.subscribe(() => {
+            setShieldedCount(tokenVault.size());
+          });
+          return unsubscribe;
+        }, []);
+
+        return React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(NotificationToast, {
+            message: toast,
+            onDismiss: () => setToast(null),
+          }),
+          React.createElement(TelemetryBadge, {
+            policyMode: currentMode,
+            latencyMs: lastLatency,
+            shieldedCount: shieldedCount,
+            onScanQrClick: handleTriggerQrScan,
+            onClearVaultClick: () => {
+              tokenVault.clear();
+              setShieldedCount(0);
+              showToast({
+                id: String(Date.now()),
+                type: 'AUDIT',
+                title: 'Đã xóa Vault',
+                detail: 'Bộ nhớ mã giả On-Device đã được dọn sạch.',
+              });
+            },
+          }),
+          React.createElement(PhishingModal, {
+            analysis: analysisModal,
+            onClose: () => setAnalysisModal(null),
+          })
+        );
       };
 
       const root = ReactDOM.createRoot(mountPoint);
-      root.render(React.createElement(ToastWrapper));
+      root.render(React.createElement(UnifiedShadowApp));
 
       const appendHost = () => {
         if (document.body && !document.body.contains(host)) {
@@ -72,7 +135,7 @@ export default defineContentScript({
       }
     }
 
-    mountShadowToast();
+    mountShadowRootUi();
 
     // 3. Initialize Reversible Stream Response Restorer (MutationObserver)
     const initRestorer = () => {
@@ -92,6 +155,11 @@ export default defineContentScript({
       if (toastUpdater) {
         toastUpdater(msg);
       }
+    }
+
+    function updateMetrics(latencyMs: number, matchesCount: number) {
+      if (latencyUpdater) latencyUpdater(latencyMs);
+      if (countUpdater) countUpdater(tokenVault.size());
     }
 
     function emitTelemetry(
@@ -121,12 +189,98 @@ export default defineContentScript({
     }
 
     // -------------------------------------------------------------------------
-    // 3. CAPTURE-PHASE EVENT INTERCEPTION
+    // 4. QR SCANNER & PHISHING WORKFLOWS
     // -------------------------------------------------------------------------
 
-    /**
-     * Intercepts paste events at Capture Phase before SPA / ProseMirror handles them
-     */
+    async function handleTriggerQrScan() {
+      showToast({
+        id: String(Date.now()),
+        type: 'AUDIT',
+        title: 'PhishGuard QR Scanner',
+        detail: 'Hãy khoanh vùng mã QR trên màn hình cần kiểm tra.',
+      });
+
+      const region = await activateInteractiveQrSnipper();
+      if (!region) {
+        return;
+      }
+
+      showToast({
+        id: String(Date.now()),
+        type: 'AUDIT',
+        title: 'Đang chụp & giải mã QR...',
+        detail: 'PhishGuard đang đọc dữ liệu từ ảnh chụp màn hình...',
+      });
+
+      chrome.runtime.sendMessage({ type: 'CAPTURE_VISIBLE_TAB' }, async (response) => {
+        if (!response?.dataUrl) {
+          showToast({
+            id: String(Date.now()),
+            type: 'BLOCKED',
+            title: 'Lỗi chụp màn hình',
+            detail: 'Không thể chụp ảnh màn hình để giải mã QR.',
+          });
+          return;
+        }
+
+        const qrResult = await decodeQrFromCrop(response.dataUrl, region);
+        if (!qrResult || !qrResult.data) {
+          showToast({
+            id: String(Date.now()),
+            type: 'BLOCKED',
+            title: 'Không tìm thấy mã QR',
+            detail: 'Vùng chọn không chứa mã QR hợp lệ. Vui lòng thử lại.',
+          });
+          return;
+        }
+
+        const qrData = qrResult.data.trim();
+        console.log('[PhishGuard QR] Decoded content:', qrData);
+
+        const isUrl = /^https?:\/\//i.test(qrData) || /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/i.test(qrData);
+        if (isUrl) {
+          const fullUrl = qrData.startsWith('http') ? qrData : `https://${qrData}`;
+          showToast({
+            id: String(Date.now()),
+            type: 'AUDIT',
+            title: 'Đang phân tích liên kết QR',
+            detail: `Gửi đến PhishGuard Sandbox: ${fullUrl}`,
+          });
+          const analysis = await analyzeUrlWithSandbox(fullUrl, 'QR_CODE');
+          if (modalUpdater) modalUpdater(analysis);
+        } else {
+          showToast({
+            id: String(Date.now()),
+            type: 'TOKENIZED',
+            title: 'Nội dung mã QR (Văn bản)',
+            detail: qrData.length > 80 ? qrData.substring(0, 80) + '...' : qrData,
+          });
+        }
+      });
+    }
+
+    // Handle messages sent from Context Menu or Background
+    chrome.runtime.onMessage.addListener(async (message) => {
+      if (message?.type === 'PHISHGUARD_SCAN_URL' && message.url) {
+        showToast({
+          id: String(Date.now()),
+          type: 'AUDIT',
+          title: 'PhishGuard Threat Scanner',
+          detail: `Đang kiểm tra mức độ an toàn: ${message.url}`,
+        });
+        const analysis = await analyzeUrlWithSandbox(message.url, 'CONTEXT_MENU');
+        if (modalUpdater) modalUpdater(analysis);
+      }
+
+      if (message?.type === 'TRIGGER_QR_SCAN') {
+        handleTriggerQrScan();
+      }
+    });
+
+    // -------------------------------------------------------------------------
+    // 5. CAPTURE-PHASE EVENT INTERCEPTION
+    // -------------------------------------------------------------------------
+
     const handlePaste = async (e: ClipboardEvent) => {
       if (!activePolicy) return;
       if (!isDomainProtected(window.location.hostname, activePolicy)) return;
@@ -142,8 +296,8 @@ export default defineContentScript({
       const result = await dlpClient.scan(rawText, activePolicy.enabledTypes);
 
       if (result.matches.length === 0) {
-        // No sensitive data detected; insert original text safely
         replaceSelectionInEditableElement(rawText);
+        updateMetrics(result.scanLatencyMs, 0);
         return;
       }
 
@@ -152,6 +306,7 @@ export default defineContentScript({
       );
 
       const detectedTypes = Array.from(new Set(result.matches.map((m) => m.type)));
+      updateMetrics(result.scanLatencyMs, result.matches.length);
 
       if (activePolicy.mode === 'STRICT_BLOCK') {
         showToast({
@@ -168,13 +323,11 @@ export default defineContentScript({
       }
 
       if (activePolicy.mode === 'AUTO_TOKENIZE') {
-        // Store mappings locally in the reversible vault
         tokenVault.storeMatches(result.matches);
         if (document.body) {
           streamRestorer.sweep(document.body);
         }
 
-        // Replace content in editable target
         const replaced = replaceSelectionInEditableElement(result.sanitizedText);
 
         showToast({
@@ -195,7 +348,6 @@ export default defineContentScript({
       }
 
       if (activePolicy.mode === 'AUDIT_ONLY') {
-        // Allow text to paste normally but log telemetry
         replaceSelectionInEditableElement(rawText);
         showToast({
           id: String(Date.now()),
@@ -209,9 +361,6 @@ export default defineContentScript({
       }
     };
 
-    /**
-     * Intercepts drop events at Capture Phase (drag-and-drop text)
-     */
     const handleDrop = async (e: DragEvent) => {
       if (!activePolicy) return;
       if (!isDomainProtected(window.location.hostname, activePolicy)) return;
@@ -225,10 +374,12 @@ export default defineContentScript({
       const result = await dlpClient.scan(rawText, activePolicy.enabledTypes);
       if (result.matches.length === 0) {
         replaceSelectionInEditableElement(rawText);
+        updateMetrics(result.scanLatencyMs, 0);
         return;
       }
 
       const detectedTypes = Array.from(new Set(result.matches.map((m) => m.type)));
+      updateMetrics(result.scanLatencyMs, result.matches.length);
 
       if (activePolicy.mode === 'STRICT_BLOCK') {
         showToast({
@@ -259,9 +410,6 @@ export default defineContentScript({
       }
     };
 
-    /**
-     * Intercepts Enter keydown to block accidental submission when in STRICT_BLOCK mode
-     */
     const handleKeyDown = async (e: KeyboardEvent) => {
       if (!activePolicy || activePolicy.mode !== 'STRICT_BLOCK') return;
       if (e.key !== 'Enter' || e.shiftKey) return;

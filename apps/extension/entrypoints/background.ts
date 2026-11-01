@@ -4,7 +4,8 @@ import {
   type SecurityPolicy,
   type ZeroKnowledgeTelemetryEvent,
 } from '@zeroleak/shared-types';
-import { localSyncBus, FIRESTORE_COLLECTIONS } from '@zeroleak/firebase-config';
+import { localSyncBus } from '@zeroleak/firebase-config';
+import { analyzeUrlWithSandbox } from '../utils/phishing-client';
 
 export default defineBackground(() => {
   console.log('[ZeroLeak Background] Service worker active.');
@@ -12,7 +13,7 @@ export default defineBackground(() => {
   const STORAGE_KEY = 'zeroleak_security_policy';
   const TELEMETRY_KEY = 'zeroleak_telemetry_history';
 
-  // 1. Initialize default policy on install
+  // 1. Initialize default policy & context menus on install
   chrome.runtime.onInstalled.addListener(async () => {
     const existing = await chrome.storage.local.get(STORAGE_KEY);
     if (!existing[STORAGE_KEY]) {
@@ -20,21 +21,37 @@ export default defineBackground(() => {
       console.log('[ZeroLeak Background] Initialized default security policy.');
     }
 
-    // Set up right-click Context Menu
+    // Context Menu: Link inspection
     chrome.contextMenus.create({
       id: 'phishguard-scan-link',
-      title: '🛡️ Kiểm tra an toàn bằng PhishGuard',
+      title: '🛡️ Kiểm tra liên kết bằng PhishGuard',
       contexts: ['link'],
+    });
+
+    // Context Menu: Screen QR scanning
+    chrome.contextMenus.create({
+      id: 'phishguard-scan-qr',
+      title: '📷 Quét mã QR trên màn hình (PhishGuard)',
+      contexts: ['page', 'image'],
     });
   });
 
   // 2. Handle Context Menu clicks
   chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (info.menuItemId === 'phishguard-scan-link' && info.linkUrl && tab?.id) {
-      console.log('[PhishGuard Background] Scanning link:', info.linkUrl);
+    if (!tab?.id) return;
+
+    if (info.menuItemId === 'phishguard-scan-link' && info.linkUrl) {
+      console.log('[PhishGuard Background] Scanning link from context menu:', info.linkUrl);
       chrome.tabs.sendMessage(tab.id, {
         type: 'PHISHGUARD_SCAN_URL',
         url: info.linkUrl,
+      });
+    }
+
+    if (info.menuItemId === 'phishguard-scan-qr') {
+      console.log('[PhishGuard Background] Triggering interactive QR scan');
+      chrome.tabs.sendMessage(tab.id, {
+        type: 'TRIGGER_QR_SCAN',
       });
     }
   });
@@ -61,17 +78,45 @@ export default defineBackground(() => {
         chrome.tabs.query({}, (tabs) => {
           for (const tab of tabs) {
             if (tab.id) {
-              chrome.tabs.sendMessage(tab.id, {
-                type: 'POLICY_UPDATED',
-                policy: updatedPolicy,
-              }).catch(() => {
-                // Ignore errors for tabs without content scripts
-              });
+              chrome.tabs
+                .sendMessage(tab.id, {
+                  type: 'POLICY_UPDATED',
+                  policy: updatedPolicy,
+                })
+                .catch(() => {
+                  // Ignore tabs without content scripts
+                });
             }
           }
         });
         sendResponse({ status: 'ok' });
       });
+      return true;
+    }
+
+    // Capture visible tab screenshot for QR decoding
+    if (message?.type === 'CAPTURE_VISIBLE_TAB') {
+      chrome.tabs
+        .captureVisibleTab({ format: 'png' })
+        .then((dataUrl) => {
+          sendResponse({ dataUrl });
+        })
+        .catch((err) => {
+          console.warn('[ZeroLeak Background] Capture tab failed:', err);
+          sendResponse({ error: err.message });
+        });
+      return true;
+    }
+
+    // Analyze phishing URL via Cloud Sandbox (with hard timeout & local fallback)
+    if (message?.type === 'ANALYZE_PHISHING_URL') {
+      analyzeUrlWithSandbox(message.url, message.sourceContext || 'CONTEXT_MENU')
+        .then((result) => {
+          sendResponse({ result });
+        })
+        .catch((err) => {
+          sendResponse({ error: err.message });
+        });
       return true;
     }
 
