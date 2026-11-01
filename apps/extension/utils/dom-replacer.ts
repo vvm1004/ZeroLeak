@@ -73,3 +73,4 @@ export function isEditableElement(el: Element | null): boolean {
   if (el.getAttribute('role') === 'textbox') return true;
   return false;
 }
+

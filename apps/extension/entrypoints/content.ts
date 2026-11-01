@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import type { ZeroKnowledgeTelemetryEvent } from '@zeroleak/shared-types';
 import { replaceSelectionInEditableElement, isEditableElement } from '../utils/dom-replacer';
-import { scanDeterministicDlp } from '../utils/deterministic-dlp';
+import { dlpClient } from '../utils/dlp-worker-client';
 import { tokenVault } from '../utils/reversible-vault';
 import { getStoredPolicy, isDomainProtected } from '../utils/policy-store';
 import { NotificationToast, type ToastMessage } from '../components/NotificationToast';
@@ -112,28 +112,29 @@ export default defineContentScript({
     /**
      * Intercepts paste events at Capture Phase before SPA / ProseMirror handles them
      */
-    const handlePaste = (e: ClipboardEvent) => {
+    const handlePaste = async (e: ClipboardEvent) => {
       if (!activePolicy) return;
       if (!isDomainProtected(window.location.hostname, activePolicy)) return;
 
       const rawText = e.clipboardData?.getData('text/plain');
       if (!rawText || rawText.trim().length === 0) return;
 
-      // Scan text with deterministic DLP engine
-      const result = scanDeterministicDlp(rawText, activePolicy.enabledTypes);
+      // Synchronously halt default paste to enforce Strict Guardrail: Zero Raw PII Exfiltration
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      // Scan text using Multi-layer DLP Client (Worker or Main-thread)
+      const result = await dlpClient.scan(rawText, activePolicy.enabledTypes);
 
       if (result.matches.length === 0) {
-        // No sensitive data detected; let natural paste proceed
+        // No sensitive data detected; insert original text safely
+        replaceSelectionInEditableElement(rawText);
         return;
       }
 
       console.log(
         `[ZeroLeak] Intercepted ${result.matches.length} sensitive items in ${result.scanLatencyMs}ms (Mode: ${activePolicy.mode})`
       );
-
-      // Stop native paste completely
-      e.preventDefault();
-      e.stopImmediatePropagation();
 
       const detectedTypes = Array.from(new Set(result.matches.map((m) => m.type)));
 
@@ -193,18 +194,21 @@ export default defineContentScript({
     /**
      * Intercepts drop events at Capture Phase (drag-and-drop text)
      */
-    const handleDrop = (e: DragEvent) => {
+    const handleDrop = async (e: DragEvent) => {
       if (!activePolicy) return;
       if (!isDomainProtected(window.location.hostname, activePolicy)) return;
 
       const rawText = e.dataTransfer?.getData('text/plain');
       if (!rawText || rawText.trim().length === 0) return;
 
-      const result = scanDeterministicDlp(rawText, activePolicy.enabledTypes);
-      if (result.matches.length === 0) return;
-
       e.preventDefault();
       e.stopImmediatePropagation();
+
+      const result = await dlpClient.scan(rawText, activePolicy.enabledTypes);
+      if (result.matches.length === 0) {
+        replaceSelectionInEditableElement(rawText);
+        return;
+      }
 
       const detectedTypes = Array.from(new Set(result.matches.map((m) => m.type)));
 
@@ -237,7 +241,7 @@ export default defineContentScript({
     /**
      * Intercepts Enter keydown to block accidental submission when in STRICT_BLOCK mode
      */
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = async (e: KeyboardEvent) => {
       if (!activePolicy || activePolicy.mode !== 'STRICT_BLOCK') return;
       if (e.key !== 'Enter' || e.shiftKey) return;
 
@@ -253,7 +257,7 @@ export default defineContentScript({
 
       if (!currentText.trim()) return;
 
-      const result = scanDeterministicDlp(currentText, activePolicy.enabledTypes);
+      const result = await dlpClient.scan(currentText, activePolicy.enabledTypes);
       if (result.matches.length > 0) {
         e.preventDefault();
         e.stopImmediatePropagation();

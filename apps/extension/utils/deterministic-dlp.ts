@@ -3,6 +3,7 @@ import type {
   DlpScanResult,
   SensitiveDataType,
 } from '@zeroleak/shared-types';
+import { scanContextualNer } from './contextual-ner';
 
 /**
  * Checks card validity using the Luhn Checksum algorithm
@@ -61,7 +62,7 @@ export const DLP_PATTERNS = {
 };
 
 /**
- * Scans text locally using deterministic rules (Regex + Luhn + Entropy)
+ * Scans text locally using Layer 1 Deterministic rules (Regex + Luhn + Entropy)
  * Latency is typically < 2ms.
  */
 export function scanDeterministicDlp(
@@ -85,7 +86,6 @@ export function scanDeterministicDlp(
     return `[${type}_${num}]`;
   }
 
-  // Helper to test regex pattern
   function testPattern(
     type: SensitiveDataType,
     regex: RegExp,
@@ -101,7 +101,6 @@ export function scanDeterministicDlp(
         continue;
       }
 
-      // Check for overlap with already recorded matches
       const startIndex = match.index;
       const endIndex = startIndex + originalValue.length;
       const overlaps = matches.some(
@@ -138,21 +137,80 @@ export function scanDeterministicDlp(
   // 4. Scan API Secrets
   testPattern('API_SECRET', DLP_PATTERNS.API_SECRET);
 
-  // 5. Scan Credit Card Candidates (requires Luhn checksum)
+  // 5. Scan Credit Card Candidates (with Luhn validation)
   testPattern('CREDIT_CARD', DLP_PATTERNS.CREDIT_CARD_CANDIDATE, isValidLuhn);
 
-  // Sort matches by start position descending to replace without offset shifting
-  matches.sort((a, b) => b.startIndex - a.startIndex);
+  return assembleSanitizedResult(text, matches, startTime, entropyMax);
+}
 
+/**
+ * Multi-layer DLP scan combining Layer 1 (Deterministic) and Layer 2 (Contextual AI NER)
+ */
+export async function scanMultiLayerDlp(
+  text: string,
+  enabledTypes: SensitiveDataType[]
+): Promise<DlpScanResult> {
+  const startTime = performance.now();
+
+  // Layer 1: Deterministic Scan
+  const l1Result = scanDeterministicDlp(text, enabledTypes);
+  const matches: DlpDetectionMatch[] = [...l1Result.matches];
+  let entropyMax = l1Result.entropyMax;
+
+  // Layer 2: Contextual NER for Names and Organizations if enabled
+  const needsContextual =
+    enabledTypes.includes('PERSON_NAME') || enabledTypes.includes('ORGANIZATION');
+
+  if (needsContextual) {
+    const nerMatches = await scanContextualNer(text, enabledTypes);
+
+    for (const match of nerMatches) {
+      const overlaps = matches.some(
+        (m) =>
+          (match.startIndex >= m.startIndex && match.startIndex < m.endIndex) ||
+          (match.endIndex > m.startIndex && match.endIndex <= m.endIndex)
+      );
+
+      if (!overlaps) {
+        matches.push(match);
+      }
+    }
+  }
+
+  // Renumber and finalize placeholders consistently
+  const typeCounters: Record<string, number> = {};
+  matches.sort((a, b) => a.startIndex - b.startIndex);
+
+  for (const m of matches) {
+    typeCounters[m.type] = (typeCounters[m.type] || 0) + 1;
+    const num = String(typeCounters[m.type]).padStart(2, '0');
+    m.tokenPlaceholder = `[${m.type}_${num}]`;
+  }
+
+  return assembleSanitizedResult(text, matches, startTime, entropyMax);
+}
+
+/**
+ * Replaces matched tokens into text and computes final latency
+ */
+function assembleSanitizedResult(
+  text: string,
+  matches: DlpDetectionMatch[],
+  startTime: number,
+  entropyMax: number
+): DlpScanResult {
+  // Sort descending by position for safe replacement
+  const sortedDesc = [...matches].sort((a, b) => b.startIndex - a.startIndex);
   let sanitizedText = text;
-  for (const match of matches) {
+
+  for (const match of sortedDesc) {
     sanitizedText =
       sanitizedText.slice(0, match.startIndex) +
       match.tokenPlaceholder +
       sanitizedText.slice(match.endIndex);
   }
 
-  // Restore chronological order for reporting
+  // Keep ascending order in the returned match list
   matches.sort((a, b) => a.startIndex - b.startIndex);
 
   const scanLatencyMs = Number((performance.now() - startTime).toFixed(2));

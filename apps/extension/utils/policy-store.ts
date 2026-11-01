@@ -48,3 +48,4 @@ export function isDomainProtected(hostname: string, policy: SecurityPolicy): boo
     return cleanHost === cleanDomain || cleanHost.endsWith('.' + cleanDomain);
   });
 }
+
