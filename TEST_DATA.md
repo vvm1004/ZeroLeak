@@ -105,19 +105,21 @@ Tôi gửi thông tin thanh toán nâng cấp tài khoản bảo mật:
 ```text
 # Cấu hình biến môi trường Production (TUYỆT ĐỐI BẢO MẬT)
 GOOGLE_API_KEY=AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y
+GEMINI_API_KEY=AQ.Ab3kP9LmQ28U5xNnBLuXq8Kdpns94emn7VkV2GHuBU5D1NfH4k
 OPENAI_API_KEY=sk-proj-9mKlA8xQzT3vBnM1pL5rStU7wXyZ0123456789abcdef
 GITHUB_ACCESS_TOKEN=ghp_3a7b9c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f
 AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 ```
 
 ### 👉 Kết quả mong đợi trên trình duyệt:
-* Toàn bộ 4 khóa bí mật đều bị chặn tức thì:
+* Toàn bộ 5 khóa bí mật đều bị chặn tức thì:
 ```text
 # Cấu hình biến môi trường Production (TUYỆT ĐỐI BẢO MẬT)
 GOOGLE_API_KEY=[ZL_KEY_01]
-OPENAI_API_KEY=[ZL_KEY_02]
-GITHUB_ACCESS_TOKEN=[ZL_KEY_03]
-AWS_ACCESS_KEY_ID=[ZL_KEY_04]
+GEMINI_API_KEY=[ZL_KEY_02]
+OPENAI_API_KEY=[ZL_KEY_03]
+GITHUB_ACCESS_TOKEN=[ZL_KEY_04]
+AWS_ACCESS_KEY_ID=[ZL_KEY_05]
 ```
 
 ---
@@ -164,3 +166,4 @@ Hãy xác nhận lại thông tin nhân sự sau đây theo đúng mẫu:
   * Điểm rủi ro (Risk Score) kèm nhãn đỏ/vàng/xanh.
   * Tên thương hiệu bị mạo danh (*Vietcombank DigiBank* hoặc *Meta*).
   * Danh sách các chỉ số bất thường (Suspicious Indicators).
+

@@ -16,7 +16,8 @@ Bên B: Tập đoàn Viễn thông FPT
 Số CCCD: 001198005678, Cấp tại: Hà Nội
 Thông tin thanh toán thẻ tín dụng: 4532-0150-1234-5671 (Thẻ Visa hợp lệ)
 API Secret Production: AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y
-OpenAI Project Key: sk-proj-9mKlA8xQzT3vBnM1pL5rStU7wXyZ0123456789abcdef`;
+OpenAI Project Key: sk-proj-9mKlA8xQzT3vBnM1pL5rStU7wXyZ0123456789abcdef
+Gemini AI Studio Key: AQ.Ab3kP9LmQ28U5xNnBLuXq8Kdpns94emn7VkV2GHuBU5D1NfH4k`;
 
   console.log('\n--- STARTING DLP MULTI-LAYER SCAN TEST ---');
   const res = await scanMultiLayerDlp(contract, [
