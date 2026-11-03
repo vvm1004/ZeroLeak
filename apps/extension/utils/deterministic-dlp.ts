@@ -54,8 +54,9 @@ export const DLP_PATTERNS = {
   // Standard Email Regex
   EMAIL: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g,
 
-  // Known Cloud and API Key prefixes
-  API_SECRET: /\b(?:AIza[0-9A-Za-z\-_]{35}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{36}|AKIA[0-9A-Z]{16})\b/g,
+  // Known Cloud and API Key prefixes (OpenAI sk-/sk-proj-, Anthropic, Google AIza, GitHub, AWS, HuggingFace, Stripe)
+  API_SECRET:
+    /\b(?:AIza[0-9A-Za-z\-_]{35}|sk-[a-zA-Z0-9_\-]{20,}|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{22,}|(?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16}|hf_[a-zA-Z0-9]{34,}|(?:sk|pk)_(?:live|test)_[0-9a-zA-Z]{24,})\b/g,
 
   // Credit Card candidates (must pass Luhn algorithm verification)
   CREDIT_CARD_CANDIDATE: /\b(?:\d[ -]*?){13,19}\b/g,
