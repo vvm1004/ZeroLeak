@@ -24,14 +24,14 @@ export default defineBackground(() => {
     // Context Menu: Link inspection
     chrome.contextMenus.create({
       id: 'phishguard-scan-link',
-      title: '🛡️ Kiểm tra liên kết bằng PhishGuard',
+      title: '🛡️ Kiểm tra liên kết với ZeroLeak',
       contexts: ['link'],
     });
 
     // Context Menu: Screen QR scanning
     chrome.contextMenus.create({
       id: 'phishguard-scan-qr',
-      title: '📷 Quét mã QR trên màn hình (PhishGuard)',
+      title: '📷 Quét mã QR trên màn hình (ZeroLeak)',
       contexts: ['page', 'image'],
     });
   });
@@ -41,7 +41,7 @@ export default defineBackground(() => {
     if (!tab?.id) return;
 
     if (info.menuItemId === 'phishguard-scan-link' && info.linkUrl) {
-      console.log('[PhishGuard Background] Scanning link from context menu:', info.linkUrl);
+      console.log('[ZeroLeak Background] Scanning link from context menu:', info.linkUrl);
       chrome.tabs.sendMessage(tab.id, {
         type: 'PHISHGUARD_SCAN_URL',
         url: info.linkUrl,
@@ -49,7 +49,7 @@ export default defineBackground(() => {
     }
 
     if (info.menuItemId === 'phishguard-scan-qr') {
-      console.log('[PhishGuard Background] Triggering interactive QR scan');
+      console.log('[ZeroLeak Background] Triggering interactive QR scan');
       chrome.tabs.sendMessage(tab.id, {
         type: 'TRIGGER_QR_SCAN',
       });

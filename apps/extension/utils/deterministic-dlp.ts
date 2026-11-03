@@ -1,9 +1,12 @@
-import type {
-  DlpDetectionMatch,
-  DlpScanResult,
-  SensitiveDataType,
+import {
+  type DlpDetectionMatch,
+  type DlpScanResult,
+  type SensitiveDataType,
+  TOKEN_PREFIX_MAP,
 } from '@zeroleak/shared-types';
 import { scanContextualNer } from './contextual-ner';
+
+export { TOKEN_PREFIX_MAP };
 
 /**
  * Checks card validity using the Luhn Checksum algorithm
@@ -84,7 +87,8 @@ export function scanDeterministicDlp(
   function getPlaceholder(type: SensitiveDataType): string {
     typeCounters[type] = (typeCounters[type] || 0) + 1;
     const num = String(typeCounters[type]).padStart(2, '0');
-    return `[${type}_${num}]`;
+    const prefix = TOKEN_PREFIX_MAP[type] || `ZL_${type}`;
+    return `[${prefix}_${num}]`;
   }
 
   function testPattern(
@@ -185,7 +189,8 @@ export async function scanMultiLayerDlp(
   for (const m of matches) {
     typeCounters[m.type] = (typeCounters[m.type] || 0) + 1;
     const num = String(typeCounters[m.type]).padStart(2, '0');
-    m.tokenPlaceholder = `[${m.type}_${num}]`;
+    const prefix = TOKEN_PREFIX_MAP[m.type] || `ZL_${m.type}`;
+    m.tokenPlaceholder = `[${prefix}_${num}]`;
   }
 
   return assembleSanitizedResult(text, matches, startTime, entropyMax);

@@ -196,7 +196,7 @@ export default defineContentScript({
       showToast({
         id: String(Date.now()),
         type: 'AUDIT',
-        title: 'PhishGuard QR Scanner',
+        title: 'ZeroLeak QR Scanner',
         detail: 'Hãy khoanh vùng mã QR trên màn hình cần kiểm tra.',
       });
 
@@ -209,7 +209,7 @@ export default defineContentScript({
         id: String(Date.now()),
         type: 'AUDIT',
         title: 'Đang chụp & giải mã QR...',
-        detail: 'PhishGuard đang đọc dữ liệu từ ảnh chụp màn hình...',
+        detail: 'ZeroLeak đang đọc dữ liệu từ ảnh chụp màn hình...',
       });
 
       chrome.runtime.sendMessage({ type: 'CAPTURE_VISIBLE_TAB' }, async (response) => {
@@ -235,7 +235,7 @@ export default defineContentScript({
         }
 
         const qrData = qrResult.data.trim();
-        console.log('[PhishGuard QR] Decoded content:', qrData);
+        console.log('[ZeroLeak QR] Decoded content:', qrData);
 
         const isUrl = /^https?:\/\//i.test(qrData) || /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/i.test(qrData);
         if (isUrl) {
@@ -244,7 +244,7 @@ export default defineContentScript({
             id: String(Date.now()),
             type: 'AUDIT',
             title: 'Đang phân tích liên kết QR',
-            detail: `Gửi đến PhishGuard Sandbox: ${fullUrl}`,
+            detail: `Gửi đến Cloud Sandbox: ${fullUrl}`,
           });
           const analysis = await analyzeUrlWithSandbox(fullUrl, 'QR_CODE');
           if (modalUpdater) modalUpdater(analysis);
@@ -265,7 +265,7 @@ export default defineContentScript({
         showToast({
           id: String(Date.now()),
           type: 'AUDIT',
-          title: 'PhishGuard Threat Scanner',
+          title: 'ZeroLeak Threat Scanner',
           detail: `Đang kiểm tra mức độ an toàn: ${message.url}`,
         });
         const analysis = await analyzeUrlWithSandbox(message.url, 'CONTEXT_MENU');

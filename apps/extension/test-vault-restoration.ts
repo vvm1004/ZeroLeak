@@ -52,18 +52,18 @@ async function runTest() {
   console.log('\n[1] Testing ReversibleTokenVault...');
   tokenVault.clear();
 
-  tokenVault.store('[VN_CCCD_01]', '048099001234', 'VN_CCCD');
-  tokenVault.store('[API_SECRET_01]', 'AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y', 'API_SECRET');
-  tokenVault.store('[PERSON_NAME_01]', 'Nguyễn Văn An', 'PERSON_NAME');
+  tokenVault.store('[ZL_CCCD_01]', '048099001234', 'VN_CCCD');
+  tokenVault.store('[ZL_KEY_01]', 'AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y', 'API_SECRET');
+  tokenVault.store('[ZL_PER_01]', 'Nguyễn Văn An', 'PERSON_NAME');
 
-  if (tokenVault.resolve('[VN_CCCD_01]') !== '048099001234') {
-    throw new Error('Vault resolve failed for [VN_CCCD_01]');
+  if (tokenVault.resolve('[ZL_CCCD_01]') !== '048099001234') {
+    throw new Error('Vault resolve failed for [ZL_CCCD_01]');
   }
-  if (tokenVault.resolve('[API_SECRET_01]') !== 'AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y') {
-    throw new Error('Vault resolve failed for [API_SECRET_01]');
+  if (tokenVault.resolve('[ZL_KEY_01]') !== 'AIzaSyBpgQXc2Mcjs9NBfcnrTbd5kFpF0s8bn4Y') {
+    throw new Error('Vault resolve failed for [ZL_KEY_01]');
   }
-  if (tokenVault.has('[UNKNOWN_99]')) {
-    throw new Error('Vault has() false positive for [UNKNOWN_99]');
+  if (tokenVault.has('[ZL_UNKNOWN_99]')) {
+    throw new Error('Vault has() false positive for [ZL_UNKNOWN_99]');
   }
   console.log('✓ TokenVault storage and O(1) resolution PASSED');
 
@@ -77,7 +77,7 @@ async function runTest() {
   // Simulate AI streaming incoming chunks
   console.log('Simulating streaming chunk from AI assistant containing tokens...');
   const p = dom.window.document.createElement('p');
-  p.textContent = 'Hồ sơ đã được phê duyệt cho [PERSON_NAME_01] với số CCCD [VN_CCCD_01] và khóa bảo mật [API_SECRET_01].';
+  p.textContent = 'Hồ sơ đã được phê duyệt cho [ZL_PER_01] với số CCCD [ZL_CCCD_01] và khóa bảo mật [ZL_KEY_01].';
   assistantDiv.appendChild(p);
 
   // Wait a microtask tick for MutationObserver
@@ -115,16 +115,16 @@ async function runTest() {
   const textarea = dom.window.document.getElementById('prompt-input') as HTMLTextAreaElement;
   const contenteditable = dom.window.document.getElementById('contenteditable-editor') as HTMLElement;
 
-  textarea.value = 'Nhập lại CCCD [VN_CCCD_01]';
-  contenteditable.textContent = 'Câu hỏi tiếp theo về [PERSON_NAME_01]';
+  textarea.value = 'Nhập lại CCCD [ZL_CCCD_01]';
+  contenteditable.textContent = 'Câu hỏi tiếp theo về [ZL_PER_01]';
 
   // Trigger manual sweep on entire body to attempt any violation
   restorer.sweep(dom.window.document.body);
 
-  if (textarea.value !== 'Nhập lại CCCD [VN_CCCD_01]') {
+  if (textarea.value !== 'Nhập lại CCCD [ZL_CCCD_01]') {
     throw new Error('VIOLATION: Textarea value was modified by restorer!');
   }
-  if (contenteditable.textContent !== 'Câu hỏi tiếp theo về [PERSON_NAME_01]') {
+  if (contenteditable.textContent !== 'Câu hỏi tiếp theo về [ZL_PER_01]') {
     throw new Error('VIOLATION: Contenteditable element was modified by restorer!');
   }
   if (textarea.querySelector('.zeroleak-restored') || contenteditable.querySelector('.zeroleak-restored')) {

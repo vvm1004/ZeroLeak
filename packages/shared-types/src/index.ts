@@ -1,6 +1,6 @@
 /**
  * @zeroleak/shared-types
- * Shared TypeScript Data Contracts for ZeroLeak & PhishGuard
+ * Shared TypeScript Data Contracts for ZeroLeak
  * GDG DevFest Mien Trung 2026
  */
 
@@ -12,6 +12,34 @@ export type SensitiveDataType =
   | 'PHONE_VN'
   | 'PERSON_NAME'
   | 'ORGANIZATION';
+
+export const TOKEN_PREFIX_MAP: Record<SensitiveDataType, string> = {
+  PERSON_NAME: 'ZL_PER',
+  VN_CCCD: 'ZL_CCCD',
+  API_SECRET: 'ZL_KEY',
+  CREDIT_CARD: 'ZL_CARD',
+  PHONE_VN: 'ZL_PHONE',
+  EMAIL: 'ZL_EMAIL',
+  ORGANIZATION: 'ZL_ORG',
+};
+
+export const TOKEN_PREFIX_TO_TYPE: Record<string, SensitiveDataType> = {
+  ZL_PER: 'PERSON_NAME',
+  ZL_CCCD: 'VN_CCCD',
+  ZL_KEY: 'API_SECRET',
+  ZL_CARD: 'CREDIT_CARD',
+  ZL_PHONE: 'PHONE_VN',
+  ZL_EMAIL: 'EMAIL',
+  ZL_ORG: 'ORGANIZATION',
+  // Backwards compatibility
+  PERSON_NAME: 'PERSON_NAME',
+  VN_CCCD: 'VN_CCCD',
+  API_SECRET: 'API_SECRET',
+  CREDIT_CARD: 'CREDIT_CARD',
+  PHONE_VN: 'PHONE_VN',
+  EMAIL: 'EMAIL',
+  ORGANIZATION: 'ORGANIZATION',
+};
 
 export type PolicyActionMode = 'AUTO_TOKENIZE' | 'STRICT_BLOCK' | 'AUDIT_ONLY';
 
@@ -26,7 +54,7 @@ export interface SecurityPolicy {
 export interface DlpDetectionMatch {
   type: SensitiveDataType;
   originalValue: string;
-  tokenPlaceholder: string; // Ví dụ: "[VN_CCCD_01]", "[API_SECRET_01]"
+  tokenPlaceholder: string; // Ví dụ: "[ZL_CCCD_01]", "[ZL_KEY_01]"
   startIndex: number;
   endIndex: number;
   confidence: number;

@@ -10,7 +10,7 @@ export default function DashboardHome() {
               <Shield className="w-6 h-6" />
             </span>
             <h1 className="text-2xl font-bold tracking-tight text-white">
-              ZeroLeak &amp; PhishGuard
+              ZeroLeak
             </h1>
           </div>
           <p className="text-sm text-slate-400 mt-1">

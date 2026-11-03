@@ -1,5 +1,5 @@
 /**
- * QR Code Scanner Utility for ZeroLeak & PhishGuard
+ * QR Code Scanner Utility for ZeroLeak
  * Decodes QR codes from image sources or interactive screen selection using jsQR.
  */
 
@@ -44,7 +44,7 @@ export function decodeQrFromImageData(imageData: ImageData): QrScanResult | null
       };
     }
   } catch (err) {
-    console.error('[PhishGuard QR] jsQR decode error:', err);
+    console.error('[ZeroLeak QR] jsQR decode error:', err);
   }
   return null;
 }
@@ -117,7 +117,7 @@ export async function decodeQrFromCrop(
         const imageData = ctx.getImageData(0, 0, cropW, cropH);
         resolve(decodeQrFromImageData(imageData));
       } catch (err) {
-        console.error('[PhishGuard QR] Crop decode error:', err);
+        console.error('[ZeroLeak QR] Crop decode error:', err);
         resolve(null);
       }
     };

@@ -1,6 +1,7 @@
-import type {
-  DlpDetectionMatch,
-  SensitiveDataType,
+import {
+  type DlpDetectionMatch,
+  type SensitiveDataType,
+  TOKEN_PREFIX_MAP,
 } from '@zeroleak/shared-types';
 
 /**
@@ -124,7 +125,7 @@ function extractPersonNames(text: string): DlpDetectionMatch[] {
       results.push({
         type: 'PERSON_NAME',
         originalValue: candidate,
-        tokenPlaceholder: '[PERSON_NAME_00]',
+        tokenPlaceholder: '[ZL_PER_00]',
         startIndex: match.index,
         endIndex: match.index + candidate.length,
         confidence: startsWithVnFamilyName && hasContextClue ? 0.98 : 0.85,
@@ -154,7 +155,7 @@ function extractOrganizations(text: string): DlpDetectionMatch[] {
       results.push({
         type: 'ORGANIZATION',
         originalValue: orgName,
-        tokenPlaceholder: '[ORGANIZATION_00]',
+        tokenPlaceholder: '[ZL_ORG_00]',
         startIndex: match.index,
         endIndex: match.index + orgName.length,
         confidence: 0.95,
@@ -200,10 +201,11 @@ async function tryChromeBuiltinAi(
       if (!enabledTypes.includes(item.type)) continue;
       const idx = text.indexOf(item.value);
       if (idx !== -1) {
+        const prefix = TOKEN_PREFIX_MAP[item.type as SensitiveDataType] || `ZL_${item.type}`;
         matches.push({
           type: item.type,
           originalValue: item.value,
-          tokenPlaceholder: `[${item.type}_00]`,
+          tokenPlaceholder: `[${prefix}_00]`,
           startIndex: idx,
           endIndex: idx + item.value.length,
           confidence: 0.95,

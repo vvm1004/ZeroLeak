@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
-  "description": "ZeroLeak & PhishGuard Chrome Extension (WXT, Manifest V3)",
+  "description": "ZeroLeak Chrome Extension (WXT, Manifest V3)",
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",

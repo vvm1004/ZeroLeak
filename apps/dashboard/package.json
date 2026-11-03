@@ -2,7 +2,7 @@
   "name": "@zeroleak/dashboard",
   "version": "1.0.0",
   "private": true,
-  "description": "ZeroLeak & PhishGuard Admin Dashboard & Phishing Simulation",
+  "description": "ZeroLeak Admin Dashboard & Security Operations",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",

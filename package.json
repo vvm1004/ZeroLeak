@@ -1,8 +1,8 @@
 {
-  "name": "zeroleak-phishguard",
+  "name": "zeroleak",
   "version": "1.0.0",
   "private": true,
-  "description": "Hybrid Edge-Cloud Security Platform (ZeroLeak On-Device DLP & PhishGuard Visual Phishing Sandbox)",
+  "description": "ZeroLeak - Hybrid Edge-Cloud Security Platform (On-Device DLP & Threat Sandbox)",
   "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev:extension": "pnpm --filter @zeroleak/extension dev",

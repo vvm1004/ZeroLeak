@@ -1,4 +1,4 @@
-# 🛡️ ZeroLeak & PhishGuard
+# 🛡️ ZeroLeak
 
 > **Hệ thống Bảo mật Lai (Hybrid Edge-Cloud Security Platform)**
 > 
@@ -8,12 +8,12 @@
 
 ## 🌟 2 Trụ cột Kỹ thuật Cốt lõi
 
-1. **ZeroLeak (On-Device Data Loss Prevention):**
+1. **ZeroLeak On-Device DLP (Data Loss Prevention):**
    * Bảo vệ người dùng trước nguy cơ rò rỉ dữ liệu nhạy cảm (CCCD, Thẻ ngân hàng, API Key, Thông tin PII) khi sử dụng các công cụ AI (ChatGPT, Claude, Gemini) hoặc web form.
-   * **Reversible Tokenization:** Thay thế thông tin nhạy cảm bằng mã định danh an toàn (`[VN_CCCD_01]`, `[API_SECRET_01]`) trước khi gửi lên máy chủ AI, và tự động khôi phục hai chiều trên DOM của trình duyệt bằng `MutationObserver`.
+   * **Reversible Tokenization:** Thay thế thông tin nhạy cảm bằng mã định danh an toàn (`[ZL_CCCD_01]`, `[ZL_KEY_01]`, `[ZL_PER_01]`) trước khi gửi lên máy chủ AI, và tự động khôi phục hai chiều trên DOM của trình duyệt bằng `MutationObserver`.
    * **100% Cục bộ:** Quá trình quét DLP và lưu trữ ánh xạ diễn ra hoàn toàn trên thiết bị của người dùng, không bao giờ gửi văn bản thô ra ngoài.
 
-2. **PhishGuard (Isolated Cloud Sandbox & Visual Phishing Detection):**
+2. **Visual Phishing Threat Sandbox:**
    * Phát hiện lừa đảo qua đường dẫn (URL) và mã QR theo thời gian thực.
    * Mở liên kết đáng ngờ trong môi trường cô lập **Playwright Headless Chromium** trên **Google Cloud Run**, thu thập ảnh chụp màn hình WebP và cấu trúc DOM form/input.
    * Đối chiếu giao diện và thương hiệu bằng **Gemini 3.5 Flash Lite Multimodal** nhằm phát hiện các trang mạo danh ngân hàng và cổng dịch vụ công (Visual Brand Impersonation) chưa có trong danh sách đen (Zero-day).

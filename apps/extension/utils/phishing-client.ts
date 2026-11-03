@@ -207,7 +207,7 @@ export async function analyzeUrlWithSandbox(
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      console.warn(`[PhishGuard] Sandbox API returned status ${response.status}. Using local fallback.`);
+      console.warn(`[ZeroLeak] Sandbox API returned status ${response.status}. Using local fallback.`);
       return localHeuristicFallback(url);
     }
 
@@ -216,9 +216,9 @@ export async function analyzeUrlWithSandbox(
   } catch (error: any) {
     clearTimeout(timeoutId);
     if (error?.name === 'AbortError') {
-      console.warn(`[PhishGuard] Sandbox API request timed out (> ${TIMEOUT_MS}ms). Falling back to local heuristic.`);
+      console.warn(`[ZeroLeak] Sandbox API request timed out (> ${TIMEOUT_MS}ms). Falling back to local heuristic.`);
     } else {
-      console.warn('[PhishGuard] Sandbox API connection failed:', error?.message);
+      console.warn('[ZeroLeak] Sandbox API connection failed:', error?.message);
     }
     return localHeuristicFallback(url);
   }

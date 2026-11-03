@@ -1,7 +1,7 @@
 {
   "name": "@zeroleak/firebase-config",
   "version": "1.0.0",
-  "description": "Firebase Firestore Realtime Client and Policy Sync for ZeroLeak & PhishGuard",
+  "description": "Firebase Firestore Realtime Client and Policy Sync for ZeroLeak",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

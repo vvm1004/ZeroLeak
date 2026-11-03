@@ -7,8 +7,8 @@ export default defineConfig({
     plugins: [react()],
   }),
   manifest: {
-    name: 'ZeroLeak & PhishGuard',
-    description: 'On-Device DLP & Visual Phishing Threat Isolation',
+    name: 'ZeroLeak',
+    description: 'On-Device AI DLP & Threat Security (GDG DevFest 2026)',
     version: '1.0.0',
     permissions: [
       'storage',
@@ -20,7 +20,7 @@ export default defineConfig({
     ],
     host_permissions: ['<all_urls>'],
     action: {
-      default_title: 'ZeroLeak & PhishGuard Shield',
+      default_title: 'ZeroLeak Shield',
     },
   },
 });

@@ -106,8 +106,8 @@ export default function App() {
             <Shield className="w-4 h-4" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-white tracking-tight">ZeroLeak &amp; PhishGuard</h1>
-            <p className="text-[10px] text-slate-400">On-Device DLP &amp; Threat Isolation</p>
+            <h1 className="text-sm font-bold text-white tracking-tight">ZeroLeak</h1>
+            <p className="text-[10px] text-slate-400">On-Device AI DLP &amp; Threat Security</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-medium">
@@ -263,7 +263,7 @@ export default function App() {
       {/* Footer Info */}
       <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-500">
         <span className="flex items-center gap-1">
-          <ExternalLink className="w-2.5 h-2.5" /> ZeroLeak &amp; PhishGuard Shield
+          <ExternalLink className="w-2.5 h-2.5" /> ZeroLeak Shield
         </span>
         <span>v1.0.0</span>
       </div>

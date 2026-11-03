@@ -2,7 +2,7 @@
  * Stream Response Restorer (ZeroLeak Reversible Restoration)
  *
  * Uses MutationObserver to monitor AI streaming responses (ChatGPT, Claude, Gemini, etc.)
- * Detects token placeholders like [VN_CCCD_01], [API_SECRET_01], [PERSON_NAME_01]
+ * Detects token placeholders like [ZL_CCCD_01], [ZL_KEY_01], [ZL_PER_01]
  * and reversibly replaces them on the fly with real values wrapped in an isolated,
  * beautiful emerald green badge.
  *
@@ -11,8 +11,14 @@
  * to prevent accidental re-leaks on subsequent prompt submissions.
  */
 
-import type { SensitiveDataType, TokenVaultEntry } from '@zeroleak/shared-types';
+import {
+  type SensitiveDataType,
+  type TokenVaultEntry,
+  TOKEN_PREFIX_TO_TYPE,
+} from '@zeroleak/shared-types';
 import { tokenVault } from './reversible-vault';
+
+export { TOKEN_PREFIX_TO_TYPE };
 
 export const TOKEN_PATTERN = /\[([A-Z0-9_]{3,25}_\d{2})\]/g;
 
@@ -101,7 +107,12 @@ export function createRestoredBadge(token: string, entry?: TokenVaultEntry): HTM
   span.setAttribute('data-token', token);
 
   const originalValue = entry?.originalValue || token;
-  const type = entry?.type || 'PERSON_NAME';
+  let type = entry?.type;
+  if (!type) {
+    const rawToken = token.replace(/^\[|\]$/g, '');
+    const prefix = rawToken.replace(/_\d+$/, '');
+    type = TOKEN_PREFIX_TO_TYPE[prefix] || 'PERSON_NAME';
+  }
   span.setAttribute('data-type', type);
 
   const friendlyType = FRIENDLY_TYPE_NAMES[type] || type;

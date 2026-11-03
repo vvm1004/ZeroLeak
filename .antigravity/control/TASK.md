@@ -76,11 +76,11 @@
 
 ### 1.3. Mã hóa Hai chiều Cục bộ — Reversible Tokenization (Dev 1)
 
-* [x] 🔴 **[P0]** Xây dựng `utils/reversible-vault.ts` lưu trữ cặp ánh xạ `[VN_CCCD_01]` $\leftrightarrow$ `"048099001234"` trong bộ nhớ phiên (`Map` + `sessionStorage`).
+* [x] 🔴 **[P0]** Xây dựng `utils/reversible-vault.ts` lưu trữ cặp ánh xạ `[ZL_CCCD_01]` $\leftrightarrow$ `"048099001234"` trong bộ nhớ phiên (`Map` + `sessionStorage`).
 
 * [x] 🔴 **[P0]** Viết `MutationObserver` theo dõi luồng câu trả lời (streaming response) của ChatGPT/Gemini:
 
-  * [x] Tự động phát hiện các nhãn `[PER_01]`, `[VN_CCCD_01]`, `[API_SECRET_01]` ngay khi AI vừa sinh ra.
+  * [x] Tự động phát hiện các nhãn `[ZL_PER_01]`, `[ZL_CCCD_01]`, `[ZL_KEY_01]` ngay khi AI vừa sinh ra.
 
   * [x] Thay thế tức thì bằng giá trị thật trên màn hình người dùng kèm thẻ badge màu xanh lá có tooltip *"Đã khôi phục cục bộ bởi ZeroLeak"*.
 
@@ -94,7 +94,7 @@
 
   * [x] Số lượng thông tin nhạy cảm vừa được ẩn danh.
 
-* [x] 🔴 **[P0]** Tạo Context Menu chuột phải: *"Kiểm tra liên kết an toàn với PhishGuard"*.
+* [x] 🔴 **[P0]** Tạo Context Menu chuột phải: *"Kiểm tra liên kết an toàn với ZeroLeak"*.
 
 * [x] 🟡 **[P1]** Tích hợp công cụ chụp vùng màn hình và giải mã **QR Code** bằng thư viện `jsQR` (`utils/qr-scanner.ts`), tự động gửi URL trích xuất được lên Cloud Sandbox.
 
