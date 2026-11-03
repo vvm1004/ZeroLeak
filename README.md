@@ -51,7 +51,18 @@ Sao chép `.env.example` thành `.env` và điền các khóa cấu hình:
 cp .env.example .env
 ```
 
-### 3. Chạy các Phân hệ
+### 3. Build & Nạp Extension vào Chrome
+```bash
+# Lệnh build Extension tạo thư mục .output/chrome-mv3:
+pnpm build:extension
+```
+Sau khi build xong:
+1. Mở trình duyệt Chrome, truy cập: `chrome://extensions/`
+2. Bật công tắc **"Chế độ dành cho nhà phát triển" (Developer mode)** ở góc trên bên phải.
+3. Nhấp vào nút **"Tải tiện ích đã giải nén" (Load unpacked)**.
+4. Chọn đường dẫn thư mục: `apps/extension/.output/chrome-mv3`.
+
+### 4. Chạy các Phân hệ ở Chế độ Phát triển (Dev Mode)
 ```bash
 # Chạy Extension ở chế độ Hot-Reload
 pnpm dev:extension

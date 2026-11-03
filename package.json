@@ -8,6 +8,7 @@
     "dev:extension": "pnpm --filter @zeroleak/extension dev",
     "dev:sandbox": "pnpm --filter @zeroleak/sandbox-api dev",
     "dev:dashboard": "pnpm --filter @zeroleak/dashboard dev",
+    "build:extension": "pnpm --filter @zeroleak/extension build",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint"
