@@ -109,6 +109,25 @@ export interface PhishingAnalysisResponse {
   executionTimeMs: number;
 }
 
+export type ScamTacticType =
+  | 'CEO_FRAUD'               // Giả giọng lãnh đạo yêu cầu chuyển khoản gấp
+  | 'AUTHORITY_IMPERSONATION' // Giả danh Công an, Viện kiểm sát, Ngân hàng
+  | 'OTP_OR_CREDENTIAL_ASK'   // Yêu cầu đọc mã OTP, mật khẩu, quét QR độc hại
+  | 'URGENCY_PRESSURE';       // Thao túng tâm lý, thúc giục trong hoảng loạn
+
+/**
+ * Kết quả trả về từ ZeroLeak Voice (Audio Deepfake & Scam Script Detector)
+ */
+export interface VoiceScamAnalysisResult {
+  riskScore: number; // 0 - 100
+  verdict: 'SAFE' | 'SUSPICIOUS' | 'DEEPFAKE_SCAM';
+  syntheticVoiceProbability: number; // 0.0 - 1.0
+  detectedTactics: ScamTacticType[];
+  transcriptSnippet: string;
+  warningMessageVi: string;
+  executionTimeMs: number;
+}
+
 /**
  * Request payload gửi từ Extension lên Sandbox API
  */

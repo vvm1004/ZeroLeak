@@ -80,7 +80,7 @@ export const TelemetryBadge: React.FC<TelemetryBadgeProps> = ({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-              <span style={{ color: '#10b981' }}>🛡️</span> ZeroLeak Telemetry
+              <span style={{ color: '#10b981' }}>🛡️</span> ZeroLeak Vault Telemetry
             </div>
             <button
               onClick={() => setIsExpanded(false)}

@@ -94,7 +94,7 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
               <div style={{ fontWeight: 700, fontSize: '13px', color: verdictTheme.scoreColor }}>
                 {verdictTheme.title}
               </div>
-              <div style={{ fontSize: '11px', color: '#94a3b8' }}>ZeroLeak Threat Analyzer</div>
+              <div style={{ fontSize: '11px', color: '#94a3b8' }}>ZeroLeak Lens Threat Analyzer</div>
             </div>
           </div>
           <button

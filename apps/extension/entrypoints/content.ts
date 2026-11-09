@@ -196,7 +196,7 @@ export default defineContentScript({
       showToast({
         id: String(Date.now()),
         type: 'AUDIT',
-        title: 'ZeroLeak QR Scanner',
+        title: 'ZeroLeak Lens: Quét mã QR',
         detail: 'Hãy khoanh vùng mã QR trên màn hình cần kiểm tra.',
       });
 
@@ -265,7 +265,7 @@ export default defineContentScript({
         showToast({
           id: String(Date.now()),
           type: 'AUDIT',
-          title: 'ZeroLeak Threat Scanner',
+          title: 'ZeroLeak Lens: Threat Scanner',
           detail: `Đang kiểm tra mức độ an toàn: ${message.url}`,
         });
         const analysis = await analyzeUrlWithSandbox(message.url, 'CONTEXT_MENU');

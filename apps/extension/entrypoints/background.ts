@@ -24,14 +24,14 @@ export default defineBackground(() => {
     // Context Menu: Link inspection
     chrome.contextMenus.create({
       id: 'phishguard-scan-link',
-      title: '🛡️ Kiểm tra liên kết với ZeroLeak',
+      title: '🛡️ Kiểm tra liên kết an toàn với ZeroLeak Lens',
       contexts: ['link'],
     });
 
     // Context Menu: Screen QR scanning
     chrome.contextMenus.create({
       id: 'phishguard-scan-qr',
-      title: '📷 Quét mã QR trên màn hình (ZeroLeak)',
+      title: '📷 Quét mã QR trên màn hình (ZeroLeak Lens)',
       contexts: ['page', 'image'],
     });
   });
