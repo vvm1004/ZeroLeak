@@ -1,0 +1,17 @@
+{
+  "googleCalls": 0,
+  "fakeUi": false,
+  "fakeDevice": false,
+  "tracksImmediatelyStopped": true,
+  "proof": {
+    "audioTracks": 1,
+    "displaySurface": "browser",
+    "labelCategory": "TAB",
+    "tabDeviceId": true,
+    "autoGainControl": true,
+    "echoCancellation": true,
+    "noiseSuppression": true,
+    "sampleRate": 48000,
+    "channelCount": 1
+  }
+}

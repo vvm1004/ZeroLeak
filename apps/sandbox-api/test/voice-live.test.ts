@@ -1,3 +1,4 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import assert from 'node:assert/strict';
 import { afterEach, test } from 'node:test';
 import type { AnalyzeVoiceRequest } from '@zeroleak/shared-types';
@@ -244,7 +245,7 @@ test('collection timeouts retain attempt provenance and open provider backoff wi
   });
   for (let i = 0; i < 3; i++) {
     const pending = analyze();
-    t.mock.timers.tick(3100);
+    t.mock.timers.tick(VOICE_ANALYSIS_TIMEOUTS.realtime.model);
     await new Promise(resolve => setImmediate(resolve));
     t.mock.timers.tick(20);
     const result = await pending;
@@ -320,4 +321,134 @@ test('a newer malformed Thinking utterance invalidates an older SAFE candidate',
   socket.receive({ serverContent: { turnComplete: true, interactionStatus: 'IDLE' } });
   await assert.rejects(pending, (error: unknown) => error instanceof VoiceAnalysisError && error.code === 'INVALID_RESULT');
   assert.equal(socket.closes, 1);
+});
+
+
+test('task synthesis survives Extended IN_PROGRESS to IDLE and standard Live tool output', async () => {
+  for(const model of [EXTENDED,'gemini-3.8-live']){
+    const socket=new Socket();
+    const pending=analyzeLiveVoice(input(),model,{socketFactory:()=>socket,assessSynthetic:true});
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    if(model===EXTENDED){
+      socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:.05})},turnComplete:true,interactionStatus:'IN_PROGRESS'}});
+      socket.receive({serverContent:{interactionStatus:'IDLE'}});
+    }else socket.receive(report({...answer(),syntheticVoiceProbability:.05}));
+    const result=await pending;assert.equal(result.syntheticVoiceProbability,.05);assert.equal(result.verdict,'SUSPICIOUS');assert.equal(socket.closes,1);
+  }
+});
+
+test('task synthesis is requested and retained when both Live providers fail and Flash succeeds', async () => {
+  route('task-flash');const calls:string[]=[];
+  const result=await analyzeAudioScam(input(),{assessSynthetic:true,socketFactory:routedFactory(()=>true,calls),generate:async params=>{
+    calls.push(params.model);assert.ok(params.config?.responseSchema?.required?.includes('syntheticVoiceProbability'));
+    return {text:JSON.stringify({...answer(),syntheticVoiceProbability:.15})};
+  }});
+  assert.equal(result.syntheticVoiceProbability,.15);assert.equal(result.fallbackUsed,true);assert.equal(result.analysisTransport,'GENERATE_CONTENT');assert.equal(calls.length,3);
+});
+
+
+test('review repairs malformed task JSON once on the same socket without resending audio', async () => {
+  const socket=new Socket();let connections=0;
+  const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,socketFactory:()=>{connections++;return socket;}});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+  socket.receive({serverContent:{outputTranscription:{text:'{invalid'},interactionStatus:'IDLE'}});
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);assert.equal(socket.closes,0);
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},interactionStatus:'IDLE'}});
+  const result=await pending;assert.equal(result.verdict,'SUSPICIOUS');assert.equal(result.formatRepairAttempts,1);
+  assert.equal(connections,1);assert.equal(socket.sent.filter(m=>m.realtimeInput?.activityStart).length,1);assert.equal(socket.closes,1);
+});
+
+test('valid UNKNOWN, realtime, legacy hybrid and insufficient budget do not request a repair', async () => {
+  for(const scenario of ['unknown','realtime','hybrid','short']){
+    const socket=new Socket();const pending=analyzeLiveVoice({...input(),...(scenario==='realtime'?{}:{analysisMode:'review' as const})},EXTENDED,
+      {assessSynthetic:scenario!=='hybrid',budgetMs:scenario==='short'?2999:15000,socketFactory:()=>socket});
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    socket.receive({serverContent:{outputTranscription:{text:scenario==='unknown'?JSON.stringify({a:4,v:3,r:null,q:1,f:[],p:null}):'{invalid'},interactionStatus:'IDLE'}});
+    if(scenario==='unknown'){const result=await pending;assert.equal(result.verdict,'UNKNOWN');assert.equal(result.formatRepairAttempts,undefined);}
+    else await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+    assert.equal(socket.sent.filter(m=>m.clientContent).length,1);
+  }
+});
+
+test('a second invalid reply rejects and a repair never reuses an earlier SAFE candidate', async () => {
+  const socket=new Socket();const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,socketFactory:()=>socket});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Lịch họp ngày mai.',finished:true}}});
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({a:3,v:0,r:0,q:0,f:[],p:null})},turnComplete:true,interactionStatus:'IN_PROGRESS'}});
+  socket.receive({serverContent:{outputTranscription:{text:'broken'},interactionStatus:'IDLE'}});
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+  socket.receive({serverContent:{interactionStatus:'IDLE'}});
+  await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);assert.equal(socket.closes,1);
+});
+
+test('review repair stays inside the original deadline and respects caller cancellation', async t => {
+  t.mock.timers.enable({apis:['setTimeout']});
+  for(const cancellation of [false,true]){
+    const socket=new Socket(),controller=new AbortController();
+    const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,budgetMs:4000,signal:controller.signal,socketFactory:()=>socket});
+    const failed=assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='TIMEOUT');
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    socket.receive({serverContent:{outputTranscription:{text:'broken'},interactionStatus:'IDLE'}});assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+    if(cancellation)controller.abort();else t.mock.timers.tick(4000);
+    await failed;socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},interactionStatus:'IDLE'}});
+    assert.equal(socket.closes,1);assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+  }
+});
+
+
+test('Live uploads every nonzero sample but omits outer digital silence with context padding', async () => {
+  const original = Buffer.from(input().audioBase64, 'base64');
+  const padded = Buffer.alloc(160044); original.copy(padded, 0, 0, 44);
+  padded.writeUInt32LE(padded.length - 8, 4); padded.writeUInt32LE(160000, 40);
+  original.copy(padded, 44 + 32000, 44); padded.writeInt16LE(1, 44 + 32000);
+  padded.writeInt16LE(-1, 44 + 64000 - 2);
+  const socket = new Socket();
+  const pending = analyzeLiveVoice({ mimeType: 'audio/wav', audioBase64: padded.toString('base64') }, 'gemini-3.8-live', { socketFactory: () => socket });
+  socket.open(); socket.receive({ setupComplete: {} });
+  const sent = Buffer.concat(socket.sent.flatMap(m => m.realtimeInput?.audio ? [Buffer.from(m.realtimeInput.audio.data, 'base64')] : []));
+  assert.deepEqual(sent, padded.subarray(44 + 25600, 44 + 70400));
+  assert.equal(sent.length, 44800); // 1s speech + 200ms at each end, not the original 5s.
+  socket.receive(report()); await pending;
+});
+
+
+function longReviewInput(): AnalyzeVoiceRequest {
+  const original = Buffer.from(input().audioBase64, 'base64'), data = Buffer.alloc(192044);
+  original.copy(data, 0, 0, 44); data.writeUInt32LE(data.length - 8, 4); data.writeUInt32LE(192000, 40);
+  for (let i = 0; i < 6; i++) original.copy(data, 44 + i * 32000, 44);
+  return { mimeType:'audio/wav', audioBase64:data.toString('base64'), analysisMode:'review' };
+}
+
+test('long review waits for late ASR evidence and sends the full transcript once in the same session', async t => {
+  t.mock.timers.enable({apis:['setTimeout']}); const socket = new Socket();
+  const pending = analyzeLiveVoice(longReviewInput(), EXTENDED, {socketFactory:()=>socket,assessSynthetic:true});
+  socket.open(); socket.receive({setupComplete:{}});
+  const frames = socket.sent.flatMap(m => m.realtimeInput?.audio ? [Buffer.from(m.realtimeInput.audio.data, 'base64')] : []);
+  assert.equal(frames.length, 60);
+  assert.deepEqual(Buffer.concat(frames), Buffer.from(longReviewInput().audioBase64, 'base64').subarray(44));
+  const prefix = 'Chúng ta trao đổi lịch làm việc ngày mai. '.repeat(10);
+  socket.receive({serverContent:{inputTranscription:{text:prefix}}});socket.receive({voiceActivity:{type:'ACTIVITY_END'}});
+  t.mock.timers.tick(150); assert.ok(!socket.sent.some(x=>x.clientContent));
+  socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.'}}});
+  t.mock.timers.tick(199); assert.ok(!socket.sent.some(x=>x.clientContent));
+  t.mock.timers.tick(1);
+  const reports=socket.sent.filter(x=>x.clientContent);assert.equal(reports.length,1);
+  assert.ok(reports[0].clientContent.turns[0].parts[0].text.includes('Đọc mã OTP ngay cho tôi.'));
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},turnComplete:true,interactionStatus:'IDLE'}});
+  const result=await pending;assert.equal(result.verdict,'SUSPICIOUS');assert.ok(result.transcriptSnippet.length>300);
+});
+
+test('cancelling a long review clears its pending ASR timer and cannot send a later report', async t => {
+  t.mock.timers.enable({apis:['setTimeout']});const socket=new Socket(),caller=new AbortController();
+  const pending=analyzeLiveVoice(longReviewInput(),EXTENDED,{socketFactory:()=>socket,signal:caller.signal,assessSynthetic:true});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.'}}});socket.receive({voiceActivity:{type:'ACTIVITY_END'}});
+  caller.abort();await assert.rejects(pending);t.mock.timers.tick(500);
+  assert.equal(socket.sent.filter(x=>x.clientContent).length,0);assert.equal(socket.closes,1);
+});
+
+test('review fails closed on an oversized ASR instead of assessing a silently truncated prefix', async () => {
+  const socket=new Socket();const pending=analyzeLiveVoice(longReviewInput(),EXTENDED,{socketFactory:()=>socket,assessSynthetic:true});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'x'.repeat(1501)}}});
+  await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+  assert.equal(socket.sent.filter(x=>x.clientContent).length,0);
 });

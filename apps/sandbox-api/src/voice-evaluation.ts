@@ -13,6 +13,8 @@ export interface VoiceEvalCase {
   license: string;
   cohort?: string;
   expectedTactics?: string[];
+  speakerId?: string;
+  scenarioId?: string;
 }
 
 export interface VoiceEvalRow {
@@ -45,13 +47,14 @@ function median(values: number[]) {
   return (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.ceil((sorted.length - 1) / 2)]) / 2;
 }
 
-export function summarizeVoiceEvaluation(rows: VoiceEvalRow[], threshold = 0.5) {
+export function summarizeVoiceEvaluation(rows: VoiceEvalRow[], threshold = 0.5, humanThreshold?: number) {
   if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) throw new Error('Invalid threshold');
+  if (humanThreshold !== undefined && (!Number.isFinite(humanThreshold) || humanThreshold < 0 || humanThreshold >= threshold)) throw new Error('Invalid uncertainty band');
   let tp = 0, tn = 0, fp = 0, fn = 0, unknownHuman = 0, unknownSynthetic = 0;
   let contentTP = 0, contentTN = 0, contentFP = 0, contentFN = 0, contentUnknown = 0, contentLabeled = 0;
   for (const row of rows) {
     const score = row.status === 'OK' ? row.syntheticScore : null;
-    if (score === null || !Number.isFinite(score) || score < 0 || score > 1) {
+    if (score === null || !Number.isFinite(score) || score < 0 || score > 1 || (humanThreshold !== undefined && score > humanThreshold && score < threshold)) {
       if (row.label === 'human') unknownHuman++; else unknownSynthetic++;
     } else if (row.label === 'synthetic') {
       if (score >= threshold) tp++; else fn++;
@@ -73,7 +76,7 @@ export function summarizeVoiceEvaluation(rows: VoiceEvalRow[], threshold = 0.5) 
   const latencies = rows.map(row => row.latencyMs).sort((a, b) => a - b);
   return {
     attempted: rows.length, sourceGroups: new Set(rows.map(row => row.originId)).size,
-    human, synthetic, threshold, assessed, unknownHuman, unknownSynthetic,
+    human, synthetic, threshold, ...(humanThreshold === undefined ? {} : { humanThreshold }), assessed, unknownHuman, unknownSynthetic,
     tp, tn, fp, fn,
     coverage: ratio(assessed, rows.length),
     selectiveAccuracy: ratio(tp + tn, assessed),

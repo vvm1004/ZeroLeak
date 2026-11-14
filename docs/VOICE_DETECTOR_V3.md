@@ -1,5 +1,7 @@
 # Voice detector V3 — 2026-11-10
 
+**Cách dùng hiện tại:** V3 là lựa chọn bổ trợ khi `VOICE_ANALYSIS_STRATEGY=hybrid`. Mặc định `gemini` bám task 2.4 và không gọi worker 8081, kể cả đã cấu hình URL. Xem [so sánh hai bản](VOICE_TASK_COMPARISON.md). Các số đo V3 bên dưới giữ nguyên.
+
 **Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
 Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
 

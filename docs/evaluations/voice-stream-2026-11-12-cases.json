@@ -1,0 +1,390 @@
+{
+  "streams": [
+    {
+      "id": "dev_ceo_clean",
+      "originId": "dev_ceo",
+      "scamLabel": true,
+      "split": "development",
+      "sourceSha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.1945625,
+      "baseline": [
+        "dev_ceo_clean_0",
+        "dev_ceo_clean_2"
+      ],
+      "candidate": [
+        "dev_ceo_clean_0",
+        "dev_ceo_clean_1",
+        "dev_ceo_clean_2"
+      ]
+    },
+    {
+      "id": "dev_warning_clean",
+      "originId": "dev_warning",
+      "scamLabel": false,
+      "split": "development",
+      "sourceSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 2.938625,
+      "baseline": [
+        "dev_warning_clean_0",
+        "dev_warning_clean_2"
+      ],
+      "candidate": [
+        "dev_warning_clean_0",
+        "dev_warning_clean_1",
+        "dev_warning_clean_2"
+      ]
+    },
+    {
+      "id": "contrast_code_reopen",
+      "originId": "contrast_code_reopen",
+      "scamLabel": true,
+      "split": "test",
+      "sourceSha256": "9f1f26f278b9b0830a269ad2c379d8ac04d350c97fed4310bde1a3368598d2b4",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.152,
+      "baseline": [
+        "contrast_code_reopen_0",
+        "contrast_code_reopen_2"
+      ],
+      "candidate": [
+        "contrast_code_reopen_0",
+        "contrast_code_reopen_1",
+        "contrast_code_reopen_2"
+      ]
+    },
+    {
+      "id": "contrast_boss_money",
+      "originId": "contrast_boss_money",
+      "scamLabel": true,
+      "split": "test",
+      "sourceSha256": "66e328351db99064ac4f995c8b38a356abbb4e7588cdab3ffe0393eb6fc8b1e9",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.519625,
+      "baseline": [
+        "contrast_boss_money_0",
+        "contrast_boss_money_2"
+      ],
+      "candidate": [
+        "contrast_boss_money_0",
+        "contrast_boss_money_1",
+        "contrast_boss_money_2"
+      ]
+    },
+    {
+      "id": "contrast_password_threat",
+      "originId": "contrast_password_threat",
+      "scamLabel": true,
+      "split": "test",
+      "sourceSha256": "1e2312d7c8fc0801e7b01bc3745539b5b9d70f0c64eb109d633ca1ae9f8aceae",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.44,
+      "baseline": [
+        "contrast_password_threat_0",
+        "contrast_password_threat_2"
+      ],
+      "candidate": [
+        "contrast_password_threat_0",
+        "contrast_password_threat_1",
+        "contrast_password_threat_2"
+      ]
+    },
+    {
+      "id": "contrast_bank_advice",
+      "originId": "contrast_bank_advice",
+      "scamLabel": false,
+      "split": "test",
+      "sourceSha256": "29cff82abae47ea4927ce2c520554c2b32cb2e3ac15333e2b7670ee75b727ae8",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.05125,
+      "baseline": [
+        "contrast_bank_advice_0",
+        "contrast_bank_advice_2"
+      ],
+      "candidate": [
+        "contrast_bank_advice_0",
+        "contrast_bank_advice_1",
+        "contrast_bank_advice_2"
+      ]
+    },
+    {
+      "id": "contrast_reported_money",
+      "originId": "contrast_reported_money",
+      "scamLabel": false,
+      "split": "test",
+      "sourceSha256": "99b5f116b6aef062ae8f257d931b91b86aab9fefe083473c3f5925ff194b0615",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.3669375,
+      "baseline": [
+        "contrast_reported_money_0",
+        "contrast_reported_money_2"
+      ],
+      "candidate": [
+        "contrast_reported_money_0",
+        "contrast_reported_money_1",
+        "contrast_reported_money_2"
+      ]
+    },
+    {
+      "id": "contrast_refused_password",
+      "originId": "contrast_refused_password",
+      "scamLabel": false,
+      "split": "test",
+      "sourceSha256": "534c631f7abe832eedd5baa746475e012cfb9f135c988be006ddca86c2e8ea80",
+      "speechOnsetSeconds": 3.7,
+      "speechDurationSeconds": 3.3720625,
+      "baseline": [
+        "contrast_refused_password_0",
+        "contrast_refused_password_2"
+      ],
+      "candidate": [
+        "contrast_refused_password_0",
+        "contrast_refused_password_1",
+        "contrast_refused_password_2"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "id": "dev_ceo_clean_0",
+      "file": "audio/dev_ceo_clean_0.wav",
+      "sha256": "94a8f22b5d37430e7cd142df261ab8669ac2f20099b96cf8fa58324f0a97799c",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "split": "development",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "dev_ceo_clean_1",
+      "file": "audio/dev_ceo_clean_1.wav",
+      "sha256": "434316d9e6752439a34a520ededbb69f18c03fc119baa0765106269c17ba4f14",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "split": "development",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "dev_ceo_clean_2",
+      "file": "audio/dev_ceo_clean_2.wav",
+      "sha256": "021237df90a72e45fdb9144938af830dc5c4b70720db26fff7aac4b0ec49660e",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "split": "development",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "dev_warning_clean_0",
+      "file": "audio/dev_warning_clean_0.wav",
+      "sha256": "775b1527ae509f2f22a7d489d788f154596d94414f82a102f0924cb05ae2d596",
+      "streamId": "dev_warning_clean",
+      "scamLabel": false,
+      "split": "development",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "dev_warning_clean_1",
+      "file": "audio/dev_warning_clean_1.wav",
+      "sha256": "34bbb28cf6d210f4edc08a61444cad878ff7dc35dc1769d12bed66e89f46e2b1",
+      "streamId": "dev_warning_clean",
+      "scamLabel": false,
+      "split": "development",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "dev_warning_clean_2",
+      "file": "audio/dev_warning_clean_2.wav",
+      "sha256": "9625c9e2da2d6a487123aa10b60dbf5ad3b5c791ac85a9937e207f8b220e0746",
+      "streamId": "dev_warning_clean",
+      "scamLabel": false,
+      "split": "development",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_code_reopen_0",
+      "file": "audio/contrast_code_reopen_0.wav",
+      "sha256": "0f04afb7f1d08cb7e7b185b32ec88255982714e3236449b7d4b846f35110d481",
+      "streamId": "contrast_code_reopen",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_code_reopen_1",
+      "file": "audio/contrast_code_reopen_1.wav",
+      "sha256": "013acb139d56f729b9ee27de6810e367e84e3c82d0eb8eaca69847c66ff86170",
+      "streamId": "contrast_code_reopen",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_code_reopen_2",
+      "file": "audio/contrast_code_reopen_2.wav",
+      "sha256": "315405d9d5460f6ffad2ae81a104e6b2ae3c809b68f3e8bfa42b3796546d0a6d",
+      "streamId": "contrast_code_reopen",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_boss_money_0",
+      "file": "audio/contrast_boss_money_0.wav",
+      "sha256": "7721914e494970059b854370588b21f518d2ea87a9c1c9e2178d8083f4d994c0",
+      "streamId": "contrast_boss_money",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_boss_money_1",
+      "file": "audio/contrast_boss_money_1.wav",
+      "sha256": "9f7f66951c97a7c3efca6f508dddfc11b30ecdd49ad2267208ce4956a1a40159",
+      "streamId": "contrast_boss_money",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_boss_money_2",
+      "file": "audio/contrast_boss_money_2.wav",
+      "sha256": "59091f40f226c4237d538b919559786a40f53b7721799796fee962501ecd4dec",
+      "streamId": "contrast_boss_money",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_password_threat_0",
+      "file": "audio/contrast_password_threat_0.wav",
+      "sha256": "bd8ed73a2596717a2a5733d5c716caa3b779573d12e19d1610dfe1bbdec45688",
+      "streamId": "contrast_password_threat",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_password_threat_1",
+      "file": "audio/contrast_password_threat_1.wav",
+      "sha256": "af19a3d946accdec31240321420919b71f2819923e8789cfa6fb37d796608733",
+      "streamId": "contrast_password_threat",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_password_threat_2",
+      "file": "audio/contrast_password_threat_2.wav",
+      "sha256": "9845fe28fa1cde4fc446f6cd6b561fdac288daffe9f4eeb7c9487b9f9721d7bf",
+      "streamId": "contrast_password_threat",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_bank_advice_0",
+      "file": "audio/contrast_bank_advice_0.wav",
+      "sha256": "2c70674904b6f6054ec9bc379e398e03fd9eda1a4df000406610cc4773bbeda9",
+      "streamId": "contrast_bank_advice",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_bank_advice_1",
+      "file": "audio/contrast_bank_advice_1.wav",
+      "sha256": "2c3e050c11cc54118506e54a814fd75f0e3ee35e2ad7f041da7740c434dc1c6f",
+      "streamId": "contrast_bank_advice",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_bank_advice_2",
+      "file": "audio/contrast_bank_advice_2.wav",
+      "sha256": "408672402412d358309823cd755e6604fa90b2e5fdc3cdd4f8c31326d3a4d3b8",
+      "streamId": "contrast_bank_advice",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_reported_money_0",
+      "file": "audio/contrast_reported_money_0.wav",
+      "sha256": "3e8956c3f7c39aa7f6d748e58011f25c4bad751c6ca2eef679306ef314601ae9",
+      "streamId": "contrast_reported_money",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_reported_money_1",
+      "file": "audio/contrast_reported_money_1.wav",
+      "sha256": "1be287054dafac4c4490f85105ed9cfc0a4fb1269bcd78148fad975afe4c9e15",
+      "streamId": "contrast_reported_money",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_reported_money_2",
+      "file": "audio/contrast_reported_money_2.wav",
+      "sha256": "06ef2217c285105ee006b287140b8f0cb25803944ce331d78373e33461aea5a2",
+      "streamId": "contrast_reported_money",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    },
+    {
+      "id": "contrast_refused_password_0",
+      "file": "audio/contrast_refused_password_0.wav",
+      "sha256": "2fc08b381d264fe54e67ea49fd46f77d3ab26d92b24931fbe62ccc9b74167977",
+      "streamId": "contrast_refused_password",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 0,
+      "endSeconds": 5
+    },
+    {
+      "id": "contrast_refused_password_1",
+      "file": "audio/contrast_refused_password_1.wav",
+      "sha256": "c97195dbd92ebdc961f44558a9b1f0ca7cff51acfbd5d4a37a59dc820daa8961",
+      "streamId": "contrast_refused_password",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_refused_password_2",
+      "file": "audio/contrast_refused_password_2.wav",
+      "sha256": "7e5ad9ff2cfaa186ba4b50cb1f81acbcd8c24e0aeeedfa01c6d15b84bb1e29bd",
+      "streamId": "contrast_refused_password",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 5,
+      "endSeconds": 10
+    }
+  ]
+}

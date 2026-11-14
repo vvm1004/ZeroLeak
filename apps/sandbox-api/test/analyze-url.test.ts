@@ -276,10 +276,16 @@ describe('Epic 2.1: Playwright Headless Real Sandbox Execution', () => {
 
 describe('Epic 2.2: Google Safe Browsing API v4 & Gemini Visual Phishing', () => {
   test('checkUrlSafeBrowsing handles missing key gracefully without throwing', async () => {
-    const result = await checkUrlSafeBrowsing('https://testsafebrowsing.appspot.com/s/malware.html', undefined);
-    assert.equal(result.isKnownThreat, false);
-    assert.equal(result.threatType, null);
-    assert.ok(typeof result.executionTimeMs === 'number');
+    const origKey = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
+    delete process.env.GOOGLE_SAFE_BROWSING_API_KEY;
+    try {
+      const result = await checkUrlSafeBrowsing('https://testsafebrowsing.appspot.com/s/malware.html', undefined);
+      assert.equal(result.isKnownThreat, false);
+      assert.equal(result.threatType, null);
+      assert.ok(typeof result.executionTimeMs === 'number');
+    } finally {
+      process.env.GOOGLE_SAFE_BROWSING_API_KEY = origKey;
+    }
   });
 
   test('visualPhishingResponseSchema has required structured output schema', () => {

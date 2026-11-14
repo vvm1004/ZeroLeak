@@ -1,0 +1,31 @@
+{
+  "prefix": {
+    "attempted": 6,
+    "correctEntireFileOutcomes": 1,
+    "scamFilesWarned": 0,
+    "benignFilesAlerted": 2,
+    "errors": 0,
+    "unknown": 1,
+    "medianMs": 2487.5
+  },
+  "full": {
+    "attempted": 6,
+    "correctEntireFileOutcomes": 6,
+    "scamFilesWarned": 3,
+    "benignFilesAlerted": 0,
+    "errors": 0,
+    "unknown": 0,
+    "medianMs": 4982.5
+  },
+  "phase": "test",
+  "checks": {
+    "allPlannedAttempted": true,
+    "minimumCorrect": true,
+    "noNewFalseAlerts": true,
+    "noExtraErrors": true,
+    "moreWholeFileOutcomesCorrect": true
+  },
+  "passed": true,
+  "scope": "Pipeline coverage on controlled files; different audio context, not intrinsic model accuracy on identical inputs.",
+  "cloneAccuracyEstablished": false
+}

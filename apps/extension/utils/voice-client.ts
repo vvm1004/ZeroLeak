@@ -1,5 +1,6 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import type { VoiceScamAnalysisResult } from '@zeroleak/shared-types';
-import { audioToBase64, encodeVoiceWav } from './voice-audio';
+import { audioToBase64, encodeVoiceWav, VOICE_SAMPLE_RATE } from './voice-audio';
 
 export interface VoiceSettings { apiBase: string; token: string }
 export const DEFAULT_VOICE_SETTINGS: VoiceSettings = { apiBase: 'http://localhost:8080', token: '' };
@@ -9,6 +10,10 @@ function validAcoustic(value: unknown): boolean {
   const raw = value as Record<string, unknown> | null;
   if (!raw) return false;
   if (raw.status === 'UNAVAILABLE') return true;
+  if ((raw.windowCount===undefined)!==(raw.audioDurationSeconds===undefined)) return false;
+  if (typeof raw.audioDurationSeconds==='number' && raw.windowCount!==Math.ceil(raw.audioDurationSeconds/5)) return false;
+  if ((raw.windowCount !== undefined && (!Number.isInteger(raw.windowCount) || (raw.windowCount as number)<1 || (raw.windowCount as number)>3)) ||
+      (raw.audioDurationSeconds !== undefined && (typeof raw.audioDurationSeconds!=='number' || !Number.isFinite(raw.audioDurationSeconds) || raw.audioDurationSeconds<.5 || raw.audioDurationSeconds>15))) return false;
   if (raw.status !== 'AVAILABLE' || raw.source !== 'LOCAL_XLSR_AASIST' || raw.scoreCalibrated !== false ||
       !(raw.score === null || (typeof raw.score === 'number' && Number.isFinite(raw.score) && raw.score >= 0 && raw.score <= 1)) ||
       typeof raw.modelVersion !== 'string' || !/^[0-9a-f]{64}$/.test(raw.modelVersion) ||
@@ -33,12 +38,12 @@ export async function analyzeVoice(
   const cancel = () => controller.abort(signal?.reason);
   if (signal?.aborted) cancel();
   signal?.addEventListener('abort', cancel, { once: true });
-  const timer = setTimeout(() => controller.abort(), analysisMode === 'review' ? 16000 : 3500);
+  const timer = setTimeout(() => controller.abort(), VOICE_ANALYSIS_TIMEOUTS[analysisMode].client);
   try {
     const response = await fetch(voiceEndpoint(settings.apiBase), {
       method: 'POST', signal: controller.signal,
       headers: { 'Content-Type': 'application/json', ...(settings.token ? { Authorization: `Bearer ${settings.token}` } : {}) },
-      body: JSON.stringify({ audioBase64: audioToBase64(encodeVoiceWav(samples)), mimeType: 'audio/wav', ...(analysisMode === 'review' ? { analysisMode } : {}) }),
+      body: JSON.stringify({ audioBase64: audioToBase64(encodeVoiceWav(samples, analysisMode === 'review')), mimeType: 'audio/wav', ...(analysisMode === 'review' ? { analysisMode } : {}) }),
       cache: 'no-store',
     });
     const body = await response.json().catch(() => null);
@@ -54,6 +59,7 @@ export async function analyzeVoice(
         !['CLEAR', 'LIMITED', 'UNUSABLE'].includes(body.audioQuality) ||
         !['GEMINI_AUDIO', 'HYBRID_AUDIO', 'LOCAL_ACOUSTIC'].includes(body.assessmentSource) || typeof body.analysisModel !== 'string' ||
         (body.analysisTransport !== undefined && !['LIVE_API', 'GENERATE_CONTENT'].includes(body.analysisTransport)) ||
+        (body.formatRepairAttempts !== undefined && (![0, 1].includes(body.formatRepairAttempts) || (body.formatRepairAttempts === 1 && body.analysisTransport !== 'LIVE_API'))) ||
         (body.fallbackUsed !== undefined && typeof body.fallbackUsed !== 'boolean') ||
         (body.providerAttempts !== undefined && (!Array.isArray(body.providerAttempts) || body.providerAttempts.length > 3 ||
           body.providerAttempts.some((attempt: { model?: unknown; transport?: unknown; status?: unknown; reason?: unknown }) => !attempt ||
@@ -72,6 +78,7 @@ export async function analyzeVoice(
         (body.contentAnalysis?.status === 'UNAVAILABLE' && (body.verdict !== 'UNKNOWN' || body.riskScore !== null || body.detectedTactics.length > 0)) ||
         (body.assessmentSource === 'LOCAL_ACOUSTIC' && body.contentAnalysis?.status === 'AVAILABLE') ||
         !validAcoustic(body.acousticAnalysis) ||
+        (body.acousticAnalysis?.status === 'AVAILABLE' && body.acousticAnalysis.audioDurationSeconds !== undefined && Math.abs(body.acousticAnalysis.audioDurationSeconds - samples.length/VOICE_SAMPLE_RATE)>1/VOICE_SAMPLE_RATE) ||
         (body.assessmentSource !== 'GEMINI_AUDIO' && body.acousticAnalysis?.status !== 'AVAILABLE') ||
         !Number.isFinite(body.executionTimeMs) || body.executionTimeMs < 0 ||
         body.warningMessageVi.length > 2000 || body.transcriptSnippet.length > 2000 ||
@@ -82,7 +89,7 @@ export async function analyzeVoice(
     return body;
   } catch (error) {
     if (signal?.aborted) throw new DOMException('Đã hủy phân tích.', 'AbortError');
-    if (controller.signal.aborted) throw new Error(analysisMode === 'review' ? 'Quá 16 giây. Chưa đánh giá được đoạn này; hãy thử lại.' : 'Quá 3,5 giây. Chưa đánh giá được đoạn này; hãy thử lại.');
+    if (controller.signal.aborted) throw new Error(`Quá ${VOICE_ANALYSIS_TIMEOUTS[analysisMode].client / 1000} giây. Chưa đánh giá được đoạn này; hãy thử lại.`);
     if (error instanceof TypeError) throw new Error('Không kết nối được dịch vụ Voice. Kiểm tra địa chỉ và máy chủ.');
     throw error;
   } finally {

@@ -1,0 +1,77 @@
+{
+  "phase": "probe",
+  "model": "gemini-3.8-live-extended-thinking",
+  "setupSha256": "d818d6c66f49f3002fa5a55c98d12fed233996d4fd8ab5269ce70250ad9cb64b",
+  "protocolSha256": "701cce16b0161e4ce2845c15f81fd75d76d40aef0afcea445f97f13c6bf1cb99",
+  "sessions": 2,
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "variant": "reference",
+      "label": "synthetic",
+      "scamLabel": true,
+      "originId": "dev_otp_request",
+      "speakerId": null,
+      "condition": "clean",
+      "inputSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "voiceScore": null,
+      "voiceVerdict": "UNKNOWN",
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "formatRepairAttempts": 0,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "roundTripMs": 7372,
+      "phases": {
+        "openMs": 191,
+        "setupMs": 767,
+        "ackMs": 5678,
+        "idleMs": 7362
+      },
+      "sourceChars": 32,
+      "sourceSha256": "8a2ea32e44901573f1fccc5e6fc4be885834aef3f5c73519d92f75a19d29c8b3",
+      "referenceAsrContamination": false,
+      "targetOtpPresent": true,
+      "clientTurns": 1,
+      "audioFrames": 29,
+      "referenceHistories": 1
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_human_clean",
+      "variant": "reference",
+      "label": "human",
+      "scamLabel": null,
+      "originId": "v4_VIVOSDEV07_2",
+      "speakerId": "VIVOSDEV07",
+      "condition": "clean",
+      "inputSha256": "f10f6bc549002e56f4b69d230e8b1d5418e191b84202794b346bc2fee090d5f4",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "voiceScore": null,
+      "voiceVerdict": "UNKNOWN",
+      "tactics": [],
+      "formatRepairAttempts": 0,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "roundTripMs": 6081,
+      "phases": {
+        "openMs": 150,
+        "setupMs": 714,
+        "ackMs": 4936,
+        "idleMs": 6074
+      },
+      "sourceChars": 48,
+      "sourceSha256": "48ac36c643f1fd355a33a365d0ccbd67a6d4389b543dbbd88b1fb860bfb741f8",
+      "referenceAsrContamination": false,
+      "targetOtpPresent": false,
+      "clientTurns": 1,
+      "audioFrames": 37,
+      "referenceHistories": 1
+    }
+  ],
+  "protocolPassed": true,
+  "finishedAt": "2026-11-12T06:53:55.127Z"
+}

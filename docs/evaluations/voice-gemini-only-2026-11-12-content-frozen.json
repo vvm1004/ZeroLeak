@@ -1,0 +1,9 @@
+{
+  "baselineCodeSha256": "390f4c996a3a0ddc5fcaca6c4a2abb613a21417618513448aa0b73c59c70bdc1",
+  "candidateCodeSha256": "3be2eb191d30c0fa22dbbf2be54dd88185f7db9236ffe75c96425637b58aa058",
+  "baselineSetupSha256": "c25b226bc6d9d6aac00bf011b324e7899925ea54712515a2f989d4a677cc444e",
+  "candidateSetupSha256": "eb0e1f95c4d33f997e27d01fedc4d544408397e5b88e955b6e26d42549eb62e8",
+  "protocolSha256": "2679cbc09d0efeb0f115f7b825af92de426c26e9061c8cac0edc98e5fb65ec79",
+  "developmentCasesSha256": "4270ee58530f9c99120c5f5e1cc41833400fb5a4e3e5dc4c342e1793c7c2ad91",
+  "comparisonCasesSha256": "8fe9542668e953b2492fc8811f6683f48e7eab2d44e526a07a7866e9102032ff"
+}

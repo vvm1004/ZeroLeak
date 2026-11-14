@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "attempted": 4,
+    "correct": 4,
+    "errors": 0,
+    "benignAlerts": 0,
+    "pcmBytes": 640000,
+    "medianMs": 3504.0
+  },
+  "candidate": {
+    "attempted": 4,
+    "correct": 4,
+    "errors": 0,
+    "benignAlerts": 0,
+    "pcmBytes": 479700,
+    "medianMs": 2888.5
+  },
+  "checks": {
+    "allPlannedAttempted": true,
+    "noCorrectContentLost": true,
+    "noErrorsAdded": true,
+    "noBenignAlertsAdded": true,
+    "pcmReduced": true
+  },
+  "passed": true,
+  "pcmReductionFraction": 0.25046875,
+  "accuracyGainEstablished": false,
+  "liveDeadlineProven": false
+}

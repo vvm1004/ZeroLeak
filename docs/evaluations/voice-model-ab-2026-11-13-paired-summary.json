@@ -1,0 +1,95 @@
+{
+  "providerCalls": 0,
+  "source": "Post-processing original report only; no new provider requests",
+  "matchedCases": 23,
+  "byModel": {
+    "gemini-3.8-live-extended-thinking": {
+      "attempted": 23,
+      "sourceGroups": 18,
+      "human": 8,
+      "synthetic": 15,
+      "threshold": 0.8,
+      "humanThreshold": 0.2,
+      "assessed": 1,
+      "unknownHuman": 7,
+      "unknownSynthetic": 15,
+      "tp": 0,
+      "tn": 1,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0.043478260869565216,
+      "selectiveAccuracy": 1,
+      "falsePositiveRateAmongAssessedHuman": 0,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": 0,
+      "latencyMedianMs": 2969,
+      "latencyMaxMs": 5833,
+      "latencyP95Ms": 4766,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 0,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 0,
+        "exactMatches": 0
+      },
+      "content": {
+        "labeled": 12,
+        "tp": 5,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 4,
+        "coverage": 0.6666666666666666
+      },
+      "providerSuccessful": 23
+    },
+    "gemini-3.1-flash-lite": {
+      "attempted": 23,
+      "sourceGroups": 18,
+      "human": 8,
+      "synthetic": 15,
+      "threshold": 0.8,
+      "humanThreshold": 0.2,
+      "assessed": 0,
+      "unknownHuman": 8,
+      "unknownSynthetic": 15,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": 0,
+      "latencyMedianMs": 3493,
+      "latencyMaxMs": 8014,
+      "latencyP95Ms": 8013,
+      "errorCounts": {
+        "TIMEOUT": 7,
+        "PROVIDER_ERROR": 4,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 0,
+        "exactMatches": 0
+      },
+      "content": {
+        "labeled": 12,
+        "tp": 3,
+        "tn": 5,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 4,
+        "coverage": 0.6666666666666666
+      },
+      "providerSuccessful": 12
+    }
+  }
+}

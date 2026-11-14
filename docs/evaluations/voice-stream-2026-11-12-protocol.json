@@ -1,0 +1,43 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "mode": "realtime",
+  "budgetMs": 3100,
+  "startIntervalMs": 6500,
+  "maxProviderSessions": 40,
+  "developmentStreams": 2,
+  "testStreams": 6,
+  "streamSeconds": 10,
+  "speechOnsetSeconds": 3.7,
+  "baselineWindows": [
+    [
+      0,
+      5
+    ],
+    [
+      5,
+      10
+    ]
+  ],
+  "candidateWindows": [
+    [
+      0,
+      5
+    ],
+    [
+      2.5,
+      7.5
+    ],
+    [
+      5,
+      10
+    ]
+  ],
+  "commonWindows": "Analyze each identical WAV once; share the same prediction/latency for both strategies. No repeated calls until success.",
+  "scope": "Controlled Vietnamese content-boundary test; no claim of acoustic clone accuracy or real-call latency",
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "gate": "All planned clips attempted, at least 75% OK; no additional benign stream with any content alert; no loss in scam streams warned; at least one new scam stream detected or an estimated first warning >=1000ms earlier. Estimate uses measured per-clip duration with single in-flight/latest pending scheduling and must not be called browser/call latency.",
+  "unchanged": "Production prompt, compact schema, thresholds, model, budget. Only audio window boundaries and bounded pending handling change."
+}

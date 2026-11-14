@@ -1,0 +1,13 @@
+{
+  "review": {
+    "exitCode": 0,
+    "providerCalls": 0,
+    "validatedCases": [
+      "late_ceo_full"
+    ],
+    "mode": "review"
+  },
+  "realtime": {
+    "rejectedLongFileBeforeApi": true
+  }
+}

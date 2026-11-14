@@ -1,5 +1,7 @@
 # Cải thiện Gemini 3.8 Live Extended Thinking — 2026-11-11
 
+**Snapshot bản hybrid `41354a7`.** Bản theo task mới và đối chiếu cùng dữ liệu nằm ở [VOICE_TASK_COMPARISON.md](VOICE_TASK_COMPARISON.md).
+
 Đã giữ lại bản tối ưu **chính `gemini-3.8-live-extended-thinking`** sau A/B và một lượt kiểm tra mới.
 Cải thiện được khả năng trả kết luận hợp lệ. Không đổi model âm học V3, ngưỡng cảnh báo hoặc ngân sách
 3.100/15.000 ms, và không dùng kết quả fallback để tính thành tích của Extended.

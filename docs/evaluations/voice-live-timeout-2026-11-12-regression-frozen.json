@@ -1,0 +1,17 @@
+{
+  "beforeRegressionCalls": true,
+  "hashes": {
+    "apps/extension/utils/voice-capture.ts": "6033ad3bb6861b7f77e459b3999f2cb7a8d2e658ce7df4f7a416254d487a4fd1",
+    "apps/extension/utils/voice-client.ts": "230284c66d9723f610d5100c32cd4491085180d3199523ada534a59d568be30f",
+    "apps/extension/entrypoints/voice/VoiceApp.tsx": "e73ea71c7cef93d7089002962263012894e983bf2905ed251b85c211c8386d6f",
+    "apps/sandbox-api/src/app.ts": "f1259e24c1097a95f2e760931690154236efc0159a0f7d00b4ef6a392a44bd71",
+    "apps/sandbox-api/src/voice-analyzer.ts": "4f0ddf94395b40e0dc36bf2731b574abd7b24e6d82198145f6b0667a0ba5214a",
+    "apps/sandbox-api/src/voice-live.ts": "11fc956e3ea69d12d4288bd58f3ed379c22595fb3b9ec54c770b6899cd905f8b",
+    "packages/shared-types/src/index.ts": "54facd4012760a3af7c9d99fabcff818eaff19ee5693cd21f726dc4a2149cb94"
+  },
+  "timing": {
+    "model": 8000,
+    "route": 8300,
+    "client": 9000
+  }
+}

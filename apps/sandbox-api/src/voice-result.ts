@@ -59,9 +59,10 @@ function redact(text: string): string {
     .replace(/\b(?:AIza[\w-]+|sk-[\w-]+|ghp_[\w-]+|AQ\.[\w-]+)\b/g, '[KHÓA ĐÃ ẨN]');
 }
 
-export function parseVoiceResult(text: string, model: string, executionTimeMs: number): VoiceScamAnalysisResult {
+export function parseVoiceResult(text: string, model: string, executionTimeMs: number, assessSynthetic = false, transcriptLimit: 300 | 1500 = 300): VoiceScamAnalysisResult {
   let raw: Record<string, unknown>;
   try { raw = JSON.parse(text); } catch { throw new VoiceAnalysisError('INVALID_RESULT'); }
+  if (assessSynthetic && (!raw || typeof raw !== 'object' || !Object.hasOwn(raw, 'syntheticVoiceProbability'))) throw new VoiceAnalysisError('INVALID_RESULT');
   if (raw && typeof raw === 'object' && !Array.isArray(raw) && raw.findings !== undefined) {
     if (!SPEECH_ACTS.includes(raw.speechAct as typeof SPEECH_ACTS[number]) || !Array.isArray(raw.findings) || raw.findings.length > 4 ||
         raw.findings.some(item => !item || typeof item !== 'object' || !TACTICS.includes(item.tactic) || typeof item.quote !== 'string')) {
@@ -69,7 +70,7 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
     }
     const findings = raw.findings as { tactic: ScamTacticType; quote: string }[];
     raw = { ...raw, detectedTactics: findings.map(item => item.tactic), tacticEvidence: findings,
-      syntheticVoiceProbability: null,
+      syntheticVoiceProbability: assessSynthetic ? raw.syntheticVoiceProbability : null,
       warningMessageVi: raw.verdict === 'SAFE' ? 'Chưa thấy dấu hiệu lừa đảo trong đoạn này. Kết quả không xác minh danh tính người gọi.'
         : findings.some(item => item.tactic === 'OTP_OR_CREDENTIAL_ASK') ? 'Không chia sẻ OTP, mật khẩu hoặc mã xác thực. Hãy ngắt cuộc gọi và xác minh qua số chính thức.'
         : 'Tạm dừng cung cấp thông tin hoặc chuyển tiền. Xác minh yêu cầu qua kênh chính thức đã biết.' };
@@ -91,21 +92,22 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
       !item.quote.trim() || item.quote.length > 160)) throw new VoiceAnalysisError('INVALID_RESULT');
   const tactics = [...new Set(raw.detectedTactics as ScamTacticType[])];
   const normalize = (value: string) => value.normalize('NFC').toLocaleLowerCase('vi').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-  const transcript = normalize(raw.transcriptSnippet.slice(0, 300));
+  const transcript = normalize(raw.transcriptSnippet.slice(0, transcriptLimit));
   // This checks self-consistency of the provider's text, not independent verification of the audio.
   const supported = evidence.length === tactics.length && new Set(evidence.map(item => item.tactic)).size === tactics.length &&
     evidence.every(item => tactics.includes(item.tactic) && normalize(item.quote).split(' ').length >= 3 &&
       transcript.includes(normalize(item.quote)));
   const nonActionable = raw.speechAct !== undefined && raw.speechAct !== 'DIRECT_REQUEST' && tactics.length > 0;
   const unsupportedAlert = (raw.verdict === 'SUSPICIOUS' || raw.verdict === 'DEEPFAKE_SCAM' || (raw.riskScore as number) >= 40) && !tactics.length;
-  // Urgency alone is common in ordinary work; this tactic requires a sensitive-action context.
+  // Job title, secrecy and urgency also occur in ordinary work. CEO fraud and
+  // urgency findings require a sensitive-action context in this clip.
   // This is a necessary-condition guard, never a rule that declares a call SAFE.
   const plain = transcript.normalize('NFD').replace(/\p{M}/gu, '').replace(/đ/g, 'd');
   const sensitiveAction = /\b(chuyen (tien|khoan)|(?:nop|nap|gui|rut|tra) (tien|phi)|thanh toan|otp|mat khau|password|pin|ma (xac thuc|xac nhan|bao mat)|(?:doc|gui|cung cap) ma|ma vua (gui|nhan)|tai khoan|so the|cvv|seed phrase|khoa bi mat|truy cap tu xa|dieu khien tu xa|cai (ung dung|phan mem))\b/.test(plain);
-  const unsupportedUrgency = tactics.includes('URGENCY_PRESSURE') && !sensitiveAction;
+  const unsupportedDemand = (tactics.includes('URGENCY_PRESSURE') || tactics.includes('CEO_FRAUD')) && !sensitiveAction;
   const contradictorySafe = raw.verdict === 'SAFE' && tactics.length > 0;
   const unusable = raw.audioQuality === 'UNUSABLE';
-  const unknown = unusable || raw.verdict === 'UNKNOWN' || raw.riskScore === null || !supported || unsupportedAlert || nonActionable || raw.speechAct === 'UNCLEAR' || unsupportedUrgency || contradictorySafe;
+  const unknown = unusable || raw.verdict === 'UNKNOWN' || raw.riskScore === null || !supported || unsupportedAlert || nonActionable || raw.speechAct === 'UNCLEAR' || unsupportedDemand || contradictorySafe;
   const verdict = raw.verdict as VoiceScamAnalysisResult['verdict'];
   return {
     riskScore: unknown ? null : Math.round(raw.riskScore as number),
@@ -114,8 +116,9 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
     syntheticVoiceProbability: unusable ? null : raw.syntheticVoiceProbability as number | null,
     detectedTactics: unknown ? [] : tactics,
     tacticEvidence: unknown ? [] : evidence.map(item => ({ tactic: item.tactic, quote: redact(item.quote) })),
-    transcriptSnippet: unusable ? '' : redact(raw.transcriptSnippet).slice(0, 300),
+    transcriptSnippet: unusable ? '' : redact(raw.transcriptSnippet).slice(0, transcriptLimit),
     warningMessageVi: unusable ? 'Chưa đủ âm thanh rõ để đánh giá. Hãy thử thu lại.'
+      : unsupportedDemand ? 'Chức danh, yêu cầu giữ bí mật hoặc lời thúc giục chưa đủ để kết luận lừa đảo. Cần nghe thêm yêu cầu cụ thể; đoạn này chưa được kết luận an toàn.'
       : unknown ? 'Chưa đủ ngữ cảnh để đánh giá nội dung đoạn này. Dấu hiệu giọng tổng hợp được đánh giá riêng.'
       : redact(raw.warningMessageVi).slice(0, 500),
     audioQuality: raw.audioQuality as VoiceScamAnalysisResult['audioQuality'],
@@ -123,4 +126,13 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
   };
 }
 
+/** Task 2.4: Gemini assesses acoustic synthesis separately from the content verdict. */
+export const voiceTaskSchema = { ...schema,
+  properties: { ...schema.properties, syntheticVoiceProbability: { type: Type.NUMBER, nullable: true } },
+  required: [...schema.required, 'syntheticVoiceProbability'],
+};
+export const voiceTaskInstruction = instruction.replace(
+  'Chỉ đánh giá nội dung, không đoán giọng AI hoặc danh tính.',
+  'Đánh giá riêng dấu hiệu giọng tổng hợp từ âm thanh. Trả syntheticVoiceProbability từ 0 đến 1 hoặc null nếu chưa đủ bằng chứng. Đây là ước lượng chưa hiệu chuẩn, không xác minh danh tính. Không suy giọng giả từ nội dung OTP/chuyển tiền, không suy giọng thật từ lời nói bình thường. Không nghe rõ thì trả null. Điểm này không tự đổi riskScore, verdict hoặc detectedTactics.',
+);
 export { schema as voiceResultSchema, instruction as voiceResultInstruction };

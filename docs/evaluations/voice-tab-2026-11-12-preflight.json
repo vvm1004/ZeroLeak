@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Node >=22 and native WebSocket",
+      "ok": true
+    },
+    {
+      "name": "Voice extension bundle",
+      "ok": true
+    },
+    {
+      "name": "Manifest V3",
+      "ok": true
+    },
+    {
+      "name": "API health",
+      "ok": true
+    },
+    {
+      "name": "Gemini-only strategy",
+      "ok": true
+    },
+    {
+      "name": "Extended-only route",
+      "ok": true
+    },
+    {
+      "name": "Live API runtime",
+      "ok": true
+    },
+    {
+      "name": "Reject invalid audio before analysis",
+      "ok": true
+    }
+  ],
+  "providerCalls": 0,
+  "providerVerified": false,
+  "scope": "Chỉ kiểm tra cấu hình cục bộ. Chưa xác minh key/quota, độ chính xác hoặc độ trễ Gemini; cần thử audio riêng."
+}

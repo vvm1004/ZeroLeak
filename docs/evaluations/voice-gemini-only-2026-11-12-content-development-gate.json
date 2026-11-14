@@ -1,0 +1,50 @@
+{
+  "phase": "development",
+  "baseline": {
+    "attempted": 6,
+    "errors": 0,
+    "acousticHuman": 1,
+    "acousticClone": 1,
+    "cloneAlerts": 0,
+    "cloneLow": 0,
+    "humanAlerts": 0,
+    "humanLow": 1,
+    "contentCorrect": 4,
+    "contentCases": 4,
+    "scamAlerts": 2,
+    "contentFalseAlerts": 0,
+    "medianMs": 2607.0
+  },
+  "candidate": {
+    "attempted": 6,
+    "errors": 0,
+    "acousticHuman": 1,
+    "acousticClone": 1,
+    "cloneAlerts": 0,
+    "cloneLow": 0,
+    "humanAlerts": 0,
+    "humanLow": 0,
+    "contentCorrect": 4,
+    "contentCases": 4,
+    "scamAlerts": 2,
+    "contentFalseAlerts": 0,
+    "medianMs": 3206.5
+  },
+  "checks": {
+    "allCasesAttempted": true,
+    "noErrorsAdded": true,
+    "noHumanFalseAlertsAdded": true,
+    "noCloneLowAdded": true,
+    "noHumanCoverageLost": false,
+    "noCorrectContentLost": true,
+    "noScamAlertsLost": true,
+    "noContentFalseAlertsAdded": true,
+    "actualBenefit": false
+  },
+  "passed": false,
+  "thresholds": {
+    "low": 0.2,
+    "synthetic": 0.8
+  },
+  "selected": false
+}

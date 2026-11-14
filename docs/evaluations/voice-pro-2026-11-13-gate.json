@@ -1,0 +1,9 @@
+{
+  "matchedCases": 40,
+  "cloneClips": 10,
+  "additionalCloneAlerts": 6,
+  "humanFalseAlerts": 0,
+  "errors": 0,
+  "p95Ms": 851.35,
+  "passed": true
+}

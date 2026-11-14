@@ -1,0 +1,12 @@
+{
+  "beforeCalls": true,
+  "hashes": {
+    "apps/extension/utils/voice-capture.ts": "6033ad3bb6861b7f77e459b3999f2cb7a8d2e658ce7df4f7a416254d487a4fd1",
+    "apps/extension/utils/voice-client.ts": "3d36ba8eed8f8ead91f4eab354b050c862ab6af03298545483d71cb013c0c162",
+    "apps/extension/entrypoints/voice/VoiceApp.tsx": "27b0ff20bf86cff55d9d01455990dbb211bb7f7d391d6a6c94f0cec485516196",
+    "apps/sandbox-api/src/app.ts": "8959ed29d12ed2acb0a765a2cbcf1c2366350b9caf04365b86be63e507cd5f51",
+    "apps/sandbox-api/src/voice-analyzer.ts": "9e015a1831abb733f234b2f9afb9e27197abaab8f3dab9d33fe5a44af29f3f93",
+    "apps/sandbox-api/src/voice-live.ts": "dc1c02ce64929866ecc1c5d692d741580dc6bc11ee632c0569b8dfa0693e22f5",
+    "packages/shared-types/src/index.ts": "e2b924365546632054b96ac7f503f3abd20d69c594ad83b141de37aaee8ecf23"
+  }
+}

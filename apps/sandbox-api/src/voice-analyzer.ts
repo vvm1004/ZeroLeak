@@ -1,6 +1,7 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import { GoogleGenAI, type GenerateContentParameters } from '@google/genai';
 import type { AnalyzeVoiceRequest, VoiceScamAnalysisResult, VoiceProviderAttempt } from '@zeroleak/shared-types';
-import { VoiceAnalysisError, parseVoiceResult, voiceResultSchema as schema, voiceResultInstruction as instruction } from './voice-result.js';
+import { VoiceAnalysisError, parseVoiceResult, voiceResultSchema, voiceResultInstruction, voiceTaskSchema, voiceTaskInstruction } from './voice-result.js';
 import { analyzeLiveVoice, isLiveVoiceModel, type VoiceSocketFactory } from './voice-live.js';
 export { VoiceAnalysisError, parseVoiceResult } from './voice-result.js';
 
@@ -15,7 +16,7 @@ const PROVIDER_COOLDOWN_MS = 30000;
 type Generate = (params: GenerateContentParameters) => Promise<{ text?: string }>;
 
 /** Shared by production and offline evaluation; labels never enter the request. */
-export function createVoiceGenerationRequest(input: AnalyzeVoiceRequest, model: string, signal: AbortSignal): GenerateContentParameters {
+export function createVoiceGenerationRequest(input: AnalyzeVoiceRequest, model: string, signal: AbortSignal, assessSynthetic = false): GenerateContentParameters {
   return {
     model,
     contents: [{ role: 'user', parts: [
@@ -23,7 +24,7 @@ export function createVoiceGenerationRequest(input: AnalyzeVoiceRequest, model: 
       { text: 'Phân loại hành vi lời nói và dấu hiệu lừa đảo trong đoạn âm thanh. Trả JSON đúng schema.' },
     ] }],
     config: {
-      systemInstruction: instruction, responseMimeType: 'application/json', responseSchema: schema,
+      systemInstruction: assessSynthetic ? voiceTaskInstruction : voiceResultInstruction, responseMimeType: 'application/json', responseSchema: assessSynthetic ? voiceTaskSchema : voiceResultSchema,
       temperature: 0, maxOutputTokens: 700, abortSignal: signal,
       // Google's deadline is separate from our shorter application abort budget.
       httpOptions: { timeout: input.analysisMode === 'review' ? 15000 : 10000, retryOptions: { attempts: 1 } },
@@ -44,11 +45,11 @@ export function voiceModelRoute(input: Pick<AnalyzeVoiceRequest, 'analysisMode'>
 /** One shared deadline includes primary and fallback; never return SAFE on failure. */
 export async function analyzeAudioScam(
   input: AnalyzeVoiceRequest,
-  options: { generate?: Generate; socketFactory?: VoiceSocketFactory; signal?: AbortSignal; budgetMs?: number } = {},
+  options: { generate?: Generate; socketFactory?: VoiceSocketFactory; signal?: AbortSignal; budgetMs?: number; assessSynthetic?: boolean } = {},
 ): Promise<VoiceScamAnalysisResult> {
   const started = performance.now();
   const review = input.analysisMode === 'review';
-  const maximumBudget = review ? 15000 : 3100;
+  const maximumBudget = VOICE_ANALYSIS_TIMEOUTS[review ? 'review' : 'realtime'].model;
   const budget = Math.min(options.budgetMs ?? maximumBudget, maximumBudget);
   if (!options.generate && !options.socketFactory && !process.env.GEMINI_API_KEY) throw new VoiceAnalysisError('NOT_CONFIGURED');
   const generate: Generate = options.generate ?? ((params) => new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! }).models.generateContent(params));
@@ -83,9 +84,9 @@ export async function analyzeAudioScam(
         controller.signal.addEventListener('abort', rejectAbort, { once: true });
       });
       const pending = transport === 'LIVE_API'
-        ? analyzeLiveVoice(input, model, { signal: controller.signal, budgetMs: remaining, socketFactory: options.socketFactory })
-        : generate(createVoiceGenerationRequest(input, model, controller.signal)).then(response =>
-          parseVoiceResult(response.text ?? '', model, Math.round(performance.now() - started)));
+        ? analyzeLiveVoice(input, model, { signal: controller.signal, budgetMs: remaining, socketFactory: options.socketFactory, assessSynthetic: options.assessSynthetic })
+        : generate(createVoiceGenerationRequest(input, model, controller.signal, options.assessSynthetic)).then(response =>
+          parseVoiceResult(response.text ?? '', model, Math.round(performance.now() - started), options.assessSynthetic));
       const result = await Promise.race([pending, aborted]);
       providerFailures.delete(model);
       attempts.push({ model, transport, status: 'SUCCEEDED' });

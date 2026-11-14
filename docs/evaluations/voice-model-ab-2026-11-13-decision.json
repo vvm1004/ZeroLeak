@@ -1,0 +1,14 @@
+{
+  "candidate": "gemini-3.1-flash-lite",
+  "baseline": "gemini-3.8-live-extended-thinking",
+  "candidatePromoted": false,
+  "productionModelChanged": false,
+  "completePlannedComparison": false,
+  "actualProviderCalls": 71,
+  "plannedMaximum": 96,
+  "skippedAfterFailureStop": 25,
+  "matchedCases": 23,
+  "reason": "Candidate reached3consecutive errors. Full-pair gate failed. No measured clone detection gain; current-key realtime availability was lower. This is not a global model-availability or intrinsic-accuracy ranking.",
+  "missingHumanScamLabels": true,
+  "nextResearchPriority": "Independent Vietnamese human/scam data and specialized acoustic detector evaluation if Gemini-only remains inadequate."
+}

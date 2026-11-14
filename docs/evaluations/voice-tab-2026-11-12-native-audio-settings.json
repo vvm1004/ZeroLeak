@@ -1,0 +1,61 @@
+{
+  "googleCalls": 0,
+  "audioPlayback": false,
+  "fakeUi": false,
+  "fakeDevice": false,
+  "tracksImmediatelyStopped": true,
+  "results": [
+    {
+      "mode": "default",
+      "labelCategory": "TAB",
+      "tabDeviceId": true,
+      "before": {
+        "autoGainControl": true,
+        "echoCancellation": true,
+        "noiseSuppression": true,
+        "sampleRate": 48000,
+        "channelCount": 1
+      },
+      "after": {
+        "autoGainControl": true,
+        "echoCancellation": true,
+        "noiseSuppression": true,
+        "sampleRate": 48000,
+        "channelCount": 1
+      }
+    },
+    {
+      "mode": "initial-false",
+      "labelCategory": "TAB",
+      "tabDeviceId": true,
+      "before": {
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false,
+        "sampleRate": 44100,
+        "channelCount": 2
+      },
+      "after": {
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false,
+        "sampleRate": 44100,
+        "channelCount": 2
+      }
+    },
+    {
+      "mode": "apply-false",
+      "labelCategory": "TAB",
+      "tabDeviceId": true,
+      "before": {
+        "autoGainControl": true,
+        "echoCancellation": true,
+        "noiseSuppression": true,
+        "sampleRate": 48000,
+        "channelCount": 1
+      },
+      "errorName": "OverconstrainedError",
+      "constraint": ""
+    }
+  ]
+}

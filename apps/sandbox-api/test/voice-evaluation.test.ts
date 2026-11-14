@@ -55,3 +55,15 @@ test('tactic exact matches never count errors or unknown content as correct', ()
   ]);
   assert.deepEqual(result.tactics, { annotated: 3, exactMatches: 1 });
 });
+
+
+test('the declared acoustic uncertainty band cannot inflate correct decisions',()=>{
+ const summary=summarizeVoiceEvaluation([
+  row({label:'synthetic',syntheticScore:.8}),row({label:'synthetic',syntheticScore:.79}),
+  row({label:'human',syntheticScore:.2}),row({label:'human',syntheticScore:.21}),
+ ],.8,.2);
+ assert.equal(summary.tp,1);assert.equal(summary.tn,1);assert.equal(summary.assessed,2);
+ assert.equal(summary.unknownHuman,1);assert.equal(summary.unknownSynthetic,1);
+ assert.equal(summary.fakeDetectionYieldAllSynthetic,.5);
+ assert.throws(()=>summarizeVoiceEvaluation([],.8,.8),/uncertainty band/);
+});

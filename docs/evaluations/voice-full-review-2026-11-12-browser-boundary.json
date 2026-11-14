@@ -1,0 +1,51 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "One exact-15s file with deterministic background noise; boundary regression of an existing TTS case, not independent accuracy",
+  "plannedCases": 1,
+  "maxProviderSessionUpperBound": 1,
+  "results": [
+    {
+      "id": "boundary_15s_noise",
+      "mode": "review",
+      "scam": true,
+      "roundTripMs": 5678,
+      "submittedSeconds": 15,
+      "submittedAnalysisMode": "review",
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "syntheticVoiceProbability": 0.1,
+      "formatRepairAttempts": null,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "uiShowsWholeFileDuration": true,
+      "status": "RESULT"
+    }
+  ],
+  "modelRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ]
+}

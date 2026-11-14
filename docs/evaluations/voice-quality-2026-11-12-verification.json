@@ -1,0 +1,37 @@
+{
+  "retainedPromptSourceCommit": "03c7b9a",
+  "candidatePromptAccepted": false,
+  "candidateGatePassed": false,
+  "backendTests": 83,
+  "clientTests": 6,
+  "chromeFixtureTests": 13,
+  "backendBuild": "passed",
+  "extensionBuild": "passed",
+  "extensionTypecheck": "passed",
+  "realFaultInjectionRecovery": true,
+  "realFaultInjectionIsAccuracyTest": false,
+  "realBrowserReview": {
+    "httpStatus": 200,
+    "contentCorrect": true
+  },
+  "realBrowserRealtime": {
+    "httpStatus": 504,
+    "errorCode": "TIMEOUT"
+  },
+  "developmentSessions": 12,
+  "comparisonSessions": 40,
+  "faultInjectionSessions": 1,
+  "realBrowserSuccessfulReviewSessions": 1,
+  "failedRealtimeSessionsUpperBound": 3,
+  "totalProviderSessionsUpperBound": 57,
+  "providerSessionsCap": 60,
+  "test6Accepted": false,
+  "productionSetupSha256Unchanged": "c25b226bc6d9d6aac00bf011b324e7899925ea54712515a2f989d4a677cc444e",
+  "modifiedSourceSha256": {
+    "apps/sandbox-api/src/voice-live.ts": "3240a8ac167660be387f7ab2e026ad4338728df71b1d98bf49a828672ba1025b",
+    "apps/extension/utils/voice-client.ts": "7d99a0f7611136e0a32e5c3f3290175b5cac3adf1c9d230e02c58d7d2ff03225",
+    "packages/shared-types/src/index.ts": "3a60099a7f3067d2d80d677e9f3df2259ef014630fbdeb1a07de5c1a2a8fe884"
+  },
+  "productionSetupSha256VerifiedByDryRun": true,
+  "cliDryRunProviderCalls": 0
+}

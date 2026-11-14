@@ -1,0 +1,16 @@
+{
+  "googleCalls": 0,
+  "realTab": true,
+  "localWav": true,
+  "fakeUi": false,
+  "fakeDevice": false,
+  "sourceProof": {
+    "displaySurface": "browser",
+    "tabLabel": true,
+    "tabDevice": true
+  },
+  "capturedSeconds": 5,
+  "capturedRms": 0.10209592598831035,
+  "tracksEnded": true,
+  "passed": true
+}
