@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { setTimeout as delay } from 'node:timers/promises';
 import dotenv from 'dotenv';
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import type { VoiceProviderAttempt } from '@zeroleak/shared-types';
 import { GoogleGenAI, type GenerateContentParameters } from '@google/genai';
 import { analyzeAudioScam, createVoiceGenerationRequest, parseVoiceResult, VoiceAnalysisError, voiceModelRoute } from '../src/voice-analyzer.js';
@@ -75,7 +76,7 @@ const definition = isLiveVoiceModel(primaryModel) ? createVoiceLiveSetup(primary
 const meta = {
   createdAt: new Date().toISOString(), strategy, voiceScoreSource: assessSynthetic ? 'GEMINI_UNCALIBRATED' : 'LOCAL_XLSR_AASIST', dataset: manifest.name ?? 'local dataset',
   limitations: manifest.limitations ?? [], mode: values.mode, requestedModel: values.model ?? 'production-router',
-  productionDeadlineMs: values.mode === 'review' ? 15000 : 3100, qualityDeadlineMs: values.mode === 'quality' ? qualityTimeout : null,
+  productionDeadlineMs: VOICE_ANALYSIS_TIMEOUTS[values.mode === 'review' ? 'review' : 'realtime'].model, qualityDeadlineMs: values.mode === 'quality' ? qualityTimeout : null,
   threshold, thresholdWasTunedOnThisRun: false, maxProviderCalls: maxCalls,
   modelRoute: evaluationRoute, transports: evaluationRoute.map(model => ({ model, transport: isLiveVoiceModel(model) ? 'LIVE_API' : 'GENERATE_CONTENT' })),
   labelsSentToProvider: false, realApi: !values['dry-run'],

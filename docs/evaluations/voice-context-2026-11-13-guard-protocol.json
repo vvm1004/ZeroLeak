@@ -1,0 +1,12 @@
+{
+  "fixedBeforePredictions": true,
+  "maxSessions": 8,
+  "model": "gemini-3.8-live-extended-thinking",
+  "budgetMs": 8000,
+  "retries": 0,
+  "fallback": false,
+  "comparison": "One provider output per case, replay identical compact JSON+ASR through original and revised parser. No raw provider text saved.",
+  "source": "8 fresh self-authored Linh TTS clips, 4 benign and 4 scam, labels fixed before prediction.",
+  "gate": "8 successful replayable calls, at least1 unsupported benign warning becomes UNKNOWN, no lost scam warning and no added benign warning.",
+  "scope": "Evidence guard only; UNKNOWN is abstention, not SAFE. Not human/clone accuracy or independent real-world benchmark."
+}

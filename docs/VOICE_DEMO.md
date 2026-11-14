@@ -1,5 +1,7 @@
 # Voice: hướng dẫn chạy và trình diễn
 
+**Voice Pro:** để chạy bản có detector âm học, dùng `pnpm dev:voice-pro` sau khi build/reload extension. Xem [hướng dẫn, kết quả và giới hạn](VOICE_PRO.md). Kiểm tra bằng `pnpm check:voice-demo --strategy hybrid`; lệnh Gemini-only cũ vẫn dùng để đối chiếu.
+
 Bản hiện tại dùng **Gemini 3.8 Live Extended Thinking duy nhất** khi khởi động bằng lệnh dưới đây.
 Có thể trình diễn phát hiện yêu cầu OTP, phân biệt lời khuyên và trả UNKNOWN cho âm thanh chưa đủ
 bằng chứng. **Chưa đạt nghiệm thu realtime <3 giây, chưa chứng minh nhận diện clone đáng tin cậy.**
@@ -76,6 +78,32 @@ python3 -m http.server 18083 --bind 127.0.0.1 --directory "$HOME/Library/Caches/
 Một nguồn được chọn nhầm thành cửa sổ/màn hình sẽ bị từ chối và dừng track trước khi gọi API.
 Không bật micro thật trong phép thử này. Nếu máy dùng cổng 18083 cho dịch vụ khác, chọn cổng trống và đổi URL tương ứng.
 Trang nguồn tĩnh không gọi Google; Voice mới là bên gửi từng WAV tới API.
+
+## Theo dõi diễn biến và giữ bằng chứng trong phiên
+
+Voice có **Diễn biến phiên kiểm tra**: mỗi lượt đã phân tích hiện nguồn, thời lượng, kết quả hoặc lỗi;
+mở chi tiết để xem lời thoại, tactic, trích dẫn và model. Đây là thứ tự các yêu cầu, không phải timeline
+căn chỉnh chính xác theo từng từ trong audio.
+
+Nếu một đoạn bị cảnh báo và có đầy đủ bằng chứng khớp transcript, khung **Phiên này đã có cảnh báo**
+giữ lại đoạn có điểm rủi ro nội dung cao nhất. Đoạn SAFE/UNKNOWN hay lỗi phía sau không xóa bằng chứng đó.
+Đây là ghi nhớ một kết quả đã có để kiểm tra ngữ cảnh, không phải cộng điểm giữa các đoạn hoặc kết luận
+cả cuộc gọi là lừa đảo. Điểm giọng tổng hợp không tự tạo cảnh báo nội dung.
+Sóng âm giữ màu cảnh báo của phiên; kết quả gần nhất vẫn hiển thị riêng nên có thể là SAFE/0.
+
+Cách thử khi demo: chọn **Theo dõi liên tục**, đọc/phát yêu cầu OTP và chờ nhận cảnh báo; sau đó nói
+một câu bình thường. Cho người xem thấy kết quả đoạn mới đổi, còn cảnh báo trước và trích dẫn vẫn ở đó.
+Nếu dịch vụ lỗi, lượt lỗi phải hiện **Chưa đánh giá được**, lịch sử và cảnh báo cũ vẫn giữ.
+Không tự tạo lỗi mạng hoặc kết quả giả để thay một lượt Google thật trong buổi demo.
+
+Khi hàng đợi bị thay bằng audio mới hơn, giao diện đếm số đoạn chưa gửi vì dịch vụ bận; không tuyên bố
+đã kiểm tra đầy đủ phiên đó. Lịch sử chỉ chứa tối đa 20 lượt mới nhất trong RAM; cảnh báo cao nhất được
+giữ riêng kể cả khi lượt cũ đã ra khỏi danh sách. Không đưa raw audio, embedding hoặc lịch sử vào storage/nhật ký.
+Đoạn trích do API trả về vẫn có thể chứa thông tin nhạy cảm chưa được bộ che hiện tại nhận diện hết.
+Bắt đầu kiểm tra mới, chọn file mới hoặc đóng trang sẽ xóa lịch sử phiên; hủy một lượt đang chờ không xóa cảnh báo cũ.
+
+Chức năng này không đổi model, prompt, số lần gọi hay độ chính xác detector; nó giúp người dùng không
+bỏ mất một cảnh báo đã ghi nhận khi các kết quả mới thay thế nhau.
 
 ## Ba tình huống ngắn để trình bày
 

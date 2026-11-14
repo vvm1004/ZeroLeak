@@ -1,0 +1,58 @@
+{
+  "providerCalls": 0,
+  "purpose": "15s transport/coverage regression; concatenation and padding are controlled, not independent real-call or clone-accuracy evidence",
+  "rows": [
+    {
+      "id": "human15",
+      "status": "AVAILABLE",
+      "verdict": "NO_SYNTHETIC_EVIDENCE",
+      "score": 0.11781723573864772,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 2607,
+      "windowCount": 3,
+      "audioDurationSeconds": 15,
+      "roundTripMs": 2639
+    },
+    {
+      "id": "clone15",
+      "status": "AVAILABLE",
+      "verdict": "SYNTHETIC_SUSPECTED",
+      "score": 0.9999747371955935,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 2033,
+      "windowCount": 3,
+      "audioDurationSeconds": 15,
+      "roundTripMs": 2046
+    },
+    {
+      "id": "late_tts15",
+      "status": "AVAILABLE",
+      "verdict": "SYNTHETIC_SUSPECTED",
+      "score": 0.9986997622806628,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 2078,
+      "windowCount": 3,
+      "audioDurationSeconds": 15,
+      "roundTripMs": 2089
+    },
+    {
+      "id": "silence15",
+      "status": "AVAILABLE",
+      "verdict": "UNKNOWN",
+      "score": null,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 668,
+      "windowCount": 3,
+      "audioDurationSeconds": 15,
+      "roundTripMs": 676
+    }
+  ]
+}

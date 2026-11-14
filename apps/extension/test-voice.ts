@@ -1,3 +1,5 @@
+import { EMPTY_VOICE_SESSION, recordVoiceEntry, VOICE_HISTORY_LIMIT } from './utils/voice-session';
+import type { VoiceScamAnalysisResult } from '@zeroleak/shared-types';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { encodeVoiceWav, VoiceWindowBuffer, VOICE_WINDOW_SAMPLES, VOICE_HOP_SAMPLES, VOICE_REVIEW_SAMPLES, readVoiceFile } from './utils/voice-audio';
@@ -185,4 +187,96 @@ test('flush does not submit retained overlap without new input', () => {
   buffer.push(samples);buffer.push(new Float32Array(8000).fill(-1));
   const tail=buffer.flush()!;assert.equal(tail.length,48000);
   assert.deepEqual(tail.subarray(0,40000),samples.subarray(40000));assert.equal(tail[47999],-1);
+});
+
+
+function sessionAnswer(patch: Partial<VoiceScamAnalysisResult> = {}): VoiceScamAnalysisResult {
+  return { riskScore:90,verdict:'DEEPFAKE_SCAM',syntheticVoiceProbability:null,
+    detectedTactics:['OTP_OR_CREDENTIAL_ASK'],tacticEvidence:[{tactic:'OTP_OR_CREDENTIAL_ASK',quote:'Đọc mã OTP ngay'}],
+    transcriptSnippet:'Đọc mã OTP ngay để tôi xác minh.',warningMessageVi:'Không cung cấp OTP. Xác minh qua kênh chính thức.',
+    audioQuality:'CLEAR',executionTimeMs:100,assessmentSource:'GEMINI_AUDIO',analysisModel:'gemini-test-fixture',...patch };
+}
+const sessionMeta = (id:number) => ({id,source:'microphone' as const,durationSeconds:5});
+
+test('session keeps a supported warning after SAFE, UNKNOWN, error and cancellation', () => {
+  let s=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:sessionAnswer()});
+  const alert=s.alert;
+  for(const [i,verdict] of (['SAFE','UNKNOWN'] as const).entries())s=recordVoiceEntry(s,{...sessionMeta(i+2),status:'RESULT',result:sessionAnswer({verdict,riskScore:verdict==='SAFE'?0:null,detectedTactics:[],tacticEvidence:[]})});
+  s=recordVoiceEntry(s,{...sessionMeta(4),status:'ERROR',message:'Timeout'});
+  s=recordVoiceEntry(s,{...sessionMeta(5),status:'CANCELLED',message:'Cancelled'});
+  assert.equal(s.alert,alert);assert.equal(s.received,3);assert.equal(s.failed,1);assert.equal(s.cancelled,1);
+  assert.deepEqual(s.entries.map(e=>e.id),[5,4,3,2,1]);
+});
+
+test('session content alert is independent of synthetic-voice probability', () => {
+  const benign=sessionAnswer({verdict:'SAFE',riskScore:0,detectedTactics:[],tacticEvidence:[],syntheticVoiceProbability:.99});
+  assert.equal(recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:benign}).alert,null);
+  assert.ok(recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:sessionAnswer({syntheticVoiceProbability:.01})}).alert);
+});
+
+test('session requires matching evidence and a valid content score for a pinned alert', () => {
+  for(const patch of [{tacticEvidence:[]},{tacticEvidence:[{tactic:'OTP_OR_CREDENTIAL_ASK' as const,quote:'Câu này không được nghe'}]},{riskScore:null},{riskScore:1000}]){
+    assert.equal(recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:sessionAnswer(patch)}).alert,null);
+  }
+});
+
+test('session retains the highest supported warning without adding risk across clips', () => {
+  let s=EMPTY_VOICE_SESSION;
+  for(const [i,score] of [80,95,85].entries())s=recordVoiceEntry(s,{...sessionMeta(i+1),status:'RESULT',result:sessionAnswer({riskScore:score})});
+  assert.equal(s.alert?.id,2);assert.equal(s.alert?.result.riskScore,95);
+});
+
+test('history is bounded while an older warning remains available', () => {
+  let s=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:sessionAnswer()});
+  for(let id=2;id<=VOICE_HISTORY_LIMIT+4;id++)s=recordVoiceEntry(s,{...sessionMeta(id),status:'ERROR',message:'Unavailable'});
+  assert.equal(s.entries.length,VOICE_HISTORY_LIMIT);assert.ok(!s.entries.some(e=>e.id===1));assert.equal(s.alert?.id,1);
+  assert.equal(s.failed,VOICE_HISTORY_LIMIT+3);assert.equal(EMPTY_VOICE_SESSION.entries.length,0);
+});
+
+test('cancelled attempts cannot later be replaced or counted twice', () => {
+  const s=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'CANCELLED',message:'Cancelled'});
+  assert.equal(recordVoiceEntry(s,{...sessionMeta(1),status:'RESULT',result:sessionAnswer()}),s);
+  assert.equal(s.alert,null);assert.equal(s.received,0);
+});
+
+test('history keeps only projected result fields, never raw audio or embeddings', () => {
+  const raw={...sessionAnswer(),audioBase64:'RAW_AUDIO_SENTINEL',embedding:['EMBEDDING_SENTINEL']};
+  const s=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:raw});
+  const serialized=JSON.stringify(s);assert.ok(!serialized.includes('RAW_AUDIO_SENTINEL'));assert.ok(!serialized.includes('EMBEDDING_SENTINEL'));
+  raw.tacticEvidence[0].quote='Changed after recording';assert.notEqual(s.alert?.result.tacticEvidence?.[0]?.quote,raw.tacticEvidence[0].quote);
+});
+
+
+test('session retains an acoustic warning independently of benign content and later local failures',()=>{
+ const acoustic={status:'AVAILABLE' as const,score:.95,verdict:'SYNTHETIC_SUSPECTED' as const,scoreCalibrated:false as const,source:'LOCAL_XLSR_AASIST' as const,modelVersion:'a'.repeat(64),executionTimeMs:300};
+ const benign=sessionAnswer({verdict:'SAFE',riskScore:0,detectedTactics:[],tacticEvidence:[],acousticAnalysis:acoustic});
+ let state=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:benign});
+ assert.equal(state.alert,null);assert.equal(state.acousticAlert?.id,1);
+ state=recordVoiceEntry(state,{...sessionMeta(2),status:'RESULT',result:{...benign,acousticAnalysis:{status:'UNAVAILABLE'}}});
+ state=recordVoiceEntry(state,{...sessionMeta(3),status:'ERROR',message:'Timeout'});
+ assert.equal(state.acousticAlert?.id,1);assert.equal(state.alert,null);assert.equal(EMPTY_VOICE_SESSION.acousticAlert,null);
+ const dirty={...acoustic,audioBase64:'RAW_AUDIO_SENTINEL',embedding:['EMBEDDING_SENTINEL']};
+ const projected=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:{...benign,acousticAnalysis:dirty}});
+ assert.ok(!JSON.stringify(projected).includes('RAW_AUDIO_SENTINEL'));assert.ok(!JSON.stringify(projected).includes('EMBEDDING_SENTINEL'));
+});
+
+test('session never pins unavailable, invalid or uncertain acoustic results',()=>{
+ for(const acousticAnalysis of [{status:'UNAVAILABLE' as const},{status:'AVAILABLE' as const,score:.5,verdict:'UNKNOWN' as const,scoreCalibrated:false as const,source:'LOCAL_XLSR_AASIST' as const,modelVersion:'a'.repeat(64),executionTimeMs:1}]){
+  const state=recordVoiceEntry(EMPTY_VOICE_SESSION,{...sessionMeta(1),status:'RESULT',result:sessionAnswer({acousticAnalysis})});
+  assert.equal(state.acousticAlert,null);
+ }
+});
+
+
+test('client verifies acoustic coverage metadata against the audio actually sent',async()=>{
+ const previous=globalThis.fetch;const samples=Float32Array.from({length:16000},(_,i)=>Math.sin(i*.1)*.2);
+ const acoustic={status:'AVAILABLE',score:.9,verdict:'SYNTHETIC_SUSPECTED',scoreCalibrated:false,source:'LOCAL_XLSR_AASIST',modelVersion:'a'.repeat(64),executionTimeMs:300,windowCount:1,audioDurationSeconds:1};
+ const body={...sessionAnswer({verdict:'SAFE',riskScore:0,detectedTactics:[],tacticEvidence:[]}),assessmentSource:'HYBRID_AUDIO',acousticAnalysis:acoustic};
+ try{
+  globalThis.fetch=async()=>new Response(JSON.stringify(body));assert.equal((await analyzeVoice(samples,{apiBase:'http://localhost:8080',token:''})).acousticAnalysis?.status,'AVAILABLE');
+  for(const patch of [{windowCount:4},{audioDurationSeconds:15,windowCount:3},{windowCount:2},{audioDurationSeconds:undefined}]){
+   globalThis.fetch=async()=>new Response(JSON.stringify({...body,acousticAnalysis:{...acoustic,...patch}}));
+   await assert.rejects(analyzeVoice(samples,{apiBase:'http://localhost:8080',token:''}),/không hợp lệ/);
+  }
+ }finally{globalThis.fetch=previous;}
 });

@@ -1,3 +1,4 @@
+import { parseCompactVoiceResult } from '../apps/sandbox-api/src/voice-live-output';
 import { test, expect } from 'playwright/test';
 import { chromium, type BrowserContext, type Page } from 'playwright';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
@@ -56,8 +57,8 @@ test('file → WAV → HTTP API → validated Gemini fixture → visible warning
   page.on('pageerror', error => errors.push(error.message));
   await page.getByLabel('Chọn file âm thanh để phân tích').setInputFiles({ name: 'sample.wav', mimeType: 'audio/wav', buffer: fixtureWav() });
   await expect(page.getByRole('heading', { name: 'Có dấu hiệu cần thận trọng' })).toBeVisible();
-  await expect(page.getByText(/85.*100 điểm rủi ro/)).toBeVisible();
-  await expect(page.getByText('Yêu cầu OTP / mật khẩu', { exact: true })).toBeVisible();
+  await expect(page.locator('.result-panel .risk-number')).toContainText(/85.*100 điểm rủi ro/);
+  await expect(page.locator('.tactics').getByText('Yêu cầu OTP / mật khẩu', { exact: true })).toBeVisible();
   await expect(page.getByText('Chưa đủ bằng chứng', { exact: true })).toBeVisible();
   await expect(page.locator('.evidence blockquote')).not.toContainText('123456');
   await expect(page.locator('.evidence blockquote')).toContainText('[ĐÃ ẨN]');
@@ -191,7 +192,7 @@ test('local acoustic result is shown separately when Gemini is unavailable', asy
   await expect(page.getByRole('heading', { name: 'Chưa đánh giá được nội dung' })).toBeVisible();
   await expect(page.getByText(/Gemini đã chạm giới hạn sử dụng/)).toBeVisible();
   await expect(page.getByText('Có dấu hiệu giọng tổng hợp', { exact: true })).toBeVisible();
-  await expect(page.getByText(/Điểm mô hình 95\/100, chưa hiệu chuẩn/)).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Đánh giá giọng nói trên máy' })).toContainText('95/100, chưa hiệu chuẩn');
   await expect(page.getByRole('heading', { name: 'Nguy cơ lừa đảo qua cuộc gọi' })).not.toBeVisible();
 });
 
@@ -483,9 +484,11 @@ for (const endMethod of ['button','source-ended'] as const) {
 
 
 test('continuous stop drains the final speech after a silent window while a request is busy', async () => {
+  const sent:Buffer[]=[];
   let calls=0, release!:()=>void;
   const held=new Promise<void>(resolve=>{release=resolve;});
   await context.route('**/api/v1/analyze-voice',async route=>{
+    sent.push(Buffer.from(route.request().postDataJSON().audioBase64,'base64'));
     calls++;if(calls===1)await held;await route.continue();
   });
   await page.getByRole('radio',{name:'Theo dõi liên tục',exact:true}).check();
@@ -493,7 +496,7 @@ test('continuous stop drains the final speech after a silent window while a requ
   const first=page.waitForRequest('**/api/v1/analyze-voice');
   await page.getByRole('button',{name:'Bắt đầu kiểm tra'}).click();
   const progress=page.getByRole('progressbar',{name:'Thời lượng đoạn đang thu'});
-  await expect.poll(()=>progress.evaluate((p:HTMLProgressElement)=>p.value)).toBeGreaterThanOrEqual(4);
+  await expect.poll(()=>progress.evaluate((p:HTMLProgressElement)=>p.value)).toBeGreaterThanOrEqual(2);
   await page.evaluate(()=>(window as Window & {voiceTestStreams:MediaStream[]}).voiceTestStreams.at(-1)!.getAudioTracks().forEach(t=>{t.enabled=false;}));
   await first;
   await expect(page.getByText('10s đã thu',{exact:true})).toBeVisible({timeout:8000});
@@ -504,5 +507,100 @@ test('continuous stop drains the final speech after a silent window while a requ
   await expect.poll(()=>calls).toBe(2);
   await expect(page.getByText('2 đoạn đã kiểm tra',{exact:true})).toBeVisible();
   await expect(page.getByRole('button',{name:'Bắt đầu kiểm tra'})).toBeEnabled();
+  expect(sent[0].readUInt32LE(40)/2).toBe(80000);expect(sent[1].readUInt32LE(40)/2).toBeLessThan(80000);expect(sent[1].readUInt32LE(40)/2).toBeGreaterThanOrEqual(8000);
   expect(await page.evaluate(()=>(window as Window & {voiceTestStreams:MediaStream[]}).voiceTestStreams.every(s=>s.getTracks().every(t=>t.readyState==='ended')))).toBe(true);
+});
+
+
+test('continuous session retains evidence after a benign result and a timeout, then resets on a new session', async ({},testInfo) => {
+  let calls=0;
+  await context.route('**/api/v1/analyze-voice', async route => {
+    calls++;
+    if(calls>=3){await route.fulfill({status:504,json:{error:{code:'TIMEOUT',message:'Fixture: đoạn này chưa được đánh giá.'}}});return;}
+    await route.fulfill({status:200,json:{riskScore:calls===1?90:0,verdict:calls===1?'DEEPFAKE_SCAM':'SAFE',syntheticVoiceProbability: calls === 1 ? .01 : .99,
+      detectedTactics:calls===1?['OTP_OR_CREDENTIAL_ASK']:[],tacticEvidence:calls===1?[{tactic:'OTP_OR_CREDENTIAL_ASK',quote:'Đọc mã OTP ngay'}]:[],
+      transcriptSnippet:calls===1?'Đọc mã OTP ngay để tôi xác minh.':'Đừng chia sẻ OTP cho người lạ.',warningMessageVi:calls===1?'Không cung cấp OTP. Xác minh qua kênh chính thức.':'Chưa thấy kịch bản lừa đảo trong đoạn này.',
+      audioQuality:'CLEAR',executionTimeMs:100,assessmentSource:'GEMINI_AUDIO',analysisModel:'gemini-test-fixture'}});
+  });
+  await page.getByRole('radio',{name:'Theo dõi liên tục',exact:true}).check();
+  await page.getByRole('radio',{name:/Micro của bạn/}).check();
+  await page.getByRole('button',{name:'Bắt đầu kiểm tra'}).click();
+  await expect(page.getByRole('complementary',{name:'Cảnh báo đã ghi nhận trong phiên'})).toBeVisible({timeout:10000});
+  const warning=page.locator('.session-warning');await expect(warning).toContainText('Đọc mã OTP ngay');
+  await expect(page.getByRole('heading',{name:'Chưa thấy kịch bản lừa đảo',exact:true})).toBeVisible({timeout:12000});
+  await expect(warning).toBeVisible();await expect(warning).toContainText('90/100');
+  const wave=await page.locator('.waveform').evaluate((canvas:HTMLCanvasElement)=>{const data=canvas.getContext('2d')!.getImageData(0,0,canvas.width,canvas.height).data;let red=0;for(let i=0;i<data.length;i+=4)if(data[i]>200&&data[i+1]<180&&data[i+3]>100)red++;return red;});expect(wave).toBeGreaterThan(20);
+  await expect(page.locator('.session-timeline > li')).toHaveCount(2);
+  await page.screenshot({path:testInfo.outputPath('session-warning-after-safe.png'),fullPage:true});
+  await expect(page.getByRole('alert')).toContainText('chưa được đánh giá',{timeout:12000});
+  await expect(warning).toBeVisible();await expect(page.locator('.session-timeline > li').first()).toContainText('Chưa đánh giá được');
+  await page.getByRole('button',{name:'Dừng thu và phân tích'}).click();
+  await expect(page.getByRole('button',{name:'Bắt đầu kiểm tra'})).toBeEnabled();
+  await page.getByText('Xem chi tiết lượt 1',{exact:true}).click();
+  await expect(page.locator('.session-history')).toContainText('Đọc mã OTP ngay');
+  await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:testInfo.outputPath('session-history-mobile.png'),fullPage:true});
+  await page.getByRole('radio',{name:'Một đoạn 5 giây',exact:true}).check();
+  await page.getByRole('button',{name:'Bắt đầu kiểm tra'}).click();
+  await expect(warning).toHaveCount(0);await expect(page.locator('.session-history')).toHaveCount(0);
+});
+
+
+test('CEO title without a sensitive demand stays UNKNOWN in the result and session history', async () => {
+ const result=parseCompactVoiceResult(JSON.stringify({a:0,v:2,r:90,q:0,f:[[0,'Anh là giám đốc đây']],p:.9}),
+  'Anh là giám đốc đây, việc này tuyệt đối bí mật.','gemini-test-fixture',1,true);
+ await context.route('**/api/v1/analyze-voice', route=>route.fulfill({status:200,json:result}));
+ await page.getByLabel('Chọn file âm thanh để phân tích').setInputFiles({name:'title-only.wav',mimeType:'audio/wav',buffer:fixtureWav()});
+ await expect(page.getByRole('heading',{name:'Chưa đánh giá được nội dung',exact:true})).toBeVisible();
+ await expect(page.locator('.warning').first()).toContainText('chưa đủ để kết luận');
+ await expect(page.locator('.result-panel .risk-number')).toContainText('—');
+ await expect(page.locator('.tactics')).toHaveCount(0);
+ await expect(page.locator('.session-warning')).toHaveCount(0);
+ await expect(page.locator('.result-details')).toContainText('90% · ước lượng mô hình');
+ await expect(page.locator('.session-timeline > li')).toHaveCount(1);
+ await expect(page.locator('.session-timeline > li')).toContainText('Chưa đánh giá được nội dung');
+});
+
+
+const proAnswer=(score:number)=>({riskScore:0,verdict:'SAFE',syntheticVoiceProbability:null,detectedTactics:[],tacticEvidence:[],
+ transcriptSnippet:'Lịch họp tuần sau đã được xác nhận.',warningMessageVi:'Chưa thấy dấu hiệu lừa đảo trong đoạn này.',executionTimeMs:500,
+ audioQuality:'CLEAR',assessmentSource:'HYBRID_AUDIO',analysisModel:'gemini-test-fixture',contentAnalysis:{status:'AVAILABLE'},
+ acousticAnalysis:{status:'AVAILABLE',score,verdict:score>=.8?'SYNTHETIC_SUSPECTED':score<=.2?'NO_SYNTHETIC_EVIDENCE':'UNKNOWN',scoreCalibrated:false,source:'LOCAL_XLSR_AASIST',modelVersion:'a'.repeat(64),executionTimeMs:400}});
+
+test('Voice Pro shows synthetic benign speech separately and keeps an auditable history',async({},testInfo)=>{
+ await context.route('**/api/v1/analyze-voice',route=>route.fulfill({status:200,json:proAnswer(.95)}));
+ await page.getByLabel('Chọn file âm thanh để phân tích').setInputFiles({name:'benign-tts.wav',mimeType:'audio/wav',buffer:fixtureWav()});
+ await expect(page.getByRole('heading',{name:'Chưa thấy kịch bản lừa đảo',exact:true})).toBeVisible();
+ const acoustic=page.getByRole('region',{name:'Đánh giá giọng nói trên máy'});
+ await expect(acoustic).toContainText('Có dấu hiệu giọng tổng hợp');await expect(acoustic).toContainText('95/100, chưa hiệu chuẩn');
+ await expect(page.locator('.session-warning')).toHaveCount(0);await expect(page.locator('.result-panel .risk-number')).toContainText('0');
+ await page.getByText('Xem chi tiết lượt 1',{exact:true}).click();await expect(page.locator('.history-acoustic')).toContainText('Có dấu hiệu giọng tổng hợp');
+ await page.screenshot({path:testInfo.outputPath('voice-pro-desktop.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.screenshot({path:testInfo.outputPath('voice-pro-mobile.png'),fullPage:true});
+});
+
+test('Voice Pro retains acoustic evidence after a low-scoring clip and resets with a new session',async()=>{
+ let calls=0;
+ await context.route('**/api/v1/analyze-voice',route=>{calls++;return route.fulfill({status:200,json:proAnswer(calls===1?.95:.05)});});
+ await page.getByRole('radio',{name:'Theo dõi liên tục',exact:true}).check();await page.getByRole('radio',{name:/Micro của bạn/}).check();
+ await page.getByRole('button',{name:'Bắt đầu kiểm tra'}).click();
+ await expect(page.getByRole('region',{name:'Đánh giá giọng nói trên máy'})).toContainText('Có dấu hiệu giọng tổng hợp',{timeout:10000});
+ const pinned=page.getByRole('complementary',{name:'Dấu hiệu giọng tổng hợp đã ghi nhận'});
+ await expect(pinned).toBeVisible({timeout:12000});await expect(pinned).toContainText('Lượt 1');
+ await expect(page.getByRole('region',{name:'Đánh giá giọng nói trên máy'})).toContainText('Chưa thấy bằng chứng giọng tổng hợp');
+ await expect(page.locator('.session-warning')).toHaveCount(0);
+ await page.getByRole('button',{name:'Dừng thu và phân tích'}).click();await expect(page.getByRole('button',{name:'Bắt đầu kiểm tra'})).toBeEnabled();
+ await page.getByRole('radio',{name:'Một đoạn 5 giây',exact:true}).check();await page.getByRole('button',{name:'Bắt đầu kiểm tra'}).click();
+ await expect(pinned).toHaveCount(0);await expect(page.locator('.session-history')).toHaveCount(0);
+});
+
+
+test('Voice Pro displays whole-file acoustic coverage for a15s upload',async()=>{
+ await context.route('**/api/v1/analyze-voice',route=>{const body=proAnswer(.95);return route.fulfill({status:200,json:{...body,acousticAnalysis:{...body.acousticAnalysis,windowCount:3,audioDurationSeconds:15}}});});
+ const sent=page.waitForRequest('**/api/v1/analyze-voice');
+ await page.getByLabel('Chọn file âm thanh để phân tích').setInputFiles({name:'voice-pro-15s.wav',mimeType:'audio/wav',buffer:reviewFileWav(15)});
+ expect(Buffer.from((await sent).postDataJSON().audioBase64,'base64').readUInt32LE(40)).toBe(480000);
+ await expect(page.getByRole('region',{name:'Đánh giá giọng nói trên máy'})).toContainText('15.0 giây, chia thành 3 đoạn');
+ await expect(page.getByRole('heading',{name:'Chưa thấy kịch bản lừa đảo',exact:true})).toBeVisible();
 });

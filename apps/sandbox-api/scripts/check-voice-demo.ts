@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { localAcousticEndpoint } from '../src/voice-acoustic.js';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
@@ -5,7 +7,9 @@ import dotenv from 'dotenv';
 
 const repo = fileURLToPath(new URL('../../../', import.meta.url));
 dotenv.config({ path: repo + '.env', quiet: true });
-const { values } = parseArgs({ options: { 'api-base': { type: 'string', default: 'http://127.0.0.1:8080' } } });
+const { values } = parseArgs({ options: { 'api-base': { type: 'string', default: 'http://127.0.0.1:8080' }, strategy:{type:'string',default:'gemini'}, 'acoustic-base':{type:'string',default:'http://127.0.0.1:8081'} } });
+if (!['gemini','hybrid'].includes(values.strategy!)) throw new Error('strategy must be gemini or hybrid');
+const startCommand=values.strategy==='hybrid'?'pnpm dev:voice-pro':'pnpm dev:voice-extended';
 const expectedModel = 'gemini-3.8-live-extended-thinking';
 const checks: { name: string; ok: boolean; action?: string }[] = [];
 const add = (name: string, ok: boolean, action?: string) => checks.push({ name, ok, ...(!ok ? { action } : {}) });
@@ -30,8 +34,18 @@ if (base) {
     const ownService = response.ok && health.service === 'zeroleak-sandbox-api';
     add('API health', ownService, 'Khởi động API bằng pnpm dev:voice-extended.');
     if (ownService) {
-      add('Gemini-only strategy', health.voice?.analysisStrategy === 'gemini', 'Dừng API cũ và chạy pnpm dev:voice-extended.');
+      add('Voice strategy: '+values.strategy, health.voice?.analysisStrategy === values.strategy, 'Dừng API cũ và chạy '+startCommand+'.');
       add('Extended-only route', JSON.stringify(health.voice?.modelRoute) === JSON.stringify([expectedModel]), 'Dừng API cũ và chạy pnpm dev:voice-extended.');
+      if(values.strategy==='hybrid'){
+        add('Acoustic endpoint configured',health.voice?.localAcousticConfigured===true,'Khởi động bằng pnpm dev:voice-pro.');
+        try{
+          const endpoint=new URL(localAcousticEndpoint(values['acoustic-base']!));
+          const response=await fetch(endpoint.origin+'/health',{signal:AbortSignal.timeout(2500),redirect:'error'});
+          const worker=await response.json() as any;
+          const version=createHash('sha256').update(readFileSync(repo+'apps/sandbox-api/models/voice-linear-v3.json')).digest('hex');
+          add('Acoustic worker ready and matching V3',response.ok&&worker.ready===true&&worker.warmupComplete===true&&worker.modelVersion===version,'Kiểm tra worker/asset hoặc --acoustic-base.');
+        }catch{add('Acoustic worker reachable',false,'Kiểm tra worker/asset hoặc --acoustic-base.');}
+      }
       add('Live API runtime', health.voice?.liveApi === true, 'Khởi động API bằng Node.js >=22.');
       // Deliberately invalid input must fail validation before any Google call.
       const headers: Record<string,string> = { 'Content-Type':'application/json' };

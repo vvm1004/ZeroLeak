@@ -1,0 +1,15 @@
+{
+  "fixedBeforePredictions": true,
+  "head": "V3 unchanged; no fitting/threshold tuning",
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "manifestSha256": "81f08c3a8477750b41734a79305a767b1a71c48f22a5e0cb5d4cb1cb92c825a3",
+  "baselineSha256": "c31452633f5f502ea9bb1485c4da7fb205cf21b2f74df38409c50fc09844526f",
+  "testScope": "All60 test cases in the80clip manifest. Compare matched40 test IDs from previous Gemini run, noting historical/different-time comparison. No new Gemini calls for screening.",
+  "thresholds": {
+    "human": 0.2,
+    "synthetic": 0.8
+  },
+  "gate": "No human false alert in selected test, no HTTP errors, at least2 additional clone alerts among10 matched test clone variants, warm HTTP p95<=2800ms. TTS content controls reported separately. Known exposure to local test sources: regression test, not new external validation.",
+  "integration": "Only after gate: opt-in launcher with8s Gemini collection, same model Extended; independent acoustic evidence never sets scam risk or SAFE. Real Google smoke max6 sessions, no fallback/retry. No physical microphone.",
+  "preserved": "Gemini-only command remains available, no .env/model weights changes"
+}

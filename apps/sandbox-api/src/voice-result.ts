@@ -99,14 +99,15 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
       transcript.includes(normalize(item.quote)));
   const nonActionable = raw.speechAct !== undefined && raw.speechAct !== 'DIRECT_REQUEST' && tactics.length > 0;
   const unsupportedAlert = (raw.verdict === 'SUSPICIOUS' || raw.verdict === 'DEEPFAKE_SCAM' || (raw.riskScore as number) >= 40) && !tactics.length;
-  // Urgency alone is common in ordinary work; this tactic requires a sensitive-action context.
+  // Job title, secrecy and urgency also occur in ordinary work. CEO fraud and
+  // urgency findings require a sensitive-action context in this clip.
   // This is a necessary-condition guard, never a rule that declares a call SAFE.
   const plain = transcript.normalize('NFD').replace(/\p{M}/gu, '').replace(/đ/g, 'd');
   const sensitiveAction = /\b(chuyen (tien|khoan)|(?:nop|nap|gui|rut|tra) (tien|phi)|thanh toan|otp|mat khau|password|pin|ma (xac thuc|xac nhan|bao mat)|(?:doc|gui|cung cap) ma|ma vua (gui|nhan)|tai khoan|so the|cvv|seed phrase|khoa bi mat|truy cap tu xa|dieu khien tu xa|cai (ung dung|phan mem))\b/.test(plain);
-  const unsupportedUrgency = tactics.includes('URGENCY_PRESSURE') && !sensitiveAction;
+  const unsupportedDemand = (tactics.includes('URGENCY_PRESSURE') || tactics.includes('CEO_FRAUD')) && !sensitiveAction;
   const contradictorySafe = raw.verdict === 'SAFE' && tactics.length > 0;
   const unusable = raw.audioQuality === 'UNUSABLE';
-  const unknown = unusable || raw.verdict === 'UNKNOWN' || raw.riskScore === null || !supported || unsupportedAlert || nonActionable || raw.speechAct === 'UNCLEAR' || unsupportedUrgency || contradictorySafe;
+  const unknown = unusable || raw.verdict === 'UNKNOWN' || raw.riskScore === null || !supported || unsupportedAlert || nonActionable || raw.speechAct === 'UNCLEAR' || unsupportedDemand || contradictorySafe;
   const verdict = raw.verdict as VoiceScamAnalysisResult['verdict'];
   return {
     riskScore: unknown ? null : Math.round(raw.riskScore as number),
@@ -117,6 +118,7 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
     tacticEvidence: unknown ? [] : evidence.map(item => ({ tactic: item.tactic, quote: redact(item.quote) })),
     transcriptSnippet: unusable ? '' : redact(raw.transcriptSnippet).slice(0, transcriptLimit),
     warningMessageVi: unusable ? 'Chưa đủ âm thanh rõ để đánh giá. Hãy thử thu lại.'
+      : unsupportedDemand ? 'Chức danh, yêu cầu giữ bí mật hoặc lời thúc giục chưa đủ để kết luận lừa đảo. Cần nghe thêm yêu cầu cụ thể; đoạn này chưa được kết luận an toàn.'
       : unknown ? 'Chưa đủ ngữ cảnh để đánh giá nội dung đoạn này. Dấu hiệu giọng tổng hợp được đánh giá riêng.'
       : redact(raw.warningMessageVi).slice(0, 500),
     audioQuality: raw.audioQuality as VoiceScamAnalysisResult['audioQuality'],

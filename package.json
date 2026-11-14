@@ -7,6 +7,7 @@
   "scripts": {
     "dev:extension": "pnpm --filter @zeroleak/extension dev",
     "dev:sandbox": "pnpm --filter @zeroleak/sandbox-api dev",
+    "dev:voice-pro": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/start-voice-pro.ts",
     "dev:voice-detector": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/start-voice-detector.ts",
     "dev:dashboard": "pnpm --filter @zeroleak/dashboard dev",
     "build:extension": "pnpm --filter @zeroleak/extension build",
@@ -15,6 +16,7 @@
     "lint": "pnpm -r lint",
     "test:voice:e2e": "playwright test --config tests/voice.playwright.config.ts",
     "dev:voice-extended": "VOICE_ANALYSIS_STRATEGY=gemini GEMINI_MODEL_VOICE=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_REVIEW=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_LIVE_FALLBACK=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_FALLBACK=gemini-3.8-live-extended-thinking pnpm dev:sandbox",
+    "eval:voice:ab": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/compare-voice-models.ts",
     "check:voice-demo": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/check-voice-demo.ts"
   },
   "devDependencies": {
