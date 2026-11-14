@@ -51,6 +51,7 @@ export const TelemetryBadge: React.FC<TelemetryBadgeProps> = ({
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         userSelect: 'none',
+        pointerEvents: 'auto',
       }}
     >
       {/* Expanded Micro-Drawer Panel */}

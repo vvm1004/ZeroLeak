@@ -11,14 +11,18 @@ import {
   Lock,
   Eye,
   AlertTriangle,
+  AlertCircle,
   CheckCircle2,
   Sliders,
   QrCode,
   Search,
   ExternalLink,
   Mic,
+  Loader2,
 } from 'lucide-react';
 import { analyzeUrlWithSandbox } from '../../utils/phishing-client';
+import { decodeQrFromImageSource } from '../../utils/qr-scanner';
+import { PopupThreatReport } from '../../components/PopupThreatReport';
 
 export default function App() {
   const [policy, setPolicy] = useState<SecurityPolicy>(DEFAULT_SECURITY_POLICY);
@@ -27,6 +31,11 @@ export default function App() {
   const [urlToCheck, setUrlToCheck] = useState('');
   const [checkingUrl, setCheckingUrl] = useState(false);
   const [urlResult, setUrlResult] = useState<PhishingAnalysisResponse | null>(null);
+  const [scanningQr, setScanningQr] = useState(false);
+  const [qrStatusText, setQrStatusText] = useState<string | null>(null);
+  const [qrError, setQrError] = useState<string | null>(null);
+  const [projectingToTab, setProjectingToTab] = useState(false);
+  const [tabProjectError, setTabProjectError] = useState<string | null>(null);
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: 'GET_POLICY' }, (response) => {
@@ -69,10 +78,107 @@ export default function App() {
     });
   };
 
-  const triggerQrScanOnTab = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'TRIGGER_QR_SCAN' });
+  const handleDirectTabQrScan = async () => {
+    setScanningQr(true);
+    setQrStatusText('Đang chụp màn hình tab...');
+    setQrError(null);
+
+    try {
+      const dataUrl = await new Promise<string | null>((resolve) => {
+        chrome.tabs.captureVisibleTab({ format: 'png' }, (result) => {
+          if (chrome.runtime.lastError || !result) {
+            resolve(null);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      if (!dataUrl) {
+        setQrError('Không thể chụp ảnh tab này do giới hạn bảo mật của trình duyệt.');
+        setScanningQr(false);
+        return;
+      }
+
+      setQrStatusText('Đang giải mã mã QR...');
+      const qrResult = await decodeQrFromImageSource(dataUrl);
+
+      if (!qrResult || !qrResult.data) {
+        setQrError('Không phát hiện thấy mã QR rõ ràng trên màn hình. Hãy đảm bảo mã QR nằm trong khung hiển thị.');
+        setScanningQr(false);
+        return;
+      }
+
+      const qrData = qrResult.data.trim();
+      const isUrl = /^https?:\/\//i.test(qrData) || /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/i.test(qrData);
+
+      if (isUrl) {
+        const fullUrl = qrData.startsWith('http') ? qrData : `https://${qrData}`;
+        setUrlToCheck(fullUrl);
+        setCheckingUrl(true);
+        setQrStatusText('Đang phân tích an toàn liên kết...');
+        const analysis = await analyzeUrlWithSandbox(fullUrl, 'QR_CODE');
+        setUrlResult(analysis);
+      } else {
+        setUrlResult({
+          url: qrData,
+          finalRedirectUrl: qrData,
+          riskScore: 0,
+          verdict: 'SAFE',
+          impersonatedBrand: null,
+          actualDomain: 'Nội dung QR (Văn bản)',
+          hasPasswordInput: false,
+          hasOtpInput: false,
+          indicators: [`Nội dung mã QR: "${qrData}"`],
+          executionTimeMs: 12,
+        });
+      }
+    } catch (err: any) {
+      setQrError('Lỗi trong quá trình quét QR: ' + (err?.message || 'Không xác định'));
+    } finally {
+      setScanningQr(false);
+      setQrStatusText(null);
+    }
+  };
+
+  const triggerQrScanOnTab = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.id) return;
+
+    setQrError(null);
+
+    // If tab URL is restricted scheme where content script cannot be injected (blob:, chrome:, about:, etc.)
+    const isRestrictedScheme =
+      tab.url?.startsWith('blob:') ||
+      tab.url?.startsWith('chrome:') ||
+      tab.url?.startsWith('chrome-extension:') ||
+      tab.url?.startsWith('about:') ||
+      tab.url?.startsWith('edge:');
+
+    if (isRestrictedScheme) {
+      // Execute Direct Capture & Scan immediately inside popup
+      await handleDirectTabQrScan();
+      return;
+    }
+
+    // Try sending message to existing content script
+    chrome.tabs.sendMessage(tab.id, { type: 'TRIGGER_QR_SCAN' }, async () => {
+      if (chrome.runtime.lastError) {
+        // Content script not loaded yet (e.g. unrefreshed tab), attempt dynamic injection
+        try {
+          await chrome.scripting.executeScript({
+            target: { tabId: tab.id! },
+            files: ['content-scripts/content.js'],
+          });
+          setTimeout(() => {
+            chrome.tabs.sendMessage(tab.id!, { type: 'TRIGGER_QR_SCAN' });
+            window.close();
+          }, 150);
+        } catch {
+          // If dynamic injection also fails, fallback to direct tab capture
+          await handleDirectTabQrScan();
+        }
+      } else {
         window.close();
       }
     });
@@ -94,12 +200,71 @@ export default function App() {
     }
   };
 
+  const handleShowOnActiveTab = async (analysis: PhishingAnalysisResponse) => {
+    setProjectingToTab(true);
+    setTabProjectError(null);
+
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!tab?.id) {
+        setTabProjectError('Không tìm thấy tab trình duyệt đang hoạt động.');
+        setProjectingToTab(false);
+        return;
+      }
+
+      // Kiểm tra nếu tab hiện tại là trang nội bộ bị trình duyệt cấm tiêm script
+      const isRestricted =
+        !tab.url ||
+        tab.url.startsWith('chrome://') ||
+        tab.url.startsWith('chrome-extension://') ||
+        tab.url.startsWith('edge://') ||
+        tab.url.startsWith('about:') ||
+        tab.url.startsWith('view-source:');
+
+      if (isRestricted) {
+        setTabProjectError(
+          'Trang nội bộ này (chrome://) bị Chrome cấm hiển thị giao diện. Hãy chuyển sang một tab trang web thông thường (như Facebook, Google...) rồi bấm lại!'
+        );
+        setProjectingToTab(false);
+        return;
+      }
+
+      // Thử gửi message tới content script đã chạy trên tab
+      chrome.tabs.sendMessage(tab.id, { type: 'SHOW_ANALYSIS_MODAL', analysis }, async () => {
+        if (chrome.runtime.lastError) {
+          // Tab chưa có content script (do chưa F5 tab sau khi reload extension) -> tự động tiêm
+          try {
+            await chrome.scripting.executeScript({
+              target: { tabId: tab.id! },
+              files: ['content-scripts/content.js'],
+            });
+
+            // Chờ React Shadow DOM gắn vào trang rồi gửi lại
+            setTimeout(() => {
+              chrome.tabs.sendMessage(tab.id!, { type: 'SHOW_ANALYSIS_MODAL', analysis });
+              setTimeout(() => window.close(), 120);
+            }, 300);
+          } catch (injectErr: any) {
+            setTabProjectError('Không thể chiếu lên trang này: ' + (injectErr?.message || 'Giới hạn bảo mật'));
+            setProjectingToTab(false);
+          }
+        } else {
+          // Đã nhận thành công, đóng popup
+          setTimeout(() => window.close(), 100);
+        }
+      });
+    } catch (err: any) {
+      setTabProjectError('Lỗi kết nối tab: ' + (err?.message || 'Không xác định'));
+      setProjectingToTab(false);
+    }
+  };
+
   if (loading) {
     return <div className="p-6 text-center text-slate-400">Đang tải cấu hình...</div>;
   }
 
   return (
-    <div className="w-[360px] text-xs pb-1">
+    <div className="w-full max-w-[380px] text-xs pb-1">
       {/* Header */}
       <header className="flex items-center justify-between pb-3 border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -171,11 +336,23 @@ export default function App() {
       <div className="mt-3">
         <button
           onClick={triggerQrScanOnTab}
-          className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 rounded-xl font-medium transition-all text-[11px]"
+          disabled={scanningQr}
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 rounded-xl font-medium transition-all text-[11px] disabled:opacity-60"
         >
-          <QrCode className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Khoanh vùng quét mã QR trên màn hình</span>
+          {scanningQr ? (
+            <Loader2 className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+          ) : (
+            <QrCode className="w-3.5 h-3.5 text-emerald-400" />
+          )}
+          <span>{qrStatusText || 'Khoanh vùng quét mã QR trên màn hình'}</span>
         </button>
+
+        {qrError && (
+          <div className="mt-2 p-2 rounded-lg bg-rose-950/40 border border-rose-800 text-rose-300 text-[10px] flex items-start gap-1.5">
+            <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+            <span>{qrError}</span>
+          </div>
+        )}
       </div>
 
       {/* Quick URL Phishing Check */}
@@ -199,28 +376,16 @@ export default function App() {
         </form>
 
         {urlResult && (
-          <div
-            className={`mt-2 p-2.5 rounded-lg border text-[11px] ${
-              urlResult.verdict === 'MALICIOUS'
-                ? 'bg-rose-950/40 border-rose-800 text-rose-300'
-                : urlResult.verdict === 'SUSPICIOUS'
-                ? 'bg-amber-950/40 border-amber-800 text-amber-300'
-                : 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
-            }`}
-          >
-            <div className="flex items-center justify-between font-bold mb-1">
-              <span>{urlResult.verdict} ({urlResult.riskScore}/100)</span>
-              <span>{urlResult.executionTimeMs}ms</span>
-            </div>
-            {urlResult.impersonatedBrand && (
-              <div className="font-semibold text-rose-400 mb-1">
-                ⚠️ Nhắm vào: {urlResult.impersonatedBrand}
-              </div>
-            )}
-            <div className="text-[10px] text-slate-300 line-clamp-2">
-              {urlResult.indicators[0]}
-            </div>
-          </div>
+          <PopupThreatReport
+            analysis={urlResult}
+            onClose={() => {
+              setUrlResult(null);
+              setTabProjectError(null);
+            }}
+            onShowOnTab={() => handleShowOnActiveTab(urlResult)}
+            isProjecting={projectingToTab}
+            projectError={tabProjectError}
+          />
         )}
       </div>
 

@@ -164,12 +164,12 @@ Khi người dùng bấm chuột phải chọn **"Kiểm tra liên kết an toà
 
 ## 5. Phân công Nhân sự (Đội hình 3–4 Thành viên)
 
-| Vai trò | Thành viên phụ trách | Nhiệm vụ cốt lõi (Deliverables) |
+| Vai trò | Chuyên môn phụ trách | Nhiệm vụ cốt lõi (Deliverables) |
 | :--- | :--- | :--- |
-| **Role 1: Extension & Vault Lead** | Dev 1 (Frontend/TS) | Phụ trách `apps/extension`: Chặn sự kiện `paste`/`drop`, Reversible Tokenizer `[ZL_...]`, `MutationObserver`, Shadow DOM Toast, tích hợp `jsQR` và thu âm `MediaRecorder`. |
-| **Role 2: Cloud Sandbox & AI Lead** | Dev 2 (Backend/AI) | Phụ trách `apps/sandbox-api`: Viết API Playwright chụp ảnh/bóc tách DOM, tích hợp `Google Safe Browsing API v4`, `Smart Model Router` (`Gemini 3.8 Flash` / `3.5 Flash Lite`) cho cả Vision và Voice. |
-| **Role 3: DLP & Voice Engine Lead** | Dev 3 (Thuật toán/AI) | Phụ trách bộ lọc `deterministic-dlp.ts` (Regex, Luhn, Entropy), tích hợp `Gemini Nano (window.ai)` trong Web Worker và xử lý biểu đồ sóng âm FFT cho ZeroLeak Voice. |
-| **Role 4: Dashboard & Demo Lead** | Dev 4 (Fullstack/UI) *(Hoặc gộp vào Dev 1 & 3)* | Phụ trách `apps/dashboard`: Xây dựng giao diện `ZeroLeak Command` với Shadcn UI + Recharts, đồng bộ Firebase Firestore `onSnapshot`, dựng trang `/demo-phishing` kèm mã QR và file âm thanh mẫu. |
+| **Role 1: Extension & Vault Lead** | Frontend / TypeScript | Phụ trách `apps/extension`: Chặn sự kiện `paste`/`drop`, Reversible Tokenizer `[ZL_...]`, `MutationObserver`, Shadow DOM Toast, tích hợp `jsQR` và thu âm `MediaRecorder`. |
+| **Role 2: Cloud Sandbox & AI Lead** | Backend / Cloud AI | Phụ trách `apps/sandbox-api`: Viết API Playwright chụp ảnh/bóc tách DOM, tích hợp `Google Safe Browsing API v4`, `Smart Model Router` (`Gemini 3.8 Flash` / `3.5 Flash Lite`) cho cả Vision và Voice. |
+| **Role 3: DLP & Voice Engine Lead** | Security Engine / Audio AI | Phụ trách bộ lọc `deterministic-dlp.ts` (Regex, Luhn, Entropy), tích hợp `Gemini Nano (window.ai)` trong Web Worker và xử lý biểu đồ sóng âm FFT cho ZeroLeak Voice. |
+| **Role 4: Dashboard & Demo Lead** | Fullstack / Dashboard UI | Phụ trách `apps/dashboard`: Xây dựng giao diện `ZeroLeak Command` với Shadcn UI + Recharts, đồng bộ Firebase Firestore `onSnapshot`, dựng trang `/demo-phishing` kèm mã QR và file âm thanh mẫu. |
 
 ---
 
@@ -182,11 +182,11 @@ Khi người dùng bấm chuột phải chọn **"Kiểm tra liên kết an toà
 
 ### Giai đoạn B: Gói 70% Code Trực tiếp tại Hackathon (Tối ưu cho 1 Buổi sáng 3.5–4 Giờ)
 * **Khung giờ 1 (60 phút đầu — Dựng Core Backend & Realtime Sync):**
-  * *Dev 2:* Hoàn thiện endpoint `/api/v1/analyze-url` kết nối **Google Safe Browsing API v4** + **Playwright Headless** chụp ảnh màn hình WebP.
-  * *Dev 3 / Dev 4:* Nối `onSnapshot` của Firebase Firestore giữa trang `ZeroLeak Command Dashboard` và `Extension Background` để đồng bộ nút gạt Policy trong $< 500\text{ ms}$.
+  * *Backend / Cloud AI:* Hoàn thiện endpoint `/api/v1/analyze-url` kết nối **Google Safe Browsing API v4** + **Playwright Headless** chụp ảnh màn hình WebP.
+  * *Dashboard & Realtime:* Nối `onSnapshot` của Firebase Firestore giữa trang `ZeroLeak Command Dashboard` và `Extension Background` để đồng bộ nút gạt Policy trong $< 500\text{ ms}$.
 * **Khung giờ 2 (60 phút tiếp theo — Ghép nối Gemini 3.8 Vision & Voice):**
-  * *Dev 2:* Nối ảnh chụp Playwright vào `gemini-analyzer.ts` và hoàn thiện endpoint `/api/v1/analyze-voice` (`voice-analyzer.ts`). Sử dụng `gemini-3.5-flash-lite` ($500\text{ RPD}$) trong lúc test liên tục.
-  * *Dev 1:* Hoàn thiện luồng quét mã QR trên màn hình (`jsQR`) và nút bấm thu âm $5\text{ s}$ trên Popup gửi lên `sandbox-api`.
+  * *Backend / Cloud AI:* Nối ảnh chụp Playwright vào `gemini-analyzer.ts` và hoàn thiện endpoint `/api/v1/analyze-voice` (`voice-analyzer.ts`). Sử dụng `gemini-3.5-flash-lite` ($500\text{ RPD}$) trong lúc test liên tục.
+  * *Extension:* Hoàn thiện luồng quét mã QR trên màn hình (`jsQR`) và nút bấm thu âm $5\text{ s}$ trên Popup gửi lên `sandbox-api`.
 * **Khung giờ 3 (60 phút tiếp theo — Trang Demo Giả lập & Đánh bóng UI):**
   * *Cả đội:* Dựng trang `/demo-phishing` giả mạo giao diện ngân hàng + Email chứa mã QR & đoạn ghi âm cuộc gọi giả giọng sếp (CEO Fraud).
   * Kiểm tra 6 bài test nghiệm thu trong `TASK.md` và cài đặt `LRU Cache` + `localHeuristicFallback(url)`.

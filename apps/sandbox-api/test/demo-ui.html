@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZeroLeak Lens — Test & Demo Portal</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #090d16;
+      color: #f8fafc;
+      padding: 32px 40px;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .title-group h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .link-box {
+      padding: 12px 14px;
+      background: #020617;
+      border-radius: 8px;
+      border: 1px solid #dc2626;
+      margin: 12px 0;
+      word-break: break-all;
+    }
+    a.phish-link {
+      color: #f87171;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    .qr-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+      background: #020617;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #1e293b;
+    }
+    .qr-img {
+      border: 3px solid #f8fafc;
+      border-radius: 8px;
+      background: white;
+      padding: 6px;
+      width: 150px;
+      height: 150px;
+      flex-shrink: 0;
+    }
+    .btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: #059669; }
+    textarea {
+      width: 100%;
+      height: 90px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title-group">
+      <h1>🛡️ ZeroLeak — Live Demo &amp; Testing Portal</h1>
+      <span style="font-size: 13px; color: #94a3b8;">GDG DevFest Miền Trung 2026 | Hybrid Edge-Cloud Security</span>
+    </div>
+    <div class="badge">Live Test Mode Active</div>
+  </div>
+
+  <div class="grid">
+    <!-- KỊCH BẢN 1: Chuột phải kiểm tra link phishing -->
+    <div class="card" id="scenario-1">
+      <h2>🎯 Kịch bản 1: Link Lừa Đảo Giả Mạo VCB (MALICIOUS)</h2>
+      <p style="font-size: 13px; color: #94a3b8; margin: 6px 0;">
+        Giả lập đường link mạo danh Vietcombank gửi qua Email/Tin nhắn:
+      </p>
+      <div class="link-box" style="border-color: #dc2626;">
+        <a class="phish-link" id="target-phish-link" href="https://vcb-digibank-confirm.top/login.php" style="color: #f87171;">
+          https://vcb-digibank-confirm.top/login.php
+        </a>
+      </div>
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 0;">
+        👉 <i>Kết quả: MALICIOUS (92/100) — Cảnh báo mạo danh Vietcombank DigiBank</i>
+      </p>
+    </div>
+
+    <!-- KỊCH BẢN 1B: Link Ngân hàng Vietcombank chính thức -->
+    <div class="card" id="scenario-1b">
+      <h2>🏛️ Kịch bản 2: Link Ngân Hàng Thật (SAFE Whitelist)</h2>
+      <p style="font-size: 13px; color: #94a3b8; margin: 6px 0;">
+        Tên miền chính thức của Ngân hàng TMCP Ngoại thương Việt Nam:
+      </p>
+      <div class="link-box" style="border-color: #059669;">
+        <a class="phish-link" id="target-vcb-real-link" href="https://vcbdigibank.vietcombank.com.vn/" style="color: #34d399;">
+          https://vcbdigibank.vietcombank.com.vn/
+        </a>
+      </div>
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 0;">
+        👉 <i>Kết quả: SAFE (0/100) — Xác thực hệ thống chính thức của ngân hàng</i>
+      </p>
+    </div>
+
+    <!-- KỊCH BẢN 1C: Link kiểm tra Playwright Sandbox Screenshot -->
+    <div class="card" id="scenario-1c">
+      <h2>🖼️ Kịch bản 3: Xem Ảnh Chụp Sandbox Preview</h2>
+      <p style="font-size: 13px; color: #94a3b8; margin: 6px 0;">
+        Trang web được mở và chụp màn hình trong Cloud Sandbox cô lập:
+      </p>
+      <div class="link-box" style="border-color: #0284c7;">
+        <a class="phish-link" id="target-screenshot-link" href="https://example.com" style="color: #38bdf8;">
+          https://example.com
+        </a>
+      </div>
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 0;">
+        👉 <i>Kết quả: SAFE (0/100) — Kèm Ảnh chụp Playwright Sandbox sắc nét</i>
+      </p>
+    </div>
+
+    <!-- KỊCH BẢN 2: Quét mã QR trên màn hình -->
+    <div class="card" id="scenario-2">
+      <h2>📷 Kịch bản 4: Khoanh Vùng &amp; Quét Mã QR</h2>
+      <div class="qr-container">
+        <img class="qr-img" id="qr-target-img" src="vcb-phishing-qr.png" alt="QR Code Fake Vietcombank">
+        <div style="font-size: 12px; color: #94a3b8;">
+          <p style="margin: 0 0 6px 0;"><b>Mục tiêu QR:</b> Mạo danh ngân hàng Vietcombank</p>
+          <p style="margin: 0 0 10px 0;"><b>Nội dung:</b> <code>vcb-digibank-confirm.top</code></p>
+          <span class="badge" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">
+            📷 Sẵn sàng cho công cụ Snipper
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KỊCH BẢN 3 & 4: On-Device DLP Textarea -->
+  <div class="card" style="margin-top: 20px;">
+    <h2>⚡ Kịch bản 3 &amp; 4: Kiểm Thử On-Device DLP (Tự Động Ẩn Danh PII)</h2>
+    <p style="font-size: 13px; color: #94a3b8; margin: 4px 0 10px 0;">
+      Dán văn bản hợp đồng chứa số CCCD, API Key vào ô dưới đây để xem thuật toán Regex + Luhn + Entropy che dữ liệu ngay tức khắc:
+    </p>
+    <textarea id="dlp-input" placeholder="Dán văn bản có chứa CCCD (048099001234) hoặc API Key (AIzaSy...) vào đây..."></textarea>
+  </div>
+</body>
+</html>
+

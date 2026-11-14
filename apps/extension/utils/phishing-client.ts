@@ -7,12 +7,15 @@
 
 import type { PhishingAnalysisResponse } from '@zeroleak/shared-types';
 
-const SANDBOX_API_ENDPOINT =
-  typeof process !== 'undefined' && process.env?.SANDBOX_API_URL
-    ? process.env.SANDBOX_API_URL
-    : 'http://localhost:8080/api/v1/analyze-url';
+const rawSandboxUrl =
+  (typeof process !== 'undefined' && process.env?.SANDBOX_API_URL) || 'http://localhost:8080';
 
-const TIMEOUT_MS = 3500;
+const SANDBOX_API_ENDPOINT = rawSandboxUrl.endsWith('/api/v1/analyze-url')
+  ? rawSandboxUrl
+  : `${rawSandboxUrl.replace(/\/+$/, '')}/api/v1/analyze-url`;
+
+// Tăng timeout lên 25s để đủ thời gian cho Playwright Sandbox (3-4s) + Gemini Multimodal Vision (5-8s) đối với các trang nặng/chậm
+const TIMEOUT_MS = 25000;
 
 const VIETNAMESE_BANKS: Array<{ brand: string; pattern: RegExp; officialDomains: string[] }> = [
   {
@@ -39,6 +42,41 @@ const VIETNAMESE_BANKS: Array<{ brand: string; pattern: RegExp; officialDomains:
     brand: 'ACB ONE',
     pattern: /(?:acb(?:bank)?|online\.acb)/i,
     officialDomains: ['acb.com.vn'],
+  },
+  {
+    brand: 'BIDV SmartBanking',
+    pattern: /(?:bidv|smartbanking)/i,
+    officialDomains: ['bidv.com.vn'],
+  },
+  {
+    brand: 'Agribank E-Mobile Banking',
+    pattern: /agribank/i,
+    officialDomains: ['agribank.com.vn'],
+  },
+  {
+    brand: 'TPBank Mobile',
+    pattern: /(?:tpbank|tpb)/i,
+    officialDomains: ['tpbank.com.vn', 'tpb.vn'],
+  },
+  {
+    brand: 'VIB MyVIB',
+    pattern: /(?:vib(?:bank)?|myvib)/i,
+    officialDomains: ['vib.com.vn'],
+  },
+  {
+    brand: 'Sacombank Pay',
+    pattern: /(?:sacombank|sacombankpay)/i,
+    officialDomains: ['sacombank.com.vn', 'sacombank.com'],
+  },
+  {
+    brand: 'Ví MoMo',
+    pattern: /(?:momo\.vn|momo-pay|momo-wallet)/i,
+    officialDomains: ['momo.vn'],
+  },
+  {
+    brand: 'Ví ZaloPay',
+    pattern: /(?:zalopay|zalo-pay)/i,
+    officialDomains: ['zalopay.vn'],
   },
   {
     brand: 'Cổng Dịch vụ công Quốc gia',
@@ -187,6 +225,36 @@ export async function analyzeUrlWithSandbox(
   url: string,
   sourceContext: 'CONTEXT_MENU' | 'QR_CODE' | 'DIRECT_CHECK' = 'CONTEXT_MENU'
 ): Promise<PhishingAnalysisResponse> {
+  // If running inside Content Script on an arbitrary webpage (e.g. facebook.com, chatgpt.com),
+  // browser CSP and Mixed Content (HTTPS page -> HTTP localhost) will block direct fetch to localhost:8080.
+  // We delegate the call to Background Service Worker which has host_permissions: ['<all_urls>'].
+  const isContentScript =
+    typeof window !== 'undefined' &&
+    typeof chrome !== 'undefined' &&
+    typeof chrome.runtime?.sendMessage === 'function' &&
+    // @ts-ignore
+    !chrome.tabs;
+
+  if (isContentScript) {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage(
+        {
+          type: 'ANALYZE_PHISHING_URL',
+          url,
+          sourceContext,
+        },
+        (response) => {
+          if (chrome.runtime.lastError || !response?.result) {
+            console.warn('[ZeroLeak] Background delegate error, using local fallback:', chrome.runtime.lastError?.message);
+            resolve(localHeuristicFallback(url));
+          } else {
+            resolve(response.result);
+          }
+        }
+      );
+    });
+  }
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
