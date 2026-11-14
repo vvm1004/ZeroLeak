@@ -7,11 +7,13 @@
   "scripts": {
     "dev:extension": "pnpm --filter @zeroleak/extension dev",
     "dev:sandbox": "pnpm --filter @zeroleak/sandbox-api dev",
+    "dev:voice-detector": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/start-voice-detector.ts",
     "dev:dashboard": "pnpm --filter @zeroleak/dashboard dev",
     "build:extension": "pnpm --filter @zeroleak/extension build",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "test:voice:e2e": "playwright test --config tests/voice.playwright.config.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^30.0.0",

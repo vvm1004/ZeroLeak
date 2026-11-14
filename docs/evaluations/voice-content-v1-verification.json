@@ -1,0 +1,20 @@
+{
+  "backendTests": 33,
+  "extensionUnitTests": 4,
+  "browserE2e": 11,
+  "providerFixturesInE2e": true,
+  "backendTypecheck": "passed",
+  "extensionTypecheck": "passed",
+  "evalCliTypecheck": "passed",
+  "extensionBuild": "passed",
+  "backendBuild": "passed final",
+  "headV3UnchangedSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "contentAccuracyGatePassed": false,
+  "conservativeProviderCallUpperBound": 64,
+  "noPrivateAudioUploaded": true,
+  "realUiSmoke": "Gemini content succeeded; local unavailable at original 2.8s timeout",
+  "localAdapterFix": "review-only timeout 5s, live 2.8s unchanged; real local+router fallback smoke passed",
+  "caution": "Software tests are not model accuracy. Test 6 physical call / <3s is not accepted.",
+  "totalSoftwareTests": 48,
+  "latestBrowserE2e": "11 passed after final client availability validation"
+}

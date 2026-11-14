@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-11",
+  "branch": "feat/zeroleak-voice",
+  "softwareTests": {
+    "backend": 39,
+    "python": 12,
+    "extension": 4,
+    "browserFixtureE2E": 11,
+    "total": 66,
+    "passed": true,
+    "fixtureIsNotAccuracy": true
+  },
+  "buildChecks": {
+    "backend": true,
+    "extensionTypecheck": true,
+    "evaluationCliTypecheck": true
+  },
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "headChanged": false,
+  "liveDeadlinesChanged": false,
+  "contentQualityGatePassed": false,
+  "physicalCallTest6Accepted": false,
+  "realBrowserSummary": {
+    "planned": 10,
+    "attempted": 4,
+    "skipped": 6,
+    "httpSuccess": 4,
+    "localAvailable": 4,
+    "contentAvailable": 1,
+    "contentUnavailable": 3,
+    "uiShowsResult": 4,
+    "allAttemptedHeadMatches": true
+  },
+  "scope": "Voice reliability and conservative result validation; no claim of improved forensic detection accuracy."
+}

@@ -1,0 +1,39 @@
+{
+  "definedBeforeFreshTestPredictions": true,
+  "thresholdsUnchanged": [
+    0.2,
+    0.8
+  ],
+  "fitOnly": [
+    "train",
+    "calibration"
+  ],
+  "hyperparameterGridUnchanged": [
+    0.01,
+    0.1,
+    1
+  ],
+  "freshGate": [
+    "human false alerts <= V2",
+    "synthetic alerts > V2",
+    "low-scored synthetic <= V2"
+  ],
+  "regressionGates": {
+    "v2-regression": [
+      "false alerts == 0",
+      "synthetic alerts >= 58",
+      "low-scored synthetic == 0"
+    ],
+    "v3-new": [
+      "false alerts == 0",
+      "synthetic alerts >= 24",
+      "low-scored synthetic <= 2"
+    ],
+    "v3-turbo-audit": [
+      "false alerts == 0",
+      "synthetic alerts >= 15",
+      "low-scored synthetic <= 5"
+    ]
+  },
+  "onFailure": "Retain V2; no tuning on fresh test"
+}

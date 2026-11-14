@@ -1,0 +1,91 @@
+{
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "httpValidated": true,
+  "candidateRequests": 398,
+  "baselineRequests": 90,
+  "candidateMaxRoundTripMs": 2470.05,
+  "deadlineMs": 2800,
+  "cohorts": [
+    {
+      "cohort": "v2-regression",
+      "cases": 128,
+      "matchesFrozenHead": true,
+      "summary": {
+        "human": 64,
+        "synthetic": 64,
+        "syntheticAlerts": 62,
+        "humanFalseAlerts": 0,
+        "unknownHuman": 6,
+        "unknownSynthetic": 2,
+        "errors": 0,
+        "lowScoredSynthetic": 0,
+        "roundTripMedianMs": 471.945,
+        "roundTripMaxMs": 1621.68
+      }
+    },
+    {
+      "cohort": "v3-new",
+      "cases": 90,
+      "matchesFrozenHead": true,
+      "summary": {
+        "human": 45,
+        "synthetic": 45,
+        "syntheticAlerts": 29,
+        "humanFalseAlerts": 0,
+        "unknownHuman": 8,
+        "unknownSynthetic": 16,
+        "errors": 0,
+        "lowScoredSynthetic": 0,
+        "roundTripMedianMs": 385.685,
+        "roundTripMaxMs": 2470.05
+      }
+    },
+    {
+      "cohort": "v3-turbo-audit",
+      "cases": 90,
+      "matchesFrozenHead": true,
+      "summary": {
+        "human": 45,
+        "synthetic": 45,
+        "syntheticAlerts": 17,
+        "humanFalseAlerts": 0,
+        "unknownHuman": 8,
+        "unknownSynthetic": 25,
+        "errors": 0,
+        "lowScoredSynthetic": 3,
+        "roundTripMedianMs": 385.02,
+        "roundTripMaxMs": 507.05
+      }
+    },
+    {
+      "cohort": "v4-fresh",
+      "cases": 90,
+      "matchesFrozenHead": true,
+      "summary": {
+        "human": 45,
+        "synthetic": 45,
+        "syntheticAlerts": 15,
+        "humanFalseAlerts": 0,
+        "unknownHuman": 5,
+        "unknownSynthetic": 24,
+        "errors": 0,
+        "lowScoredSynthetic": 6,
+        "roundTripMedianMs": 417.8,
+        "roundTripMaxMs": 606.54
+      }
+    }
+  ],
+  "baselineFresh": {
+    "human": 45,
+    "synthetic": 45,
+    "syntheticAlerts": 12,
+    "humanFalseAlerts": 0,
+    "unknownHuman": 4,
+    "unknownSynthetic": 23,
+    "errors": 0,
+    "lowScoredSynthetic": 10,
+    "roundTripMedianMs": 433.945,
+    "roundTripMaxMs": 1571.59
+  },
+  "benchmarkScope": "Sequential local CPU requests after model readiness; excludes 5s capture and Gemini; correlated variants not independent trials"
+}

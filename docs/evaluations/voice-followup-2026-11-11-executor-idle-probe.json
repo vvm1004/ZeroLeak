@@ -1,0 +1,42 @@
+{
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "initialHealth": {
+    "ready": true,
+    "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+    "warmupComplete": true,
+    "keepWarmSeconds": 30,
+    "idleWarmups": 0
+  },
+  "firstRequest": {
+    "roundTripMs": 769.98,
+    "result": {
+      "status": "AVAILABLE",
+      "verdict": "SYNTHETIC_SUSPECTED",
+      "score": 0.9990857588009916,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 768
+    }
+  },
+  "afterIdleHealth": {
+    "ready": true,
+    "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+    "warmupComplete": true,
+    "keepWarmSeconds": 30,
+    "idleWarmups": 1
+  },
+  "idleWarmupObserved": true,
+  "afterIdleRequest": {
+    "roundTripMs": 646.56,
+    "result": {
+      "status": "AVAILABLE",
+      "verdict": "SYNTHETIC_SUSPECTED",
+      "score": 0.9990857588009916,
+      "scoreCalibrated": false,
+      "source": "LOCAL_XLSR_AASIST",
+      "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+      "executionTimeMs": 644
+    }
+  }
+}

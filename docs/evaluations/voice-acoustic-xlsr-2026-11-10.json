@@ -1,0 +1,410 @@
+{
+  "meta": {
+    "backend": "xlsr",
+    "provenance": {
+      "repository": "https://huggingface.co/Gustking/wav2vec2-large-xlsr-deepfake-audio-classification",
+      "revision": "f7050b586236dc910d1157f430def2d0647b02b4",
+      "files": [
+        {
+          "file": "model.safetensors",
+          "sha256": "8bff7244579a5c0f22f9994848c7eee2e038a07358bfebfbe75b38bd11d39b90"
+        },
+        {
+          "file": "config.json",
+          "sha256": "bc86d455d78aa7c256844038e342e2beea9399bf0efc48e1748fdd918ddf3934"
+        },
+        {
+          "file": "preprocessor_config.json",
+          "sha256": "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335"
+        }
+      ]
+    },
+    "versions": {
+      "python": "3.13.7",
+      "torch": "2.15.0",
+      "numpy": "2.5.4",
+      "transformers": "4.57.6"
+    },
+    "device": "cpu",
+    "threads": 4,
+    "threshold": 0.5,
+    "thresholdTunedOnThisRun": false,
+    "manifestSha256": "7020c13263ef5d1c2805538ac0e93b0ff91c13710d1a1cbdccac8ba5f0fd64af",
+    "runnerSha256": "847a073da4862836af9ac406bed1a6107783934147de662013935fbc872d5a2a",
+    "scoreMeaning": "Uncalibrated softmax output; not probability of fraud or identity verification",
+    "loadMs": 1591.7,
+    "warmupMs": 736.61,
+    "warmupIncludedInCaseLatency": false,
+    "audioUploaded": false,
+    "limitations": [
+      "Small screening set, not a validated Vietnamese deepfake benchmark; no modern voice-clone samples.",
+      "Human speaker identities are unavailable; four files must not be reported as four independent speakers.",
+      "The accessible FLEURS metadata selected here is not gender/dialect balanced.",
+      "Paired TTS uses one installed macOS voice; source/channel/gender confounds remain.",
+      "Paired full transcripts match, but the first 5-second crops are not word-time aligned.",
+      "Piper is an extra generator probe with different original compression and text, not a balanced held-out test.",
+      "Clean and Opus copies share source groups; do not count copies as independent observations.",
+      "Threshold 0.5 is a preset diagnostic cut, not calibrated or optimized using this screening set."
+    ]
+  },
+  "results": [
+    {
+      "id": "human_1_clean",
+      "originId": "pair_1",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.06586750596761703,
+      "latencyMs": 380.39
+    },
+    {
+      "id": "tts_1_clean",
+      "originId": "pair_1",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9068368077278137,
+      "latencyMs": 333.79
+    },
+    {
+      "id": "human_2_clean",
+      "originId": "pair_2",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.05941833183169365,
+      "latencyMs": 331.23
+    },
+    {
+      "id": "tts_2_clean",
+      "originId": "pair_2",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.8788877129554749,
+      "latencyMs": 330.59
+    },
+    {
+      "id": "human_3_clean",
+      "originId": "pair_3",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.05965049937367439,
+      "latencyMs": 327.86
+    },
+    {
+      "id": "tts_3_clean",
+      "originId": "pair_3",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9071032404899597,
+      "latencyMs": 333.37
+    },
+    {
+      "id": "human_4_clean",
+      "originId": "pair_4",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.06684811413288116,
+      "latencyMs": 330.47
+    },
+    {
+      "id": "tts_4_clean",
+      "originId": "pair_4",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9177172183990479,
+      "latencyMs": 330.22
+    },
+    {
+      "id": "human_1_opus",
+      "originId": "pair_1",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.06566748023033142,
+      "latencyMs": 332.54
+    },
+    {
+      "id": "tts_1_opus",
+      "originId": "pair_1",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9075273275375366,
+      "latencyMs": 326.08
+    },
+    {
+      "id": "human_2_opus",
+      "originId": "pair_2",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.06182065233588219,
+      "latencyMs": 330.48
+    },
+    {
+      "id": "tts_2_opus",
+      "originId": "pair_2",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.8885297775268555,
+      "latencyMs": 330.92
+    },
+    {
+      "id": "human_3_opus",
+      "originId": "pair_3",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.06291579455137253,
+      "latencyMs": 329.0
+    },
+    {
+      "id": "tts_3_opus",
+      "originId": "pair_3",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9065762162208557,
+      "latencyMs": 324.56
+    },
+    {
+      "id": "human_4_opus",
+      "originId": "pair_4",
+      "label": "human",
+      "family": "FLEURS",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.07191947102546692,
+      "latencyMs": 333.46
+    },
+    {
+      "id": "tts_4_opus",
+      "originId": "pair_4",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "opus",
+      "cohort": "paired",
+      "status": "OK",
+      "spoofScore": 0.9176591038703918,
+      "latencyMs": 336.95
+    },
+    {
+      "id": "benign_meeting_clean",
+      "originId": "benign_meeting",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-control",
+      "status": "OK",
+      "spoofScore": 0.8956555724143982,
+      "latencyMs": 203.12
+    },
+    {
+      "id": "benign_otp_clean",
+      "originId": "benign_otp",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-control",
+      "status": "OK",
+      "spoofScore": 0.9149637222290039,
+      "latencyMs": 224.08
+    },
+    {
+      "id": "piper_1_clean",
+      "originId": "piper-rainbow-text",
+      "label": "synthetic",
+      "family": "Piper-1",
+      "condition": "clean",
+      "cohort": "external-generator",
+      "status": "OK",
+      "spoofScore": 0.11800715327262878,
+      "latencyMs": 331.55
+    },
+    {
+      "id": "piper_2_clean",
+      "originId": "piper-rainbow-text",
+      "label": "synthetic",
+      "family": "Piper-2",
+      "condition": "clean",
+      "cohort": "external-generator",
+      "status": "OK",
+      "spoofScore": 0.19761687517166138,
+      "latencyMs": 339.25
+    },
+    {
+      "id": "scam_authority_clean",
+      "originId": "scam_authority",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-control",
+      "status": "OK",
+      "spoofScore": 0.9038789868354797,
+      "latencyMs": 239.94
+    },
+    {
+      "id": "scam_ceo_clean",
+      "originId": "scam_ceo",
+      "label": "synthetic",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-control",
+      "status": "OK",
+      "spoofScore": 0.8328924775123596,
+      "latencyMs": 245.53
+    }
+  ],
+  "summary": {
+    "attempted": 22,
+    "sourceGroups": 9,
+    "assessed": 22,
+    "unknown": 0,
+    "tp": 12,
+    "tn": 8,
+    "fp": 0,
+    "fn": 2,
+    "coverage": 1.0,
+    "selectiveAccuracy": 0.9090909090909091,
+    "falsePositiveRate": 0.0,
+    "falseNegativeRate": 0.14285714285714285,
+    "latencyMedianMs": 330.53499999999997,
+    "latencyP95Ms": 339.25
+  },
+  "byCondition": {
+    "clean": {
+      "attempted": 14,
+      "sourceGroups": 9,
+      "assessed": 14,
+      "unknown": 0,
+      "tp": 8,
+      "tn": 4,
+      "fp": 0,
+      "fn": 2,
+      "coverage": 1.0,
+      "selectiveAccuracy": 0.8571428571428571,
+      "falsePositiveRate": 0.0,
+      "falseNegativeRate": 0.2,
+      "latencyMedianMs": 330.53,
+      "latencyP95Ms": null
+    },
+    "opus": {
+      "attempted": 8,
+      "sourceGroups": 4,
+      "assessed": 8,
+      "unknown": 0,
+      "tp": 4,
+      "tn": 4,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 1.0,
+      "selectiveAccuracy": 1.0,
+      "falsePositiveRate": 0.0,
+      "falseNegativeRate": 0.0,
+      "latencyMedianMs": 330.70000000000005,
+      "latencyP95Ms": null
+    }
+  },
+  "byFamily": {
+    "FLEURS": {
+      "attempted": 8,
+      "sourceGroups": 4,
+      "assessed": 8,
+      "unknown": 0,
+      "tp": 0,
+      "tn": 8,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 1.0,
+      "selectiveAccuracy": 1.0,
+      "falsePositiveRate": 0.0,
+      "falseNegativeRate": null,
+      "latencyMedianMs": 330.855,
+      "latencyP95Ms": null
+    },
+    "Piper-1": {
+      "attempted": 1,
+      "sourceGroups": 1,
+      "assessed": 1,
+      "unknown": 0,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 1,
+      "coverage": 1.0,
+      "selectiveAccuracy": 0.0,
+      "falsePositiveRate": null,
+      "falseNegativeRate": 1.0,
+      "latencyMedianMs": 331.55,
+      "latencyP95Ms": null
+    },
+    "Piper-2": {
+      "attempted": 1,
+      "sourceGroups": 1,
+      "assessed": 1,
+      "unknown": 0,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 1,
+      "coverage": 1.0,
+      "selectiveAccuracy": 0.0,
+      "falsePositiveRate": null,
+      "falseNegativeRate": 1.0,
+      "latencyMedianMs": 339.25,
+      "latencyP95Ms": null
+    },
+    "macOS-Linh": {
+      "attempted": 12,
+      "sourceGroups": 8,
+      "assessed": 12,
+      "unknown": 0,
+      "tp": 12,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 1.0,
+      "selectiveAccuracy": 1.0,
+      "falsePositiveRate": null,
+      "falseNegativeRate": 0.0,
+      "latencyMedianMs": 328.15,
+      "latencyP95Ms": null
+    }
+  }
+}

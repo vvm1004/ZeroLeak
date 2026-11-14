@@ -93,9 +93,18 @@
 * [ ] 🟡 **[P1]** Viết `Dockerfile` chuẩn (dùng base image `mcr.microsoft.com/playwright`) và triển khai dịch vụ lên **Google Cloud Run**.
 
 ### 2.4. Phân tích Âm thanh Deepfake & Kịch bản Lừa đảo — ZeroLeak Voice (Dev 2 & Dev 3)
-* [ ] 🔴 **[P0]** Tạo endpoint `POST /api/v1/analyze-voice` nhận phân đoạn âm thanh 5 giây (`audio/webm` hoặc `audio/wav` Base64).
-* [ ] 🔴 **[P0]** Viết `voice-analyzer.ts` gọi Gemini (`gemini-3.8-live-extended-thinking` / `gemini-3.8-live` / fallback `gemini-3.5-flash-lite`) trả về JSON chuẩn: `riskScore`, `syntheticVoiceProbability`, `detectedTactics` (`CEO_FRAUD`, `AUTHORITY_IMPERSONATION`, `OTP_OR_CREDENTIAL_ASK`, `URGENCY_PRESSURE`) và `warningMessageVi`.
-* [ ] 🔴 **[P0]** Thêm tab/nút **"Bảo vệ Cuộc gọi (ZeroLeak Voice)"** trên Extension Popup sử dụng `MediaRecorder` / `Web Audio API` (vẽ sóng âm FFT) và gửi chunk âm thanh lên API kiểm tra.
+* [x] 🔴 **[P0]** Tạo endpoint `POST /api/v1/analyze-voice` nhận phân đoạn âm thanh 5 giây (`audio/webm` hoặc `audio/wav` Base64).
+* [x] 🔴 **[P0]** Viết `voice-analyzer.ts` gọi Gemini (`gemini-3.8-live-extended-thinking` / `gemini-3.8-live` / fallback `gemini-3.5-flash-lite`) trả về JSON chuẩn: `riskScore`, `syntheticVoiceProbability`, `detectedTactics` (`CEO_FRAUD`, `AUTHORITY_IMPERSONATION`, `OTP_OR_CREDENTIAL_ASK`, `URGENCY_PRESSURE`) và `warningMessageVi`.
+* [x] 🔴 **[P0]** Thêm tab/nút **"Bảo vệ Cuộc gọi (ZeroLeak Voice)"** trên Extension Popup sử dụng `MediaRecorder` / `Web Audio API` (vẽ sóng âm FFT) và gửi chunk âm thanh lên API kiểm tra.
+
+**Triển khai Voice hiện tại:** endpoint nhận từng WAV PCM16 mono 16 kHz 0,5–5 giây; UI giải mã WebM/MP3 locally trước khi gửi. Trang Voice riêng dùng Web Audio/AudioWorklet, không phụ thuộc thời gian sống popup.
+
+**Đúng chuỗi model:** `gemini-3.8-live-extended-thinking` → `gemini-3.8-live` qua Live API WebSocket → `gemini-3.5-flash-lite` qua `generateContent`. Extended thinking LOW, JSON được kiểm tra từ đầu ra model; không parse lời người gọi thành kết quả. UI hiển thị `analysisModel`, transport và fallback thực tế. Detector âm học V3 chạy riêng, `syntheticVoiceProbability` vẫn null ở schema mới; không tạo xác suất giọng giả chưa kiểm định.
+
+**Kiểm chứng và nghiệm thu mới nhất:** 70 test backend, typecheck/build qua; Extended dùng output gọn, ASR cùng phiên để kiểm tra quote, giữ guard UNKNOWN. A/B primary-only: số lượt có kết luận 0/8 → 5/8; sáu câu mới cùng một giọng TTS ở review: 3/3 scam cảnh báo và 3/3 benign đúng. Hai ca Chrome thật đúng model/không fallback: OTP review ~3,25s, advice realtime ~2,92s. Đây là kiểm tra nhỏ; fast A/B vẫn 2/4 chưa có kết luận. Test 6 <3s cuộc gọi thực tế **chưa nghiệm thu**. Xem [bản tối ưu Extended](../../docs/VOICE_EXTENDED_IMPROVEMENTS.md), [Voice Live API](../../docs/VOICE_LIVE_API.md), [hướng dẫn chạy](../../docs/VOICE.md).
+
+**Lịch sử và bằng chứng:** [screening](../../docs/VOICE_EVALUATION.md), [cải thiện](../../docs/VOICE_IMPROVEMENTS.md), [V2](../../docs/VOICE_DETECTOR_V2.md), [V3](../../docs/VOICE_DETECTOR_V3.md), [nội dung Flash](../../docs/VOICE_TESTING.md), [reliability](../../docs/VOICE_RELIABILITY.md), [followup](../../docs/VOICE_FOLLOWUP.md). Các bản trước chưa dùng Live API, không coi benchmark của chúng là kết quả model 3.8.
+
 
 ---
 

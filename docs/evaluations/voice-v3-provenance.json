@@ -1,0 +1,1309 @@
+{
+  "protocols": [
+    {
+      "phase": "v3",
+      "originalProtocolSha256": "fb68b67de0c314d924180157298c2d7a5b4cdbe59e6680f7e7fd9ced3dcadfff",
+      "protocol": {
+        "version": "voice-v3-reference-clone-and-channel",
+        "createdBeforeDetectorEvaluation": true,
+        "conditions": [
+          "clean",
+          "phone8k",
+          "room_noise15db"
+        ],
+        "referencePolicy": "Different unused utterance from same public speaker ID; no identity inference",
+        "sources": [
+          {
+            "id": "v3_VIVOSDEV01_0",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R028.wav",
+            "sha256": "7046bd2e029a884e71365b7754a9b35f0dc8c36251c3fb9f672c7ad943f022f8",
+            "seed": 31000
+          },
+          {
+            "id": "v3_VIVOSDEV01_1",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R043.wav",
+            "sha256": "324e8ef27624c43e6f9beeb61e9903989f1658ed0b5c2d6b630c83a3c4fcdbde",
+            "seed": 31001
+          },
+          {
+            "id": "v3_VIVOSDEV01_2",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R058.wav",
+            "sha256": "815fea10bf1cf496689ccac271901ac1ea03086d4f6a55da48b310f8147fff7d",
+            "seed": 31002
+          },
+          {
+            "id": "v3_VIVOSDEV02_0",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R032.wav",
+            "sha256": "dfdac1b51169ee1dad8073915d2ed2a29aaa744ed5de6fbd0ae700b2597255e9",
+            "seed": 31003
+          },
+          {
+            "id": "v3_VIVOSDEV02_1",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R045.wav",
+            "sha256": "3598053e2f2287b2fe646adc251d97e531b07933207b5b866583c2ad09479ebb",
+            "seed": 31004
+          },
+          {
+            "id": "v3_VIVOSDEV02_2",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R067.wav",
+            "sha256": "8a4e6126873f01af5a07c14c3adfbbcea4ea0d30bf06115e281f12b1dd2e7f8c",
+            "seed": 31005
+          },
+          {
+            "id": "v3_VIVOSDEV03_0",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R041.wav",
+            "sha256": "667e0d7cc8f14c3ee96e0ca2dd8d13863da5c40177156d431abcf2eac65d59ac",
+            "seed": 31006
+          },
+          {
+            "id": "v3_VIVOSDEV03_1",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R046.wav",
+            "sha256": "4525ab707bb1330bffb0a3b946af24351cbe44315b6ac4821aea6436723de0fb",
+            "seed": 31007
+          },
+          {
+            "id": "v3_VIVOSDEV03_2",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R056.wav",
+            "sha256": "b9d06e9e5fc5a6255f6ab59ed6b9c80f4557e466b473de69488b91f323cb29f8",
+            "seed": 31008
+          },
+          {
+            "id": "v3_VIVOSDEV04_0",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R013.wav",
+            "sha256": "fb4e02747c3c8521094f2f44e99d9c181faf9f2d7a819952efef92704c66d05b",
+            "seed": 31009
+          },
+          {
+            "id": "v3_VIVOSDEV04_1",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R047.wav",
+            "sha256": "bf3eebe15116b6c00c882d95bd91c35c38ec600df8de3b1000fdd2654f0754f5",
+            "seed": 31010
+          },
+          {
+            "id": "v3_VIVOSDEV04_2",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R081.wav",
+            "sha256": "4f070ffad480fc1d761fecdaa6586176dfa1833b92c63a039e34b3f2a476937d",
+            "seed": 31011
+          },
+          {
+            "id": "v3_VIVOSDEV05_0",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_065.wav",
+            "sha256": "3a1f6dfc5b7ed4a64067b1c819c20cb9ff137fc9658861c492a2a77b4401a176",
+            "seed": 31012
+          },
+          {
+            "id": "v3_VIVOSDEV05_1",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_109.wav",
+            "sha256": "bd13307690f1f7c1ab85d5163e40c40ee90e713c2d40e2bcc2e8a0c910464b82",
+            "seed": 31013
+          },
+          {
+            "id": "v3_VIVOSDEV05_2",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_115.wav",
+            "sha256": "a6c7a3b2a1626181bb4eb8df7359144181478f2873b10bd81a6fa0f1930fcf6b",
+            "seed": 31014
+          },
+          {
+            "id": "v3_VIVOSDEV06_0",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_022.wav",
+            "sha256": "2cb37ffd2600ab10ac6d8fb3e4c816452f7bc29c0c01875f70efa79aea8bb9c3",
+            "seed": 31015
+          },
+          {
+            "id": "v3_VIVOSDEV06_1",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_037.wav",
+            "sha256": "07d81341043f798faf86da0cc0cba82f4b5eb27539d183f711f6fc970c8e8ac6",
+            "seed": 31016
+          },
+          {
+            "id": "v3_VIVOSDEV06_2",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_040.wav",
+            "sha256": "6d7e81b2959a2a8e13806b9354193d50419b6a4926045a14e3c9823ab894d9fe",
+            "seed": 31017
+          },
+          {
+            "id": "v3_VIVOSDEV07_0",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_039.wav",
+            "sha256": "684276f737982a73f7f356d22e90e99a087f6e67f80a05e5c94f8b3677bf2643",
+            "seed": 31018
+          },
+          {
+            "id": "v3_VIVOSDEV07_1",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_044.wav",
+            "sha256": "df018ae22f1a307a878d494b405468d0cf1eac0d7675851e052e192856a72ddb",
+            "seed": 31019
+          },
+          {
+            "id": "v3_VIVOSDEV07_2",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_045.wav",
+            "sha256": "1e4e4e5f2ee81b37a73498dc760f67cab0c48c105fcdad00415aa99871fb7272",
+            "seed": 31020
+          },
+          {
+            "id": "v3_VIVOSDEV08_0",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_053.wav",
+            "sha256": "3dce01b103c1a265f3881ba12fc64827892897f6f17245e51e7112b7852f3e83",
+            "seed": 31021
+          },
+          {
+            "id": "v3_VIVOSDEV08_1",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_057.wav",
+            "sha256": "6448acb3e03b684e534f4f3f8a9f0a6f6d6dffc27adac2f59213403253ce64f3",
+            "seed": 31022
+          },
+          {
+            "id": "v3_VIVOSDEV08_2",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_062.wav",
+            "sha256": "e94e867fed43568ceefc70ccd0bdad656d2b178072c352b8dd76cf01962aafeb",
+            "seed": 31023
+          },
+          {
+            "id": "v3_VIVOSDEV09_0",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_038.wav",
+            "sha256": "dc1c4df4b2f73d1a332bc6ba272a49608ea9233eeaeb6d2f7d659c4ee7b04e4d",
+            "seed": 31024
+          },
+          {
+            "id": "v3_VIVOSDEV09_1",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_039.wav",
+            "sha256": "c4ea9fda42729c623dfbedb40d42c1420ea57e0aae0062a6eecbd408bede8139",
+            "seed": 31025
+          },
+          {
+            "id": "v3_VIVOSDEV09_2",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_041.wav",
+            "sha256": "6df9a5c9e4b779e4de05515980782556f59db8eb6e630624c701ae69a6f11f17",
+            "seed": 31026
+          },
+          {
+            "id": "v3_VIVOSDEV10_0",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_024.wav",
+            "sha256": "5573b95c8d842a48dcb5f1a056786828fac102dd7d1b4d7a7ed5a06fab18b631",
+            "seed": 31027
+          },
+          {
+            "id": "v3_VIVOSDEV10_1",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_030.wav",
+            "sha256": "5e78287f976f1a99eed6646a2a1b17d3b69abd0a1346c739b9e49dbf6bc38234",
+            "seed": 31028
+          },
+          {
+            "id": "v3_VIVOSDEV10_2",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_035.wav",
+            "sha256": "f8b2610dccae33c18170037d449ad514e8d022adfee0346adbb2b7f4e13378cc",
+            "seed": 31029
+          },
+          {
+            "id": "v3_VIVOSDEV11_0",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_046.wav",
+            "sha256": "989129e8bb0fc5c003de940f541b29097aca082081d503a569c254e988fdd52b",
+            "seed": 31030
+          },
+          {
+            "id": "v3_VIVOSDEV11_1",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_048.wav",
+            "sha256": "68c1302ca85d750000a55dbd0e2a20e580b02bd08f9174e32a302d63948d4998",
+            "seed": 31031
+          },
+          {
+            "id": "v3_VIVOSDEV11_2",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_076.wav",
+            "sha256": "ee5b7324338d211b9033b4980a1c571139df3caec16d78a3fd095874d64bb095",
+            "seed": 31032
+          },
+          {
+            "id": "v3_VIVOSDEV12_0",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_054.wav",
+            "sha256": "28472a30ff5e5983453933c00086549f644b288b9b7c5c96a1abd25db6517247",
+            "seed": 31033
+          },
+          {
+            "id": "v3_VIVOSDEV12_1",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_057.wav",
+            "sha256": "97fda352f0bc37a57859f0ae9bb75e49f5effb90b1ea0b00f9d2927a5555a899",
+            "seed": 31034
+          },
+          {
+            "id": "v3_VIVOSDEV12_2",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_065.wav",
+            "sha256": "aaf9350d0f4acc20efaf85a76438bcc473e076ee5205b20db4f8f3d76c1f9d75",
+            "seed": 31035
+          },
+          {
+            "id": "v3_VIVOSDEV13_0",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_061.wav",
+            "sha256": "a08e76c8d3de8b58f2cc03be135e283a674965be1234d2d3c249c57b8b255cf9",
+            "seed": 31036
+          },
+          {
+            "id": "v3_VIVOSDEV13_1",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_069.wav",
+            "sha256": "b01ffa21da859a7020c22c0a39ba312143e462e17e92ba95a3598e14c12d06ee",
+            "seed": 31037
+          },
+          {
+            "id": "v3_VIVOSDEV13_2",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_075.wav",
+            "sha256": "319e403988a8f398467eb1516c92976a5e2532e35341af115343dd515448e70a",
+            "seed": 31038
+          },
+          {
+            "id": "v3_VIVOSDEV14_0",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_079.wav",
+            "sha256": "0e5174bf330ca8713b29132e894aa00bee8f435e8aa991a00da30cc32de8f8e5",
+            "seed": 31039
+          },
+          {
+            "id": "v3_VIVOSDEV14_1",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_080.wav",
+            "sha256": "245ec10950bbec34ad4e507e582ac7afee521117a3c69b9bc52731d21ad8222b",
+            "seed": 31040
+          },
+          {
+            "id": "v3_VIVOSDEV14_2",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_085.wav",
+            "sha256": "573c73d233cdf6a4abfcc5461b9b4c9ca4efe4a4ec7c8a8d7fe93267c531f6ba",
+            "seed": 31041
+          },
+          {
+            "id": "v3_VIVOSDEV15_0",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_021.wav",
+            "sha256": "6670b3df8044663bd7a716c7bc048e8a7b4a82bc97e9b764d8e287e6aa0dc0b2",
+            "seed": 31042
+          },
+          {
+            "id": "v3_VIVOSDEV15_1",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_026.wav",
+            "sha256": "8d5806fdf19ed8d5e877cb4715a64946b9ce26b9791235cbdc8cb9f986119a34",
+            "seed": 31043
+          },
+          {
+            "id": "v3_VIVOSDEV15_2",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_037.wav",
+            "sha256": "11d5d6b9d3f3b8d7efd715e635f0b12e7b3eaff54fe8298963c51a967f0df77e",
+            "seed": 31044
+          },
+          {
+            "id": "v3_VIVOSDEV16_0",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_050.wav",
+            "sha256": "180133c239f485471bc07d68f8802f5773e72e074cb28710eb59c6c2e845f52e",
+            "seed": 31045
+          },
+          {
+            "id": "v3_VIVOSDEV16_1",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_051.wav",
+            "sha256": "9687bdaecef02b3b44dc5e12b76d164ceedc6b558b351ab69558d2a3b13734be",
+            "seed": 31046
+          },
+          {
+            "id": "v3_VIVOSDEV16_2",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_058.wav",
+            "sha256": "9e205bf64e4b8a924c58bac7b967df4a17d1eb65f9dbb6ad588544bb7a0e7f02",
+            "seed": 31047
+          },
+          {
+            "id": "v3_VIVOSDEV17_0",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_048.wav",
+            "sha256": "30f59b5ef104728f3a1a8d181e2f50330674ce507ea8395551d8cb36add40870",
+            "seed": 31048
+          },
+          {
+            "id": "v3_VIVOSDEV17_1",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_060.wav",
+            "sha256": "5b9705accf83abd484e0643eeb9d5fbe2a330bebe8ebae70b2d60132e885af5f",
+            "seed": 31049
+          },
+          {
+            "id": "v3_VIVOSDEV17_2",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_062.wav",
+            "sha256": "6533492d055585007e638cdb5e4e6d20527f82c99e3aaa04e5674ecd9e1ec33c",
+            "seed": 31050
+          },
+          {
+            "id": "v3_VIVOSDEV18_0",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_051.wav",
+            "sha256": "4482f457986bff2944cc031f70f58475ed52b286b5b10b41d963432664a588b1",
+            "seed": 31051
+          },
+          {
+            "id": "v3_VIVOSDEV18_1",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_056.wav",
+            "sha256": "6535a7a0e9cb09965715f837293135de04bb885e48f25a5aa118cf7e1db4e7bb",
+            "seed": 31052
+          },
+          {
+            "id": "v3_VIVOSDEV18_2",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_064.wav",
+            "sha256": "d0bc3c361344d3bb65c9509f52a0a42386ee2f025a4766fcbf7addb18e8877e1",
+            "seed": 31053
+          },
+          {
+            "id": "v3_VIVOSDEV19_0",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_024.wav",
+            "sha256": "2d465561aab9816dd028898132d69f9523e54a8acb02de562b56cb96ed96d07b",
+            "seed": 31054
+          },
+          {
+            "id": "v3_VIVOSDEV19_1",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_027.wav",
+            "sha256": "1857e39caa452534b429924a70433b5b42550d4f683dc8576618ef008ebf9e7c",
+            "seed": 31055
+          },
+          {
+            "id": "v3_VIVOSDEV19_2",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_029.wav",
+            "sha256": "11a14ec8fa87dda9b3ed9698e74ba3df3caea9a5bfcb2677ef120fc986bd3a9b",
+            "seed": 31056
+          }
+        ],
+        "references": {
+          "VIVOSDEV01": {
+            "sourceFile": "VIVOSDEV01_R044.wav",
+            "sha256": "afd58976b1572253801b911a0f8113b86a94586ef6fc409e1648aa4948aa7590",
+            "split": "test"
+          },
+          "VIVOSDEV02": {
+            "sourceFile": "VIVOSDEV02_R031.wav",
+            "sha256": "4dafd9b593227e80b2bd25ff37ce52c8c005c0e86c4f72ec8e53e3447dc891a8",
+            "split": "test"
+          },
+          "VIVOSDEV03": {
+            "sourceFile": "VIVOSDEV03_R082.wav",
+            "sha256": "783073bd568a37fc3611e18e775c418aeb5b131fc16735045af387708c069f09",
+            "split": "train"
+          },
+          "VIVOSDEV04": {
+            "sourceFile": "VIVOSDEV04_R023.wav",
+            "sha256": "ca7302490cb52feee6d1b97d2dd353e4e26bd69e079e57a73422ea4ed6139b93",
+            "split": "train"
+          },
+          "VIVOSDEV05": {
+            "sourceFile": "VIVOSDEV05_107.wav",
+            "sha256": "113770631d627b0bc0a1d270458ebaa846d3e1251cc99795ead76ad108e17228",
+            "split": "train"
+          },
+          "VIVOSDEV06": {
+            "sourceFile": "VIVOSDEV06_034.wav",
+            "sha256": "9db1e70ea2fb432dd20050740b2d8bcf6c195c6474b10f113e329f63405f47d7",
+            "split": "train"
+          },
+          "VIVOSDEV07": {
+            "sourceFile": "VIVOSDEV07_064.wav",
+            "sha256": "79cec5fdd2d11968fef711c21541c55f2ebe0ee1cef0418c6c4db73696214174",
+            "split": "calibration"
+          },
+          "VIVOSDEV08": {
+            "sourceFile": "VIVOSDEV08_032.wav",
+            "sha256": "f782e709467519eef24a77a0e14c9107603da12e536ebb1c0bb4b254189e5c33",
+            "split": "calibration"
+          },
+          "VIVOSDEV09": {
+            "sourceFile": "VIVOSDEV09_047.wav",
+            "sha256": "2febb35fac43268345b4c0f42f19dbef6ccb8d54cb20d9adc1b9708bb2988006",
+            "split": "train"
+          },
+          "VIVOSDEV10": {
+            "sourceFile": "VIVOSDEV10_140.wav",
+            "sha256": "a3aa3bee1159bb48938990ad2b81da8a8d7d29cdc632a165552d88dbaab4b1be",
+            "split": "train"
+          },
+          "VIVOSDEV11": {
+            "sourceFile": "VIVOSDEV11_147.wav",
+            "sha256": "082e291e1f43c0d804742d9e3db9fdf0638dfa6c8a577a1e4c714f5d37576d48",
+            "split": "train"
+          },
+          "VIVOSDEV12": {
+            "sourceFile": "VIVOSDEV12_075.wav",
+            "sha256": "b5f3ce16f6f722ae174154aad06b7a0a2d7821a212c8785f198d00fee0fcc97c",
+            "split": "calibration"
+          },
+          "VIVOSDEV13": {
+            "sourceFile": "VIVOSDEV13_105.wav",
+            "sha256": "8e334bfb939ce7c1493174635e5b180a5ae82b50bd83891d17822bb1e464bac2",
+            "split": "test"
+          },
+          "VIVOSDEV14": {
+            "sourceFile": "VIVOSDEV14_195.wav",
+            "sha256": "0c6f34fddb19e64ddeeb2b5eca18c3811ec7b71a375a264d49fe2bbedd486db4",
+            "split": "train"
+          },
+          "VIVOSDEV15": {
+            "sourceFile": "VIVOSDEV15_168.wav",
+            "sha256": "32aa3e28aa2adab545a12f17fd5688f55ba0a31d508b36f6eddb90636da1cd9c",
+            "split": "calibration"
+          },
+          "VIVOSDEV16": {
+            "sourceFile": "VIVOSDEV16_233.wav",
+            "sha256": "7440bbfdf3b2f9ed7664774428910588b32b3bdd0fb45049555ac7d5bb0705bc",
+            "split": "test"
+          },
+          "VIVOSDEV17": {
+            "sourceFile": "VIVOSDEV17_217.wav",
+            "sha256": "17ac8cd88d8e32cae21814f304ee577f02d7208f8b277282a8ee7cb7b9ac8e56",
+            "split": "test"
+          },
+          "VIVOSDEV18": {
+            "sourceFile": "VIVOSDEV18_250.wav",
+            "sha256": "6a88e0c57af7023ce97816372d35f8727e1fba0f06a6c951f89c2f065df57241",
+            "split": "train"
+          },
+          "VIVOSDEV19": {
+            "sourceFile": "VIVOSDEV19_227.wav",
+            "sha256": "128f0efa7870ceb538b05447edd96b22c8b780400100b56fa15ce6e27baa4dff",
+            "split": "train"
+          }
+        },
+        "auditGenerator": "VieNeu Turbo fp32 on test speakers only; never fitted",
+        "trainGenerator": "VieNeu Nano reference-conditioned, 16 steps; test Nano uses 32 steps",
+        "pairedCrop": "Same duration=min(human, generated, 5s), no label-dependent duration padding",
+        "noiseSeed": "Same per-origin noise seed for paired human and synthetic",
+        "splitRule": "Reuse VIVOS speaker partitions from V2, choose unused recordings; V2 heldout retained only as regression"
+      }
+    },
+    {
+      "phase": "v4",
+      "originalProtocolSha256": "752d16921d465fe475cafc1b17bfd9001265e3841c7c168e1b0aa45b0a16837f",
+      "protocol": {
+        "version": "voice-v4-development-turbo-fresh-recordings",
+        "createdBeforeDetectorEvaluation": true,
+        "conditions": [
+          "clean",
+          "phone8k",
+          "room_noise15db"
+        ],
+        "referencePolicy": "Different unused utterance from same public speaker ID; no identity inference",
+        "sources": [
+          {
+            "id": "v4_VIVOSDEV01_0",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R078.wav",
+            "sha256": "c62c0100317b798b147fb72190c29463867ef03e2478c1c5df25b87ac134d556",
+            "seed": 41000
+          },
+          {
+            "id": "v4_VIVOSDEV01_1",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R086.wav",
+            "sha256": "4f74d99dd401c9434c86d1c69d8fc2dd134264993c9a92036e99454548956fc2",
+            "seed": 41001
+          },
+          {
+            "id": "v4_VIVOSDEV01_2",
+            "speakerId": "VIVOSDEV01",
+            "split": "test",
+            "sourceFile": "VIVOSDEV01_R089.wav",
+            "sha256": "f5fc76e4928ab37fc0c7af59fbef7707e494fc77a9a30d1b801d85934ec30225",
+            "seed": 41002
+          },
+          {
+            "id": "v4_VIVOSDEV02_0",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R071.wav",
+            "sha256": "1ab3862183270cdf969d96dd6329abbd005eb314a2cf6cd2e512fd6cc68d6dca",
+            "seed": 41003
+          },
+          {
+            "id": "v4_VIVOSDEV02_1",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R079.wav",
+            "sha256": "8e63169a0091e8ac820dfdb09091c9bfe17250796c7cbc01879fcf7b4e9acb61",
+            "seed": 41004
+          },
+          {
+            "id": "v4_VIVOSDEV02_2",
+            "speakerId": "VIVOSDEV02",
+            "split": "test",
+            "sourceFile": "VIVOSDEV02_R087.wav",
+            "sha256": "e3db8504a5b9f333b6b088aaf71552959b125ca12226ed095e822165a3aeeeb9",
+            "seed": 41005
+          },
+          {
+            "id": "v4_VIVOSDEV03_0",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R061.wav",
+            "sha256": "ad2528760babe016dc64af0afe819258b43e9816e242928c149cd364aed8cb4c",
+            "seed": 41006
+          },
+          {
+            "id": "v4_VIVOSDEV03_1",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R113.wav",
+            "sha256": "0d453306cd81a8bf35e065eaebf263c3e3bceced2592e31056b139a78030d884",
+            "seed": 41007
+          },
+          {
+            "id": "v4_VIVOSDEV03_2",
+            "speakerId": "VIVOSDEV03",
+            "split": "train",
+            "sourceFile": "VIVOSDEV03_R148.wav",
+            "sha256": "b80e395641414fb51e051b7f92876527bb78ce579ebbeb06817ac80eb50125be",
+            "seed": 41008
+          },
+          {
+            "id": "v4_VIVOSDEV04_0",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R092.wav",
+            "sha256": "4ce924bedab79780344eed652968653da9cffaaeed39869576b12c391310f717",
+            "seed": 41009
+          },
+          {
+            "id": "v4_VIVOSDEV04_1",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R095.wav",
+            "sha256": "42818634ce3832c666ace8dc1e79a4d564b06689fd4b96b74e32539ae59fdb59",
+            "seed": 41010
+          },
+          {
+            "id": "v4_VIVOSDEV04_2",
+            "speakerId": "VIVOSDEV04",
+            "split": "train",
+            "sourceFile": "VIVOSDEV04_R114.wav",
+            "sha256": "d78f425b79f6dc508c0ba6944acbd72fed78dbbd5fcee473c3c92ca1a4d53075",
+            "seed": 41011
+          },
+          {
+            "id": "v4_VIVOSDEV05_0",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_119.wav",
+            "sha256": "5b16fecb0dfac01b5ff0ae24bb918dcbed0794247a280d536fb4734813b32feb",
+            "seed": 41012
+          },
+          {
+            "id": "v4_VIVOSDEV05_1",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_120.wav",
+            "sha256": "e279d64b1c54e95eb9c5a9efc366cf419d648c21c23d9ad8f0f0213e287aa173",
+            "seed": 41013
+          },
+          {
+            "id": "v4_VIVOSDEV05_2",
+            "speakerId": "VIVOSDEV05",
+            "split": "train",
+            "sourceFile": "VIVOSDEV05_135.wav",
+            "sha256": "99e050ee962fda161900210a846a5fbc0a673d605e8a5960c5503a634feed99e",
+            "seed": 41014
+          },
+          {
+            "id": "v4_VIVOSDEV06_0",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_042.wav",
+            "sha256": "a89c27f09033ea24c10ff617317f659bb4a31772a6afe4cf59c86f1269f52739",
+            "seed": 41015
+          },
+          {
+            "id": "v4_VIVOSDEV06_1",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_054.wav",
+            "sha256": "ca62949803ed987a575f8db3d7d65cddb215d116f3be40830b1a95f50ea9d8a2",
+            "seed": 41016
+          },
+          {
+            "id": "v4_VIVOSDEV06_2",
+            "speakerId": "VIVOSDEV06",
+            "split": "train",
+            "sourceFile": "VIVOSDEV06_061.wav",
+            "sha256": "8320e05ca6b7dca497a4141f311f37a51920c7c8ba2b5bcd3b6287d310ba30e7",
+            "seed": 41017
+          },
+          {
+            "id": "v4_VIVOSDEV07_0",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_066.wav",
+            "sha256": "b9cd1c57f06a216fad85c1becd9a7559bde834550e0858364b1ca723b5205cab",
+            "seed": 41018
+          },
+          {
+            "id": "v4_VIVOSDEV07_1",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_067.wav",
+            "sha256": "9d68309898553e9c85869b08ecd172d6dc446d4ea4df0e2ff16f15806a3048b0",
+            "seed": 41019
+          },
+          {
+            "id": "v4_VIVOSDEV07_2",
+            "speakerId": "VIVOSDEV07",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV07_084.wav",
+            "sha256": "788c0688a91e7116931fd4eb88d34394ddcedfdae5a1ec80fb7c1e78923195c8",
+            "seed": 41020
+          },
+          {
+            "id": "v4_VIVOSDEV08_0",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_071.wav",
+            "sha256": "8b7e3ea4719e5cba6cfca62c35c6025ccd08a2fe7ae7a3f389ab4691ea39d3bd",
+            "seed": 41021
+          },
+          {
+            "id": "v4_VIVOSDEV08_1",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_077.wav",
+            "sha256": "9ec609d6fbd1de9b8b6ee8428ce583a224c269510efb7fb60462dfbdc5b93678",
+            "seed": 41022
+          },
+          {
+            "id": "v4_VIVOSDEV08_2",
+            "speakerId": "VIVOSDEV08",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV08_085.wav",
+            "sha256": "00828b005051032dc04074406dbcb95895f32acb1c3420fd0dc111d89c39b13a",
+            "seed": 41023
+          },
+          {
+            "id": "v4_VIVOSDEV09_0",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_055.wav",
+            "sha256": "0e57da6b8e2a1f2fe6447221166f1bb7bc23bd75e176c80dddbdbae4844fc3a9",
+            "seed": 41024
+          },
+          {
+            "id": "v4_VIVOSDEV09_1",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_077.wav",
+            "sha256": "c94f7ed2f6d1ca4dc62c92c5308d5f6ae4ab096b250fce3ac1b3ad897da94477",
+            "seed": 41025
+          },
+          {
+            "id": "v4_VIVOSDEV09_2",
+            "speakerId": "VIVOSDEV09",
+            "split": "train",
+            "sourceFile": "VIVOSDEV09_098.wav",
+            "sha256": "a6c4c716d21cd582bcd379ec0886b19e7fde6db824ff681fc1f781faf4cacd65",
+            "seed": 41026
+          },
+          {
+            "id": "v4_VIVOSDEV10_0",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_043.wav",
+            "sha256": "793d61ed4ab8f4f34079899094c29160ad4c0704a91571bcfc69a3293ef9cdaa",
+            "seed": 41027
+          },
+          {
+            "id": "v4_VIVOSDEV10_1",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_045.wav",
+            "sha256": "ffbfe079215d0f35bb7ed710e7888f887211f51093f574d57bffbecfaffd7259",
+            "seed": 41028
+          },
+          {
+            "id": "v4_VIVOSDEV10_2",
+            "speakerId": "VIVOSDEV10",
+            "split": "train",
+            "sourceFile": "VIVOSDEV10_067.wav",
+            "sha256": "3bceb5d208707fd9991896cc73a882aed9a016e211c98d1455e299175d5bed24",
+            "seed": 41029
+          },
+          {
+            "id": "v4_VIVOSDEV11_0",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_077.wav",
+            "sha256": "96df7dacc240afc5a49cd35c12d6ab8d0ed11583116372c59c14a6de0e884396",
+            "seed": 41030
+          },
+          {
+            "id": "v4_VIVOSDEV11_1",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_079.wav",
+            "sha256": "50fb2b2a867103e465b2a37e29e3bdac56a9832d8a417bff9271318c87fa04d3",
+            "seed": 41031
+          },
+          {
+            "id": "v4_VIVOSDEV11_2",
+            "speakerId": "VIVOSDEV11",
+            "split": "train",
+            "sourceFile": "VIVOSDEV11_083.wav",
+            "sha256": "064cd23060e07e1ac2e7f9fb48c67a69f11c627fd90e0e8592a385e00284b33c",
+            "seed": 41032
+          },
+          {
+            "id": "v4_VIVOSDEV12_0",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_068.wav",
+            "sha256": "f36f85ccd5d272508ec52d8a237028121daac9586f911755219ef1e6675b244b",
+            "seed": 41033
+          },
+          {
+            "id": "v4_VIVOSDEV12_1",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_071.wav",
+            "sha256": "5116d2a6b8b7233a7b4f36069be0891dc4d57eb481bc8652405d62ff8c6ae5ad",
+            "seed": 41034
+          },
+          {
+            "id": "v4_VIVOSDEV12_2",
+            "speakerId": "VIVOSDEV12",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV12_076.wav",
+            "sha256": "7a8ff31ceaa529d6e1df84a92bc90a0604400438bd5b4eef7b0a85c13808b9fa",
+            "seed": 41035
+          },
+          {
+            "id": "v4_VIVOSDEV13_0",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_078.wav",
+            "sha256": "93c8328a01675c6385b3093c95f6a8bf813b3487af1c1c4f910a1f3846666482",
+            "seed": 41036
+          },
+          {
+            "id": "v4_VIVOSDEV13_1",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_088.wav",
+            "sha256": "43ffe15e59c75655dc5d133847d2f7ed4aaf499139a11a568e7a1c078498e622",
+            "seed": 41037
+          },
+          {
+            "id": "v4_VIVOSDEV13_2",
+            "speakerId": "VIVOSDEV13",
+            "split": "test",
+            "sourceFile": "VIVOSDEV13_089.wav",
+            "sha256": "8984eee1dc8853458a62dea0ade46400cfedfb865afe8770b09643f3b0ee837c",
+            "seed": 41038
+          },
+          {
+            "id": "v4_VIVOSDEV14_0",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_086.wav",
+            "sha256": "0d619d2deeacbd32b8e429bf18c17349b514ca0dc8b3b6f5f4744d88c48e7411",
+            "seed": 41039
+          },
+          {
+            "id": "v4_VIVOSDEV14_1",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_093.wav",
+            "sha256": "aee2cb833465e29d33c42a56dc1d0d035600977d1dbd1e8184a9bbf5baa67e22",
+            "seed": 41040
+          },
+          {
+            "id": "v4_VIVOSDEV14_2",
+            "speakerId": "VIVOSDEV14",
+            "split": "train",
+            "sourceFile": "VIVOSDEV14_104.wav",
+            "sha256": "a2409de81e12ebc7ee497367ac90b9cb1c27387c79b3302d771712f3badc7d15",
+            "seed": 41041
+          },
+          {
+            "id": "v4_VIVOSDEV15_0",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_038.wav",
+            "sha256": "2fca43f339e5567d637c12a25bd3ef76538be1cd3d6e5c5304c2087863d423f0",
+            "seed": 41042
+          },
+          {
+            "id": "v4_VIVOSDEV15_1",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_050.wav",
+            "sha256": "dc5ca41b9b67aded50d965f8d7c56b5212cf1e7b5e77add9636f1bcf70fa7180",
+            "seed": 41043
+          },
+          {
+            "id": "v4_VIVOSDEV15_2",
+            "speakerId": "VIVOSDEV15",
+            "split": "calibration",
+            "sourceFile": "VIVOSDEV15_062.wav",
+            "sha256": "1a6bf9e8d1aeec6cf265c6cd5dd23fec03ed7a5380f1295c73a95dcf84773fb7",
+            "seed": 41044
+          },
+          {
+            "id": "v4_VIVOSDEV16_0",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_059.wav",
+            "sha256": "0b8023a3d460f1ea6708e158f785ec09adae813331e678b85492a183c132bf8f",
+            "seed": 41045
+          },
+          {
+            "id": "v4_VIVOSDEV16_1",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_064.wav",
+            "sha256": "29bd15471b15c3ff49a92c5871581ed9d5b6d00bef58cb9a1b862eb493637da2",
+            "seed": 41046
+          },
+          {
+            "id": "v4_VIVOSDEV16_2",
+            "speakerId": "VIVOSDEV16",
+            "split": "test",
+            "sourceFile": "VIVOSDEV16_067.wav",
+            "sha256": "76d0c64eb8cd64ca219a248b5c43f4b8aa3d1b393afa210a8d86627b9d9aad47",
+            "seed": 41047
+          },
+          {
+            "id": "v4_VIVOSDEV17_0",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_070.wav",
+            "sha256": "a48862dff42feeff5fb87cc32893eba2c3281c86cc984aa375fdbc773451af22",
+            "seed": 41048
+          },
+          {
+            "id": "v4_VIVOSDEV17_1",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_071.wav",
+            "sha256": "8bb7ac9842887c9c589ec40e03088cda0c11cf00c689cbb2ed2a3c2a1352135e",
+            "seed": 41049
+          },
+          {
+            "id": "v4_VIVOSDEV17_2",
+            "speakerId": "VIVOSDEV17",
+            "split": "test",
+            "sourceFile": "VIVOSDEV17_077.wav",
+            "sha256": "ae345e8ce891ada09217273d8451f47956195991070a7992a61b990654b2f769",
+            "seed": 41050
+          },
+          {
+            "id": "v4_VIVOSDEV18_0",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_082.wav",
+            "sha256": "56a5a0852aba0beb675042d9617c24d1d6c652ff7f875dee74cbd5ee1b8be368",
+            "seed": 41051
+          },
+          {
+            "id": "v4_VIVOSDEV18_1",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_102.wav",
+            "sha256": "6f1009366344c574b9f691b3ef6c566dfd0a7b6df37af060d251e1266e629b72",
+            "seed": 41052
+          },
+          {
+            "id": "v4_VIVOSDEV18_2",
+            "speakerId": "VIVOSDEV18",
+            "split": "train",
+            "sourceFile": "VIVOSDEV18_114.wav",
+            "sha256": "1186c173927339840ee0af0287f419eb074bc2b1528d9fc7d6862abcd8c3f101",
+            "seed": 41053
+          },
+          {
+            "id": "v4_VIVOSDEV19_0",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_030.wav",
+            "sha256": "6ef86ea49c8087014476cb059d12fbbcf66473964c6688bcda057d69e4b1e8f1",
+            "seed": 41054
+          },
+          {
+            "id": "v4_VIVOSDEV19_1",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_045.wav",
+            "sha256": "0e9ef6e52f83fae448ff55df69c17c56af586d83a2033350b9f2a78f2115fb98",
+            "seed": 41055
+          },
+          {
+            "id": "v4_VIVOSDEV19_2",
+            "speakerId": "VIVOSDEV19",
+            "split": "train",
+            "sourceFile": "VIVOSDEV19_056.wav",
+            "sha256": "2c7aace8bd9c29b68fdca130925d6539805ade689d0dc789c2ebd3f8a3aa58df",
+            "seed": 41056
+          }
+        ],
+        "references": {
+          "VIVOSDEV01": {
+            "sourceFile": "VIVOSDEV01_R071.wav",
+            "sha256": "86cd6245db9c63a2324b228697848b80b79bc3e759577ad31ddf1a9138fc15c8",
+            "split": "test"
+          },
+          "VIVOSDEV02": {
+            "sourceFile": "VIVOSDEV02_R154.wav",
+            "sha256": "2e5c3207059a17304b582bf950a059b294eaf19cc065145f5037736c2bad7876",
+            "split": "test"
+          },
+          "VIVOSDEV03": {
+            "sourceFile": "VIVOSDEV03_R136.wav",
+            "sha256": "f2f83985e32cb9da36c62e4e054309298fcfe3e781cafd978c568a7383322551",
+            "split": "train"
+          },
+          "VIVOSDEV04": {
+            "sourceFile": "VIVOSDEV04_R086.wav",
+            "sha256": "ec5febc46a309908069a7010354ddb5a376449e6a23ed0783fcd5d128e18efb3",
+            "split": "train"
+          },
+          "VIVOSDEV05": {
+            "sourceFile": "VIVOSDEV05_206.wav",
+            "sha256": "45d3ccb54f1da779ebb5e3935de575551fd5a55ecf06fbcc236ec8cb97a2f222",
+            "split": "train"
+          },
+          "VIVOSDEV06": {
+            "sourceFile": "VIVOSDEV06_103.wav",
+            "sha256": "9c7007773cd6ad259b2d5ebbd08e97da97e68607b515c7478f85db2537699fdd",
+            "split": "train"
+          },
+          "VIVOSDEV07": {
+            "sourceFile": "VIVOSDEV07_170.wav",
+            "sha256": "a0ad8f966a828e9ef2236690938ad7d981b6dc0b677e3e80a599b3d58358429f",
+            "split": "calibration"
+          },
+          "VIVOSDEV08": {
+            "sourceFile": "VIVOSDEV08_141.wav",
+            "sha256": "e71fd6ac1848db9f7d54486734955c59662288e295b39fa105eae32c1f8024bc",
+            "split": "calibration"
+          },
+          "VIVOSDEV09": {
+            "sourceFile": "VIVOSDEV09_159.wav",
+            "sha256": "2f326e0e249b8baeaa2d511d5e9c8fd958bd02c46581ebfbd16050272c3fde3e",
+            "split": "train"
+          },
+          "VIVOSDEV10": {
+            "sourceFile": "VIVOSDEV10_294.wav",
+            "sha256": "19f993e5ddee1d0446d3bfb405a9bde728054319a5692f4beccf7425bf735e5e",
+            "split": "train"
+          },
+          "VIVOSDEV11": {
+            "sourceFile": "VIVOSDEV11_131.wav",
+            "sha256": "af616fc31fafb2faa2b287d7635cc19893f41a3de70dd877a2a201eedcea730d",
+            "split": "train"
+          },
+          "VIVOSDEV12": {
+            "sourceFile": "VIVOSDEV12_101.wav",
+            "sha256": "e8496b7b5acd35bf95e881b12c951f055144bd18e959b46bf5fdcaea1a8cc446",
+            "split": "calibration"
+          },
+          "VIVOSDEV13": {
+            "sourceFile": "VIVOSDEV13_097.wav",
+            "sha256": "a1e428e8cefc56a6480c317864910c891c49d7a9c665730f7c511969e90851d7",
+            "split": "test"
+          },
+          "VIVOSDEV14": {
+            "sourceFile": "VIVOSDEV14_191.wav",
+            "sha256": "f3d16adfacbaaefdbc21de775474da65f5e79abd109a9b8b264d7c06bad79a1f",
+            "split": "train"
+          },
+          "VIVOSDEV15": {
+            "sourceFile": "VIVOSDEV15_047.wav",
+            "sha256": "107911e18cdb9e5525d56b0ba17d20bd82024a47ac35383015971e9769153a2d",
+            "split": "calibration"
+          },
+          "VIVOSDEV16": {
+            "sourceFile": "VIVOSDEV16_177.wav",
+            "sha256": "c5569e8656bfe743067b5c44e35967d529cc1249f1cca9e4553798f1c76b428c",
+            "split": "test"
+          },
+          "VIVOSDEV17": {
+            "sourceFile": "VIVOSDEV17_271.wav",
+            "sha256": "82443e5ddcac5a1ddd2ab51f4a2c3c629176312936d3f0429227b4195c51289a",
+            "split": "test"
+          },
+          "VIVOSDEV18": {
+            "sourceFile": "VIVOSDEV18_126.wav",
+            "sha256": "46c59e216af2a55f921a7dac15cd9ad2d0720ffd1f211cfd86d3f1b5be98356e",
+            "split": "train"
+          },
+          "VIVOSDEV19": {
+            "sourceFile": "VIVOSDEV19_064.wav",
+            "sha256": "dd686f3e75716281d1c026b551f0aaf460669f9b33268678cae06a804f2a4e86",
+            "split": "train"
+          }
+        },
+        "priorTestHandling": "V2/V3 test groups are now frozen regression tests, not fresh evidence",
+        "trainGenerator": "VieNeu Turbo fp32 reference-conditioned for all splits; held-out VIVOS speakers and unused target/reference recordings",
+        "pairedCrop": "Same duration=min(human, generated, 5s), no label-dependent duration padding",
+        "noiseSeed": "Same per-origin noise seed for paired human and synthetic",
+        "splitRule": "Reuse VIVOS speaker partitions from V2, choose unused recordings; V2 heldout retained only as regression"
+      }
+    }
+  ],
+  "generators": [
+    {
+      "repository": "pnnbao-ump/VieNeu-TTS-v3-Nano",
+      "revision": "aba295eb96a6fa6003ebe417cc1f2802a7adc1dc",
+      "files": [
+        {
+          "file": "text_encoder.onnx",
+          "sha256": "204f02cccae1f16ccb2d3840f05721a37fe250b82cbd456337a0ccb49615e4bf",
+          "bytes": 26519943
+        },
+        {
+          "file": "duration_predictor.onnx",
+          "sha256": "20fd7fa60006d0a48ee82e0451b3f920d2052588c083c756cce669f3947c0a68",
+          "bytes": 727809
+        },
+        {
+          "file": "vector_estimator.onnx",
+          "sha256": "c6c1d4398ca35d3ad1bd3f0459413d1b975d09e7f2f3a2b4493a7b92bbf6ce93",
+          "bytes": 155132418
+        },
+        {
+          "file": "codec_decoder.onnx",
+          "sha256": "b0ab15e7828a39d53679e25b1ba4ba415a61311307202a6323130b9e1cc3029d",
+          "bytes": 99319941
+        },
+        {
+          "file": "config.json",
+          "sha256": "3762f1716fd8d7a1451ddf2e051c03b0a341e8adda4f1dbd0db0ae9777514e56",
+          "bytes": 2927
+        },
+        {
+          "file": "constants.npz",
+          "sha256": "7c011938effe41687a9af85107a31a040dfcf0fb3d0f048ec10f4fb65c1a8829",
+          "bytes": 53448
+        }
+      ]
+    },
+    {
+      "repository": "pnnbao-ump/VieNeu-TTS-v3-Nano",
+      "revision": "aba295eb96a6fa6003ebe417cc1f2802a7adc1dc",
+      "files": [
+        {
+          "file": "speaker_encoder.onnx",
+          "sha256": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73",
+          "bytes": 28303423,
+          "url": "https://huggingface.co/pnnbao-ump/VieNeu-TTS-v3-Nano/resolve/aba295eb96a6fa6003ebe417cc1f2802a7adc1dc/speaker_encoder.onnx"
+        },
+        {
+          "file": "codec_encoder.onnx",
+          "sha256": "195418031f190bf1c72dbfbed8490574754b346769180209a423a96c45caab98",
+          "bytes": 56419417,
+          "url": "https://huggingface.co/pnnbao-ump/VieNeu-TTS-v3-Nano/resolve/aba295eb96a6fa6003ebe417cc1f2802a7adc1dc/codec_encoder.onnx"
+        },
+        {
+          "file": "reference_encoder.onnx",
+          "sha256": "6746906bfe857969a2b1b6e9091f1d4a19d9f04af4e187844021272dad4dcd3a",
+          "bytes": 10778145,
+          "url": "https://huggingface.co/pnnbao-ump/VieNeu-TTS-v3-Nano/resolve/aba295eb96a6fa6003ebe417cc1f2802a7adc1dc/reference_encoder.onnx"
+        }
+      ]
+    },
+    {
+      "repository": "pnnbao-ump/VieNeu-TTS-v3-Turbo",
+      "revision": "61b85e3d937fbbacb387714180e8182823512523",
+      "files": [
+        {
+          "file": "onnx_update/config.json",
+          "sha256": "17d89d414ee302a82db7b330bf57b4cdf8541569392119c81f552178cafcb79b",
+          "bytes": 2152
+        },
+        {
+          "file": "onnx_update/tokenizer.json",
+          "sha256": "6cc6bcbe380b8c37bd9f2514e37c5dfa3e00e122c6e3125dae5c4afe48e39158",
+          "bytes": 22320
+        },
+        {
+          "file": "onnx_update/vieneu_acoustic_cached.onnx",
+          "sha256": "f631e3387c788c3d8b9a5ac5df94952af5bc4c4d1049ff8a751e76a246fff2d4",
+          "bytes": 7207223
+        },
+        {
+          "file": "onnx_update/vieneu_backbone_shared.data",
+          "sha256": "c7c072193db33d0542457e2612c7272c44c4279d1cafaf0aa4c379964911db2f",
+          "bytes": 415319040
+        },
+        {
+          "file": "onnx_update/vieneu_decode_step.onnx",
+          "sha256": "bedc379cea61ea5d616312750d95ad3924e055856662d19187a889a5edc24ceb",
+          "bytes": 306134
+        },
+        {
+          "file": "onnx_update/vieneu_prefill.onnx",
+          "sha256": "27f8b064f6b57b5448e95d095f1959588c005d614678045c2b97ecccf3b7a0f7",
+          "bytes": 324499
+        },
+        {
+          "file": "onnx_update/vieneu_v3_heads.npz",
+          "sha256": "fb22484baa424bbb775133a6e5f0d00d6299b2b256fbe3312a864b85b9aed01e",
+          "bytes": 52219622
+        },
+        {
+          "file": "speaker_encoder.onnx",
+          "sha256": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73",
+          "bytes": 28303423
+        }
+      ]
+    },
+    {
+      "repository": "OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX",
+      "revision": "ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae",
+      "files": [
+        {
+          "file": "moss_audio_tokenizer_decode_full.onnx",
+          "sha256": "0fbbafe3fd4afa2a019af5c5ced204af6e2d1db044fa40f021525d2aee95b4ac",
+          "bytes": 681902
+        },
+        {
+          "file": "moss_audio_tokenizer_decode_shared.data",
+          "sha256": "e69d52e0f4e84ca27850557ee54face46632d3a5a16c89bd246c7c408466dcad",
+          "bytes": 44198912
+        },
+        {
+          "file": "moss_audio_tokenizer_decode_step.onnx",
+          "sha256": "9527c86a29e1837edec1f74db57d5eeaadb3a715af3382703566460afed25855",
+          "bytes": 351400
+        },
+        {
+          "file": "codec_browser_onnx_meta.json",
+          "sha256": "3e291c883bb7d11ff2fe8e964e3e495519760358859f35c951254c7741592731",
+          "bytes": 17036
+        },
+        {
+          "file": "moss_audio_tokenizer_encode.onnx",
+          "sha256": "eadea4a645abdcf98714c7aead122ee2ce7da6e080f9f80b977cd1ca8e19473a",
+          "bytes": 815775
+        },
+        {
+          "file": "moss_audio_tokenizer_encode.data",
+          "sha256": "aa751265b2bab2887eac224484546b194875aa7494b607115439b3dc6b228a2c",
+          "bytes": 44507136
+        }
+      ]
+    }
+  ],
+  "sourceShard": "See voice-v2-provenance.json for pinned VIVOS source shard and download checksum",
+  "generationEnvironment": {
+    "vieneu": "3.8.3",
+    "onnxruntime": "1.31.1",
+    "device": "Mac M2 Pro 16GB CPU, 4 threads"
+  },
+  "limitations": [
+    "No private recordings or named identity imitation used. Public opaque speaker IDs only.",
+    "Clone similarity not independently rated; source read speech and simulations do not certify real calls.",
+    "V4 test is new utterances from the same five held-out VIVOS speaker IDs, not external validation.",
+    "V3 Turbo and Nano cohorts reuse underlying human test targets and are correlated.",
+    "V3 candidate 1 failed audit; rejected before adding Turbo to development. V2/V3 tests are regression evidence only for candidate 2."
+  ]
+}

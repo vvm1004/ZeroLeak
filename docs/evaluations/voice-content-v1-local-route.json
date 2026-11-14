@@ -1,0 +1,14 @@
+{
+  "inProcessHttpRouter": true,
+  "realLocalWorker": true,
+  "cloudCalls": 0,
+  "contentConfiguration": "deliberately absent only in this isolated process",
+  "assessmentSource": "LOCAL_ACOUSTIC",
+  "contentAnalysis": {
+    "status": "UNAVAILABLE",
+    "reason": "NOT_CONFIGURED"
+  },
+  "acousticVerdict": "SYNTHETIC_SUSPECTED",
+  "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "roundTripMs": 2396
+}

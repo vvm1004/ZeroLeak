@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "createdAt": "2026-11-10T17:29:27.698Z",
+    "dataset": "Content controls v1 test, interleaved scam/benign before predictions",
+    "limitations": [
+      "All synthetic, one voice, authored scenarios; no human/call generalization claim.",
+      "Clean and Opus copies share twelve test texts and are correlated.",
+      "Expected tactic lists are author annotations, not independent adjudication."
+    ],
+    "mode": "review",
+    "requestedModel": "gemini-3.1-flash-lite",
+    "productionDeadlineMs": 15000,
+    "qualityDeadlineMs": null,
+    "threshold": 0.5,
+    "thresholdWasTunedOnThisRun": false,
+    "maxProviderCalls": 24,
+    "modelRoute": [
+      "gemini-3.1-flash-lite"
+    ],
+    "labelsSentToProvider": false,
+    "realApi": true,
+    "manifestSha256": "658cc86b4776512c4a4bce024d824428de26cc3973677cc1d4e26ce61db03bba",
+    "requestDefinitionSha256": "b174f3b528ebdef46f065693b634a3deb97f24e73bcdecda34c256b1dd7998b3",
+    "analyzerCodeSha256": "4bbc15c1402bd73c1211c7982e2882331bd3d836fcf641334fbaa64f480e7b8d",
+    "selectedSplit": "test",
+    "plannedCases": 24,
+    "sourceGroups": 12
+  },
+  "providerCalls": 3,
+  "notAttempted": [
+    "test_otp_warning_opus",
+    "test_boss_secret_clean",
+    "test_password_advice_clean",
+    "test_boss_secret_opus",
+    "test_password_advice_opus",
+    "test_police_password_clean",
+    "test_news_quote_clean",
+    "test_police_password_opus",
+    "test_news_quote_opus",
+    "test_password_clean",
+    "test_meeting_urgent_clean",
+    "test_password_opus",
+    "test_meeting_urgent_opus",
+    "test_coercion_clean",
+    "test_transfer_normal_clean",
+    "test_coercion_opus",
+    "test_transfer_normal_opus",
+    "test_code_request_clean",
+    "test_staff_normal_clean",
+    "test_code_request_opus",
+    "test_staff_normal_opus"
+  ],
+  "summary": {
+    "attempted": 3,
+    "sourceGroups": 2,
+    "human": 0,
+    "synthetic": 3,
+    "threshold": 0.5,
+    "assessed": 0,
+    "unknownHuman": 0,
+    "unknownSynthetic": 3,
+    "tp": 0,
+    "tn": 0,
+    "fp": 0,
+    "fn": 0,
+    "coverage": 0,
+    "selectiveAccuracy": null,
+    "falsePositiveRateAmongAssessedHuman": null,
+    "falseNegativeRateAmongAssessedSynthetic": null,
+    "fakeDetectionYieldAllSynthetic": 0,
+    "falseAlertsAllHuman": null,
+    "latencyMedianMs": 3316,
+    "latencyMaxMs": 14914,
+    "latencyP95Ms": null,
+    "errorCounts": {
+      "TIMEOUT": 0,
+      "PROVIDER_ERROR": 3,
+      "INVALID_RESULT": 0,
+      "INPUT_ERROR": 0
+    },
+    "tactics": {
+      "annotated": 3,
+      "exactMatches": 0
+    },
+    "content": {
+      "labeled": 3,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "unknown": 3,
+      "coverage": 0
+    }
+  },
+  "byCondition": {
+    "clean": {
+      "attempted": 2,
+      "sourceGroups": 2,
+      "human": 0,
+      "synthetic": 2,
+      "threshold": 0.5,
+      "assessed": 0,
+      "unknownHuman": 0,
+      "unknownSynthetic": 2,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": null,
+      "latencyMedianMs": 9115,
+      "latencyMaxMs": 14914,
+      "latencyP95Ms": null,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 2,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 2,
+        "exactMatches": 0
+      },
+      "content": {
+        "labeled": 2,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 2,
+        "coverage": 0
+      }
+    },
+    "opus16k": {
+      "attempted": 1,
+      "sourceGroups": 1,
+      "human": 0,
+      "synthetic": 1,
+      "threshold": 0.5,
+      "assessed": 0,
+      "unknownHuman": 0,
+      "unknownSynthetic": 1,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": null,
+      "latencyMedianMs": 1665,
+      "latencyMaxMs": 1665,
+      "latencyP95Ms": null,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 1,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 1,
+        "exactMatches": 0
+      },
+      "content": {
+        "labeled": 1,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 1,
+        "coverage": 0
+      }
+    }
+  },
+  "byCohort": {
+    "content-controls-v1": {
+      "attempted": 3,
+      "sourceGroups": 2,
+      "human": 0,
+      "synthetic": 3,
+      "threshold": 0.5,
+      "assessed": 0,
+      "unknownHuman": 0,
+      "unknownSynthetic": 3,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": null,
+      "latencyMedianMs": 3316,
+      "latencyMaxMs": 14914,
+      "latencyP95Ms": null,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 3,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 3,
+        "exactMatches": 0
+      },
+      "content": {
+        "labeled": 3,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 3,
+        "coverage": 0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "test_bank_otp_clean",
+      "originId": "test_bank_otp",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "review",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 3316,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    },
+    {
+      "id": "test_otp_warning_clean",
+      "originId": "test_otp_warning",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "review",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 14914,
+      "providerCalls": 1,
+      "providerStatus": 504,
+      "detectedTactics": [],
+      "expectedTactics": []
+    },
+    {
+      "id": "test_bank_otp_opus",
+      "originId": "test_bank_otp",
+      "condition": "opus16k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "review",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 1665,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    }
+  ]
+}

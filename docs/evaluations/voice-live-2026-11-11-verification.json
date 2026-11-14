@@ -1,0 +1,30 @@
+{
+  "scope": "Implementation and protocol verification, not independent detector accuracy",
+  "modelRoute": [
+    "gemini-3.8-live-extended-thinking",
+    "gemini-3.8-live",
+    "gemini-3.5-flash-lite"
+  ],
+  "softwareTests": {
+    "backend": 63,
+    "client": 5,
+    "browserFixture": 12,
+    "total": 80,
+    "passed": true
+  },
+  "checks": {
+    "backendBuild": true,
+    "extensionBuild": true,
+    "backendTypecheck": true,
+    "clientTypecheck": true,
+    "evaluationCliTypecheck": true,
+    "evaluationDryRun": true
+  },
+  "primaryLiveSucceededOnKnownSyntheticSample": true,
+  "realBrowserReviewPrimarySucceeded": true,
+  "realBrowserFastAcceptancePassed": false,
+  "test6PhysicalCallAccepted": false,
+  "acousticHeadUnchangedSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "noIndependentAccuracyImprovementClaimed": true,
+  "dataExposure": "Public/synthetic development audio only; no user microphone recordings or raw audio in Git"
+}

@@ -16,6 +16,7 @@ import {
   QrCode,
   Search,
   ExternalLink,
+  Mic,
 } from 'lucide-react';
 import { analyzeUrlWithSandbox } from '../../utils/phishing-client';
 
@@ -117,6 +118,12 @@ export default function App() {
       </header>
 
       {/* Action Mode Selector */}
+      <button
+        onClick={() => { void chrome.tabs.create({ url: chrome.runtime.getURL('/voice.html') }); window.close(); }}
+        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+      >
+        <Mic className="w-4 h-4" aria-hidden="true" /> Bảo vệ cuộc gọi — ZeroLeak Voice
+      </button>
       <div className="mt-3">
         <label className="text-[11px] font-semibold text-slate-300 block mb-1.5">
           Chế độ Hành động (Policy Mode):

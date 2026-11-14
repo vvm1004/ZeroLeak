@@ -1,0 +1,19 @@
+{
+  "definedBeforeRemainingPredictions": true,
+  "reason": "Real browser smoke just received a valid Gemini result; retry none of the three errored cases, attempt only the 21 cases never sent",
+  "modelUnchanged": "gemini-3.1-flash-lite",
+  "mode": "review",
+  "analyzerSha256": "b629060a16d173182adcde686e7874be688deaee5d7eea5d31a82c56cf7622ca",
+  "oldFailedReportSha256": "07dfa1b1a0389afacca31fc019e60c64481c7f71578a4a530edd79b5e9b58960",
+  "retainedAsUnknown": [
+    "test_bank_otp_clean",
+    "test_bank_otp_opus",
+    "test_otp_warning_clean"
+  ],
+  "remaining": 21,
+  "stopAfterConsecutiveErrors": 3,
+  "maximumAdditionalProviderCalls": 21,
+  "conservativePreviousCallUpperBound": 43,
+  "totalCallUpperBound": 64,
+  "note": "The first 3 cases had only provider errors, no semantic predictions observed. No prompt tuning on holdout answers. Prior errors remain in final denominator."
+}

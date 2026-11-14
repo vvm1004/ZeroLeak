@@ -16,7 +16,8 @@
     "test:dlp": "tsx test-dlp.ts",
     "test:vault": "tsx test-vault-restoration.ts",
     "test:phishing": "tsx test-phishing-qr.ts",
-    "test": "pnpm test:dlp && pnpm test:vault && pnpm test:phishing"
+    "test:voice": "tsx --test test-voice.ts",
+    "test": "pnpm test:dlp && pnpm test:vault && pnpm test:phishing && pnpm test:voice"
   },
   "dependencies": {
     "@zeroleak/firebase-config": "workspace:*",

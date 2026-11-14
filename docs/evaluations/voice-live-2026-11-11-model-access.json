@@ -1,0 +1,29 @@
+[
+  {
+    "model": "gemini-3.8-live-extended-thinking",
+    "name": "models/gemini-3.8-live-extended-thinking",
+    "supportedActions": [
+      "bidiGenerateContent"
+    ],
+    "status": "AVAILABLE"
+  },
+  {
+    "model": "gemini-3.8-live",
+    "name": "models/gemini-3.8-live",
+    "supportedActions": [
+      "bidiGenerateContent"
+    ],
+    "status": "AVAILABLE"
+  },
+  {
+    "model": "gemini-3.5-flash-lite",
+    "name": "models/gemini-3.5-flash-lite",
+    "supportedActions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "status": "AVAILABLE"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "createdAt": "2026-11-11T13:42:45.543Z",
+    "dataset": "Vietnamese scam content controls v1",
+    "limitations": [
+      "All synthetic, one voice, authored scenarios; no human/call generalization claim.",
+      "Clean and Opus copies share twelve test texts and are correlated.",
+      "Expected tactic lists are author annotations, not independent adjudication."
+    ],
+    "mode": "realtime",
+    "requestedModel": "production-router",
+    "productionDeadlineMs": 3100,
+    "qualityDeadlineMs": null,
+    "threshold": 0.5,
+    "thresholdWasTunedOnThisRun": false,
+    "maxProviderCalls": 32,
+    "modelRoute": [
+      "gemini-3.8-live-extended-thinking",
+      "gemini-3.8-live",
+      "gemini-3.5-flash-lite"
+    ],
+    "transports": [
+      {
+        "model": "gemini-3.8-live-extended-thinking",
+        "transport": "LIVE_API"
+      },
+      {
+        "model": "gemini-3.8-live",
+        "transport": "LIVE_API"
+      },
+      {
+        "model": "gemini-3.5-flash-lite",
+        "transport": "GENERATE_CONTENT"
+      }
+    ],
+    "labelsSentToProvider": false,
+    "realApi": false,
+    "manifestSha256": "f5368df46a7f7fd8c1fac9f220241a05087b578eff13a40fd79af31e7d2c6e30",
+    "requestDefinitionSha256": "4be8f8b87a181fde21fcc79bd349c8810b5c37d5df1a9040382c5fb9791aad86",
+    "analyzerCodeSha256": "67e8e69768780178237594c2009ff1e77d01af06a3fae89114093f425a2a7a04",
+    "selectedSplit": "explicit selection",
+    "plannedCases": 1,
+    "sourceGroups": 1
+  },
+  "validatedCases": [
+    "dev_otp_request_clean"
+  ],
+  "providerCalls": 0
+}

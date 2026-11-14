@@ -1,28 +1,10 @@
 import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
-import { cors } from 'hono/cors';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'node:url';
+import { createApp } from './app.js';
 
-dotenv.config();
-
-const app = new Hono();
-
-app.use(
-  '*',
-  cors({
-    origin: '*',
-    allowMethods: ['GET', 'POST', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization'],
-  })
-);
-
-app.get('/health', (c) => {
-  return c.json({
-    status: 'ok',
-    service: 'zeroleak-sandbox-api',
-    timestamp: new Date().toISOString(),
-  });
-});
+dotenv.config({ path: fileURLToPath(new URL('../../../.env', import.meta.url)) });
+const app = createApp();
 
 const port = Number(process.env.PORT) || 8080;
 console.log(`[Sandbox API] Server starting on http://localhost:${port}`);
@@ -30,6 +12,7 @@ console.log(`[Sandbox API] Server starting on http://localhost:${port}`);
 serve({
   fetch: app.fetch,
   port,
+  hostname: process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1',
 });
 
 export default app;

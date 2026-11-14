@@ -1,0 +1,26 @@
+{
+  "frozenBeforeFreshTestPredictions": true,
+  "createdAtUtc": "2026-11-10T17:29:26.589486+00:00",
+  "selectedModel": "gemini-3.1-flash-lite",
+  "selectedMode": "review",
+  "analysisDeadlineMs": 15000,
+  "liveDeadlineUnchangedMs": 3100,
+  "analyzerSha256": "4bbc15c1402bd73c1211c7982e2882331bd3d836fcf641334fbaa64f480e7b8d",
+  "testManifestSha256": "658cc86b4776512c4a4bce024d824428de26cc3973677cc1d4e26ce61db03bba",
+  "selectionEvidence": [
+    "candidate-31-dev.json",
+    "compact-dev.json"
+  ],
+  "gate": {
+    "attemptedMinimum": 24,
+    "validResponsesMinimum": 20,
+    "trueScamAlertsMinimum": 10,
+    "trueBenignMinimum": 10,
+    "falseAlertsMaximum": 0
+  },
+  "limitations": [
+    "No promise of sub-3s content analysis; review is separate opt-in file mode.",
+    "This holdout has 12 authored scripts, clean/Opus variants, one TTS voice, no human-call or external validity claim.",
+    "Do not tune this prompt on these test answers; any later model revision requires fresh scenarios."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "definedBeforeTestPredictions": true,
+  "thresholdsUnchanged": [
+    0.2,
+    0.8
+  ],
+  "fitOnly": [
+    "train",
+    "calibration"
+  ],
+  "newMainGate": [
+    "operational human false alerts <= V2",
+    "synthetic alerts >= V2",
+    "diagnostic balanced accuracy >= V2"
+  ],
+  "auditGate": [
+    "human false alerts <= V2",
+    "low-scored synthetic <= V2"
+  ],
+  "v2RegressionGate": [
+    "human false alerts == 0",
+    "synthetic alerts >= 58"
+  ],
+  "onFailure": "Keep the running V2, record failed gate; do not tune on test labels"
+}

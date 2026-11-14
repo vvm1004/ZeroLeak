@@ -1,0 +1,22 @@
+{
+  "backendTests": {
+    "passed": 20,
+    "failed": 0
+  },
+  "pythonTests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "backendTypecheck": "passed",
+  "backendBuild": "passed",
+  "startupCliTypecheck": "passed",
+  "v2HeadByteIdenticalReproduction": true,
+  "v3HeadByteIdenticalReproduction": true,
+  "runtimeHttpRequests": 488,
+  "runtimeErrors": 0,
+  "cliSmoke": "passed",
+  "cliRejectsWrongHeadBeforeEvaluation": true,
+  "cliRejectsTruncatedCohort": true,
+  "integrationSmoke": "real worker, content dependency forced unavailable, no Gemini calls",
+  "frontendTestsThisIteration": "not repeated; no frontend changes in this iteration"
+}

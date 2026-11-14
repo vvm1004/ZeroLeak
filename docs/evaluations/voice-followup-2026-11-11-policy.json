@@ -1,0 +1,12 @@
+{
+  "definedBeforeCandidatePredictions": true,
+  "objective": "Improve worst generator-channel detection using only existing train/calibration embeddings; preserve human false-alert limits.",
+  "features": "Frozen XLSR 256 + AASIST 160; unchanged audio preprocessing and VAD",
+  "trainingPolicies": ["uniform", "equal-label-family-condition"],
+  "regularizationGrid": [0.001, 0.01, 0.1],
+  "selection": "calibration only: require zero human alerts and no more low-scored synthetic than V3; rank by worst synthetic family-condition alert yield, overall synthetic alert yield, fewer low-scored synthetic, stronger regularization",
+  "thresholds": [0.2, 0.8],
+  "testHandling": "All currently cached test cases are known regression, never fresh. Do not tune candidates after inspecting regression predictions. A new source/reference recording check is required for replacing the runtime head.",
+  "regressionGate": "For every existing cohort: no more human false alerts and no more low-scored synthetic than V3; for noisy Turbo in v4-fresh: at least one additional synthetic alert; total synthetic alerts must not decrease.",
+  "onFailure": "Retain V3; keep rejected candidate results. Do not loosen thresholds or hide UNKNOWN/errors."
+}

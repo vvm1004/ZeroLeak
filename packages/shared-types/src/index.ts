@@ -118,14 +118,51 @@ export type ScamTacticType =
 /**
  * Kết quả trả về từ ZeroLeak Voice (Audio Deepfake & Scam Script Detector)
  */
+export type AcousticVoiceAnalysis = {
+  status: 'AVAILABLE';
+  verdict: 'SYNTHETIC_SUSPECTED' | 'NO_SYNTHETIC_EVIDENCE' | 'UNKNOWN';
+  /** Uncalibrated classifier output, not a probability of fraud or identity. */
+  score: number | null; // null with UNKNOWN when insufficient speech is detected
+  scoreCalibrated: false;
+  source: 'LOCAL_XLSR_AASIST';
+  modelVersion: string;
+  executionTimeMs: number;
+} | { status: 'UNAVAILABLE' };
+
+/** Sanitized provider provenance; no audio, transcript, URLs or credentials. */
+export interface VoiceProviderAttempt {
+  model: string;
+  transport: 'LIVE_API' | 'GENERATE_CONTENT';
+  status: 'SUCCEEDED' | 'FAILED' | 'SKIPPED';
+  reason?: 'TIMEOUT' | 'RATE_LIMITED' | 'NOT_CONFIGURED' | 'INVALID_RESULT' | 'PROVIDER_ERROR';
+}
+
 export interface VoiceScamAnalysisResult {
-  riskScore: number; // 0 - 100
-  verdict: 'SAFE' | 'SUSPICIOUS' | 'DEEPFAKE_SCAM';
-  syntheticVoiceProbability: number; // 0.0 - 1.0
+  riskScore: number | null; // 0 - 100; null when audio cannot be assessed
+  verdict: 'SAFE' | 'SUSPICIOUS' | 'DEEPFAKE_SCAM' | 'UNKNOWN';
+  /** Gemini's uncalibrated estimate; never an identity verification result. */
+  syntheticVoiceProbability: number | null;
   detectedTactics: ScamTacticType[];
+  /** Short provider quotes checked against its transcript, not independent audio verification. */
+  tacticEvidence?: { tactic: ScamTacticType; quote: string }[];
   transcriptSnippet: string;
   warningMessageVi: string;
   executionTimeMs: number;
+  audioQuality: 'CLEAR' | 'LIMITED' | 'UNUSABLE';
+  assessmentSource: 'GEMINI_AUDIO' | 'HYBRID_AUDIO' | 'LOCAL_ACOUSTIC';
+  analysisModel: string;
+  analysisTransport?: 'LIVE_API' | 'GENERATE_CONTENT';
+  fallbackUsed?: boolean;
+  providerAttempts?: VoiceProviderAttempt[];
+  acousticAnalysis?: AcousticVoiceAnalysis;
+  contentAnalysis?: { status: 'AVAILABLE' } | { status: 'UNAVAILABLE'; reason: 'TIMEOUT' | 'RATE_LIMITED' | 'NOT_CONFIGURED' | 'INVALID_RESULT' | 'PROVIDER_ERROR' };
+}
+
+export interface AnalyzeVoiceRequest {
+  audioBase64: string;
+  mimeType: 'audio/wav';
+  /** Review is an explicit opt-in for a short uploaded clip; live capture stays realtime. */
+  analysisMode?: 'realtime' | 'review';
 }
 
 /**

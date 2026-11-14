@@ -1,0 +1,69 @@
+{
+  "fixedBeforeCandidatePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "changeHypothesis": "Reduce output/audio-JSON length; use same-session input ASR as the evidence transcript, never as the model assessment. Preserve conservative semantic guards.",
+  "developmentIds": [
+    "dev_meeting_clean",
+    "dev_otp_request_clean",
+    "dev_warning_clean",
+    "dev_ceo_clean"
+  ],
+  "developmentModes": [
+    "realtime",
+    "review"
+  ],
+  "budgetsMs": {
+    "realtime": 3100,
+    "review": 15000
+  },
+  "pairedOrder": "Alternate baseline/candidate first by case/mode; new isolated socket each call, >=6s between starts",
+  "providerSessionMaximum": 32,
+  "retryPolicy": "No retries. Stop a run after 3 consecutive provider errors; keep errors and skipped cases visible.",
+  "modelFallbackAllowedInComparison": false,
+  "devAcceptance": [
+    "Candidate has no additional false alerts or confident false negatives in either mode",
+    "Candidate semantic assessed count >= baseline in each mode",
+    "At least one additional assessed case, or >=15% median latency reduction without losing assessed cases"
+  ],
+  "freshCases": [
+    [
+      "fresh_password_unlock",
+      "Gửi mật khẩu ngân hàng để tôi mở khóa cho bạn.",
+      true
+    ],
+    [
+      "fresh_boss_no_verify",
+      "Sếp nhờ em chuyển tiền liền, tuyệt đối đừng gọi lại.",
+      true
+    ],
+    [
+      "fresh_code_penalty",
+      "Đọc mã xác thực cho tôi để tránh bị phạt.",
+      true
+    ],
+    [
+      "fresh_code_advice",
+      "Không ai có quyền yêu cầu bạn đọc mã xác thực.",
+      false
+    ],
+    [
+      "fresh_design_deadline",
+      "Chiều nay họp gấp để hoàn thành bản thiết kế nhé.",
+      false
+    ],
+    [
+      "fresh_refused_quote",
+      "Họ dặn chuyển tiền ngay. Tôi đã từ chối yêu cầu đó.",
+      false
+    ]
+  ],
+  "freshAcceptance": {
+    "assessedMin": 4,
+    "scamAlertsMin": 2,
+    "benignCorrectMin": 2,
+    "falseAlertsMax": 0,
+    "confidentMissesMax": 0
+  },
+  "onFailure": "Retain baseline if protocol does not meet gates; never loosen thresholds or tune on fresh answers. Keep independent regression bug fixes with tests.",
+  "scope": "Small synthetic one-voice content/protocol regression, not real-call deepfake accuracy or statistical model superiority"
+}

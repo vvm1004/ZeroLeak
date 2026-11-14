@@ -1,0 +1,55 @@
+{
+  "release": true,
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "policySha256": "7b5dcdd467776f76d8cf6ed89c188dab2c9ecc15621e551b5f79056fff356040",
+  "checks": [
+    {
+      "name": "fresh human false alerts <= V2",
+      "passed": true
+    },
+    {
+      "name": "fresh synthetic alerts > V2",
+      "passed": true
+    },
+    {
+      "name": "fresh low-scored synthetic <= V2",
+      "passed": true
+    },
+    {
+      "name": "v2-regression zero human false alerts",
+      "passed": true
+    },
+    {
+      "name": "v2-regression synthetic alerts minimum",
+      "passed": true
+    },
+    {
+      "name": "v2-regression low-scored synthetic maximum",
+      "passed": true
+    },
+    {
+      "name": "v3-new zero human false alerts",
+      "passed": true
+    },
+    {
+      "name": "v3-new synthetic alerts minimum",
+      "passed": true
+    },
+    {
+      "name": "v3-new low-scored synthetic maximum",
+      "passed": true
+    },
+    {
+      "name": "v3-turbo-audit zero human false alerts",
+      "passed": true
+    },
+    {
+      "name": "v3-turbo-audit synthetic alerts minimum",
+      "passed": true
+    },
+    {
+      "name": "v3-turbo-audit low-scored synthetic maximum",
+      "passed": true
+    }
+  ]
+}

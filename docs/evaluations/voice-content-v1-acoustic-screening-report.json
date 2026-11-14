@@ -1,0 +1,579 @@
+{
+  "dataset": "calibration only; no new test scored",
+  "candidate": {
+    "repository": "MelodyMachine/Deepfake-audio-detection-V2",
+    "revision": "de3cde5a29c449bb5268814e421b46bf6ebdcd72",
+    "files": [
+      {
+        "file": "config.json",
+        "bytes": 2509,
+        "sha256": "a7ff31ca7ba4dc7fb5c4847d6dff0cb8daa1f0ec512e6ff8190664874c5b2806"
+      },
+      {
+        "file": "preprocessor_config.json",
+        "bytes": 215,
+        "sha256": "8cdfd65ff4115423185a1512bdae100e2e0cd744f5b322417429944aaafd0827"
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 378302360,
+        "sha256": "997d9ce59e63151d5e444a6fa7c863986d0e56d515f67321bd705ac3b01bc38c"
+      }
+    ]
+  },
+  "thresholdsUnchanged": [
+    0.2,
+    0.8
+  ],
+  "candidateSummary": {
+    "human": 24,
+    "synthetic": 24,
+    "humanFalseAlerts": 8,
+    "syntheticAlerts": 9,
+    "lowScoredSynthetic": 15,
+    "unknown": 0
+  },
+  "v3Summary": {
+    "human": 24,
+    "synthetic": 24,
+    "humanFalseAlerts": 2,
+    "syntheticAlerts": 21,
+    "lowScoredSynthetic": 0,
+    "unknown": 13
+  },
+  "passesScreeningGate": false,
+  "results": [
+    {
+      "id": "v3_VIVOSDEV07_0_human_clean",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.6812629837659188e-05,
+      "v3Score": 0.4353993109910859,
+      "candidateMs": 134.39
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_human_clean",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.682480433373712e-05,
+      "v3Score": 0.1627433932926829,
+      "candidateMs": 161.84
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_human_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.7036214558174834e-05,
+      "v3Score": 0.08958972699368696,
+      "candidateMs": 133.43
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_human_clean",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.6809359294711612e-05,
+      "v3Score": 0.025540046964042162,
+      "candidateMs": 315.92
+    },
+    {
+      "id": "v3_VIVOSDEV07_0_synthetic_clean",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.6811460227472708e-05,
+      "v3Score": 0.9999979556488942,
+      "candidateMs": 891.24
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_synthetic_clean",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.686274481471628e-05,
+      "v3Score": 0.9999974255147264,
+      "candidateMs": 440.04
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_synthetic_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.6873007552931085e-05,
+      "v3Score": 0.9999984205177884,
+      "candidateMs": 155.98
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_synthetic_clean",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.680168315942865e-05,
+      "v3Score": 0.9999927775903414,
+      "candidateMs": 258.01
+    },
+    {
+      "id": "v3_VIVOSDEV07_0_human_phone8k",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999810457229614,
+      "v3Score": 0.3499664129096353,
+      "candidateMs": 281.38
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_human_phone8k",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999799728393555,
+      "v3Score": 0.11622481275239861,
+      "candidateMs": 275.89
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_human_phone8k",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.999981164932251,
+      "v3Score": 0.09492531715229256,
+      "candidateMs": 151.29
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_human_phone8k",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999747276306152,
+      "v3Score": 0.03333207832111246,
+      "candidateMs": 512.57
+    },
+    {
+      "id": "v3_VIVOSDEV07_0_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999819993972778,
+      "v3Score": 0.9999950205991603,
+      "candidateMs": 306.11
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999827146530151,
+      "v3Score": 0.9999976482411513,
+      "candidateMs": 368.7
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999829530715942,
+      "v3Score": 0.9999971523170508,
+      "candidateMs": 357.43
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.9999793767929077,
+      "v3Score": 0.9999688070315789,
+      "candidateMs": 391.22
+    },
+    {
+      "id": "v3_VIVOSDEV07_0_human_room_noise15db",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 0.0011940882541239262,
+      "v3Score": 0.9580161153068609,
+      "candidateMs": 493.66
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_human_room_noise15db",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.7100446711992845e-05,
+      "v3Score": 0.6266474146536947,
+      "candidateMs": 329.64
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_human_room_noise15db",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 9.997434972319752e-05,
+      "v3Score": 0.7360376821438251,
+      "candidateMs": 150.17
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_human_room_noise15db",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.7146496247733012e-05,
+      "v3Score": 0.5853390665686766,
+      "candidateMs": 235.55
+    },
+    {
+      "id": "v3_VIVOSDEV07_0_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 2.0308301827753894e-05,
+      "v3Score": 0.9589937181175529,
+      "candidateMs": 142.81
+    },
+    {
+      "id": "v3_VIVOSDEV07_1_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.7676391507848166e-05,
+      "v3Score": 0.8565824203284754,
+      "candidateMs": 232.37
+    },
+    {
+      "id": "v3_VIVOSDEV07_2_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 2.3957412849995308e-05,
+      "v3Score": 0.9166591973240268,
+      "candidateMs": 168.47
+    },
+    {
+      "id": "v3_VIVOSDEV08_0_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v3-new",
+      "split": "calibration",
+      "candidateScore": 1.6802676327642985e-05,
+      "v3Score": 0.3100464908993155,
+      "candidateMs": 209.82
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_human_clean",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.6839667296153493e-05,
+      "v3Score": 0.04434999946771679,
+      "candidateMs": 174.42
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_human_clean",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.681187677604612e-05,
+      "v3Score": 0.7636244337406997,
+      "candidateMs": 153.74
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_human_clean",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.680341301835142e-05,
+      "v3Score": 0.028432254027531457,
+      "candidateMs": 740.41
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_human_clean",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.680626519373618e-05,
+      "v3Score": 0.26812374669254774,
+      "candidateMs": 562.89
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_synthetic_clean",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.6961417713901028e-05,
+      "v3Score": 0.9999805307579104,
+      "candidateMs": 219.04
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_synthetic_clean",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.684169183135964e-05,
+      "v3Score": 0.9999976019027362,
+      "candidateMs": 149.83
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_synthetic_clean",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.6971902368823066e-05,
+      "v3Score": 0.9999919914790403,
+      "candidateMs": 226.79
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_synthetic_clean",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "clean",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.6846413927851245e-05,
+      "v3Score": 0.9999980283325839,
+      "candidateMs": 195.36
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_human_phone8k",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999788999557495,
+      "v3Score": 0.08404077767968492,
+      "candidateMs": 185.32
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_human_phone8k",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999805688858032,
+      "v3Score": 0.680911589665319,
+      "candidateMs": 133.24
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_human_phone8k",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999765157699585,
+      "v3Score": 0.04951082639616975,
+      "candidateMs": 201.91
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_human_phone8k",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999657869338989,
+      "v3Score": 0.13151557977813014,
+      "candidateMs": 184.53
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_synthetic_phone8k",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999822378158569,
+      "v3Score": 0.9587537221310997,
+      "candidateMs": 190.13
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_synthetic_phone8k",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999736547470093,
+      "v3Score": 0.9999959582773963,
+      "candidateMs": 138.98
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_synthetic_phone8k",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999760389328003,
+      "v3Score": 0.9999657188676805,
+      "candidateMs": 389.38
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_synthetic_phone8k",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "phone8k",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9999819993972778,
+      "v3Score": 0.9999976953711132,
+      "candidateMs": 166.14
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_human_room_noise15db",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 2.370684342167806e-05,
+      "v3Score": 0.5337733270271067,
+      "candidateMs": 173.8
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_human_room_noise15db",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.732663622533437e-05,
+      "v3Score": 0.8948695810066988,
+      "candidateMs": 123.14
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_human_room_noise15db",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.747712303767912e-05,
+      "v3Score": 0.16091906529819477,
+      "candidateMs": 157.82
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_human_room_noise15db",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "human",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 2.2778416678193025e-05,
+      "v3Score": 0.6908895066040276,
+      "candidateMs": 161.15
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_0_synthetic_room_noise15db",
+      "originId": "v4_VIVOSDEV07_0",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 3.712767647812143e-05,
+      "v3Score": 0.6305571255215326,
+      "candidateMs": 162.22
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_1_synthetic_room_noise15db",
+      "originId": "v4_VIVOSDEV07_1",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 4.688710760092363e-05,
+      "v3Score": 0.9901785687508889,
+      "candidateMs": 117.33
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_synthetic_room_noise15db",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 1.696585059107747e-05,
+      "v3Score": 0.5304923824365108,
+      "candidateMs": 156.12
+    },
+    {
+      "id": "audit_v4_VIVOSDEV08_0_synthetic_room_noise15db",
+      "originId": "v4_VIVOSDEV08_0",
+      "label": "synthetic",
+      "condition": "room_noise15db",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "candidateScore": 0.9998570680618286,
+      "v3Score": 0.9342179656021281,
+      "candidateMs": 394.36
+    }
+  ],
+  "limitations": [
+    "Candidate card does not specify training corpus adequately. No claim of independent training-data disjointness.",
+    "Latency is candidate inference only after warmup, not API/capture timing."
+  ]
+}

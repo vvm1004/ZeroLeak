@@ -1,0 +1,16 @@
+{
+  "definedBeforeTestPredictions": true,
+  "content": {
+    "selection": "dev only; no test prompt tuning",
+    "freshTestMinimum": {"attempted": 24, "completedWithValidResponse": 20, "falseAlertsMaximum": 0, "scamAlertsMinimum": 10},
+    "realtime": "report operational results separately under unchanged 3100ms content deadline; do not use quality-mode latency as SLA",
+    "onFailure": "Keep proven software safeguards; do not claim model accuracy improvement or tune on this test"
+  },
+  "acoustic": {
+    "candidate": "MelodyMachine/Deepfake-audio-detection-V2 pinned de3cde5a29c449bb5268814e421b46bf6ebdcd72",
+    "screeningSplit": "existing calibration only, first four origins per label and condition in v3/v4 cohorts",
+    "thresholds": [0.2, 0.8],
+    "screeningGate": "human false alerts no more than V3 and synthetic alerts greater than V3; otherwise reject without replacing V3",
+    "onFailure": "retain V3; preserve rejected experiment results"
+  }
+}
