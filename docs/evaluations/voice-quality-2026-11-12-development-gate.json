@@ -1,0 +1,44 @@
+{
+  "phase": "development",
+  "summary": {
+    "baseline": {
+      "attempted": 6,
+      "humanFP": 0,
+      "humanCorrect": 0,
+      "syntheticTP": 0,
+      "syntheticLow": 2,
+      "voiceUnknown": 4,
+      "contentCorrect": 2,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 0,
+      "providerErrors": 1,
+      "medianAllMs": 2646.0
+    },
+    "candidate": {
+      "attempted": 6,
+      "humanFP": 0,
+      "humanCorrect": 1,
+      "syntheticTP": 0,
+      "syntheticLow": 0,
+      "voiceUnknown": 5,
+      "contentCorrect": 2,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 0,
+      "providerErrors": 0,
+      "medianAllMs": 2931.5
+    }
+  },
+  "checks": {
+    "allAttempted": true,
+    "noExtraHumanFP": true,
+    "noExtraSyntheticLow": true,
+    "noExtraContentFP": true,
+    "noExtraContentFN": true,
+    "noContentCoverageLoss": true,
+    "measuredBenefit": true
+  },
+  "passed": true,
+  "scope": "Unknowns and errors kept; no labels/provider text leaked; low synthetic scores are misses, not verified humans."
+}

@@ -1,5 +1,7 @@
 # ZeroLeak Voice
 
+**Cập nhật chất lượng:** [review sửa định dạng tối đa một lần trong deadline và kết quả kiểm định](VOICE_QUALITY.md). Realtime không đổi; không coi đây là cải thiện độ chính xác giọng clone.
+
 **Luồng mặc định theo task:** `VOICE_ANALYSIS_STRATEGY=gemini`, Gemini đánh giá cả nội dung và dấu hiệu giọng tổng hợp; không cần worker Python. `hybrid` giữ bản cũ để so sánh. Xem [kết quả và cách chuyển](VOICE_TASK_COMPARISON.md).
 
 **Model hiện tại:** [Gemini 3.8 Live Extended Thinking theo TASK](VOICE_LIVE_API.md).

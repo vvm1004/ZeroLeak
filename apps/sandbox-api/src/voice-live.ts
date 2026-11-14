@@ -49,6 +49,7 @@ export async function analyzeLiveVoice(input: AnalyzeVoiceRequest, model: string
     let done = false, setup = false, inputComplete = false, inputAcknowledged = false, reportRequested = false, messages = 0;
     let sourceTranscript = '';
     let outputText = '', outputTranscript = '';
+    let formatRepairAttempts: 0 | 1 = 0;
     let candidate: VoiceScamAnalysisResult | undefined;
     const finish = (result?: VoiceScamAnalysisResult, error?: VoiceAnalysisError) => {
       if (done) return;
@@ -134,11 +135,27 @@ export async function analyzeLiveVoice(input: AnalyzeVoiceRequest, model: string
           const final = content.interactionStatus === 'IDLE' || (content.turnComplete && !model.endsWith('-extended-thinking'));
           if (final) {
             const text = (outputText || outputTranscript).trim().replace(/^```(?:json)?\s*([\s\S]*?)\s*```$/i, '$1');
-            const result = text ? (model.endsWith('-extended-thinking')
-              ? parseCompactVoiceResult(text, sourceTranscript, model, Math.round(performance.now() - started), options.assessSynthetic)
-              : parseVoiceResult(text, model, Math.round(performance.now() - started), options.assessSynthetic)) : candidate;
-            if (!result) return fail('INVALID_RESULT');
-            return finish({ ...result, executionTimeMs: Math.round(performance.now() - started), analysisTransport: 'LIVE_API' });
+            let result: VoiceScamAnalysisResult;
+            try {
+              const parsed = text ? (model.endsWith('-extended-thinking')
+                ? parseCompactVoiceResult(text, sourceTranscript, model, Math.round(performance.now() - started), options.assessSynthetic)
+                : parseVoiceResult(text, model, Math.round(performance.now() - started), options.assessSynthetic)) : candidate;
+              if (!parsed) throw new VoiceAnalysisError('INVALID_RESULT');
+              result = parsed;
+            } catch (error) {
+              // One format repair in review only, on the same isolated audio session.
+              // A valid UNKNOWN is not an error and must never be "repaired" into certainty.
+              if (!(error instanceof VoiceAnalysisError) || error.code !== 'INVALID_RESULT' ||
+                  input.analysisMode !== 'review' || !options.assessSynthetic || !model.endsWith('-extended-thinking') ||
+                  formatRepairAttempts || budget - (performance.now() - started) < 3000) throw error;
+              formatRepairAttempts = 1; outputText = ''; outputTranscript = ''; candidate = undefined;
+              send({ clientContent: { turns: [{ role: 'user', parts: [{ text:
+                'Your previous report was not a complete machine-readable JSON object. Reformat your assessment of the SAME recorded audio as exactly a,v,r,q,f,p, no other text or keys. Preserve uncertainty and do not invent missing evidence. If unsure, use a=4,v=3,r=null,q=1,f=[],p=null. No new audio is being supplied.'
+              }] }], turnComplete: true } });
+              return;
+            }
+            return finish({ ...result, executionTimeMs: Math.round(performance.now() - started), analysisTransport: 'LIVE_API',
+              ...(formatRepairAttempts ? { formatRepairAttempts } : {}) });
           }
           if (content.turnComplete && content.interactionStatus === 'IN_PROGRESS') {
             const text = (outputText || outputTranscript).trim().replace(/^```(?:json)?\s*([\s\S]*?)\s*```$/i, '$1');

@@ -1,0 +1,23 @@
+{
+  "realProvider": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "faultInjected": true,
+  "scope": "First model output is deliberately corrupted locally to exercise review format recovery; NOT a natural provider failure or AI-accuracy benchmark",
+  "newSockets": 1,
+  "clientTurns": 2,
+  "audioFrames": 29,
+  "audioFramesAtRepair": 29,
+  "faultApplied": true,
+  "status": "OK",
+  "verdict": "DEEPFAKE_SCAM",
+  "riskScore": 90,
+  "detectedTactics": [
+    "OTP_OR_CREDENTIAL_ASK"
+  ],
+  "analysisModel": "gemini-3.8-live-extended-thinking",
+  "analysisTransport": "LIVE_API",
+  "formatRepairAttempts": 1,
+  "syntheticVoiceProbability": null,
+  "noAudioResent": true,
+  "roundTripMs": 2567
+}

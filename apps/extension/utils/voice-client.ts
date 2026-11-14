@@ -54,6 +54,7 @@ export async function analyzeVoice(
         !['CLEAR', 'LIMITED', 'UNUSABLE'].includes(body.audioQuality) ||
         !['GEMINI_AUDIO', 'HYBRID_AUDIO', 'LOCAL_ACOUSTIC'].includes(body.assessmentSource) || typeof body.analysisModel !== 'string' ||
         (body.analysisTransport !== undefined && !['LIVE_API', 'GENERATE_CONTENT'].includes(body.analysisTransport)) ||
+        (body.formatRepairAttempts !== undefined && (![0, 1].includes(body.formatRepairAttempts) || (body.formatRepairAttempts === 1 && body.analysisTransport !== 'LIVE_API'))) ||
         (body.fallbackUsed !== undefined && typeof body.fallbackUsed !== 'boolean') ||
         (body.providerAttempts !== undefined && (!Array.isArray(body.providerAttempts) || body.providerAttempts.length > 3 ||
           body.providerAttempts.some((attempt: { model?: unknown; transport?: unknown; status?: unknown; reason?: unknown }) => !attempt ||

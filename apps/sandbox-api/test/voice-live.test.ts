@@ -344,3 +344,52 @@ test('task synthesis is requested and retained when both Live providers fail and
   }});
   assert.equal(result.syntheticVoiceProbability,.15);assert.equal(result.fallbackUsed,true);assert.equal(result.analysisTransport,'GENERATE_CONTENT');assert.equal(calls.length,3);
 });
+
+
+test('review repairs malformed task JSON once on the same socket without resending audio', async () => {
+  const socket=new Socket();let connections=0;
+  const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,socketFactory:()=>{connections++;return socket;}});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+  socket.receive({serverContent:{outputTranscription:{text:'{invalid'},interactionStatus:'IDLE'}});
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);assert.equal(socket.closes,0);
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},interactionStatus:'IDLE'}});
+  const result=await pending;assert.equal(result.verdict,'SUSPICIOUS');assert.equal(result.formatRepairAttempts,1);
+  assert.equal(connections,1);assert.equal(socket.sent.filter(m=>m.realtimeInput?.activityStart).length,1);assert.equal(socket.closes,1);
+});
+
+test('valid UNKNOWN, realtime, legacy hybrid and insufficient budget do not request a repair', async () => {
+  for(const scenario of ['unknown','realtime','hybrid','short']){
+    const socket=new Socket();const pending=analyzeLiveVoice({...input(),...(scenario==='realtime'?{}:{analysisMode:'review' as const})},EXTENDED,
+      {assessSynthetic:scenario!=='hybrid',budgetMs:scenario==='short'?2999:15000,socketFactory:()=>socket});
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    socket.receive({serverContent:{outputTranscription:{text:scenario==='unknown'?JSON.stringify({a:4,v:3,r:null,q:1,f:[],p:null}):'{invalid'},interactionStatus:'IDLE'}});
+    if(scenario==='unknown'){const result=await pending;assert.equal(result.verdict,'UNKNOWN');assert.equal(result.formatRepairAttempts,undefined);}
+    else await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+    assert.equal(socket.sent.filter(m=>m.clientContent).length,1);
+  }
+});
+
+test('a second invalid reply rejects and a repair never reuses an earlier SAFE candidate', async () => {
+  const socket=new Socket();const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,socketFactory:()=>socket});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Lịch họp ngày mai.',finished:true}}});
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({a:3,v:0,r:0,q:0,f:[],p:null})},turnComplete:true,interactionStatus:'IN_PROGRESS'}});
+  socket.receive({serverContent:{outputTranscription:{text:'broken'},interactionStatus:'IDLE'}});
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+  socket.receive({serverContent:{interactionStatus:'IDLE'}});
+  await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+  assert.equal(socket.sent.filter(m=>m.clientContent).length,2);assert.equal(socket.closes,1);
+});
+
+test('review repair stays inside the original deadline and respects caller cancellation', async t => {
+  t.mock.timers.enable({apis:['setTimeout']});
+  for(const cancellation of [false,true]){
+    const socket=new Socket(),controller=new AbortController();
+    const pending=analyzeLiveVoice({...input(),analysisMode:'review'},EXTENDED,{assessSynthetic:true,budgetMs:4000,signal:controller.signal,socketFactory:()=>socket});
+    const failed=assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='TIMEOUT');
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    socket.receive({serverContent:{outputTranscription:{text:'broken'},interactionStatus:'IDLE'}});assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+    if(cancellation)controller.abort();else t.mock.timers.tick(4000);
+    await failed;socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},interactionStatus:'IDLE'}});
+    assert.equal(socket.closes,1);assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
+  }
+});

@@ -1,0 +1,5 @@
+{
+  "fixedBeforeRealtimePredictions": true,
+  "observedReviewRowsAtDeclaration": 31,
+  "rule": "Before deployment also require no fewer correct content results, no more provider errors and no extra content FP/FN on the two fixed realtime regressions; this only tightens the original gate."
+}

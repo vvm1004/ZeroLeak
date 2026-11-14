@@ -152,6 +152,8 @@ export interface VoiceScamAnalysisResult {
   assessmentSource: 'GEMINI_AUDIO' | 'HYBRID_AUDIO' | 'LOCAL_ACOUSTIC';
   analysisModel: string;
   analysisTransport?: 'LIVE_API' | 'GENERATE_CONTENT';
+  /** At most one same-session JSON repair in review; never a new model/audio upload. */
+  formatRepairAttempts?: 0 | 1;
   fallbackUsed?: boolean;
   providerAttempts?: VoiceProviderAttempt[];
   acousticAnalysis?: AcousticVoiceAnalysis;

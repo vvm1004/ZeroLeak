@@ -70,3 +70,15 @@ test('client rejects misleading Live model provenance and accepts an explicit Fl
     }
   } finally { globalThis.fetch = originalFetch; }
 });
+
+
+test('client accepts one disclosed Live format repair and rejects invalid repair metadata', async () => {
+ const originalFetch=globalThis.fetch;const samples=Float32Array.from({length:16000},(_,i)=>Math.sin(i*.1)*.2);
+ const body={riskScore:null,verdict:'UNKNOWN',syntheticVoiceProbability:null,detectedTactics:[],transcriptSnippet:'',warningMessageVi:'Chưa đủ bằng chứng.',executionTimeMs:2000,audioQuality:'LIMITED',assessmentSource:'GEMINI_AUDIO',analysisModel:'gemini-3.8-live-extended-thinking',analysisTransport:'LIVE_API',formatRepairAttempts:1};
+ try{
+  globalThis.fetch=async()=>new Response(JSON.stringify(body));assert.equal((await analyzeVoice(samples,{apiBase:'http://localhost:8080',token:''},undefined,'review')).formatRepairAttempts,1);
+  for(const patch of [{formatRepairAttempts:2},{formatRepairAttempts:'1'},{formatRepairAttempts:-1},{analysisTransport:'GENERATE_CONTENT'}]){
+   globalThis.fetch=async()=>new Response(JSON.stringify({...body,...patch}));await assert.rejects(analyzeVoice(samples,{apiBase:'http://localhost:8080',token:''}),/không hợp lệ/);
+  }
+ }finally{globalThis.fetch=originalFetch;}
+});

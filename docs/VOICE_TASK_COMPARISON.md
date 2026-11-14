@@ -1,5 +1,7 @@
 # Voice theo task và bản hybrid — cập nhật 12/11/2026
 
+**Cập nhật sau snapshot này:** [VOICE_QUALITY.md](VOICE_QUALITY.md). Giữ prompt theo task của bản `03c7b9a`; chỉ bổ sung một lần sửa JSON lỗi ở review, không sửa valid UNKNOWN.
+
 Đã triển khai **Gemini đánh giá cả nội dung và dấu hiệu giọng tổng hợp**, bám phần 2.4 trong TASK gốc.
 Mặc định mới là `VOICE_ANALYSIS_STRATEGY=gemini`. Bản hybrid ở commit `41354a7` được giữ dưới
 cấu hình `hybrid` để đối chiếu. Không xóa V3, không sửa `.env`, không thay trọng số/ngưỡng hoặc thêm dependency.

@@ -1,5 +1,7 @@
 # Cải thiện Voice sau screening — 2026-11-10
 
+**Kiểm định mới nhất:** [ứng viên prompt bị loại và sửa JSON review có giới hạn](VOICE_QUALITY.md).
+
 **Bản theo task và so sánh với hybrid:** [Gemini đánh giá cả giọng tổng hợp và nội dung](VOICE_TASK_COMPARISON.md). Mặc định mới là `VOICE_ANALYSIS_STRATEGY=gemini`; các phép đo bên dưới thuộc các bản trước.
 
 **Cập nhật trước đó:** [tối ưu trực tiếp Gemini 3.8 Extended, A/B và sáu câu mới](VOICE_EXTENDED_IMPROVEMENTS.md).
