@@ -269,6 +269,7 @@ export async function analyzeUrlWithSandbox(
         url,
         sourceContext,
         timeoutMs: 6000,
+        noCache: true,
       }),
       signal: controller.signal,
     });
