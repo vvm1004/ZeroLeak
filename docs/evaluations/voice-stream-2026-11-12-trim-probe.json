@@ -1,0 +1,56 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "maxProviderSessions": 3,
+  "originalPcmBytes": 160000,
+  "trimmedPcmBytes": 114964,
+  "zeroOnlyTrim": true,
+  "results": [
+    {
+      "id": "trimmed_middle_fast",
+      "mode": "realtime",
+      "budgetMs": 3100,
+      "status": "ERROR",
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3104,
+      "phases": {
+        "setupMs": 811,
+        "ackMs": 2856
+      },
+      "frames": 36
+    },
+    {
+      "id": "known_short_otp_control",
+      "mode": "realtime",
+      "budgetMs": 3100,
+      "status": "ERROR",
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3112,
+      "phases": {
+        "setupMs": 839,
+        "ackMs": 2072
+      },
+      "frames": 29
+    },
+    {
+      "id": "original_middle_review_diagnostic",
+      "mode": "review",
+      "budgetMs": 15000,
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "voiceScore": null,
+      "roundTripMs": 3874,
+      "phases": {
+        "setupMs": 635,
+        "ackMs": 2079,
+        "firstOutputMs": 3823,
+        "idleMs": 3866
+      },
+      "frames": 50
+    }
+  ]
+}

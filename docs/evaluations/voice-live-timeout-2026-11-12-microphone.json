@@ -1,0 +1,138 @@
+{
+  "phase": "microphone",
+  "physicalCall": false,
+  "microphoneUsed": false,
+  "actualTabCapture": false,
+  "fakeDeviceUsed": true,
+  "fakeUiUsed": false,
+  "streamOverrideUsed": false,
+  "physicalMicrophoneUsed": false,
+  "simulatedMicrophone": true,
+  "permissionAutomation": "camera/microphone-only",
+  "modelRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ],
+  "plannedRequests": 2,
+  "httpRequests": 2,
+  "providerSessionUpperBound": 2,
+  "results": [
+    {
+      "id": "otp",
+      "windowIndex": 0,
+      "scamLabel": true,
+      "status": "RESULT",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "capturedSha256": "3efbc83da4b14f84bdaa2f57c06bd9a56ba60396efab4081852525bf72420884",
+      "capturedSeconds": 5,
+      "capturedRms": 0.13833251986232029,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": null,
+      "executionTimeMs": 5254,
+      "evidenceCount": 1,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500190003.4001,
+      "fetchStartedAt": 1794500190023,
+      "uiObservedAt": 1794500195323.3,
+      "uiObserved": true,
+      "requestToUiMs": 5300,
+      "windowReadyToUiMs": 5320,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": true
+    },
+    {
+      "id": "advice",
+      "windowIndex": 0,
+      "scamLabel": false,
+      "status": "RESULT",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "capturedSha256": "979ba2e6d40ebb0a05a89282abc56648e9391ee49e30eed745394c74861e0cd9",
+      "capturedSeconds": 5,
+      "capturedRms": 0.13195493459898763,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": null,
+      "executionTimeMs": 3396,
+      "evidenceCount": 0,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500208316.4001,
+      "fetchStartedAt": 1794500208336.4001,
+      "uiObservedAt": 1794500211774,
+      "uiObserved": true,
+      "requestToUiMs": 3438,
+      "windowReadyToUiMs": 3458,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "otp",
+      "scamLabel": true,
+      "plannedRequests": 1,
+      "media": {
+        "grantedAt": 1794500184852.4001,
+        "audioTracks": 1,
+        "videoTracks": 0,
+        "source": "CHROMIUM_FAKE_MICROPHONE",
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false
+      },
+      "syntheticSourceLooping": true,
+      "tracksEnded": true,
+      "actualRequests": 1,
+      "blockedExtraFetches": 1
+    },
+    {
+      "id": "advice",
+      "scamLabel": false,
+      "plannedRequests": 1,
+      "media": {
+        "grantedAt": 1794500203164.4001,
+        "audioTracks": 1,
+        "videoTracks": 0,
+        "source": "CHROMIUM_FAKE_MICROPHONE",
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false
+      },
+      "syntheticSourceLooping": true,
+      "tracksEnded": true,
+      "actualRequests": 1,
+      "blockedExtraFetches": 0
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-11-12T16:16:58.057Z"
+}

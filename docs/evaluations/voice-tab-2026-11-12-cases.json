@@ -1,0 +1,34 @@
+[
+  {
+    "id": "otp",
+    "file": "/private/tmp/zeroleak-voice-tab-20261112/audio/otp.wav",
+    "scamLabel": true,
+    "plannedRequests": 1,
+    "source": "Self-authored Vietnamese macOS Linh educational TTS",
+    "sourceSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1"
+  },
+  {
+    "id": "advice",
+    "file": "/private/tmp/zeroleak-voice-tab-20261112/audio/advice.wav",
+    "scamLabel": false,
+    "plannedRequests": 1,
+    "source": "Self-authored Vietnamese macOS Linh educational TTS",
+    "sourceSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac"
+  },
+  {
+    "id": "no_speech",
+    "file": "/private/tmp/zeroleak-voice-tab-20261112/audio/no_speech.wav",
+    "scamLabel": null,
+    "plannedRequests": 1,
+    "source": "Seeded non-speech noise, seed45261",
+    "sourceSha256": "d2721f20909071841d3f07cf26ec2453cc1c96c213463cdaead6c8a324b2c410"
+  },
+  {
+    "id": "late_ceo",
+    "file": "/private/tmp/zeroleak-voice-tab-20261112/audio/late_ceo.wav",
+    "scamLabel": true,
+    "plannedRequests": 2,
+    "source": "Self-authored TTS, neutral introduction, CEO money request at6s",
+    "sourceSha256": "2f55deac2bea3ba5a48ba6070e816dfbaad88ed174811929a5d76a7be32df756"
+  }
+]

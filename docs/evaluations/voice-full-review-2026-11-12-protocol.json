@@ -1,0 +1,20 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "mode": "review",
+  "budgetMs": 15000,
+  "startIntervalMs": 6500,
+  "developmentCases": 2,
+  "testCases": 6,
+  "pairedVariants": [
+    "previous implementation receives first5s",
+    "new implementation receives whole <=15s"
+  ],
+  "goldLabelScope": "Entire file; this measures pipeline coverage and delayed context, not intrinsic model accuracy on identical inputs.",
+  "maxProviderSessions": 24,
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "gate": "Dev must attempt all, candidate correct 2/2 with no new false alerts/errors. Test must attempt all, candidate at least 5/6 content-correct, no new benign alerts/errors and strictly more correct whole-file outcomes. UNKNOWN/errors remain incorrect. Stop after 3 consecutive provider failures. Freeze before dev and do not retune on test.",
+  "limitations": "Controlled TTS, one voice, no claim of human/clone forensic accuracy, real-call quality or always <3s."
+}

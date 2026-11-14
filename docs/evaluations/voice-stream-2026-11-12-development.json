@@ -1,0 +1,69 @@
+{
+  "phase": "development",
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "budgetMs": 3100,
+  "primaryOnly": true,
+  "fallback": false,
+  "retries": 0,
+  "commonPredictionsShared": true,
+  "plannedClips": 6,
+  "sessions": 3,
+  "newSessions": 3,
+  "results": [
+    {
+      "id": "dev_ceo_clean_0",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "startSeconds": 0,
+      "endSeconds": 5,
+      "inputSha256": "94a8f22b5d37430e7cd142df261ab8669ac2f20099b96cf8fa58324f0a97799c",
+      "status": "ERROR",
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "voiceScore": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3118,
+      "sourceChars": 16
+    },
+    {
+      "id": "dev_ceo_clean_1",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "startSeconds": 2.5,
+      "endSeconds": 7.5,
+      "inputSha256": "434316d9e6752439a34a520ededbb69f18c03fc119baa0765106269c17ba4f14",
+      "status": "ERROR",
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "voiceScore": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3115,
+      "sourceChars": 48
+    },
+    {
+      "id": "dev_ceo_clean_2",
+      "streamId": "dev_ceo_clean",
+      "scamLabel": true,
+      "startSeconds": 5,
+      "endSeconds": 10,
+      "inputSha256": "021237df90a72e45fdb9144938af830dc5c4b70720db26fff7aac4b0ec49660e",
+      "status": "ERROR",
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "voiceScore": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3110,
+      "sourceChars": 24
+    }
+  ],
+  "notAttempted": [
+    "dev_warning_clean_0",
+    "dev_warning_clean_1",
+    "dev_warning_clean_2"
+  ],
+  "finishedAt": "2026-11-12T07:20:53.275Z"
+}

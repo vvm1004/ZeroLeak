@@ -1,0 +1,54 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "Two fixed known development clips through task-aligned Gemini with bounded review JSON repair; no whole-request retries, not unseen accuracy or physical calls",
+  "plannedCases": 2,
+  "maxProviderSessionUpperBound": 6,
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "scam": true,
+      "roundTripMs": 3524,
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "syntheticVoiceProbability": null,
+      "formatRepairAttempts": null,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "status": "RESULT"
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "scam": false,
+      "roundTripMs": 3189,
+      "httpStatus": 504,
+      "status": "HTTP_ERROR",
+      "errorCode": "TIMEOUT"
+    }
+  ]
+}

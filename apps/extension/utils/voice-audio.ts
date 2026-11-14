@@ -1,9 +1,12 @@
 export const VOICE_SAMPLE_RATE = 16000;
 export const VOICE_WINDOW_SAMPLES = VOICE_SAMPLE_RATE * 5;
+export const VOICE_REVIEW_SAMPLES = VOICE_SAMPLE_RATE * 15;
+export const VOICE_HOP_SAMPLES = VOICE_SAMPLE_RATE * 2.5;
 
 /** Each request is an independent PCM WAV, not an undecodable WebM fragment. */
-export function encodeVoiceWav(samples: Float32Array): Uint8Array {
-  if (samples.length < 8000 || samples.length > VOICE_WINDOW_SAMPLES) throw new Error('Cần từ 0,5 đến 5 giây âm thanh.');
+export function encodeVoiceWav(samples: Float32Array, review = false): Uint8Array {
+  const maximum = review ? VOICE_REVIEW_SAMPLES : VOICE_WINDOW_SAMPLES;
+  if (samples.length < 8000 || samples.length > maximum) throw new Error(`Cần từ 0,5 đến ${review ? 15 : 5} giây âm thanh.`);
   const bytes = new Uint8Array(44 + samples.length * 2);
   const view = new DataView(bytes.buffer);
   const text = (offset: number, value: string) => [...value].forEach((c, i) => view.setUint8(offset + i, c.charCodeAt(0)));
@@ -35,30 +38,45 @@ export function audioRms(samples: Float32Array): number {
 export class VoiceWindowBuffer {
   private buffer = new Float32Array(VOICE_WINDOW_SAMPLES);
   private offset = 0;
+  private freshSamples = 0;
+  constructor(private readonly hopSamples = VOICE_WINDOW_SAMPLES) {
+    if (!Number.isInteger(hopSamples) || hopSamples < 8000 || hopSamples > VOICE_WINDOW_SAMPLES) {
+      throw new Error('Bước cửa sổ âm thanh không hợp lệ.');
+    }
+  }
   push(chunk: Float32Array): Float32Array[] {
     const windows: Float32Array[] = [];
     let pos = 0;
     while (pos < chunk.length) {
       const count = Math.min(chunk.length - pos, this.buffer.length - this.offset);
       this.buffer.set(chunk.subarray(pos, pos + count), this.offset);
-      this.offset += count; pos += count;
+      this.offset += count; this.freshSamples += count; pos += count;
       if (this.offset === this.buffer.length) {
-        windows.push(this.buffer);
-        this.buffer = new Float32Array(VOICE_WINDOW_SAMPLES);
-        this.offset = 0;
+        windows.push(this.buffer); this.freshSamples = 0;
+        const next = new Float32Array(VOICE_WINDOW_SAMPLES);
+        next.set(this.buffer.subarray(this.hopSamples));
+        this.buffer = next;
+        this.offset = VOICE_WINDOW_SAMPLES - this.hopSamples;
       }
     }
     return windows;
   }
+  /** Flush only new audio; retained overlap alone must not resubmit a previous window. */
+  flush(): Float32Array | null {
+    const samples = this.freshSamples ? this.buffer.slice(0, this.offset) : null;
+    this.buffer = new Float32Array(VOICE_WINDOW_SAMPLES); this.offset = 0; this.freshSamples = 0;
+    return samples;
+  }
 }
 
-/** Decode locally and send only the first 5 seconds; never upload the original file. */
-export async function readVoiceFile(file: File): Promise<Float32Array> {
+/** Decode locally. Fast uses the first 5s; review requires the whole file to fit within 15s. */
+export async function readVoiceFile(file: File, review = false): Promise<Float32Array> {
   if (file.size > 10 * 1024 * 1024) throw new Error('Chọn file âm thanh nhỏ hơn 10 MB.');
   const context = new AudioContext();
   try {
     const decoded = await context.decodeAudioData(await file.arrayBuffer());
-    const length = Math.min(VOICE_WINDOW_SAMPLES, Math.floor(decoded.duration * VOICE_SAMPLE_RATE));
+    if (review && decoded.duration > 15) throw new Error('File cần dài tối đa 15 giây. Hãy cắt ngắn file; hệ thống không tự bỏ phần cuối.');
+    const length = Math.min(review ? VOICE_REVIEW_SAMPLES : VOICE_WINDOW_SAMPLES, Math.floor(decoded.duration * VOICE_SAMPLE_RATE));
     if (length < 8000) throw new Error('File cần có ít nhất 0,5 giây âm thanh.');
     const offline = new OfflineAudioContext(1, length, VOICE_SAMPLE_RATE);
     const source = offline.createBufferSource();

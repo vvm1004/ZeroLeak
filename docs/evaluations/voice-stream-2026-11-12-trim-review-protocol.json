@@ -1,0 +1,63 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "mode": "review",
+  "budgetMs": 15000,
+  "maxProviderSessions": 8,
+  "startIntervalMs": 6500,
+  "cases": [
+    {
+      "id": "contrast_code_reopen_1",
+      "file": "audio/contrast_code_reopen_1.wav",
+      "sha256": "013acb139d56f729b9ee27de6810e367e84e3c82d0eb8eaca69847c66ff86170",
+      "streamId": "contrast_code_reopen",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_boss_money_1",
+      "file": "audio/contrast_boss_money_1.wav",
+      "sha256": "9f7f66951c97a7c3efca6f508dddfc11b30ecdd49ad2267208ce4956a1a40159",
+      "streamId": "contrast_boss_money",
+      "scamLabel": true,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_reported_money_1",
+      "file": "audio/contrast_reported_money_1.wav",
+      "sha256": "1be287054dafac4c4490f85105ed9cfc0a4fb1269bcd78148fad975afe4c9e15",
+      "streamId": "contrast_reported_money",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    },
+    {
+      "id": "contrast_refused_password_1",
+      "file": "audio/contrast_refused_password_1.wav",
+      "sha256": "c97195dbd92ebdc961f44558a9b1f0ca7cff51acfbd5d4a37a59dc820daa8961",
+      "streamId": "contrast_refused_password",
+      "scamLabel": false,
+      "split": "test",
+      "startSeconds": 2.5,
+      "endSeconds": 7.5
+    }
+  ],
+  "primaryOnly": true,
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "baselineSource": "c555fff cached source before PCM trimming",
+  "candidateChange": "Only exact zero PCM trim, 200ms padding, minimum 0.5s. Identical caller WAV input SHA.",
+  "gate": "All cases attempted; no fewer correct content verdicts, no more benign alerts or errors; retain only if PCM bytes decrease. Latency is measured, not promised. No claim about clone accuracy or live deadline.",
+  "setupSha256": "c25b226bc6d9d6aac00bf011b324e7899925ea54712515a2f989d4a677cc444e",
+  "candidateCodeHashes": {
+    "voice-live.ts": "57d4cfc293259cb17612f30b20a07754c64b6b3f898fe2fc9bb920895a439a6b",
+    "voice-input.ts": "1b6b2ea00f3cf7668f7c4d0930a24319e9cadfc16dda30e0a4b8d0821054ba4b",
+    "voice-result.ts": "0c2e97b0a02a32278974aa9779f794892415f542136c01e63f2f57f7c05b6af2",
+    "voice-live-output.ts": "d5bfd26c55b5f16832e5d438a1feeb9f426d444420b7f5767554c84375712be2"
+  }
+}

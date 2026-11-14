@@ -1,0 +1,32 @@
+{
+  "realGoogleCalls": 0,
+  "results": [
+    {
+      "name": "Unexpected model fallback",
+      "exitCode": 1,
+      "passed": false,
+      "providerCalls": 0,
+      "failedChecks": [
+        "Extended-only route"
+      ]
+    },
+    {
+      "name": "API offline",
+      "exitCode": 1,
+      "passed": false,
+      "providerCalls": 0,
+      "failedChecks": [
+        "API reachable"
+      ]
+    },
+    {
+      "name": "Invalid URL",
+      "exitCode": 1,
+      "passed": false,
+      "providerCalls": 0,
+      "failedChecks": [
+        "API URL"
+      ]
+    }
+  ]
+}

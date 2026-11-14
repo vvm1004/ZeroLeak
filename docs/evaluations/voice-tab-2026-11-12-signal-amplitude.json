@@ -1,0 +1,21 @@
+{
+  "scope": "Amplitude preservation on two known short TTS clips that fit within first5s; no acoustic-classification accuracy inference",
+  "results": [
+    {
+      "id": "otp",
+      "sourceRmsIfWholeUtteranceFits5s": 0.10176057463825086,
+      "baselineCapturedRms": 0.15922818528036245,
+      "rawCapturedRms": 0.10175157500623122,
+      "baselineRatio": 1.5647335507528672,
+      "rawRatio": 0.999911560719349
+    },
+    {
+      "id": "advice",
+      "sourceRmsIfWholeUtteranceFits5s": 0.0987256715235303,
+      "baselineCapturedRms": 0.16475677650693665,
+      "rawCapturedRms": 0.09871930479974111,
+      "baselineRatio": 1.668834194434104,
+      "rawRatio": 0.999935510959906
+    }
+  ]
+}

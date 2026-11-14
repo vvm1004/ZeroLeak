@@ -1,0 +1,61 @@
+{
+  "launcher": "pnpm dev:voice-extended",
+  "model": "gemini-3.8-live-extended-thinking",
+  "health": {
+    "strategy": "gemini",
+    "modelRoute": [
+      "gemini-3.8-live-extended-thinking"
+    ],
+    "liveApi": true
+  },
+  "maxProviderSessions": 2,
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "httpStatus": 200,
+      "roundTripMs": 3314,
+      "errorCode": null,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 100,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "voiceScore": null,
+      "model": "gemini-3.8-live-extended-thinking",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "localResultPresent": false,
+      "formatRepairAttempts": 0
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "httpStatus": 200,
+      "roundTripMs": 2113,
+      "errorCode": null,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "model": "gemini-3.8-live-extended-thinking",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "localResultPresent": false,
+      "formatRepairAttempts": 0
+    }
+  ],
+  "finishedAt": "2026-11-12T07:02:37.036Z"
+}

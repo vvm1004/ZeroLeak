@@ -1,0 +1,234 @@
+{
+  "phase": "regression",
+  "physicalCall": false,
+  "microphoneUsed": false,
+  "actualTabCapture": true,
+  "fakeDeviceUsed": false,
+  "fakeUiUsed": false,
+  "streamOverrideUsed": false,
+  "modelRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ],
+  "plannedRequests": 4,
+  "httpRequests": 4,
+  "providerSessionUpperBound": 4,
+  "results": [
+    {
+      "id": "otp",
+      "windowIndex": 0,
+      "scamLabel": true,
+      "status": "RESULT",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "capturedSha256": "3d2dff1dc909b57ba5d1bc09559760ed7f49ed897836b05149fdd73be67dc176",
+      "capturedSeconds": 5,
+      "capturedRms": 0.10175154737251814,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": null,
+      "executionTimeMs": 3253,
+      "evidenceCount": 1,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500118774.8,
+      "fetchStartedAt": 1794500118794.6,
+      "uiObservedAt": 1794500122096.5,
+      "uiObserved": true,
+      "requestToUiMs": 3302,
+      "windowReadyToUiMs": 3322,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": true
+    },
+    {
+      "id": "late_ceo",
+      "windowIndex": 0,
+      "scamLabel": true,
+      "status": "RESULT",
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "capturedSha256": "0b06d1e37da0ea3fa26f91a2bf6663271d343e3bef5de00edfbe0d3c1afe824c",
+      "capturedSeconds": 5,
+      "capturedRms": 0.09591730287350751,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": null,
+      "executionTimeMs": 2325,
+      "evidenceCount": 0,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500135484.9001,
+      "fetchStartedAt": 1794500135505.8,
+      "uiObservedAt": 1794500137874.6,
+      "uiObserved": true,
+      "requestToUiMs": 2369,
+      "windowReadyToUiMs": 2390,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": false
+    },
+    {
+      "id": "late_ceo",
+      "windowIndex": 1,
+      "scamLabel": true,
+      "status": "RESULT",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "capturedSha256": "ba00cd4eb7b76378c63d3d7e45d5a7345afe243882664008c4a8380b31440b2e",
+      "capturedSeconds": 5,
+      "capturedRms": 0.10512963062251761,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": null,
+      "executionTimeMs": 3830,
+      "evidenceCount": 1,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500140477.1,
+      "fetchStartedAt": 1794500140493.1,
+      "uiObservedAt": 1794500144363.3,
+      "uiObserved": true,
+      "requestToUiMs": 3870,
+      "windowReadyToUiMs": 3886,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": true
+    },
+    {
+      "id": "advice",
+      "windowIndex": 0,
+      "scamLabel": false,
+      "status": "RESULT",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "capturedSha256": "4079898ddb7b2dd4597d957e32d58c50b96308e7979c1b9134c20e977434c453",
+      "capturedSeconds": 5,
+      "capturedRms": 0.09901657851759324,
+      "httpStatus": 200,
+      "errorCode": null,
+      "detectedTactics": [],
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "syntheticVoiceProbability": 0.05,
+      "executionTimeMs": 3130,
+      "evidenceCount": 0,
+      "localResultPresent": false,
+      "windowAvailableAt": 1794500157569.2002,
+      "fetchStartedAt": 1794500157579.3,
+      "uiObservedAt": 1794500160746.1,
+      "uiObserved": true,
+      "requestToUiMs": 3167,
+      "windowReadyToUiMs": 3177,
+      "packetizationUpperBoundMs": 128,
+      "semanticCorrect": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "otp",
+      "scamLabel": true,
+      "plannedRequests": 1,
+      "media": {
+        "grantedAt": 1794500113477.1,
+        "audioTracks": 1,
+        "displaySurface": "browser",
+        "audioLabelCategory": "TAB",
+        "tabDeviceId": true,
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false
+      },
+      "sourcePlayingAt": null,
+      "tracksEnded": true,
+      "actualRequests": 1,
+      "blockedExtraFetches": 0
+    },
+    {
+      "id": "late_ceo",
+      "scamLabel": true,
+      "plannedRequests": 2,
+      "media": {
+        "grantedAt": 1794500130299.3,
+        "audioTracks": 1,
+        "displaySurface": "browser",
+        "audioLabelCategory": "TAB",
+        "tabDeviceId": true,
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false
+      },
+      "sourcePlayingAt": 1794500130724.5999,
+      "tracksEnded": true,
+      "actualRequests": 2,
+      "blockedExtraFetches": 0
+    },
+    {
+      "id": "advice",
+      "scamLabel": false,
+      "plannedRequests": 1,
+      "media": {
+        "grantedAt": 1794500152371.5,
+        "audioTracks": 1,
+        "displaySurface": "browser",
+        "audioLabelCategory": "TAB",
+        "tabDeviceId": true,
+        "autoGainControl": false,
+        "echoCancellation": false,
+        "noiseSuppression": false
+      },
+      "sourcePlayingAt": 1794500152541.7002,
+      "tracksEnded": true,
+      "actualRequests": 1,
+      "blockedExtraFetches": 0
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-11-12T16:16:07.095Z"
+}

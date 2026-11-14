@@ -1,3 +1,4 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import type { VoiceScamAnalysisResult } from '@zeroleak/shared-types';
 import { audioToBase64, encodeVoiceWav } from './voice-audio';
 
@@ -33,12 +34,12 @@ export async function analyzeVoice(
   const cancel = () => controller.abort(signal?.reason);
   if (signal?.aborted) cancel();
   signal?.addEventListener('abort', cancel, { once: true });
-  const timer = setTimeout(() => controller.abort(), analysisMode === 'review' ? 16000 : 3500);
+  const timer = setTimeout(() => controller.abort(), VOICE_ANALYSIS_TIMEOUTS[analysisMode].client);
   try {
     const response = await fetch(voiceEndpoint(settings.apiBase), {
       method: 'POST', signal: controller.signal,
       headers: { 'Content-Type': 'application/json', ...(settings.token ? { Authorization: `Bearer ${settings.token}` } : {}) },
-      body: JSON.stringify({ audioBase64: audioToBase64(encodeVoiceWav(samples)), mimeType: 'audio/wav', ...(analysisMode === 'review' ? { analysisMode } : {}) }),
+      body: JSON.stringify({ audioBase64: audioToBase64(encodeVoiceWav(samples, analysisMode === 'review')), mimeType: 'audio/wav', ...(analysisMode === 'review' ? { analysisMode } : {}) }),
       cache: 'no-store',
     });
     const body = await response.json().catch(() => null);
@@ -54,6 +55,7 @@ export async function analyzeVoice(
         !['CLEAR', 'LIMITED', 'UNUSABLE'].includes(body.audioQuality) ||
         !['GEMINI_AUDIO', 'HYBRID_AUDIO', 'LOCAL_ACOUSTIC'].includes(body.assessmentSource) || typeof body.analysisModel !== 'string' ||
         (body.analysisTransport !== undefined && !['LIVE_API', 'GENERATE_CONTENT'].includes(body.analysisTransport)) ||
+        (body.formatRepairAttempts !== undefined && (![0, 1].includes(body.formatRepairAttempts) || (body.formatRepairAttempts === 1 && body.analysisTransport !== 'LIVE_API'))) ||
         (body.fallbackUsed !== undefined && typeof body.fallbackUsed !== 'boolean') ||
         (body.providerAttempts !== undefined && (!Array.isArray(body.providerAttempts) || body.providerAttempts.length > 3 ||
           body.providerAttempts.some((attempt: { model?: unknown; transport?: unknown; status?: unknown; reason?: unknown }) => !attempt ||
@@ -82,7 +84,7 @@ export async function analyzeVoice(
     return body;
   } catch (error) {
     if (signal?.aborted) throw new DOMException('Đã hủy phân tích.', 'AbortError');
-    if (controller.signal.aborted) throw new Error(analysisMode === 'review' ? 'Quá 16 giây. Chưa đánh giá được đoạn này; hãy thử lại.' : 'Quá 3,5 giây. Chưa đánh giá được đoạn này; hãy thử lại.');
+    if (controller.signal.aborted) throw new Error(`Quá ${VOICE_ANALYSIS_TIMEOUTS[analysisMode].client / 1000} giây. Chưa đánh giá được đoạn này; hãy thử lại.`);
     if (error instanceof TypeError) throw new Error('Không kết nối được dịch vụ Voice. Kiểm tra địa chỉ và máy chủ.');
     throw error;
   } finally {

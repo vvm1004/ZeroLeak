@@ -1,0 +1,79 @@
+{
+  "phase": "comparison",
+  "summary": {
+    "baseline": {
+      "attempted": 18,
+      "humanFP": 0,
+      "humanCorrect": 2,
+      "syntheticTP": 0,
+      "syntheticLow": 4,
+      "voiceUnknown": 12,
+      "contentCorrect": 5,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 1,
+      "providerErrors": 0,
+      "medianAllMs": 2664.5
+    },
+    "candidate": {
+      "attempted": 18,
+      "humanFP": 0,
+      "humanCorrect": 2,
+      "syntheticTP": 0,
+      "syntheticLow": 2,
+      "voiceUnknown": 14,
+      "contentCorrect": 3,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 3,
+      "providerErrors": 1,
+      "medianAllMs": 2923.0
+    }
+  },
+  "checks": {
+    "allAttempted": true,
+    "noExtraHumanFP": true,
+    "noExtraSyntheticLow": true,
+    "noExtraContentFP": true,
+    "noExtraContentFN": true,
+    "noContentCoverageLoss": false,
+    "measuredBenefit": true,
+    "minimumContentCorrect": false,
+    "noRealtimeContentLoss": false,
+    "noRealtimeExtraErrors": false,
+    "noRealtimeExtraFP": true,
+    "noRealtimeExtraFN": true
+  },
+  "passed": false,
+  "scope": "Unknowns and errors kept; no labels/provider text leaked; low synthetic scores are misses, not verified humans.",
+  "realtimeSummary": {
+    "baseline": {
+      "attempted": 2,
+      "humanFP": 0,
+      "humanCorrect": 0,
+      "syntheticTP": 0,
+      "syntheticLow": 1,
+      "voiceUnknown": 1,
+      "contentCorrect": 2,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 0,
+      "providerErrors": 0,
+      "medianAllMs": 2414.0
+    },
+    "candidate": {
+      "attempted": 2,
+      "humanFP": 0,
+      "humanCorrect": 0,
+      "syntheticTP": 0,
+      "syntheticLow": 0,
+      "voiceUnknown": 2,
+      "contentCorrect": 1,
+      "contentFP": 0,
+      "contentFN": 0,
+      "contentUnknown": 1,
+      "providerErrors": 1,
+      "medianAllMs": 2767.0
+    }
+  }
+}
