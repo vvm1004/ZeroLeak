@@ -1,3 +1,4 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import { GoogleGenAI, type GenerateContentParameters } from '@google/genai';
 import type { AnalyzeVoiceRequest, VoiceScamAnalysisResult, VoiceProviderAttempt } from '@zeroleak/shared-types';
 import { VoiceAnalysisError, parseVoiceResult, voiceResultSchema, voiceResultInstruction, voiceTaskSchema, voiceTaskInstruction } from './voice-result.js';
@@ -48,7 +49,7 @@ export async function analyzeAudioScam(
 ): Promise<VoiceScamAnalysisResult> {
   const started = performance.now();
   const review = input.analysisMode === 'review';
-  const maximumBudget = review ? 15000 : 3100;
+  const maximumBudget = VOICE_ANALYSIS_TIMEOUTS[review ? 'review' : 'realtime'].model;
   const budget = Math.min(options.budgetMs ?? maximumBudget, maximumBudget);
   if (!options.generate && !options.socketFactory && !process.env.GEMINI_API_KEY) throw new VoiceAnalysisError('NOT_CONFIGURED');
   const generate: Generate = options.generate ?? ((params) => new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! }).models.generateContent(params));

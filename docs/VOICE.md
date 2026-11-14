@@ -1,5 +1,15 @@
 # ZeroLeak Voice
 
+**Sửa timeout tab/micro:** [budget realtime 8 giây và kiểm thử trước/sau](VOICE_LIVE_TIMEOUT.md). Giữ cửa sổ audio 5 giây; chưa đạt Test 6 dưới 3 giây.
+
+**Demo mới nhất:** [lệnh kiểm tra trước demo và kịch bản](VOICE_DEMO.md); [đo native Chrome tab, sửa constraints và giới hạn timeout](VOICE_TAB_ACCEPTANCE.md). Test 6 dưới 3 giây vẫn chưa đạt.
+
+**Review toàn bộ file:** [đọc đủ tối đa 15 giây audio, không bỏ lời yêu cầu/giải thích sau giây thứ 5](VOICE_FULL_FILE_REVIEW.md). Đây là cải thiện độ bao phủ ngữ cảnh, không phải bằng chứng tăng nhận diện clone.
+
+**Bảo toàn tín hiệu:** [bỏ khoảng lặng số, hàng đợi giới hạn và thử nghiệm chồng lấp](VOICE_STREAM_IMPROVEMENTS.md). Chồng lấp mặc định tắt; không đổi deadline hoặc tuyên bố detector clone chính xác hơn.
+
+**Chỉ Extended Thinking:** chạy `pnpm dev:voice-extended` trên macOS/Linux để khóa cả realtime/review vào `gemini-3.8-live-extended-thinking`, không chuyển model và không gọi worker local. [Kết quả kiểm tra mới](VOICE_GEMINI_ONLY.md): hai ứng viên bị loại ở development; chưa có bằng chứng tăng độ chính xác.
+
 **Cập nhật chất lượng:** [review sửa định dạng tối đa một lần trong deadline và kết quả kiểm định](VOICE_QUALITY.md). Realtime không đổi; không coi đây là cải thiện độ chính xác giọng clone.
 
 **Luồng mặc định theo task:** `VOICE_ANALYSIS_STRATEGY=gemini`, Gemini đánh giá cả nội dung và dấu hiệu giọng tổng hợp; không cần worker Python. `hybrid` giữ bản cũ để so sánh. Xem [kết quả và cách chuyển](VOICE_TASK_COMPARISON.md).
@@ -10,7 +20,7 @@
 
 **Bản sửa trước đó 2026-11-11:** [sửa coordinator, warmup và kết quả test thật](VOICE_RELIABILITY.md).
 Xem thêm [cách test bằng chứng, lỗi Gemini và review file](VOICE_TESTING.md).
-Review là tùy chọn thử nghiệm tối đa 15 giây; thu micro/tab giữ deadline cũ.
+Review cho phép file tối đa 15 giây audio, budget xử lý 15 giây; thu micro/tab giữ cửa sổ 5 giây, budget Gemini nay 8 giây.
 
 Mục 2.4 của TASK.md: thu âm, phân tích âm thanh bằng Gemini, và cảnh báo trong extension.
 Có [detector âm học V3 chạy local bằng PyTorch](VOICE_DETECTOR_V3.md) trong chế độ `hybrid`, kết hợp với Gemini phân tích
@@ -43,13 +53,15 @@ Chrome → `chrome://extensions` → Developer mode → Load unpacked →
 Trong trang Voice:
 
 1. Chọn **Âm thanh từ tab** hoặc **Micro của bạn**.
-2. Bấm **Bắt đầu kiểm tra**. Với tab, chọn Thẻ Chrome và bật chia sẻ âm thanh.
-3. Giữ trang Voice mở; có thể chuyển sang tab cuộc gọi. Popup đóng không làm dừng phiên này.
-4. Mỗi 5 giây, một đoạn PCM WAV độc lập được gửi. Sóng âm và thời lượng phản ánh nguồn đang thu.
-5. Bấm **Dừng thu âm** để dừng mọi track và hủy yêu cầu đang chờ. Đóng trang cũng dừng thu.
+2. Chọn **Một đoạn 5 giây** (mặc định): thu đủ 5 giây, tự ngừng thu rồi chờ kết quả; hoặc **Theo dõi liên tục**: phân tích từng đoạn cho đến khi dừng.
+3. Bấm **Bắt đầu kiểm tra**, cấp quyền. Với tab, chọn Thẻ Chrome và bật chia sẻ âm thanh.
+4. Thanh thời lượng phản ánh audio thực đã nhận; giao diện tách bước nhận âm thanh, phân tích và kết quả.
+5. **Dừng thu và phân tích** dừng mọi track, gửi cả phần cuối đủ từ 0,5 giây và tiếp tục chờ yêu cầu đang chạy. **Hủy phân tích** mới bỏ yêu cầu/kết quả đang chờ.
+6. Đóng trang hủy phiên. Chế độ một đoạn giữ kết quả ổn định đến lần kiểm tra tiếp theo. Chế độ liên tục chỉ hiện kết quả gần nhất, không xác minh toàn bộ cuộc gọi.
 
-**Chọn file thử** giải mã file ngay trên thiết bị, chuyển thành WAV mono 16 kHz và chỉ gửi tối đa
-5 giây đầu. Không upload toàn bộ file gốc. File tối đa 10 MB; file không giải mã được sẽ báo lỗi.
+**Chọn file thử** tự động phân tích toàn bộ file dài tối đa 15 giây, budget xử lý 15 giây;
+không cần chọn chế độ. File được giải mã trên thiết bị và chuyển thành WAV mono 16 kHz trước khi gửi;
+file dài hơn báo lỗi, không âm thầm cắt cuối. Không upload định dạng file gốc. File tối đa 10 MB; file không giải mã được sẽ báo lỗi.
 Micro không tự nghe được mọi âm thanh hệ thống: dùng nguồn tab cho cuộc gọi/video phát trong Chrome.
 Tính năng không thu âm nền khi trang Voice đã đóng, và không thu cuộc gọi điện thoại ngoài trình duyệt.
 
@@ -66,7 +78,9 @@ giới hạn đồng thời hiện tại chỉ áp dụng trên từng tiến tr
 { "audioBase64": "<PCM WAV encoded as Base64>", "mimeType": "audio/wav" }
 ```
 
-Chấp nhận PCM16 mono 16 kHz dài 0,5–5 giây, tối đa 160.044 byte. Server kiểm tra header, khối dữ liệu,
+Mặc định chấp nhận PCM16 mono 16 kHz dài 0,5–5 giây, tối đa 160.044 byte. Đặt `analysisMode:"review"`
+để gửi toàn file 0,5–15 giây, tối đa 480.044 byte. JSON fast giới hạn 220.000 byte, review 650.000 byte.
+Server kiểm tra header, khối dữ liệu,
 số frame và tín hiệu im lặng. WAV được chọn để mỗi cửa sổ đều đọc độc lập, tránh gửi các fragment WebM
 không có header. File WebM/MP3 có thể chọn trong giao diện nếu Chrome giải mã được; server nhận WAV đã chuyển.
 
@@ -82,15 +96,15 @@ Lỗi có dạng `{ "error": { "code": "...", "message": "..." } }` và HTTP 400
 Nguồn trình duyệt được giới hạn cho extension Chrome và localhost. Thêm origin web được phép vào
 `VOICE_ALLOWED_ORIGINS` nếu tích hợp web client; nguồn không được phép nhận HTTP 403 trước khi gọi Gemini.
 
-Với chế độ nhanh, yêu cầu extension có hard timeout 3.500 ms. Bộ phân tích có một ngân sách chung 3.100 ms cho cả
+Với realtime Gemini-only, yêu cầu extension có hard timeout 9.000 ms, route 8.300 ms. Bộ phân tích có một ngân sách chung 8.000 ms cho cả
 model chính và fallback; không cộng nhiều timeout liên tiếp. Hủy phía client không đảm bảo vendor hủy
 phần tính toán đã nhận. Khi lỗi/timeout, hiển thị chưa đánh giá được. Không tạo kết quả an toàn giả lập.
 Model chính được dùng hết thời gian còn lại; không cắt sớm ở 2.100 ms để chừa một giây cho fallback.
 Fallback chỉ chạy nếu có lỗi sớm và ngân sách chung còn đủ, không gọi thêm sau khi hết deadline.
-Review opt-in có ngân sách Gemini 15.000 ms, local 5.000 ms, route 15.300 ms, client 16.000 ms,
-chỉ xử lý tối đa 5 giây audio. Không dùng review để công bố đã đạt <3 giây.
+Review tự động khi chọn file có ngân sách Gemini 15.000 ms, local 5.000 ms, route 15.300 ms, client 16.000 ms,
+xử lý toàn bộ file tối đa 15 giây audio; fast vẫn 5 giây. Không dùng review để công bố đã đạt <3 giây.
 Riêng Flash fallback, SDK đặt deadline của dịch vụ Google tối thiểu 10 giây vì API từ chối giá trị thấp hơn; deadline này
-không thay thế bộ hủy/timeout độc lập 3.100 ms của ứng dụng.
+không thay thế bộ hủy/timeout độc lập 8.000 ms của Gemini-only. Chế độ hybrid cũ có collection deadline riêng 3.100 ms.
 
 ## Giới hạn cần trình bày đúng khi demo
 

@@ -13,7 +13,9 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
-    "test:voice:e2e": "playwright test --config tests/voice.playwright.config.ts"
+    "test:voice:e2e": "playwright test --config tests/voice.playwright.config.ts",
+    "dev:voice-extended": "VOICE_ANALYSIS_STRATEGY=gemini GEMINI_MODEL_VOICE=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_REVIEW=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_LIVE_FALLBACK=gemini-3.8-live-extended-thinking GEMINI_MODEL_VOICE_FALLBACK=gemini-3.8-live-extended-thinking pnpm dev:sandbox",
+    "check:voice-demo": "pnpm --filter @zeroleak/sandbox-api exec tsx scripts/check-voice-demo.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^30.0.0",

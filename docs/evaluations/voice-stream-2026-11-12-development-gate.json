@@ -1,0 +1,49 @@
+{
+  "phase": "development",
+  "passed": false,
+  "checks": {
+    "allClipsAttempted": false,
+    "atLeast75PercentClipSuccess": false,
+    "noAdditionalBenignAlerts": true,
+    "noLossOfScamStreams": true,
+    "benefit": false
+  },
+  "baselineScamStreamsWarned": 0,
+  "candidateScamStreamsWarned": 0,
+  "scamStreams": 1,
+  "baselineBenignStreamsWithAlert": 0,
+  "candidateBenignStreamsWithAlert": 0,
+  "benignStreams": 1,
+  "estimatedWarningAdvancesMs": [],
+  "timingIsSimulationNotBrowserLatency": true,
+  "streams": [
+    {
+      "id": "dev_ceo_clean",
+      "scamLabel": true,
+      "baseline": {
+        "warned": false,
+        "estimatedFirstWarningMs": null,
+        "incomplete": false
+      },
+      "candidate": {
+        "warned": false,
+        "estimatedFirstWarningMs": null,
+        "incomplete": false
+      }
+    },
+    {
+      "id": "dev_warning_clean",
+      "scamLabel": false,
+      "baseline": {
+        "warned": false,
+        "estimatedFirstWarningMs": null,
+        "incomplete": true
+      },
+      "candidate": {
+        "warned": false,
+        "estimatedFirstWarningMs": null,
+        "incomplete": true
+      }
+    }
+  ]
+}

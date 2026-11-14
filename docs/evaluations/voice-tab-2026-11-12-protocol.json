@@ -1,0 +1,28 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "mode": "realtime",
+  "budgetsMs": {
+    "model": 3100,
+    "route": 3200,
+    "client": 3500
+  },
+  "capture": "Actual Chrome getDisplayMedia tab audio, no fake device or stream override. Permission picker automated for only the owned source tab.",
+  "physicalCall": false,
+  "microphoneUsed": false,
+  "expectedDisplaySurface": "browser",
+  "fixedCases": [
+    "otp",
+    "advice",
+    "no_speech",
+    "late_ceo"
+  ],
+  "plannedHttpRequests": 5,
+  "maxHttpRequestsPerRun": 6,
+  "maxProviderSessionsAllPhases": 24,
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "maxRunMsPerCase": 20000,
+  "metrics": "Window available at actual AudioWorklet packet callback crossing80k samples; request start; HTTP completion; UI observed after response. Packetization up to128ms is separate from 5s capture. UI observation includes small automation overhead.",
+  "failures": "No-response, permissions, HTTP errors, UNKNOWN and timeouts retained; stop on >=3 consecutive request failures. Repeat only as a separately identified regression after a concrete code fix, never until success."
+}

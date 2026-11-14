@@ -1,0 +1,86 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "Two controlled 12s files already used in whole-file comparison; actual Chrome/API regression, not new independent accuracy or physical calls",
+  "plannedCases": 2,
+  "maxProviderSessionUpperBound": 2,
+  "results": [
+    {
+      "id": "late_ceo_full",
+      "mode": "review",
+      "scam": true,
+      "roundTripMs": 5297,
+      "submittedSeconds": 12,
+      "submittedAnalysisMode": "review",
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "syntheticVoiceProbability": null,
+      "formatRepairAttempts": null,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "uiShowsWholeFileDuration": true,
+      "status": "RESULT"
+    },
+    {
+      "id": "delayed_quoted_warning_full",
+      "mode": "review",
+      "scam": false,
+      "roundTripMs": 4348,
+      "submittedSeconds": 12,
+      "submittedAnalysisMode": "review",
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [],
+      "syntheticVoiceProbability": null,
+      "formatRepairAttempts": null,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "uiShowsWholeFileDuration": true,
+      "status": "RESULT"
+    }
+  ],
+  "modelRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ]
+}

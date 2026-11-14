@@ -109,6 +109,12 @@ export interface PhishingAnalysisResponse {
   executionTimeMs: number;
 }
 
+/** Processing limits, separate from audio duration. Never claim these meet the <3s target. */
+export const VOICE_ANALYSIS_TIMEOUTS = {
+  realtime: { model: 8000, route: 8300, client: 9000 },
+  review: { model: 15000, route: 15300, client: 16000 },
+} as const;
+
 export type ScamTacticType =
   | 'CEO_FRAUD'               // Giả giọng lãnh đạo yêu cầu chuyển khoản gấp
   | 'AUTHORITY_IMPERSONATION' // Giả danh Công an, Viện kiểm sát, Ngân hàng
@@ -163,7 +169,7 @@ export interface VoiceScamAnalysisResult {
 export interface AnalyzeVoiceRequest {
   audioBase64: string;
   mimeType: 'audio/wav';
-  /** Review is an explicit opt-in for a short uploaded clip; live capture stays realtime. */
+  /** Review explicitly sends a whole uploaded file <=15s; live capture stays realtime <=5s. */
   analysisMode?: 'realtime' | 'review';
 }
 

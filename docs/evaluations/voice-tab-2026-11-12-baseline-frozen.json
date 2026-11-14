@@ -1,0 +1,12 @@
+{
+  "sourceHashes": {
+    "apps/extension/entrypoints/voice/VoiceApp.tsx": "8241d6e53960297b0bb085bc887b8a9dc346735eed244ef6e2830f6494f3ac44",
+    "apps/extension/utils/voice-capture.ts": "05668ecf9e0d407685beaed1bace9197f310d4fc4d4960a20499754048899e48",
+    "apps/extension/public/voice-worklet.js": "0ccbcbbd17d1f6609715108babe9b7f6b7b6fdae44f801ca9ce69c9f5c361cf6",
+    "apps/extension/utils/voice-client.ts": "3d36ba8eed8f8ead91f4eab354b050c862ab6af03298545483d71cb013c0c162",
+    "apps/sandbox-api/src/voice-live.ts": "dc1c02ce64929866ecc1c5d692d741580dc6bc11ee632c0569b8dfa0693e22f5",
+    "apps/sandbox-api/src/voice-analyzer.ts": "9e015a1831abb733f234b2f9afb9e27197abaab8f3dab9d33fe5a44af29f3f93",
+    "apps/sandbox-api/src/voice-result.ts": "1b3a51eb499ea80abe82dfa6745774c8f1e6ef19704139c1b7fa06d6d65e7b94"
+  },
+  "protocolSha256": "4cda72adc3bd88ce9056ea48895816d16e3ca0eb7c244903d31863107477828b"
+}

@@ -1,0 +1,12 @@
+{
+  "fixedBeforePrediction": true,
+  "case": "boundary_15s_noise",
+  "sourceCase": "late_ceo_full",
+  "seconds": 15,
+  "noise": "deterministic integer uniform [-100,100], seed 41024",
+  "sha256": "780be51a9f41abf340b76e7468946cac7bc5ce874dc914f2e48744b2bea4d10b",
+  "scope": "Exact 15s browser/API boundary regression; same underlying TTS already used, not a new independent accuracy sample",
+  "maxProviderSessions": 1,
+  "fallback": false,
+  "wholeRequestRetries": 0
+}

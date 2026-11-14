@@ -1,0 +1,32 @@
+{
+  "fixedBeforeCalls": true,
+  "scope": "Regression of reported upload timeout; no user private file uploaded",
+  "model": "gemini-3.8-live-extended-thinking",
+  "plannedOrder": [
+    {
+      "file": "otp.wav",
+      "mode": "realtime"
+    },
+    {
+      "file": "otp.wav",
+      "mode": "review"
+    },
+    {
+      "file": "advice.wav",
+      "mode": "review"
+    },
+    {
+      "file": "advice.wav",
+      "mode": "realtime"
+    }
+  ],
+  "plannedCalls": 4,
+  "maxCalls": 4,
+  "wholeRequestRetries": 0,
+  "sameAudioBytesWithinPair": true,
+  "audioSource": "Self-authored development TTS from previous archive, not independent accuracy test",
+  "fastModelBudgetMs": 3100,
+  "reviewModelBudgetMs": 15000,
+  "softwareChange": "Default file review enabled; live remains fast; mode-specific timeout message",
+  "noAccuracyClaim": true
+}

@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "id": "audit_v4_VIVOSDEV03_0_human_clean",
+      "file": "audio/v4-fresh/audit_v4_VIVOSDEV03_0_human_clean.wav",
+      "sha256": "d2e122d82879735919664310263bdb1156158713467a7e6c4d9bc465fe437a56",
+      "originId": "v4_VIVOSDEV03_0",
+      "label": "human",
+      "condition": "clean",
+      "family": "vivos",
+      "cohort": "v4-fresh",
+      "split": "train",
+      "scamLabel": null,
+      "speakerId": "VIVOSDEV03",
+      "source": "Turbo clone development and fresh held-out recordings; public VIVOS reference",
+      "license": "VIVOS CC-BY-NC-SA-4.0; local noncommercial research",
+      "originalCohort": "v4-fresh"
+    },
+    {
+      "id": "audit_v4_VIVOSDEV03_0_synthetic_clean",
+      "file": "audio/v4-fresh/audit_v4_VIVOSDEV03_0_synthetic_clean.wav",
+      "sha256": "62de3bbf3b303ae23f65043ba32e10df19bf2d69153a7f1a67f27cae70595f59",
+      "originId": "v4_VIVOSDEV03_0",
+      "label": "synthetic",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "cohort": "v4-fresh",
+      "split": "train",
+      "scamLabel": null,
+      "speakerId": "VIVOSDEV03",
+      "source": "Turbo clone development and fresh held-out recordings; public VIVOS reference",
+      "license": "VIVOS CC-BY-NC-SA-4.0; local noncommercial research",
+      "originalCohort": "v4-fresh"
+    }
+  ]
+}

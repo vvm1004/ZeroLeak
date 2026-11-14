@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-12",
+  "backendTestsPassed": 94,
+  "clientTestsPassed": 11,
+  "chromeTestsPassed": 18,
+  "chromeTestsSkipped": 2,
+  "sharedBuild": true,
+  "backendBuild": true,
+  "extensionBuild": true,
+  "extensionTypecheck": true,
+  "realGoogleRequests": 9,
+  "maxGoogleRequests": 9,
+  "wholeRequestRetries": 0,
+  "baselineNative": {
+    "windows": 3,
+    "httpTimeouts": 3
+  },
+  "regressionNative": {
+    "windows": 4,
+    "httpResults": 4,
+    "httpTimeouts": 0
+  },
+  "microphoneFixture": {
+    "windows": 2,
+    "httpResults": 2,
+    "physicalMicrophoneUsed": false
+  },
+  "test6Accepted": false,
+  "detectorAccuracyImprovementEstablished": false,
+  "sharedTiming": {
+    "realtime": {
+      "model": 8000,
+      "route": 8300,
+      "client": 9000
+    },
+    "review": {
+      "model": 15000,
+      "route": 15300,
+      "client": 16000
+    }
+  },
+  "interpretation": [
+    "Single controlled run per case and phase; not statistical reliability evidence",
+    "Capture native tab input PCM differs slightly across runs; same source WAV, not byte-identical submitted audio",
+    "Only first three native windows are matched before/after; advice added after as benign regression",
+    "late_ceo window 0 has neutral introduction; semanticCorrect=false in raw harness is not counted as a missed scam",
+    "Advice native TTS scored syntheticVoiceProbability 0.05; retain this false-negative example",
+    "Fake microphone phase uses only injected TTS, never actual hardware or human calls"
+  ]
+}

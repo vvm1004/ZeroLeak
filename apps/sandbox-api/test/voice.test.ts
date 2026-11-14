@@ -202,17 +202,17 @@ test('review is explicit, bounded and validated before provider calls', () => {
   for (const analysisMode of ['slow', 15000, null]) assert.throws(() => parseVoiceRequest({ ...payload(), analysisMode }));
 });
 
-test('review allows a response beyond the live deadline and uses one configured model', async t => {
+test('review allows a response beyond the realtime budget and uses one configured model', async t => {
   process.env.GEMINI_MODEL_VOICE_REVIEW = 'gemini-test-review';
   process.env.GEMINI_MODEL_VOICE_FALLBACK = 'gemini-test-review';
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const calls: string[] = [];
   const pending = analyzeAudioScam({ ...payload(), analysisMode: 'review' }, { generate: async params => {
     calls.push(params.model); assert.equal(params.config?.httpOptions?.timeout, 15000);
-    await new Promise(resolve => setTimeout(resolve, 4500));
+    await new Promise(resolve => setTimeout(resolve, 10000));
     return { text: JSON.stringify(answer()) };
   } });
-  t.mock.timers.tick(4500);
+  t.mock.timers.tick(10000);
   const result = await pending;
   assert.equal(result.verdict, 'SUSPICIOUS'); assert.deepEqual(calls, ['gemini-test-review']);
 });
@@ -414,4 +414,31 @@ test('default HTTP strategy returns Gemini synthesis and never contacts a config
     process.env.VOICE_ANALYSIS_STRATEGY='gemini';process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK=process.env.GEMINI_MODEL_VOICE;process.env.GEMINI_MODEL_VOICE_FALLBACK=process.env.GEMINI_MODEL_VOICE;TaskSocket.fail=true;
     const failed=await post();assert.equal(failed.status,502);const failure=await failed.json();assert.equal(failure.error.code,'PROVIDER_ERROR');assert.equal(failure.verdict,undefined);assert.equal(localCalls,1);
   }finally{globalThis.WebSocket=oldSocket;globalThis.fetch=oldFetch;}
+});
+
+
+test('realtime allows a 4.5s provider response without changing the audio mode', async t => {
+  process.env.GEMINI_MODEL_VOICE = 'gemini-test-realtime-delayed';
+  process.env.GEMINI_MODEL_VOICE_FALLBACK = process.env.GEMINI_MODEL_VOICE;
+  t.mock.timers.enable({ apis:['setTimeout'] });
+  let calls = 0;
+  const pending = analyzeAudioScam(payload(), { generate:async () => {
+    calls++; await new Promise(resolve => setTimeout(resolve,4500));
+    return { text:JSON.stringify(answer()) };
+  } });
+  t.mock.timers.tick(4500);
+  assert.equal((await pending).verdict,'SUSPICIOUS'); assert.equal(calls,1);
+});
+
+test('realtime caps a hung provider at 8s and cancels without retrying', async t => {
+  process.env.GEMINI_MODEL_VOICE = 'gemini-test-realtime-hard-stop';
+  process.env.GEMINI_MODEL_VOICE_FALLBACK = process.env.GEMINI_MODEL_VOICE;
+  t.mock.timers.enable({ apis:['setTimeout'] });
+  let calls = 0; let signal:AbortSignal|undefined;
+  const pending = analyzeAudioScam(payload(), { budgetMs:60000, generate:async params => {
+    calls++; signal=params.config?.abortSignal; return new Promise(() => {});
+  } });
+  const rejected=assert.rejects(pending,(error:unknown)=>error instanceof VoiceAnalysisError&&error.code==='TIMEOUT');
+  t.mock.timers.tick(7900); assert.equal(signal?.aborted,false);
+  t.mock.timers.tick(100); await rejected; assert.equal(signal?.aborted,true); assert.equal(calls,1);
 });

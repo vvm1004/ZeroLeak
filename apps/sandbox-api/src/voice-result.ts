@@ -59,7 +59,7 @@ function redact(text: string): string {
     .replace(/\b(?:AIza[\w-]+|sk-[\w-]+|ghp_[\w-]+|AQ\.[\w-]+)\b/g, '[KHÓA ĐÃ ẨN]');
 }
 
-export function parseVoiceResult(text: string, model: string, executionTimeMs: number, assessSynthetic = false): VoiceScamAnalysisResult {
+export function parseVoiceResult(text: string, model: string, executionTimeMs: number, assessSynthetic = false, transcriptLimit: 300 | 1500 = 300): VoiceScamAnalysisResult {
   let raw: Record<string, unknown>;
   try { raw = JSON.parse(text); } catch { throw new VoiceAnalysisError('INVALID_RESULT'); }
   if (assessSynthetic && (!raw || typeof raw !== 'object' || !Object.hasOwn(raw, 'syntheticVoiceProbability'))) throw new VoiceAnalysisError('INVALID_RESULT');
@@ -92,7 +92,7 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
       !item.quote.trim() || item.quote.length > 160)) throw new VoiceAnalysisError('INVALID_RESULT');
   const tactics = [...new Set(raw.detectedTactics as ScamTacticType[])];
   const normalize = (value: string) => value.normalize('NFC').toLocaleLowerCase('vi').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-  const transcript = normalize(raw.transcriptSnippet.slice(0, 300));
+  const transcript = normalize(raw.transcriptSnippet.slice(0, transcriptLimit));
   // This checks self-consistency of the provider's text, not independent verification of the audio.
   const supported = evidence.length === tactics.length && new Set(evidence.map(item => item.tactic)).size === tactics.length &&
     evidence.every(item => tactics.includes(item.tactic) && normalize(item.quote).split(' ').length >= 3 &&
@@ -115,7 +115,7 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
     syntheticVoiceProbability: unusable ? null : raw.syntheticVoiceProbability as number | null,
     detectedTactics: unknown ? [] : tactics,
     tacticEvidence: unknown ? [] : evidence.map(item => ({ tactic: item.tactic, quote: redact(item.quote) })),
-    transcriptSnippet: unusable ? '' : redact(raw.transcriptSnippet).slice(0, 300),
+    transcriptSnippet: unusable ? '' : redact(raw.transcriptSnippet).slice(0, transcriptLimit),
     warningMessageVi: unusable ? 'Chưa đủ âm thanh rõ để đánh giá. Hãy thử thu lại.'
       : unknown ? 'Chưa đủ ngữ cảnh để đánh giá nội dung đoạn này. Dấu hiệu giọng tổng hợp được đánh giá riêng.'
       : redact(raw.warningMessageVi).slice(0, 500),

@@ -1,0 +1,55 @@
+{
+  "backendTests": {
+    "passed": 92,
+    "failed": 0
+  },
+  "clientTests": {
+    "passed": 10,
+    "failed": 0
+  },
+  "chromeDefaultFixture": {
+    "passed": 16,
+    "failed": 0,
+    "skippedExperimentalOverlap": 2
+  },
+  "extensionTypecheck": "passed",
+  "backendBuild": "passed",
+  "extensionBuild": "passed",
+  "deliveredExtensionBuild": "default overlap disabled",
+  "realChromeCases": {
+    "review12s": 2,
+    "review15sNoisyBoundary": 1,
+    "contentCorrect": 3,
+    "allUsedExtendedOnly": true,
+    "allSubmittedWholeFile": true
+  },
+  "googleSessions": {
+    "development": 4,
+    "test": 12,
+    "realBrowser12s": 2,
+    "realBrowser15s": 1,
+    "total": 19,
+    "cap": 24
+  },
+  "tunedOnTest": false,
+  "physicalCallsTested": false,
+  "forensicCloneAccuracyEstablished": false,
+  "knownSyntheticNoisyBoundaryP": 0.1,
+  "under3sTest6Accepted": false,
+  "sourceHashes": {
+    "apps/sandbox-api/src/voice-input.ts": "75d5effd9ab2006911a5b9834a622f4999a835531464cbc8312b1dabba154818",
+    "apps/sandbox-api/src/app.ts": "e90019373143f9f65a291032960ea65379e85a2d89828130ba2aa30cb51dedc1",
+    "apps/sandbox-api/src/voice-result.ts": "1b3a51eb499ea80abe82dfa6745774c8f1e6ef19704139c1b7fa06d6d65e7b94",
+    "apps/sandbox-api/src/voice-live-output.ts": "6feba4bc8b9264ef6141ddc450686b303cfa69149c7c04070f5902ea372dee45",
+    "apps/sandbox-api/src/voice-live.ts": "dc1c02ce64929866ecc1c5d692d741580dc6bc11ee632c0569b8dfa0693e22f5",
+    "apps/extension/utils/voice-audio.ts": "bbc624d3e21ba62a2121d28475d34d4329779855a25c1ddd393cb471d2022923",
+    "apps/extension/utils/voice-client.ts": "3d36ba8eed8f8ead91f4eab354b050c862ab6af03298545483d71cb013c0c162",
+    "apps/extension/entrypoints/voice/VoiceApp.tsx": "8241d6e53960297b0bb085bc887b8a9dc346735eed244ef6e2830f6494f3ac44",
+    "apps/sandbox-api/scripts/evaluate-voice.ts": "d8c489dcfae36e0948486ec966699824e0667cb85dc9952b3f8bd3c2e767558c",
+    "tests/voice.spec.ts": "0b62260ac5b4c6c158677bd2572cf7e1172c2be71232d5d1c8cb7adba6228d3c",
+    "apps/extension/test-voice.ts": "3fa2f38868e2d83ae12a7d6eba6884411395462df818ea4a6ce3e4f841723113",
+    "apps/sandbox-api/test/voice-review.test.ts": "a0a2ba1054bc0f65e244e9935aefdb7168d76ab5963a391ef69126ebcf94b1a9",
+    "apps/sandbox-api/test/voice-live.test.ts": "afb8d8b46cef0d0edc49e01e63c57f11077c61c3434536771f8e0a0b4516e226",
+    "packages/shared-types/src/index.ts": "e2b924365546632054b96ac7f503f3abd20d69c594ad83b141de37aaee8ecf23"
+  }
+}

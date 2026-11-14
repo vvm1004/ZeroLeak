@@ -1,0 +1,38 @@
+{
+  "baseline": {
+    "attempted": 6,
+    "errors": 0,
+    "cloneAlerts": 0,
+    "cloneLow": 0,
+    "humanAlerts": 0,
+    "humanLow": 2,
+    "contentCorrect": 1,
+    "contentCases": 2,
+    "scamAlerts": 1,
+    "medianMs": 2443.0
+  },
+  "reference": {
+    "attempted": 6,
+    "errors": 0,
+    "cloneAlerts": 0,
+    "cloneLow": 0,
+    "humanAlerts": 0,
+    "humanLow": 0,
+    "contentCorrect": 1,
+    "contentCases": 2,
+    "scamAlerts": 1,
+    "medianMs": 6768.0
+  },
+  "checks": {
+    "noErrorsAdded": true,
+    "noHumanFalseAlertsAdded": true,
+    "noCloneLowAdded": true,
+    "noHumanCoverageLost": false,
+    "noCorrectContentLost": true,
+    "noScamAlertsLost": true,
+    "actualBenefit": false
+  },
+  "passed": false,
+  "holdoutConsumed": false,
+  "decision": "Reject audio-reference candidate; preserve production prompt"
+}

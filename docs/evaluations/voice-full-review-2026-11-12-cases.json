@@ -1,0 +1,180 @@
+{
+  "cases": [
+    {
+      "id": "dev_late_code",
+      "variant": "prefix",
+      "file": "audio/dev_late_code_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": true,
+      "split": "development",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "dev_late_code",
+      "variant": "full",
+      "file": "audio/dev_late_code_full.wav",
+      "sha256": "3fb2d73d550a331ca5df72ae348bdead1ee515ef2351b7e088f48e69f3feee1b",
+      "seconds": 12.0,
+      "scamLabel": true,
+      "split": "development",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "dev_late_advice",
+      "variant": "prefix",
+      "file": "audio/dev_late_advice_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": false,
+      "split": "development",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "dev_late_advice",
+      "variant": "full",
+      "file": "audio/dev_late_advice_full.wav",
+      "sha256": "855090c21d7f402b284364b94a726ae4ad7efe12b359a02b034b3148d7d4b7fc",
+      "seconds": 12.0,
+      "scamLabel": false,
+      "split": "development",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_ceo",
+      "variant": "prefix",
+      "file": "audio/late_ceo_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_ceo",
+      "variant": "full",
+      "file": "audio/late_ceo_full.wav",
+      "sha256": "2f55deac2bea3ba5a48ba6070e816dfbaad88ed174811929a5d76a7be32df756",
+      "seconds": 12.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_police",
+      "variant": "prefix",
+      "file": "audio/late_police_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_police",
+      "variant": "full",
+      "file": "audio/late_police_full.wav",
+      "sha256": "391c4edb187110e304229343b3780e05c4cff4dce698e6cae12e6d198ffd750a",
+      "seconds": 12.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_password",
+      "variant": "prefix",
+      "file": "audio/late_password_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_password",
+      "variant": "full",
+      "file": "audio/late_password_full.wav",
+      "sha256": "22d80e0d30ae0bf6c5f815824e971571481e86d3c386ee91d6f7164ad45e345c",
+      "seconds": 12.0,
+      "scamLabel": true,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_refusal",
+      "variant": "prefix",
+      "file": "audio/late_refusal_prefix.wav",
+      "sha256": "da1e149a0ff70c4cc9defa3674bcb2d26fea26645ab42cbbaf0b8ce31a5afa8f",
+      "seconds": 5.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "late_refusal",
+      "variant": "full",
+      "file": "audio/late_refusal_full.wav",
+      "sha256": "437bbcceb33de302fc2f3fda0ee6b2d6d29b34e835932cf4f05a48034dae6cc9",
+      "seconds": 12.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "delayed_quoted_warning",
+      "variant": "prefix",
+      "file": "audio/delayed_quoted_warning_prefix.wav",
+      "sha256": "3912dcea83e0052cd6828f5934e1166c1ca496f8e356c904e11861d610264eb6",
+      "seconds": 5.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "delayed_quoted_warning",
+      "variant": "full",
+      "file": "audio/delayed_quoted_warning_full.wav",
+      "sha256": "3327df57db352950a33ad3eca95aa3533ae07542aa18f71663becdcd0ec56e74",
+      "seconds": 12.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "delayed_refused_warning",
+      "variant": "prefix",
+      "file": "audio/delayed_refused_warning_prefix.wav",
+      "sha256": "ebc0cd283a2bd38d27e0a4583ad47213bc1090e07540a98e57ff50d7bbaeda7c",
+      "seconds": 5.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    },
+    {
+      "id": "delayed_refused_warning",
+      "variant": "full",
+      "file": "audio/delayed_refused_warning_full.wav",
+      "sha256": "595848717d3a39740a826987de9676257b7db8b8a0f2da78cf065c2d8eed6587",
+      "seconds": 12.0,
+      "scamLabel": false,
+      "split": "test",
+      "source": "Self-authored educational scenario, macOS Linh TTS, fixed before predictions",
+      "license": "Local testing only, raw audio not redistributed"
+    }
+  ]
+}

@@ -53,10 +53,10 @@ const cases: VoiceEvalCase[] = manifest.cases.map((value: VoiceEvalCase) => {
       !(value.scamLabel === null || typeof value.scamLabel === 'boolean')) throw new Error('Invalid or duplicate manifest entry');
   ids.add(value.id);
   const file = realpathSync(resolve(dataRoot, value.file));
-  if (!file.startsWith(dataRoot + sep) || !statSync(file).isFile() || statSync(file).size > 160044) throw new Error('Audio must be a small WAV below the manifest directory');
+  if (!file.startsWith(dataRoot + sep) || !statSync(file).isFile() || statSync(file).size > (values.mode === 'review' ? 480044 : 160044)) throw new Error('Audio must be a small WAV below the manifest directory');
   const bytes = readFileSync(file);
   if (createHash('sha256').update(bytes).digest('hex') !== value.sha256) throw new Error(`Audio checksum mismatch: ${value.id}`);
-  parseVoiceRequest({ mimeType: 'audio/wav', audioBase64: bytes.toString('base64') });
+  parseVoiceRequest({ mimeType: 'audio/wav', audioBase64: bytes.toString('base64'), ...(values.mode === 'review' ? { analysisMode: 'review' } : {}) });
   return value;
 });
 const requestedIds = values.ids ? values.ids.split(',') : null;

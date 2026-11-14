@@ -1,0 +1,29 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "budgetMs": 15000,
+  "startIntervalMs": 6500,
+  "priorThinkingSessionsFromSessionSummary": 24,
+  "priorThinkingArtifacts": "Temporary artifacts no longer present after host restart; results not republished as auditable benchmark",
+  "maxNewSessions": 46,
+  "maxProbes": 2,
+  "developmentCases": 6,
+  "developmentVariants": [
+    "baseline",
+    "reference"
+  ],
+  "holdoutCases": 14,
+  "holdoutVariants": [
+    "baseline",
+    "reference"
+  ],
+  "thresholds": {
+    "synthetic": 0.8,
+    "low": 0.2
+  },
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "formatRepair": "same production maximum one review reformat within original budget",
+  "gate": "No more errors, human alerts or synthetic low predictions; no fewer human low predictions or correct content/scam alerts; at least one additional synthetic alert or correct content verdict. Reject on reference ASR contamination. Freeze candidate before dev; no tuning on holdout."
+}

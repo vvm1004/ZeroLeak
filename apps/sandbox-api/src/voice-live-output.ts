@@ -25,7 +25,7 @@ function code(value: unknown, length: number): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value < length;
 }
 
-export function parseCompactVoiceResult(text: string, sourceTranscript: string, model: string, executionTimeMs: number, assessSynthetic = false): VoiceScamAnalysisResult {
+export function parseCompactVoiceResult(text: string, sourceTranscript: string, model: string, executionTimeMs: number, assessSynthetic = false, transcriptLimit: 300 | 1500 = 300): VoiceScamAnalysisResult {
   let raw: unknown;
   try { raw = JSON.parse(text); } catch { throw new VoiceAnalysisError('INVALID_RESULT'); }
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new VoiceAnalysisError('INVALID_RESULT');
@@ -45,7 +45,7 @@ export function parseCompactVoiceResult(text: string, sourceTranscript: string, 
     speechAct: hasSource ? ACTS[value.a] : 'UNCLEAR',
     verdict: hasSource ? VERDICTS[value.v] : 'UNKNOWN', riskScore: hasSource ? value.r : null,
     audioQuality: hasSource ? QUALITIES[value.q] : value.q === 2 ? 'UNUSABLE' : 'LIMITED',
-    transcriptSnippet: sourceTranscript.slice(0, 300),
+    transcriptSnippet: sourceTranscript.slice(0, transcriptLimit),
     findings: hasSource ? findings.map(finding => ({ tactic: TACTICS[finding[0]], quote: finding[1] })) : [],
-  }), model, executionTimeMs, assessSynthetic);
+  }), model, executionTimeMs, assessSynthetic, transcriptLimit);
 }

@@ -1,0 +1,20 @@
+{
+  "fixedBeforePredictions": true,
+  "supersedesForNativeCapture": "baseline_native.json used fake-UI flag and is excluded from true-tab acceptance",
+  "nativeRuns": [
+    "verified_baseline",
+    "regression-after-concrete-fix-only"
+  ],
+  "requiredProof": {
+    "fakeUi": false,
+    "fakeDevice": false,
+    "displaySurface": "browser",
+    "audioLabelCategory": "TAB",
+    "deviceIdPrefix": "web-contents",
+    "getUserMedia": "blocked by test instrumentation"
+  },
+  "previousProviderSessionUpperBound": 6,
+  "maxProviderSessionsAllPhases": 24,
+  "sameFixedAudioScenarios": true,
+  "sourceCurrentSha256": "05668ecf9e0d407685beaed1bace9197f310d4fc4d4960a20499754048899e48"
+}

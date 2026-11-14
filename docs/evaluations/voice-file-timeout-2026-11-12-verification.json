@@ -1,0 +1,32 @@
+{
+  "scope": "Default uploaded-file analysis mode, not realtime latency or new detector accuracy",
+  "backendPassed": 92,
+  "clientPassed": 10,
+  "chromePassed": 18,
+  "chromeSkipped": 2,
+  "extensionTypecheck": true,
+  "backendBuild": true,
+  "extensionBuild": true,
+  "realGoogleRequests": 4,
+  "retries": 0,
+  "sameSentPcmWithinEachPair": true,
+  "reproducedOtpFastTimeout": true,
+  "otpReview": {
+    "verdict": "DEEPFAKE_SCAM",
+    "riskScore": 95,
+    "uploadToObservedUiMs": 3268
+  },
+  "adviceReview": {
+    "verdict": "SAFE",
+    "riskScore": 0,
+    "uploadToObservedUiMs": 2474
+  },
+  "test6Accepted": false,
+  "limits": [
+    "One request per case/mode, stochastic provider timing; no statistical reliability claim",
+    "Review OTP completed in 3022ms server time, within nominal fast budget in that separate session; paired observations do not prove timeout was deterministically fixed by the longer budget",
+    "Same short known TTS used for regression, not independent accuracy data",
+    "Review gives more processing time, not a faster realtime detector",
+    "User private audio was not uploaded"
+  ]
+}

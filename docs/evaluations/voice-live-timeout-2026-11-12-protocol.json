@@ -1,0 +1,53 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "phases": {
+    "baseline": [
+      "otp",
+      "late_ceo"
+    ],
+    "regression": [
+      "otp",
+      "late_ceo",
+      "advice"
+    ],
+    "microphone": [
+      "otp",
+      "advice"
+    ]
+  },
+  "plannedRequests": {
+    "baseline": 3,
+    "regression": 4,
+    "microphone": 2
+  },
+  "maxProviderSessionsAllPhases": 9,
+  "maxHttpRequestsPerRun": 4,
+  "maxRunMsPerCase": 30000,
+  "baselineBudgetMs": {
+    "model": 3100,
+    "route": 3200,
+    "client": 3500
+  },
+  "candidateBudgetMs": {
+    "model": 8000,
+    "route": 8300,
+    "client": 9000
+  },
+  "reviewBudgetUnchanged": true,
+  "audioWindowSeconds": 5,
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "physicalMicrophoneUsed": false,
+  "microphonePhase": "Injected test audio through Chromium fake microphone; never record actual hardware",
+  "nativeTabProof": [
+    "No fake UI/device flags",
+    "TAB audio label category",
+    "web-contents device prefix",
+    "browser display surface",
+    "getUserMedia blocked"
+  ],
+  "quotaGuard": "Instrumentation blocks excess fetches after planned windows per case without fake model responses; stops abort blocked fetches",
+  "metrics": "Observed UI after a full AudioWorklet window, plus separate 5s collection; includes automation overhead, not foreground-paint latency",
+  "interpretation": "Single controlled regression per case; no accuracy/statistical or <3s claim. Preserve all failures."
+}

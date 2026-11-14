@@ -1,0 +1,130 @@
+{
+  "model": "gemini-3.8-live-extended-thinking",
+  "mode": "review",
+  "plannedJobs": 8,
+  "sessions": 8,
+  "results": [
+    {
+      "id": "contrast_code_reopen",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "013acb139d56f729b9ee27de6810e367e84e3c82d0eb8eaca69847c66ff86170",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "voiceScore": null,
+      "pcmBytesSent": 160000,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 3257
+    },
+    {
+      "id": "contrast_code_reopen",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "013acb139d56f729b9ee27de6810e367e84e3c82d0eb8eaca69847c66ff86170",
+      "status": "OK",
+      "verdict": "SUSPICIOUS",
+      "riskScore": 80,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "voiceScore": null,
+      "pcmBytesSent": 113598,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 2816
+    },
+    {
+      "id": "contrast_boss_money",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "9f7f66951c97a7c3efca6f508dddfc11b30ecdd49ad2267208ce4956a1a40159",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "voiceScore": null,
+      "pcmBytesSent": 125178,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 3773
+    },
+    {
+      "id": "contrast_boss_money",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "9f7f66951c97a7c3efca6f508dddfc11b30ecdd49ad2267208ce4956a1a40159",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "voiceScore": null,
+      "pcmBytesSent": 160000,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 3048
+    },
+    {
+      "id": "contrast_reported_money",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "1be287054dafac4c4490f85105ed9cfc0a4fb1269bcd78148fad975afe4c9e15",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "pcmBytesSent": 160000,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 3751
+    },
+    {
+      "id": "contrast_reported_money",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "1be287054dafac4c4490f85105ed9cfc0a4fb1269bcd78148fad975afe4c9e15",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "pcmBytesSent": 120524,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 2961
+    },
+    {
+      "id": "contrast_refused_password",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "c97195dbd92ebdc961f44558a9b1f0ca7cff51acfbd5d4a37a59dc820daa8961",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "pcmBytesSent": 120400,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 2651
+    },
+    {
+      "id": "contrast_refused_password",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "c97195dbd92ebdc961f44558a9b1f0ca7cff51acfbd5d4a37a59dc820daa8961",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "pcmBytesSent": 160000,
+      "formatRepairAttempts": 0,
+      "roundTripMs": 4004
+    }
+  ],
+  "notAttempted": [],
+  "finishedAt": "2026-11-12T07:30:28.446Z"
+}

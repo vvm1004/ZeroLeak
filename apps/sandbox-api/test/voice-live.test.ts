@@ -393,3 +393,61 @@ test('review repair stays inside the original deadline and respects caller cance
     assert.equal(socket.closes,1);assert.equal(socket.sent.filter(m=>m.clientContent).length,2);
   }
 });
+
+
+test('Live uploads every nonzero sample but omits outer digital silence with context padding', async () => {
+  const original = Buffer.from(input().audioBase64, 'base64');
+  const padded = Buffer.alloc(160044); original.copy(padded, 0, 0, 44);
+  padded.writeUInt32LE(padded.length - 8, 4); padded.writeUInt32LE(160000, 40);
+  original.copy(padded, 44 + 32000, 44); padded.writeInt16LE(1, 44 + 32000);
+  padded.writeInt16LE(-1, 44 + 64000 - 2);
+  const socket = new Socket();
+  const pending = analyzeLiveVoice({ mimeType: 'audio/wav', audioBase64: padded.toString('base64') }, 'gemini-3.8-live', { socketFactory: () => socket });
+  socket.open(); socket.receive({ setupComplete: {} });
+  const sent = Buffer.concat(socket.sent.flatMap(m => m.realtimeInput?.audio ? [Buffer.from(m.realtimeInput.audio.data, 'base64')] : []));
+  assert.deepEqual(sent, padded.subarray(44 + 25600, 44 + 70400));
+  assert.equal(sent.length, 44800); // 1s speech + 200ms at each end, not the original 5s.
+  socket.receive(report()); await pending;
+});
+
+
+function longReviewInput(): AnalyzeVoiceRequest {
+  const original = Buffer.from(input().audioBase64, 'base64'), data = Buffer.alloc(192044);
+  original.copy(data, 0, 0, 44); data.writeUInt32LE(data.length - 8, 4); data.writeUInt32LE(192000, 40);
+  for (let i = 0; i < 6; i++) original.copy(data, 44 + i * 32000, 44);
+  return { mimeType:'audio/wav', audioBase64:data.toString('base64'), analysisMode:'review' };
+}
+
+test('long review waits for late ASR evidence and sends the full transcript once in the same session', async t => {
+  t.mock.timers.enable({apis:['setTimeout']}); const socket = new Socket();
+  const pending = analyzeLiveVoice(longReviewInput(), EXTENDED, {socketFactory:()=>socket,assessSynthetic:true});
+  socket.open(); socket.receive({setupComplete:{}});
+  const frames = socket.sent.flatMap(m => m.realtimeInput?.audio ? [Buffer.from(m.realtimeInput.audio.data, 'base64')] : []);
+  assert.equal(frames.length, 60);
+  assert.deepEqual(Buffer.concat(frames), Buffer.from(longReviewInput().audioBase64, 'base64').subarray(44));
+  const prefix = 'Chúng ta trao đổi lịch làm việc ngày mai. '.repeat(10);
+  socket.receive({serverContent:{inputTranscription:{text:prefix}}});socket.receive({voiceActivity:{type:'ACTIVITY_END'}});
+  t.mock.timers.tick(150); assert.ok(!socket.sent.some(x=>x.clientContent));
+  socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.'}}});
+  t.mock.timers.tick(199); assert.ok(!socket.sent.some(x=>x.clientContent));
+  t.mock.timers.tick(1);
+  const reports=socket.sent.filter(x=>x.clientContent);assert.equal(reports.length,1);
+  assert.ok(reports[0].clientContent.turns[0].parts[0].text.includes('Đọc mã OTP ngay cho tôi.'));
+  socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:null})},turnComplete:true,interactionStatus:'IDLE'}});
+  const result=await pending;assert.equal(result.verdict,'SUSPICIOUS');assert.ok(result.transcriptSnippet.length>300);
+});
+
+test('cancelling a long review clears its pending ASR timer and cannot send a later report', async t => {
+  t.mock.timers.enable({apis:['setTimeout']});const socket=new Socket(),caller=new AbortController();
+  const pending=analyzeLiveVoice(longReviewInput(),EXTENDED,{socketFactory:()=>socket,signal:caller.signal,assessSynthetic:true});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.'}}});socket.receive({voiceActivity:{type:'ACTIVITY_END'}});
+  caller.abort();await assert.rejects(pending);t.mock.timers.tick(500);
+  assert.equal(socket.sent.filter(x=>x.clientContent).length,0);assert.equal(socket.closes,1);
+});
+
+test('review fails closed on an oversized ASR instead of assessing a silently truncated prefix', async () => {
+  const socket=new Socket();const pending=analyzeLiveVoice(longReviewInput(),EXTENDED,{socketFactory:()=>socket,assessSynthetic:true});
+  socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'x'.repeat(1501)}}});
+  await assert.rejects(pending,(e:unknown)=>e instanceof VoiceAnalysisError&&e.code==='INVALID_RESULT');
+  assert.equal(socket.sent.filter(x=>x.clientContent).length,0);
+});

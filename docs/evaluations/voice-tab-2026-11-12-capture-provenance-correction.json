@@ -1,0 +1,19 @@
+{
+  "invalidForNativeTabAcceptance": [
+    "baseline_native.json",
+    "signal-probe.json",
+    "timeout-probe.json"
+  ],
+  "reason": "use-fake-ui-for-media-stream chooses Chromium FakeMediaStreamUIProxy for display capture; displaySurface alone was insufficient.",
+  "retained": "Original timing/outcome metadata including all failures; not accepted as native-tab latency evidence.",
+  "acceptedBaseline": "verified_baseline.json",
+  "requiredSourceProof": [
+    "No fake UI/device flags",
+    "audio track label classified TAB",
+    "deviceId starts web-contents",
+    "video displaySurface browser",
+    "getUserMedia blocked by harness"
+  ],
+  "oldRawCapturesDeleted": true,
+  "scope": "Only temporary capture files created by this test, whose source was not verified."
+}

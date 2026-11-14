@@ -1,0 +1,16 @@
+{
+  "launcher": "pnpm dev:voice-extended",
+  "realtimeRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ],
+  "reviewRoute": [
+    "gemini-3.8-live-extended-thinking"
+  ],
+  "injectedFailure": "503",
+  "expectedError": "PROVIDER_ERROR",
+  "webSockets": 1,
+  "generateContentCalls": 0,
+  "providerAttempts": 1,
+  "passed": true,
+  "realApi": false
+}

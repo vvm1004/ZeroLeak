@@ -1,0 +1,27 @@
+{
+  "fixedBeforePredictions": true,
+  "baselineCommit": "c555fff",
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "budgetsMs": {
+    "review": 15000,
+    "realtime": 3100
+  },
+  "startIntervalMs": 6500,
+  "maxNewSessions": 32,
+  "priorThinkingSessionsSummaryOnly": 24,
+  "priorReferenceSessions": 14,
+  "globalSessionUpperBound": 70,
+  "scope": "Task Gemini-only. Text speech-act contrasts only; no audio references, no local models, no Flash, no threshold change.",
+  "thresholds": {
+    "synthetic": 0.8,
+    "low": 0.2
+  },
+  "developmentCases": 6,
+  "holdoutAcousticCases": 2,
+  "holdoutFreshContentCases": 6,
+  "fallback": false,
+  "wholeRequestRetries": 0,
+  "gate": "No added errors, human false alerts, or clone low predictions; no fewer human low assessments, correct content verdicts, or scam alerts; strictly more correct content or clone alerts. All planned cases must be attempted. Freeze before dev; accept only if held-out gate passes independently.",
+  "formatRepair": "production review maximum one within shared deadline"
+}

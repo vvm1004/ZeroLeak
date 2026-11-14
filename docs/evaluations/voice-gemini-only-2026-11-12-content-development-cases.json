@@ -1,0 +1,100 @@
+{
+  "cases": [
+    {
+      "id": "audit_v4_VIVOSDEV07_2_human_clean",
+      "file": "audio/v4-fresh/audit_v4_VIVOSDEV07_2_human_clean.wav",
+      "sha256": "f10f6bc549002e56f4b69d230e8b1d5418e191b84202794b346bc2fee090d5f4",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "human",
+      "condition": "clean",
+      "family": "vivos",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "scamLabel": null,
+      "speakerId": "VIVOSDEV07",
+      "source": "Turbo clone development and fresh held-out recordings; public VIVOS reference",
+      "license": "VIVOS CC-BY-NC-SA-4.0; local noncommercial research",
+      "originalCohort": "v4-fresh"
+    },
+    {
+      "id": "audit_v4_VIVOSDEV07_2_synthetic_clean",
+      "file": "audio/v4-fresh/audit_v4_VIVOSDEV07_2_synthetic_clean.wav",
+      "sha256": "ccc42053bdfe0af44fb8d0e738bd69c759849a4266ed6309ab89700f7a33c5aa",
+      "originId": "v4_VIVOSDEV07_2",
+      "label": "synthetic",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "cohort": "v4-fresh",
+      "split": "calibration",
+      "scamLabel": null,
+      "speakerId": "VIVOSDEV07",
+      "source": "Turbo clone development and fresh held-out recordings; public VIVOS reference",
+      "license": "VIVOS CC-BY-NC-SA-4.0; local noncommercial research",
+      "originalCohort": "v4-fresh"
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "file": "audio/dev_otp_request_clean.wav",
+      "sha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "originId": "dev_otp_request",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "dev",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "dev_ceo_clean",
+      "file": "audio/dev_ceo_clean.wav",
+      "sha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "originId": "dev_ceo",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "dev",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "dev_warning_clean",
+      "file": "audio/dev_warning_clean.wav",
+      "sha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "originId": "dev_warning",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "dev",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "fresh_refused_quote",
+      "originId": "fresh_refused_quote",
+      "file": "audio/fresh_refused_quote.wav",
+      "sha256": "34187edf91a0f7b1487e82414e1e778f33b4c56bd335520d943958bb233e6074",
+      "label": "synthetic",
+      "scamLabel": false,
+      "split": "test",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "source": "Locally authored educational scenario fixed before candidate predictions",
+      "license": "Local evaluation only; no raw audio redistribution"
+    }
+  ]
+}

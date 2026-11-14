@@ -1,0 +1,53 @@
+{
+  "backendTests": {
+    "passed": 86,
+    "failed": 0
+  },
+  "clientTests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "chromeFixtureExperimentalOverlap": {
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0
+  },
+  "chromeFixtureDefault": {
+    "passed": 13,
+    "failed": 0,
+    "skippedOptInOverlapTests": 2
+  },
+  "extensionTypecheck": "passed",
+  "backendBuild": "passed",
+  "extensionDefaultBuild": "passed",
+  "extensionExperimentalBuild": "passed",
+  "deliveredExtensionBuild": "default, VITE_VOICE_OVERLAP unset",
+  "realBrowserRegressions": 2,
+  "realBrowserRegressionsPassed": 2,
+  "realBrowserUsesMicrophone": false,
+  "googleSessionsThisTurn": {
+    "stoppedRealtimeDevelopment": 3,
+    "diagnosticProbes": 3,
+    "pairedReview": 8,
+    "realChromeReview": 2,
+    "total": 16,
+    "globalCap": 40
+  },
+  "knownShortOtpRealtimeTimeoutRetained": true,
+  "accuracyGainEstablished": false,
+  "cloneDetectionImprovementEstablished": false,
+  "realCallUnder3sAccepted": false,
+  "reviewPromptUnchanged": true,
+  "finalSourceHashes": {
+    "apps/extension/utils/voice-audio.ts": "0245085a5ff96162cd1ca05466d9e148f7839bd340721d55a2c09c4331dc2d5c",
+    "apps/extension/utils/voice-capture.ts": "05668ecf9e0d407685beaed1bace9197f310d4fc4d4960a20499754048899e48",
+    "apps/extension/entrypoints/voice/VoiceApp.tsx": "19cff4c6d9858c2f152e9a60771a32cb30dac2abd6bb8ff48434e29f5e8ddbd0",
+    "apps/extension/test-voice.ts": "01871c8f6949edb4c40542a3e6f2212683e7af781009ac839fee80098a32e125",
+    "tests/voice.spec.ts": "f491b9a29f05583f9a45a9fce606de56afe11d4f552bd5ef65ac6c06272bb88f",
+    "apps/sandbox-api/src/voice-input.ts": "1b6b2ea00f3cf7668f7c4d0930a24319e9cadfc16dda30e0a4b8d0821054ba4b",
+    "apps/sandbox-api/src/voice-live.ts": "57d4cfc293259cb17612f30b20a07754c64b6b3f898fe2fc9bb920895a439a6b",
+    "apps/sandbox-api/test/voice-live.test.ts": "e0850d8467fa052b73348e31e0b5a8b81c973a2ed596410750e5ffd3cf76fa4f",
+    "apps/sandbox-api/test/voice-input-trim.test.ts": "27b3e15c2b2aba715a97d18d752f8f777520f0ba2c656a62d676b19ea0093ebd",
+    "apps/extension/utils/voice-env.d.ts": "13d7ae37fa0d9e5c60eeeff760300d6543cdcc5413a27963a6e43d7ede5a01de"
+  }
+}
