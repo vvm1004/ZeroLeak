@@ -53,6 +53,20 @@ export async function analyzeVoice(
             !body.detectedTactics.includes((item as { tactic?: unknown }).tactic)))) ||
         !['CLEAR', 'LIMITED', 'UNUSABLE'].includes(body.audioQuality) ||
         !['GEMINI_AUDIO', 'HYBRID_AUDIO', 'LOCAL_ACOUSTIC'].includes(body.assessmentSource) || typeof body.analysisModel !== 'string' ||
+        (body.analysisTransport !== undefined && !['LIVE_API', 'GENERATE_CONTENT'].includes(body.analysisTransport)) ||
+        (body.fallbackUsed !== undefined && typeof body.fallbackUsed !== 'boolean') ||
+        (body.providerAttempts !== undefined && (!Array.isArray(body.providerAttempts) || body.providerAttempts.length > 3 ||
+          body.providerAttempts.some((attempt: { model?: unknown; transport?: unknown; status?: unknown; reason?: unknown }) => !attempt ||
+            typeof attempt.model !== 'string' || !/^gemini-[a-z0-9.-]{1,100}$/.test(attempt.model) ||
+            !['LIVE_API', 'GENERATE_CONTENT'].includes(attempt.transport as string) ||
+            !['SUCCEEDED', 'FAILED', 'SKIPPED'].includes(attempt.status as string) ||
+            (attempt.status !== 'SUCCEEDED' && !['TIMEOUT', 'RATE_LIMITED', 'NOT_CONFIGURED', 'INVALID_RESULT', 'PROVIDER_ERROR'].includes(attempt.reason as string))))) ||
+        (Array.isArray(body.providerAttempts) && body.providerAttempts.some((attempt: { status: string }, index: number) => attempt.status === 'SUCCEEDED' &&
+          (index !== body.providerAttempts.length - 1 || body.assessmentSource === 'LOCAL_ACOUSTIC'))) ||
+        (Array.isArray(body.providerAttempts) && body.assessmentSource !== 'LOCAL_ACOUSTIC' &&
+          (!body.providerAttempts.length || body.providerAttempts.at(-1)?.status !== 'SUCCEEDED' ||
+            body.providerAttempts.at(-1)?.model !== body.analysisModel || body.providerAttempts.at(-1)?.transport !== body.analysisTransport ||
+            body.fallbackUsed !== (body.providerAttempts.length > 1))) ||
         (body.contentAnalysis !== undefined && (!body.contentAnalysis || !['AVAILABLE', 'UNAVAILABLE'].includes(body.contentAnalysis.status) ||
           (body.contentAnalysis.status === 'UNAVAILABLE' && !['TIMEOUT', 'RATE_LIMITED', 'NOT_CONFIGURED', 'INVALID_RESULT', 'PROVIDER_ERROR'].includes(body.contentAnalysis.reason)))) ||
         (body.contentAnalysis?.status === 'UNAVAILABLE' && (body.verdict !== 'UNKNOWN' || body.riskScore !== null || body.detectedTactics.length > 0)) ||

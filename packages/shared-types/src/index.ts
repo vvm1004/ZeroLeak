@@ -129,6 +129,14 @@ export type AcousticVoiceAnalysis = {
   executionTimeMs: number;
 } | { status: 'UNAVAILABLE' };
 
+/** Sanitized provider provenance; no audio, transcript, URLs or credentials. */
+export interface VoiceProviderAttempt {
+  model: string;
+  transport: 'LIVE_API' | 'GENERATE_CONTENT';
+  status: 'SUCCEEDED' | 'FAILED' | 'SKIPPED';
+  reason?: 'TIMEOUT' | 'RATE_LIMITED' | 'NOT_CONFIGURED' | 'INVALID_RESULT' | 'PROVIDER_ERROR';
+}
+
 export interface VoiceScamAnalysisResult {
   riskScore: number | null; // 0 - 100; null when audio cannot be assessed
   verdict: 'SAFE' | 'SUSPICIOUS' | 'DEEPFAKE_SCAM' | 'UNKNOWN';
@@ -143,6 +151,9 @@ export interface VoiceScamAnalysisResult {
   audioQuality: 'CLEAR' | 'LIMITED' | 'UNUSABLE';
   assessmentSource: 'GEMINI_AUDIO' | 'HYBRID_AUDIO' | 'LOCAL_ACOUSTIC';
   analysisModel: string;
+  analysisTransport?: 'LIVE_API' | 'GENERATE_CONTENT';
+  fallbackUsed?: boolean;
+  providerAttempts?: VoiceProviderAttempt[];
   acousticAnalysis?: AcousticVoiceAnalysis;
   contentAnalysis?: { status: 'AVAILABLE' } | { status: 'UNAVAILABLE'; reason: 'TIMEOUT' | 'RATE_LIMITED' | 'NOT_CONFIGURED' | 'INVALID_RESULT' | 'PROVIDER_ERROR' };
 }

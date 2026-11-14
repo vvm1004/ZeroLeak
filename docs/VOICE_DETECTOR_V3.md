@@ -1,5 +1,8 @@
 # Voice detector V3 — 2026-11-10
 
+**Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
+Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
+
 **Cập nhật runtime 2026-11-11:** [Voice followup](VOICE_FOLLOWUP.md). Head V3 giữ nguyên;
 ứng viên head/đổi luồng chưa đạt điều kiện thay thế. Số đo phía dưới là lịch sử ngày 2026-11-10.
 

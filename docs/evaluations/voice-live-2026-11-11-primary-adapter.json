@@ -1,0 +1,17 @@
+{
+  "model": "gemini-3.8-live-extended-thinking",
+  "transport": "LIVE_API",
+  "input": "known synthetic OTP request",
+  "mode": "review",
+  "physicalCall": false,
+  "budgetMs": 15000,
+  "status": "SUCCESS",
+  "analysisModel": "gemini-3.8-live-extended-thinking",
+  "verdict": "SUSPICIOUS",
+  "riskScore": 100,
+  "detectedTactics": [
+    "OTP_OR_CREDENTIAL_ASK"
+  ],
+  "syntheticVoiceProbability": null,
+  "roundTripMs": 2353
+}

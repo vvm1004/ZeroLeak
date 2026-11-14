@@ -1,0 +1,131 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "Known synthetic development-file regression, not unseen accuracy validation",
+  "plannedCases": 3,
+  "maxProviderSessionUpperBound": 9,
+  "results": [
+    {
+      "id": "dev_meeting_clean",
+      "mode": "realtime",
+      "scam": false,
+      "roundTripMs": 3494,
+      "httpStatus": 200,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "analysisModel": "local-xlsr-aasist-linear",
+      "analysisTransport": null,
+      "fallbackUsed": null,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "INVALID_RESULT"
+        },
+        {
+          "model": "gemini-3.8-live",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "UNAVAILABLE",
+        "reason": "TIMEOUT"
+      },
+      "assessmentSource": "LOCAL_ACOUSTIC",
+      "acousticAnalysis": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999889871448897,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 792
+      },
+      "semanticCorrect": null,
+      "status": "RESULT"
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "realtime",
+      "scam": true,
+      "roundTripMs": 3133,
+      "httpStatus": 200,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "analysisModel": "local-xlsr-aasist-linear",
+      "analysisTransport": null,
+      "fallbackUsed": null,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "INVALID_RESULT"
+        },
+        {
+          "model": "gemini-3.8-live",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "UNAVAILABLE",
+        "reason": "TIMEOUT"
+      },
+      "assessmentSource": "LOCAL_ACOUSTIC",
+      "acousticAnalysis": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999993987135756,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 434
+      },
+      "semanticCorrect": null,
+      "status": "RESULT"
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "review",
+      "scam": false,
+      "roundTripMs": 15069,
+      "httpStatus": 200,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "analysisModel": "local-xlsr-aasist-linear",
+      "analysisTransport": null,
+      "fallbackUsed": null,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "UNAVAILABLE",
+        "reason": "TIMEOUT"
+      },
+      "assessmentSource": "LOCAL_ACOUSTIC",
+      "acousticAnalysis": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999983414669831,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 450
+      },
+      "semanticCorrect": null,
+      "status": "RESULT"
+    }
+  ]
+}

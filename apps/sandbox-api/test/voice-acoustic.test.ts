@@ -120,6 +120,7 @@ test('a hanging content branch cannot discard completed acoustic evidence at the
     acoustic: async () => acoustic(.95),
   });
   await Promise.resolve(); t.mock.timers.tick(3100);
+  await new Promise(resolve => setImmediate(resolve)); t.mock.timers.tick(20);
   const result = await pending;
   assert.equal(result.assessmentSource, 'LOCAL_ACOUSTIC');
   assert.equal(result.acousticAnalysis?.status, 'AVAILABLE');

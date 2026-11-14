@@ -5,6 +5,8 @@ import { analyzeAudioScam } from '../src/voice-analyzer';
 
 if (process.env.VOICE_E2E !== '1') throw new Error('Test server requires VOICE_E2E=1. Never use as a production analyzer.');
 process.env.NODE_ENV = 'test'; delete process.env.VOICE_API_TOKEN; delete process.env.VOICE_ACOUSTIC_URL;
+// Never open Google WebSockets from fixture tests, even if the shell has a real API key.
+for (const key of ['GEMINI_MODEL_VOICE', 'GEMINI_MODEL_VOICE_LIVE_FALLBACK', 'GEMINI_MODEL_VOICE_FALLBACK', 'GEMINI_MODEL_VOICE_REVIEW']) process.env[key] = 'gemini-test-fixture';
 let requests = 0;
 const app = createApp({ analyzeVoice: async (input, signal) => {
   requests++;

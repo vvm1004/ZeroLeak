@@ -1,5 +1,8 @@
 # Cải thiện Voice sau screening — 2026-11-10
 
+**Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
+Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
+
 **Cập nhật tiếp theo 2026-11-11:** [backoff, readiness, kết quả paced và các ứng viên bị loại](VOICE_FOLLOWUP.md).
 
 **Bản sửa trước đó 2026-11-11:** [sửa timeout/coordinator, warmup và kiểm thử lại](VOICE_RELIABILITY.md).

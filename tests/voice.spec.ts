@@ -223,3 +223,24 @@ test('detailed file review is opt-in and survives the live client deadline', asy
   await expect(page.getByRole('status')).toContainText('15 giây');
   await expect(page.getByRole('heading', { name: 'Chưa thấy kịch bản lừa đảo' })).toBeVisible();
 });
+
+test('provider fixture shows the actual Flash fallback rather than claiming Live success', async ({}, testInfo) => {
+  await context.route('**/api/v1/analyze-voice', route => route.fulfill({ status: 200, json: {
+    riskScore: 85, verdict: 'SUSPICIOUS', syntheticVoiceProbability: null, detectedTactics: ['OTP_OR_CREDENTIAL_ASK'],
+    transcriptSnippet: 'Đọc mã OTP cho tôi.', warningMessageVi: 'Không cung cấp OTP.', audioQuality: 'CLEAR', executionTimeMs: 1200,
+    assessmentSource: 'GEMINI_AUDIO', analysisModel: 'gemini-3.5-flash-lite', analysisTransport: 'GENERATE_CONTENT', fallbackUsed: true,
+    contentAnalysis: { status: 'AVAILABLE' }, providerAttempts: [
+      { model: 'gemini-3.8-live-extended-thinking', transport: 'LIVE_API', status: 'FAILED', reason: 'PROVIDER_ERROR' },
+      { model: 'gemini-3.8-live', transport: 'LIVE_API', status: 'FAILED', reason: 'PROVIDER_ERROR' },
+      { model: 'gemini-3.5-flash-lite', transport: 'GENERATE_CONTENT', status: 'SUCCEEDED' },
+    ],
+  } }));
+  await page.getByLabel('Chọn file âm thanh để phân tích 5 giây đầu').setInputFiles({ name: 'sample.wav', mimeType: 'audio/wav', buffer: fixtureWav() });
+  await expect(page.getByText(/Model phân tích nội dung:.*gemini-3.5-flash-lite/)).toContainText('Đang dùng model dự phòng');
+  await page.getByText('Các model đã thử', { exact: true }).click();
+  await expect(page.getByText('gemini-3.8-live-extended-thinking: Chưa phân tích được', { exact: true })).toBeVisible();
+  await expect(page.getByText('gemini-3.5-flash-lite: Đã phân tích', { exact: true })).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('voice-fallback-provenance.png'), fullPage: true });
+});

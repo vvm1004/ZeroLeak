@@ -203,6 +203,8 @@ test('review is explicit, bounded and validated before provider calls', () => {
 });
 
 test('review allows a response beyond the live deadline and uses one configured model', async t => {
+  process.env.GEMINI_MODEL_VOICE_REVIEW = 'gemini-test-review';
+  process.env.GEMINI_MODEL_VOICE_FALLBACK = 'gemini-test-review';
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const calls: string[] = [];
   const pending = analyzeAudioScam({ ...payload(), analysisMode: 'review' }, { generate: async params => {
@@ -212,10 +214,12 @@ test('review allows a response beyond the live deadline and uses one configured 
   } });
   t.mock.timers.tick(4500);
   const result = await pending;
-  assert.equal(result.verdict, 'SUSPICIOUS'); assert.deepEqual(calls, ['gemini-3.1-flash-lite']);
+  assert.equal(result.verdict, 'SUSPICIOUS'); assert.deepEqual(calls, ['gemini-test-review']);
 });
 
 test('review budget cannot exceed fifteen seconds and never retries after deadline', async t => {
+  process.env.GEMINI_MODEL_VOICE_REVIEW = 'gemini-test-review-timeout';
+  process.env.GEMINI_MODEL_VOICE_FALLBACK = 'gemini-test-review-timeout';
   t.mock.timers.enable({ apis: ['setTimeout'] });
   let calls = 0;
   const pending = analyzeAudioScam({ ...payload(), analysisMode: 'review' }, { budgetMs: 60000,
@@ -239,14 +243,14 @@ test('an explicitly unclear speech act cannot return SAFE even with no findings'
 
 
 test('live and review share one default model, while explicit routes remain configurable', () => {
-  delete process.env.GEMINI_MODEL_VOICE; delete process.env.GEMINI_MODEL_VOICE_REVIEW; delete process.env.GEMINI_MODEL_VOICE_FALLBACK;
+  delete process.env.GEMINI_MODEL_VOICE; delete process.env.GEMINI_MODEL_VOICE_REVIEW; delete process.env.GEMINI_MODEL_VOICE_FALLBACK; delete process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK;
   process.env.NODE_ENV = 'production';
-  assert.deepEqual(voiceModelRoute({}), ['gemini-3.1-flash-lite', 'gemini-3.5-flash-lite']);
-  assert.deepEqual(voiceModelRoute({ analysisMode: 'review' }), ['gemini-3.1-flash-lite']);
+  assert.deepEqual(voiceModelRoute({}), ['gemini-3.8-live-extended-thinking', 'gemini-3.8-live', 'gemini-3.5-flash-lite']);
+  assert.deepEqual(voiceModelRoute({ analysisMode: 'review' }), ['gemini-3.8-live-extended-thinking', 'gemini-3.8-live', 'gemini-3.5-flash-lite']);
   process.env.GEMINI_MODEL_VOICE = 'gemini-explicit'; process.env.GEMINI_MODEL_VOICE_FALLBACK = 'gemini-explicit';
   assert.deepEqual(voiceModelRoute({}), ['gemini-explicit']);
   process.env.GEMINI_MODEL_VOICE_REVIEW = 'gemini-review';
-  assert.deepEqual(voiceModelRoute({ analysisMode: 'review' }), ['gemini-review']);
+  assert.deepEqual(voiceModelRoute({ analysisMode: 'review' }), ['gemini-review', 'gemini-explicit']);
 });
 
 

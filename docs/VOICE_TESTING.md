@@ -1,5 +1,8 @@
 # Voice: kiểm tra nội dung, bằng chứng và lỗi — 2026-11-11
 
+**Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
+Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
+
 **Cập nhật tiếp theo:** [bản sửa độ ổn định và bộ 12 câu mới](VOICE_RELIABILITY.md).
 Các kết quả 24 ca bên dưới được giữ làm lịch sử.
 

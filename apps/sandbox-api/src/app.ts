@@ -3,7 +3,7 @@ import { cors } from 'hono/cors';
 import { bodyLimit } from 'hono/body-limit';
 import { timingSafeEqual } from 'node:crypto';
 import type { AnalyzeVoiceRequest, VoiceScamAnalysisResult } from '@zeroleak/shared-types';
-import { VoiceAnalysisError } from './voice-analyzer.js';
+import { VoiceAnalysisError, voiceModelRoute } from './voice-analyzer.js';
 import { analyzeVoiceWithAcoustic } from './voice-acoustic.js';
 import { MAX_VOICE_REQUEST_BYTES, parseVoiceRequest, VoiceInputError } from './voice-input.js';
 
@@ -13,7 +13,7 @@ export function createApp(options: {
   const app = new Hono();
   const analyze = options.analyzeVoice ?? analyzeVoiceWithAcoustic;
   app.use('*', cors({ origin: '*', allowMethods: ['GET', 'POST', 'OPTIONS'], allowHeaders: ['Content-Type', 'Authorization'] }));
-  app.get('/health', c => c.json({ status: 'ok', service: 'zeroleak-sandbox-api', timestamp: new Date().toISOString(), voice: { contentEvidence: true, fileReview: true, localAcousticConfigured: Boolean(process.env.VOICE_ACOUSTIC_URL) } }));
+  app.get('/health', c => c.json({ status: 'ok', service: 'zeroleak-sandbox-api', timestamp: new Date().toISOString(), voice: { liveApi: typeof WebSocket === 'function', modelRoute: voiceModelRoute({}), contentEvidence: true, fileReview: true, localAcousticConfigured: Boolean(process.env.VOICE_ACOUSTIC_URL) } }));
   app.use('/api/v1/analyze-voice', async (c, next) => {
     c.header('Cache-Control', 'no-store');
     c.header('X-Content-Type-Options', 'nosniff');

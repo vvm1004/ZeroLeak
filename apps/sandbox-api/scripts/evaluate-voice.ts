@@ -5,8 +5,10 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { setTimeout as delay } from 'node:timers/promises';
 import dotenv from 'dotenv';
+import type { VoiceProviderAttempt } from '@zeroleak/shared-types';
 import { GoogleGenAI, type GenerateContentParameters } from '@google/genai';
 import { analyzeAudioScam, createVoiceGenerationRequest, parseVoiceResult, VoiceAnalysisError, voiceModelRoute } from '../src/voice-analyzer.js';
+import { analyzeLiveVoice, createVoiceLiveSetup, isLiveVoiceModel } from '../src/voice-live.js';
 import { parseVoiceRequest } from '../src/voice-input.js';
 import { summarizeVoiceEvaluation, type VoiceEvalCase, type VoiceEvalRow } from '../src/voice-evaluation.js';
 
@@ -59,21 +61,21 @@ const selected = eligible;
 if (!selected.length) throw new Error('No cases selected');
 const output = resolve(values.output);
 if (!output.endsWith('.json') || existsSync(output)) throw new Error('Output must be a new .json file; refusing to overwrite');
-const definition = createVoiceGenerationRequest({ mimeType: 'audio/wav', audioBase64: '', ...(values.mode === 'review' ? { analysisMode: 'review' as const } : {}) }, values.model ?? 'router', new AbortController().signal);
-if (values.mode === 'quality') definition.config!.httpOptions!.timeout = qualityTimeout;
 const configuredRoute = voiceModelRoute({ analysisMode: values.mode === 'review' ? 'review' : 'realtime' });
 const primaryModel = values.model ?? configuredRoute[0];
-const fallbackModel = values.model ?? configuredRoute[1] ?? primaryModel;
+const evaluationRoute = values.model ? [values.model] : configuredRoute;
+const definition = isLiveVoiceModel(primaryModel) ? createVoiceLiveSetup(primaryModel)
+  : createVoiceGenerationRequest({ mimeType: 'audio/wav', audioBase64: '' }, primaryModel, new AbortController().signal);
 const meta = {
   createdAt: new Date().toISOString(), dataset: manifest.name ?? 'local dataset',
   limitations: manifest.limitations ?? [], mode: values.mode, requestedModel: values.model ?? 'production-router',
   productionDeadlineMs: values.mode === 'review' ? 15000 : 3100, qualityDeadlineMs: values.mode === 'quality' ? qualityTimeout : null,
   threshold, thresholdWasTunedOnThisRun: false, maxProviderCalls: maxCalls,
-  modelRoute: values.mode === 'quality' ? [primaryModel] : [...new Set([primaryModel, fallbackModel])],
+  modelRoute: evaluationRoute, transports: evaluationRoute.map(model => ({ model, transport: isLiveVoiceModel(model) ? 'LIVE_API' : 'GENERATE_CONTENT' })),
   labelsSentToProvider: false, realApi: !values['dry-run'],
   manifestSha256: createHash('sha256').update(manifestBytes).digest('hex'),
   requestDefinitionSha256: createHash('sha256').update(JSON.stringify(definition)).digest('hex'),
-  analyzerCodeSha256: createHash('sha256').update(readFileSync(new URL('../src/voice-analyzer.ts', import.meta.url))).digest('hex'),
+  analyzerCodeSha256: createHash('sha256').update(Buffer.concat(['voice-analyzer.ts','voice-live.ts','voice-result.ts'].map(file => readFileSync(new URL('../src/' + file, import.meta.url))))).digest('hex'),
   selectedSplit: values.split ?? 'explicit selection', plannedCases: selected.length, sourceGroups: new Set(selected.map(row => row.originId)).size,
 };
 if (values['dry-run']) {
@@ -81,7 +83,7 @@ if (values['dry-run']) {
 } else {
   if (!process.env.GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
   const api = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const rows: (VoiceEvalRow & { providerStatus: number | null })[] = [];
+  const rows: (VoiceEvalRow & { providerStatus: number | null; providerAttempts?: VoiceProviderAttempt[] })[] = [];
   let totalCalls = 0, lastCall = 0, consecutiveErrors = 0;
   mkdirSync(dirname(output), { recursive: true });
   writeFileSync(output, '{}\n', { flag: 'wx' });
@@ -99,7 +101,7 @@ if (values['dry-run']) {
     if (pause > 0) await delay(pause);
     const started = performance.now(), before = totalCalls;
     let providerStatus: number | null = null;
-    const row: VoiceEvalRow & { providerStatus: number | null } = {
+    const row: VoiceEvalRow & { providerStatus: number | null; providerAttempts?: VoiceProviderAttempt[] } = {
       id: item.id, originId: item.originId, condition: item.condition, family: item.family,
       label: item.label, scamLabel: item.scamLabel, mode: values.mode as 'realtime' | 'quality' | 'review',
       cohort: typeof item.cohort === 'string' ? item.cohort : 'unspecified',
@@ -118,20 +120,28 @@ if (values['dry-run']) {
         throw error;
       }
     };
+    const socketFactory = (url: string, model: string) => {
+      if (totalCalls >= maxCalls) throw new VoiceAnalysisError('PROVIDER_ERROR');
+      totalCalls++; lastCall = performance.now(); row.model = model;
+      return new WebSocket(url);
+    };
     try {
       const input = parseVoiceRequest({ mimeType: 'audio/wav', audioBase64: readFileSync(resolve(dataRoot, item.file)).toString('base64'), ...(values.mode === 'review' ? { analysisMode: 'review' } : {}) });
       let result;
       if (values.mode !== 'quality') {
         // Optional single-model realtime comparison is explicit, never a hidden fallback.
         const originalPrimary = process.env.GEMINI_MODEL_VOICE, originalFallback = process.env.GEMINI_MODEL_VOICE_FALLBACK;
-        const originalReview = process.env.GEMINI_MODEL_VOICE_REVIEW;
-        if (values.model) { process.env.GEMINI_MODEL_VOICE = values.model; process.env.GEMINI_MODEL_VOICE_FALLBACK = values.model; process.env.GEMINI_MODEL_VOICE_REVIEW = values.model; }
-        try { result = await analyzeAudioScam(input, { generate }); }
+        const originalReview = process.env.GEMINI_MODEL_VOICE_REVIEW, originalLiveFallback = process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK;
+        if (values.model) { process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK = values.model; process.env.GEMINI_MODEL_VOICE = values.model; process.env.GEMINI_MODEL_VOICE_FALLBACK = values.model; process.env.GEMINI_MODEL_VOICE_REVIEW = values.model; }
+        try { result = await analyzeAudioScam(input, { generate, socketFactory }); }
         finally {
+          if (originalLiveFallback === undefined) delete process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK; else process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK = originalLiveFallback;
           if (originalReview === undefined) delete process.env.GEMINI_MODEL_VOICE_REVIEW; else process.env.GEMINI_MODEL_VOICE_REVIEW = originalReview;
           if (originalPrimary === undefined) delete process.env.GEMINI_MODEL_VOICE; else process.env.GEMINI_MODEL_VOICE = originalPrimary;
           if (originalFallback === undefined) delete process.env.GEMINI_MODEL_VOICE_FALLBACK; else process.env.GEMINI_MODEL_VOICE_FALLBACK = originalFallback;
         }
+      } else if (isLiveVoiceModel(values.model!)) {
+        result = await analyzeLiveVoice(input, values.model!, { budgetMs: qualityTimeout, socketFactory });
       } else {
         const controller = new AbortController();
         let rejectTimeout!: () => void;
@@ -144,6 +154,7 @@ if (values['dry-run']) {
           result = parseVoiceResult(response.text ?? '', values.model!, Math.round(performance.now() - started));
         } finally { clearTimeout(timer); }
       }
+      row.providerAttempts = result.providerAttempts;
       row.syntheticScore = result.syntheticVoiceProbability;
       row.contentVerdict = result.verdict;
       row.contentAlert = result.riskScore === null || result.audioQuality === 'UNUSABLE' ? null : result.detectedTactics.length > 0;
@@ -151,6 +162,7 @@ if (values['dry-run']) {
       row.riskScore = result.riskScore; row.audioQuality = result.audioQuality; row.model = result.analysisModel;
       consecutiveErrors = 0;
     } catch (error) {
+      if (error instanceof VoiceAnalysisError) row.providerAttempts = error.attempts;
       row.status = error instanceof VoiceAnalysisError && ['TIMEOUT', 'INVALID_RESULT'].includes(error.code)
         ? error.code as 'TIMEOUT' | 'INVALID_RESULT' : 'PROVIDER_ERROR';
       consecutiveErrors++;

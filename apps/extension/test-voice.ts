@@ -49,3 +49,24 @@ test('client keeps content availability consistent and sends review only when se
     }
   } finally { globalThis.fetch = originalFetch; }
 });
+
+
+test('client rejects misleading Live model provenance and accepts an explicit Flash fallback', async () => {
+  const originalFetch = globalThis.fetch;
+  const samples = Float32Array.from({ length: 16000 }, (_, i) => Math.sin(i * .1) * .2);
+  const answer = { riskScore: 0, verdict: 'SAFE', detectedTactics: [], tacticEvidence: [], syntheticVoiceProbability: null,
+    transcriptSnippet: 'Lịch họp ngày mai.', warningMessageVi: 'Chưa thấy dấu hiệu.', executionTimeMs: 1,
+    audioQuality: 'CLEAR', assessmentSource: 'GEMINI_AUDIO', analysisModel: 'gemini-3.5-flash-lite',
+    analysisTransport: 'GENERATE_CONTENT', fallbackUsed: true, contentAnalysis: { status: 'AVAILABLE' },
+    providerAttempts: [{ model: 'gemini-3.8-live-extended-thinking', transport: 'LIVE_API', status: 'FAILED', reason: 'PROVIDER_ERROR' },
+      { model: 'gemini-3.5-flash-lite', transport: 'GENERATE_CONTENT', status: 'SUCCEEDED' }] };
+  try {
+    globalThis.fetch = async () => new Response(JSON.stringify(answer));
+    assert.equal((await analyzeVoice(samples, { apiBase: 'http://localhost:8080', token: '' })).analysisModel, 'gemini-3.5-flash-lite');
+    for (const patch of [{ analysisModel: 'gemini-3.8-live-extended-thinking' }, { analysisTransport: 'LIVE_API' },
+      { fallbackUsed: false }, { providerAttempts: [] }, { providerAttempts: [{ ...answer.providerAttempts[0], reason: 'RAW_SECRET' }] }]) {
+      globalThis.fetch = async () => new Response(JSON.stringify({ ...answer, ...patch }));
+      await assert.rejects(analyzeVoice(samples, { apiBase: 'http://localhost:8080', token: '' }), /không hợp lệ/);
+    }
+  } finally { globalThis.fetch = originalFetch; }
+});

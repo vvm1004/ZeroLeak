@@ -60,9 +60,10 @@ export async function analyzeVoiceWithAcoustic(input: AnalyzeVoiceRequest, signa
   const settled: { content?: PromiseSettledResult<VoiceScamAnalysisResult>; acoustic?: PromiseSettledResult<AcousticVoiceAnalysis> } = {};
   let timer: ReturnType<typeof setTimeout>;
   let onAbort!: () => void;
+  let expired = false;
   const deadline = new Promise<void>((resolve, reject) => {
-    timer = setTimeout(resolve, input.analysisMode === 'review' ? 15000 : 3100);
-    onAbort = () => { controller.abort(); reject(new VoiceAnalysisError('TIMEOUT')); };
+    timer = setTimeout(() => { expired = true; resolve(); }, input.analysisMode === 'review' ? 15000 : 3100);
+    onAbort = () => { controller.abort(signal.reason); reject(new VoiceAnalysisError('TIMEOUT')); };
     signal.addEventListener('abort', onAbort, { once: true });
   });
   const invoke = <T>(call: () => Promise<T>): Promise<T> => {
@@ -78,7 +79,16 @@ export async function analyzeVoiceWithAcoustic(input: AnalyzeVoiceRequest, signa
     await Promise.race([Promise.all([contentTask, acousticTask]), deadline]);
     if (signal.aborted) throw new VoiceAnalysisError('TIMEOUT');
   } finally {
-    clearTimeout(timer!); signal.removeEventListener('abort', onAbort); controller.abort();
+    clearTimeout(timer!); signal.removeEventListener('abort', onAbort);
+    controller.abort(expired ? new VoiceAnalysisError('TIMEOUT') : undefined);
+  }
+  // Let cooperative abort handlers record their model attempts before collecting a
+  // local-only result. A hanging adapter gets at most 20ms of cleanup, within the
+  // route's 3.2s/15.3s hard limit; no extra model or audio processing is started.
+  if (expired && !settled.content) {
+    let cleanup!: ReturnType<typeof setTimeout>;
+    await Promise.race([contentTask, new Promise<void>(resolve => { cleanup = setTimeout(resolve, 20); })]);
+    clearTimeout(cleanup);
   }
   // The collection deadline stops unfinished work, preserving results already obtained.
   // A caller cancellation above still rejects and never returns a stale result.
@@ -96,5 +106,6 @@ export async function analyzeVoiceWithAcoustic(input: AnalyzeVoiceRequest, signa
     warningMessageVi: 'Chưa phân tích được nội dung cuộc gọi. Kết quả âm học được hiển thị riêng; hãy kiểm tra lại qua kênh chính thức.',
     executionTimeMs: Math.round(performance.now() - started), audioQuality: 'LIMITED',
     contentAnalysis: { status: 'UNAVAILABLE', reason },
+    providerAttempts: scam.reason instanceof VoiceAnalysisError ? scam.reason.attempts : undefined,
     assessmentSource: 'LOCAL_ACOUSTIC', analysisModel: 'local-xlsr-aasist-linear', acousticAnalysis: acoustic.value };
 }

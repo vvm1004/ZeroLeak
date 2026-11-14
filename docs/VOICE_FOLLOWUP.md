@@ -1,5 +1,8 @@
 # Voice: backoff, readiness và kiểm thử theo nhịp live — 2026-11-11
 
+**Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
+Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
+
 Bản tiếp theo của [sửa độ ổn định](VOICE_RELIABILITY.md). Đã thêm backoff provider, sửa health
 worker và công cụ đánh giá. **Không thay head V3; chưa có bằng chứng accuracy detector tăng.**
 Sáu cấu hình head thử bị loại trên calibration. Ứng viên đổi luồng suy luận cũng không được giữ.

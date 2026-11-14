@@ -52,3 +52,15 @@ export function parseVoiceRequest(value: unknown): AnalyzeVoiceRequest {
   }
   return { audioBase64, mimeType, ...(analysisMode === 'review' || analysisMode === 'realtime' ? { analysisMode } : {}) };
 }
+
+/** Extract the validated data chunk, including WAVs containing JUNK/LIST metadata chunks. */
+export function voicePcmBytes(input: AnalyzeVoiceRequest): Buffer {
+  const checked = parseVoiceRequest(input);
+  const wav = Buffer.from(checked.audioBase64, 'base64');
+  for (let pos = 12; pos + 8 <= wav.length;) {
+    const size = wav.readUInt32LE(pos + 4);
+    if (wav.toString('ascii', pos, pos + 4) === 'data') return wav.subarray(pos + 8, pos + 8 + size);
+    pos += 8 + size + (size % 2);
+  }
+  throw new VoiceInputError('WAV không chứa âm thanh.');
+}

@@ -1,5 +1,7 @@
 # ZeroLeak Voice
 
+**Model hiện tại:** [Gemini 3.8 Live Extended Thinking theo TASK](VOICE_LIVE_API.md).
+
 **Cập nhật tiếp theo 2026-11-11:** [backoff, readiness và kiểm thử theo nhịp live](VOICE_FOLLOWUP.md).
 
 **Bản sửa trước đó 2026-11-11:** [sửa coordinator, warmup và kết quả test thật](VOICE_RELIABILITY.md).
@@ -19,12 +21,13 @@ pnpm dev:sandbox
 ```
 
 Máy chủ đọc `.env` tại gốc monorepo, cần `GEMINI_API_KEY` thực của bạn. Không đưa key này vào extension.
-`GEMINI_MODEL_VOICE` chọn model Flash hỗ trợ âm thanh và structured output; mặc định là
-`gemini-3.1-flash-lite` ở cả dev và production. Live có fallback `gemini-3.5-flash-lite`,
-được ghi đè bằng `GEMINI_MODEL_VOICE_FALLBACK`; chỉ gọi model khác khi lỗi sớm và còn thời gian.
-Model review kế thừa model chính trừ khi cấu hình `GEMINI_MODEL_VOICE_REVIEW`, và chỉ gọi một model.
-API và công cụ đánh giá dùng chung router. Tên model/quota phụ thuộc tài khoản API thực tế.
-Các model Live sử dụng giao thức streaming khác; không điền ID Live vào endpoint generateContent này.
+Backend Voice dùng Node >=22. `GEMINI_MODEL_VOICE` mặc định là
+`gemini-3.8-live-extended-thinking`, tiếp theo `GEMINI_MODEL_VOICE_LIVE_FALLBACK=gemini-3.8-live`,
+rồi `GEMINI_MODEL_VOICE_FALLBACK=gemini-3.5-flash-lite`. Hai Live model dùng WebSocket;
+chỉ Flash dùng `generateContent`. Review kế thừa primary hoặc ghi đè bằng `GEMINI_MODEL_VOICE_REVIEW`,
+vẫn dùng chuỗi fallback trong ngân sách chung. API/CLI dùng chung router; model override được ưu tiên.
+Giao diện báo model xử lý thực tế và cờ fallback, không coi Flash là kết quả của 3.8.
+Xem tài liệu Live để biết kết quả test thật và hạn chế còn lại; các số đo Flash trước đây là lịch sử.
 
 ```bash
 pnpm build:extension
@@ -82,7 +85,7 @@ Model chính được dùng hết thời gian còn lại; không cắt sớm ở
 Fallback chỉ chạy nếu có lỗi sớm và ngân sách chung còn đủ, không gọi thêm sau khi hết deadline.
 Review opt-in có ngân sách Gemini 15.000 ms, local 5.000 ms, route 15.300 ms, client 16.000 ms,
 chỉ xử lý tối đa 5 giây audio. Không dùng review để công bố đã đạt <3 giây.
-SDK đặt deadline của dịch vụ Google tối thiểu 10 giây vì API từ chối giá trị thấp hơn; deadline này
+Riêng Flash fallback, SDK đặt deadline của dịch vụ Google tối thiểu 10 giây vì API từ chối giá trị thấp hơn; deadline này
 không thay thế bộ hủy/timeout độc lập 3.100 ms của ứng dụng.
 
 ## Giới hạn cần trình bày đúng khi demo
