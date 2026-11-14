@@ -27,7 +27,7 @@ export interface UrlAnalysisOptions {
 }
 
 const BANK_PATTERNS: Array<{ brand: string; pattern: RegExp; officialDomains: string[] }> = [
-  { brand: 'Vietcombank DigiBank', pattern: /(?:vietcombank|vcb)/i, officialDomains: ['vietcombank.com.vn'] },
+  { brand: 'Vietcombank DigiBank', pattern: /(?:vietcombank|vcb)/i, officialDomains: ['vietcombank.com.vn', 'vcbdigibank.vietcombank.com.vn'] },
   { brand: 'Techcombank Mobile', pattern: /(?:techcombank|tcb)/i, officialDomains: ['techcombank.com.vn', 'techcombank.com'] },
   { brand: 'MB Bank', pattern: /(?:mbbank|mb-bank)/i, officialDomains: ['mbbank.com.vn'] },
   { brand: 'VPBank NEO', pattern: /(?:vpbank|vp-bank)/i, officialDomains: ['vpbank.com.vn'] },
@@ -45,16 +45,30 @@ export function evaluateDomainBrandHeuristics(rawUrl: string, actualDomain: stri
   riskScore: number;
   indicator: string | null;
 } {
-  const domain = (actualDomain || '').toLowerCase();
+  let domain = (actualDomain || '').toLowerCase().trim();
+  let rawHostname = '';
+  try {
+    rawHostname = new URL(rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`).hostname.toLowerCase().trim();
+  } catch {}
+
+  if (!domain || domain === 'about:blank') {
+    domain = rawHostname;
+  }
+
   for (const item of BANK_PATTERNS) {
     if (item.pattern.test(rawUrl)) {
-      const isOfficial = item.officialDomains.some((d) => domain === d || domain.endsWith(`.${d}`));
+      const isOfficial = item.officialDomains.some((d) =>
+        domain === d || domain.endsWith(`.${d}`) || (rawHostname && (rawHostname === d || rawHostname.endsWith(`.${d}`)))
+      );
       if (!isOfficial) {
         return {
           impersonatedBrand: item.brand,
           riskScore: 92,
-          indicator: `CẢNH BÁO GIẢ MẠO: Tên miền ${domain} không thuộc ${item.brand} nhưng chứa từ khóa nhận diện!`,
+          indicator: `CẢNH BÁO GIẢ MẠO: Tên miền ${domain || rawHostname} không thuộc ${item.brand} nhưng chứa từ khóa nhận diện!`,
         };
+      } else {
+        // Explicitly identified as official legitimate domain!
+        return { impersonatedBrand: null, riskScore: 0, indicator: null };
       }
     }
   }
@@ -66,6 +80,7 @@ export async function coordinateUrlAnalysis(
   options: UrlAnalysisOptions = {}
 ): Promise<PhishingAnalysisResponse> {
   const startTime = Date.now();
+  console.log(`\n[ZeroLeak Lens] 🔍 Bắt đầu phân tích liên kết: ${rawUrl}`);
   const cacheKey = normalizeUrlForCache(rawUrl);
   const cache = options.cache !== undefined ? options.cache : defaultUrlAnalysisCache;
 
@@ -73,6 +88,7 @@ export async function coordinateUrlAnalysis(
   if (!options.noCache && cache) {
     const cached = cache.get(cacheKey);
     if (cached) {
+      console.log(`[ZeroLeak Lens] ⚡ CACHE HIT (< 5ms): Trả về ngay kết quả lưu sẵn [${cached.verdict} - ${cached.riskScore}/100] | Ảnh Sandbox: ${cached.screenshotBase64 ? 'CÓ' : 'KHÔNG'}`);
       return {
         ...cached,
         url: rawUrl,
@@ -97,8 +113,10 @@ export async function coordinateUrlAnalysis(
       threatType: null,
       executionTimeMs: 0,
     })),
-    captureSandbox(rawUrl, { timeoutMs: options.timeoutMs ?? 2500 }),
+    captureSandbox(rawUrl, { timeoutMs: options.timeoutMs ?? 2000 }),
   ]);
+
+  console.log(`[ZeroLeak Lens] 🌐 Playwright Sandbox (${captureResult.executionTimeMs}ms): Trạng thái: ${captureResult.status} | Tiêu đề: "${captureResult.pageTitle || 'N/A'}" | Ảnh chụp: ${captureResult.screenshotBase64 ? 'CÓ (WebP ' + Math.round(captureResult.screenshotBase64.length / 1024) + 'KB)' : 'KHÔNG'}`);
 
   if (captureResult.status === 'BLOCKED_SSRF') {
     throw new Error(captureResult.errorMessage || 'URL bị chặn bởi bộ lọc an ninh SSRF');
@@ -195,8 +213,33 @@ export async function coordinateUrlAnalysis(
     }
   }
 
-  if (indicators.length === 0) {
-    indicators.push('Không phát hiện dấu hiệu giả mạo thương hiệu hoặc đánh cắp thông tin');
+  let finalIndicators = [...indicators];
+
+  // Check if target is a known legitimate official domain
+  const rawHost = safety.parsedUrl?.hostname.toLowerCase() || '';
+  const actualHost = (captureResult.actualDomain || '').toLowerCase();
+  const isKnownOfficial = BANK_PATTERNS.some((item) =>
+    item.officialDomains.some((d) =>
+      rawHost === d || rawHost.endsWith(`.${d}`) ||
+      (actualHost && (actualHost === d || actualHost.endsWith(`.${d}`)))
+    )
+  );
+
+  if (isKnownOfficial && !safeBrowsingResult.isKnownThreat) {
+    // Legitimate official bank domain must never be flagged as phishing
+    riskScore = Math.min(riskScore, 10);
+    verdict = 'SAFE';
+    impersonatedBrand = null;
+    finalIndicators = finalIndicators.filter(
+      (ind) => !ind.includes('CẢNH BÁO GIẢ MẠO') && !ind.includes('giả mạo') && !ind.includes('Nguy cơ') && !ind.includes('Dấu hiệu nguy cơ')
+    );
+    if (!finalIndicators.some((ind) => ind.includes('chính thức'))) {
+      finalIndicators.unshift('Xác thực an toàn: Tên miền thuộc hệ thống chính thức của ngân hàng / tổ chức');
+    }
+  }
+
+  if (finalIndicators.length === 0) {
+    finalIndicators.push('Không phát hiện dấu hiệu giả mạo thương hiệu hoặc đánh cắp thông tin');
   }
 
   const result: PhishingAnalysisResponse = {
@@ -209,7 +252,7 @@ export async function coordinateUrlAnalysis(
     riskScore,
     verdict,
     impersonatedBrand,
-    indicators,
+    indicators: finalIndicators,
     executionTimeMs: Date.now() - startTime,
   };
 
@@ -217,6 +260,8 @@ export async function coordinateUrlAnalysis(
   if (!options.noCache && cache) {
     cache.set(cacheKey, result);
   }
+
+  console.log(`[ZeroLeak Lens] 🏁 KẾT QUẢ TỔNG HỢP: [${result.verdict}] - Rủi ro: ${result.riskScore}/100 - Tổng thời gian: ${result.executionTimeMs}ms\n`);
 
   return result;
 }

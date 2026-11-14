@@ -195,7 +195,7 @@ export async function captureUrlInSandbox(
   } = {}
 ): Promise<PlaywrightCaptureResult> {
   const startTime = Date.now();
-  const timeoutMs = options.timeoutMs ?? 2000;
+  const timeoutMs = options.timeoutMs ?? 3500;
   const viewport = options.viewport ?? { width: 1280, height: 720 };
 
   // 1. SSRF Safety Validation
@@ -266,12 +266,15 @@ export async function captureUrlInSandbox(
       }
     }
 
-    const finalRedirectUrl = page.url() || normalizedUrl;
+    const currentUrl = page.url();
+    const finalRedirectUrl = currentUrl && currentUrl !== 'about:blank' ? currentUrl : normalizedUrl;
     let actualDomain = initialDomain;
     try {
-      actualDomain = new URL(finalRedirectUrl).hostname;
+      if (finalRedirectUrl && finalRedirectUrl !== 'about:blank') {
+        actualDomain = new URL(finalRedirectUrl).hostname || initialDomain;
+      }
     } catch {
-      // Ignored
+      actualDomain = initialDomain;
     }
 
     let pageTitle = '';
@@ -342,11 +345,14 @@ export async function captureUrlInSandbox(
     // 5. Screenshot capture in lightweight WebP format
     let screenshotBase64: string | undefined;
     try {
-      const screenshotBuffer = await page.screenshot({
-        type: 'webp',
-        quality: 75,
-      });
-      screenshotBase64 = screenshotBuffer.toString('base64');
+      const isBlank = page.url() === 'about:blank';
+      if (status === 'SUCCESS' && !isBlank) {
+        const screenshotBuffer = await page.screenshot({
+          type: 'webp',
+          quality: 75,
+        });
+        screenshotBase64 = screenshotBuffer.toString('base64');
+      }
     } catch {
       // Ignored if screenshot failed (e.g. empty or unreachable page)
     }

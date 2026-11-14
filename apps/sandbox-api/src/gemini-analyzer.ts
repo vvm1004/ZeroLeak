@@ -120,16 +120,20 @@ Hãy đối chiếu kỹ lưỡng giao diện trang web (nếu có ảnh chụp 
     };
   }
 
-  // Model Routing: Primary Vision -> Fallback Lite
-  const modelsToAttempt = [
-    GEMINI_MODELS.PRIMARY_VISION,
-    GEMINI_MODELS.FALLBACK_LITE,
-  ];
+  // Smart Model Routing (AGENTS.md Rule 4):
+  // Ưu tiên gemini-3.5-flash-lite (500 RPD) khi dev/test, chuyển sang gemini-3.8-flash khi lên sân khấu
+  const primaryModel = process.env.GEMINI_MODEL_VISION || (process.env.NODE_ENV === 'production' ? 'gemini-3.8-flash' : 'gemini-3.5-flash-lite');
+  const fallbackModel = 'gemini-3.5-flash-lite';
+  const modelsToAttempt = primaryModel === fallbackModel ? [primaryModel] : [primaryModel, fallbackModel];
 
   let lastError: any = null;
 
   for (const model of modelsToAttempt) {
+    const callController = new AbortController();
+    const callTimer = setTimeout(() => callController.abort(), 6000);
+
     try {
+      console.log(`[ZeroLeak Lens] 🤖 Đang phân tích qua mô hình Gemini: ${model}...`);
       const response = await ai.models.generateContent({
         model,
         contents,
@@ -138,19 +142,30 @@ Hãy đối chiếu kỹ lưỡng giao diện trang web (nếu có ảnh chụp 
           responseMimeType: 'application/json',
           responseSchema: visualPhishingResponseSchema,
           temperature: 0.1,
-          abortSignal: options.signal,
+          abortSignal: callController.signal,
         },
       });
+      clearTimeout(callTimer);
 
       if (response.text) {
         const parsed = JSON.parse(response.text);
+        const duration = Date.now() - startTime;
+        console.log(`[ZeroLeak Lens] ✅ Gemini [${model}] phân tích thành công trong ${duration}ms!`);
+        console.log(`[ZeroLeak Lens]    📊 Phán quyết: ${parsed.verdict} | Điểm rủi ro: ${parsed.riskScore}/100`);
+        if (parsed.impersonatedBrand) {
+          console.log(`[ZeroLeak Lens]    🚨 Thương hiệu bị mạo danh: ${parsed.impersonatedBrand}`);
+        }
+        if (Array.isArray(parsed.indicators) && parsed.indicators.length > 0) {
+          console.log(`[ZeroLeak Lens]    🔍 Bằng chứng: ${parsed.indicators.join(' | ')}`);
+        }
+
         return {
           riskScore: Math.max(0, Math.min(100, Number(parsed.riskScore ?? 0))),
           verdict: parsed.verdict || 'SAFE',
           impersonatedBrand: parsed.impersonatedBrand || null,
           indicators: Array.isArray(parsed.indicators) ? parsed.indicators : [],
           modelUsed: model,
-          executionTimeMs: Date.now() - startTime,
+          executionTimeMs: duration,
         };
       }
     } catch (err: any) {

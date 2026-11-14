@@ -263,6 +263,19 @@ export default defineContentScript({
 
     // Handle messages sent from Context Menu or Background
     chrome.runtime.onMessage.addListener(async (message) => {
+      if (message?.type === 'PHISHGUARD_SCAN_START' && message.url) {
+        showToast({
+          id: String(Date.now()),
+          type: 'AUDIT',
+          title: 'ZeroLeak Lens: Threat Scanner',
+          detail: `Đang kiểm tra mức độ an toàn qua Playwright Sandbox: ${message.url}`,
+        });
+      }
+
+      if (message?.type === 'SHOW_ANALYSIS_MODAL' && message.analysis) {
+        if (modalUpdater) modalUpdater(message.analysis);
+      }
+
       if (message?.type === 'PHISHGUARD_SCAN_URL' && message.url) {
         showToast({
           id: String(Date.now()),

@@ -12,7 +12,7 @@ const SANDBOX_API_ENDPOINT =
     ? process.env.SANDBOX_API_URL
     : 'http://localhost:8080/api/v1/analyze-url';
 
-const TIMEOUT_MS = 3500;
+const TIMEOUT_MS = 8000;
 
 const VIETNAMESE_BANKS: Array<{ brand: string; pattern: RegExp; officialDomains: string[] }> = [
   {
@@ -222,6 +222,36 @@ export async function analyzeUrlWithSandbox(
   url: string,
   sourceContext: 'CONTEXT_MENU' | 'QR_CODE' | 'DIRECT_CHECK' = 'CONTEXT_MENU'
 ): Promise<PhishingAnalysisResponse> {
+  // If running inside Content Script on an arbitrary webpage (e.g. facebook.com, chatgpt.com),
+  // browser CSP and Mixed Content (HTTPS page -> HTTP localhost) will block direct fetch to localhost:8080.
+  // We delegate the call to Background Service Worker which has host_permissions: ['<all_urls>'].
+  const isContentScript =
+    typeof window !== 'undefined' &&
+    typeof chrome !== 'undefined' &&
+    typeof chrome.runtime?.sendMessage === 'function' &&
+    // @ts-ignore
+    !chrome.tabs;
+
+  if (isContentScript) {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage(
+        {
+          type: 'ANALYZE_PHISHING_URL',
+          url,
+          sourceContext,
+        },
+        (response) => {
+          if (chrome.runtime.lastError || !response?.result) {
+            console.warn('[ZeroLeak] Background delegate error, using local fallback:', chrome.runtime.lastError?.message);
+            resolve(localHeuristicFallback(url));
+          } else {
+            resolve(response.result);
+          }
+        }
+      );
+    });
+  }
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 

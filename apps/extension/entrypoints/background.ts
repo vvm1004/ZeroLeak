@@ -42,10 +42,26 @@ export default defineBackground(() => {
 
     if (info.menuItemId === 'phishguard-scan-link' && info.linkUrl) {
       console.log('[ZeroLeak Background] Scanning link from context menu:', info.linkUrl);
-      chrome.tabs.sendMessage(tab.id, {
-        type: 'PHISHGUARD_SCAN_URL',
-        url: info.linkUrl,
-      });
+      const targetUrl = info.linkUrl;
+      const targetTabId = tab.id;
+
+      // 1. Tell tab to show scanning toast immediately
+      chrome.tabs.sendMessage(targetTabId, {
+        type: 'PHISHGUARD_SCAN_START',
+        url: targetUrl,
+      }).catch(() => {});
+
+      // 2. Perform fetch from background service worker (Bypasses page CSP and Mixed Content!)
+      analyzeUrlWithSandbox(targetUrl, 'CONTEXT_MENU')
+        .then((result) => {
+          chrome.tabs.sendMessage(targetTabId, {
+            type: 'SHOW_ANALYSIS_MODAL',
+            analysis: result,
+          }).catch(() => {});
+        })
+        .catch((err) => {
+          console.error('[ZeroLeak Background] Context menu scan failed:', err);
+        });
     }
 
     if (info.menuItemId === 'phishguard-scan-qr') {
