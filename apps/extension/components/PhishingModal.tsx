@@ -61,13 +61,14 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(2, 6, 23, 0.75)',
+        backgroundColor: 'rgba(2, 6, 23, 0.8)',
         backdropFilter: 'blur(8px)',
         zIndex: 2147483647,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px',
+        padding: '16px',
+        boxSizing: 'border-box',
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         pointerEvents: 'auto',
@@ -77,11 +78,12 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
       <div
         style={{
           width: '100%',
-          maxWidth: '540px',
+          maxWidth: '520px',
+          maxHeight: 'min(86vh, 600px)',
           backgroundColor: verdictTheme.bg,
           border: `1px solid ${verdictTheme.border}`,
           borderRadius: '16px',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.85)',
           overflow: 'hidden',
           color: '#f8fafc',
           display: 'flex',
@@ -90,15 +92,16 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
+        {/* Header - Fixed at Top */}
         <div
           style={{
-            padding: '16px 20px',
+            flexShrink: 0,
+            padding: '12px 18px',
             borderBottom: `1px solid ${verdictTheme.border}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: 'rgba(0, 0, 0, 0.25)',
+            backgroundColor: 'rgba(0, 0, 0, 0.35)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -119,30 +122,45 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
               cursor: 'pointer',
               fontSize: '18px',
               padding: '4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             ✕
           </button>
         </div>
 
-        {/* Content Body */}
-        <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {/* Content Body - Scrollable if content overflows */}
+        <div
+          style={{
+            flex: '1 1 auto',
+            minHeight: 0,
+            overflowY: 'auto',
+            padding: '14px 18px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+          }}
+        >
           {/* Risk Score & Verdict Bar */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              backgroundColor: 'rgba(15, 23, 42, 0.6)',
-              padding: '12px 16px',
+              backgroundColor: 'rgba(15, 23, 42, 0.65)',
+              padding: '10px 16px',
               borderRadius: '10px',
               border: '1px solid rgba(51, 65, 85, 0.6)',
             }}
           >
             <div>
-              <div style={{ fontSize: '11px', color: '#94a3b8' }}>ĐIỂM RỦI RO (RISK SCORE)</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: verdictTheme.scoreColor }}>
-                {analysis.riskScore} <span style={{ fontSize: '13px', color: '#64748b' }}>/ 100</span>
+              <div style={{ fontSize: '10px', fontWeight: 600, color: '#94a3b8', letterSpacing: '0.05em' }}>
+                ĐIỂM RỦI RO (RISK SCORE)
+              </div>
+              <div style={{ fontSize: '22px', fontWeight: 800, color: verdictTheme.scoreColor, lineHeight: 1.2 }}>
+                {analysis.riskScore} <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 500 }}>/ 100</span>
               </div>
             </div>
 
@@ -150,10 +168,10 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
               style={{
                 backgroundColor: verdictTheme.badgeBg,
                 color: verdictTheme.badgeText,
-                padding: '6px 14px',
+                padding: '5px 14px',
                 borderRadius: '9999px',
                 fontWeight: 700,
-                fontSize: '12px',
+                fontSize: '11px',
                 letterSpacing: '0.05em',
                 border: `1px solid ${verdictTheme.border}`,
               }}
@@ -166,7 +184,7 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
           {analysis.impersonatedBrand && (
             <div
               style={{
-                padding: '10px 14px',
+                padding: '8px 12px',
                 borderRadius: '8px',
                 backgroundColor: 'rgba(239, 68, 68, 0.15)',
                 border: '1px solid rgba(239, 68, 68, 0.35)',
@@ -185,11 +203,11 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
           )}
 
           {/* Target URL Info */}
-          <div style={{ fontSize: '12px' }}>
-            <div style={{ color: '#94a3b8', marginBottom: '4px' }}>Địa chỉ kiểm tra:</div>
+          <div style={{ fontSize: '11px' }}>
+            <div style={{ color: '#94a3b8', marginBottom: '3px' }}>Địa chỉ kiểm tra:</div>
             <div
               style={{
-                padding: '8px 12px',
+                padding: '6px 10px',
                 backgroundColor: 'rgba(15, 23, 42, 0.8)',
                 borderRadius: '6px',
                 fontFamily: 'ui-monospace, monospace',
@@ -205,10 +223,10 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
 
           {/* Indicators List */}
           <div>
-            <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '6px' }}>
+            <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '6px' }}>
               Chỉ số phân tích & Bằng chứng nhận diện:
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               {analysis.indicators.map((ind, i) => (
                 <div
                   key={i}
@@ -216,12 +234,12 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '8px',
-                    fontSize: '12px',
+                    fontSize: '11.5px',
                     color: '#e2e8f0',
                     lineHeight: '1.4',
                   }}
                 >
-                  <span style={{ color: verdictTheme.scoreColor, marginTop: '2px' }}>•</span>
+                  <span style={{ color: verdictTheme.scoreColor, marginTop: '2px', flexShrink: 0 }}>•</span>
                   <span>{ind}</span>
                 </div>
               ))}
@@ -231,50 +249,70 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
           {/* Screenshot Preview if available */}
           {analysis.screenshotBase64 && (
             <div>
-              <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '6px' }}>
+              <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '6px' }}>
                 Ảnh chụp Playwright Sandbox:
               </div>
-              <img
-                src={`data:image/webp;base64,${analysis.screenshotBase64}`}
-                alt="Sandbox Screenshot"
+              <div
                 style={{
                   width: '100%',
-                  height: '160px',
-                  objectFit: 'cover',
+                  height: '125px',
                   borderRadius: '8px',
+                  overflow: 'hidden',
                   border: '1px solid rgba(51, 65, 85, 0.8)',
+                  backgroundColor: '#0a0f1d',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
-              />
+              >
+                <img
+                  src={`data:image/webp;base64,${analysis.screenshotBase64}`}
+                  alt="Sandbox Screenshot"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </div>
             </div>
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer - Fixed at Bottom */}
         <div
           style={{
-            padding: '12px 20px',
+            flexShrink: 0,
+            padding: '12px 18px',
             borderTop: `1px solid ${verdictTheme.border}`,
-            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+            backgroundColor: 'rgba(0, 0, 0, 0.45)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             fontSize: '11px',
-            color: '#64748b',
+            color: '#94a3b8',
           }}
         >
-          <span>Thời gian phân tích: {analysis.executionTimeMs}ms</span>
+          <span>Thời gian phân tích: <strong style={{ color: '#e2e8f0' }}>{analysis.executionTimeMs}ms</strong></span>
           <button
             onClick={onClose}
             style={{
-              padding: '6px 16px',
+              padding: '7px 20px',
               backgroundColor: isMalicious ? '#ef4444' : '#10b981',
               color: '#ffffff',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '12px',
+              letterSpacing: '0.02em',
+              transition: 'all 0.15s ease',
+              boxShadow: isMalicious
+                ? '0 2px 8px rgba(239, 68, 68, 0.4)'
+                : '0 2px 8px rgba(16, 185, 129, 0.4)',
             }}
+            onMouseOver={(e) => (e.currentTarget.style.filter = 'brightness(1.15)')}
+            onMouseOut={(e) => (e.currentTarget.style.filter = 'brightness(1.0)')}
           >
             Đã hiểu & Đóng
           </button>

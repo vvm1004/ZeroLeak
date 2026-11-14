@@ -113,7 +113,7 @@ export async function coordinateUrlAnalysis(
       threatType: null,
       executionTimeMs: 0,
     })),
-    captureSandbox(rawUrl, { timeoutMs: options.timeoutMs ?? 2000 }),
+    captureSandbox(rawUrl, { timeoutMs: options.timeoutMs ?? 3500 }),
   ]);
 
   console.log(`[ZeroLeak Lens] 🌐 Playwright Sandbox (${captureResult.executionTimeMs}ms): Trạng thái: ${captureResult.status} | Tiêu đề: "${captureResult.pageTitle || 'N/A'}" | Ảnh chụp: ${captureResult.screenshotBase64 ? 'CÓ (WebP ' + Math.round(captureResult.screenshotBase64.length / 1024) + 'KB)' : 'KHÔNG'}`);

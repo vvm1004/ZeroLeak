@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { analyzeUrlWithSandbox } from '../../utils/phishing-client';
 import { decodeQrFromImageSource } from '../../utils/qr-scanner';
+import { PopupThreatReport } from '../../components/PopupThreatReport';
 
 export default function App() {
   const [policy, setPolicy] = useState<SecurityPolicy>(DEFAULT_SECURITY_POLICY);
@@ -33,6 +34,8 @@ export default function App() {
   const [scanningQr, setScanningQr] = useState(false);
   const [qrStatusText, setQrStatusText] = useState<string | null>(null);
   const [qrError, setQrError] = useState<string | null>(null);
+  const [projectingToTab, setProjectingToTab] = useState(false);
+  const [tabProjectError, setTabProjectError] = useState<string | null>(null);
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: 'GET_POLICY' }, (response) => {
@@ -197,12 +200,71 @@ export default function App() {
     }
   };
 
+  const handleShowOnActiveTab = async (analysis: PhishingAnalysisResponse) => {
+    setProjectingToTab(true);
+    setTabProjectError(null);
+
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!tab?.id) {
+        setTabProjectError('Không tìm thấy tab trình duyệt đang hoạt động.');
+        setProjectingToTab(false);
+        return;
+      }
+
+      // Kiểm tra nếu tab hiện tại là trang nội bộ bị trình duyệt cấm tiêm script
+      const isRestricted =
+        !tab.url ||
+        tab.url.startsWith('chrome://') ||
+        tab.url.startsWith('chrome-extension://') ||
+        tab.url.startsWith('edge://') ||
+        tab.url.startsWith('about:') ||
+        tab.url.startsWith('view-source:');
+
+      if (isRestricted) {
+        setTabProjectError(
+          'Trang nội bộ này (chrome://) bị Chrome cấm hiển thị giao diện. Hãy chuyển sang một tab trang web thông thường (như Facebook, Google...) rồi bấm lại!'
+        );
+        setProjectingToTab(false);
+        return;
+      }
+
+      // Thử gửi message tới content script đã chạy trên tab
+      chrome.tabs.sendMessage(tab.id, { type: 'SHOW_ANALYSIS_MODAL', analysis }, async () => {
+        if (chrome.runtime.lastError) {
+          // Tab chưa có content script (do chưa F5 tab sau khi reload extension) -> tự động tiêm
+          try {
+            await chrome.scripting.executeScript({
+              target: { tabId: tab.id! },
+              files: ['content-scripts/content.js'],
+            });
+
+            // Chờ React Shadow DOM gắn vào trang rồi gửi lại
+            setTimeout(() => {
+              chrome.tabs.sendMessage(tab.id!, { type: 'SHOW_ANALYSIS_MODAL', analysis });
+              setTimeout(() => window.close(), 120);
+            }, 300);
+          } catch (injectErr: any) {
+            setTabProjectError('Không thể chiếu lên trang này: ' + (injectErr?.message || 'Giới hạn bảo mật'));
+            setProjectingToTab(false);
+          }
+        } else {
+          // Đã nhận thành công, đóng popup
+          setTimeout(() => window.close(), 100);
+        }
+      });
+    } catch (err: any) {
+      setTabProjectError('Lỗi kết nối tab: ' + (err?.message || 'Không xác định'));
+      setProjectingToTab(false);
+    }
+  };
+
   if (loading) {
     return <div className="p-6 text-center text-slate-400">Đang tải cấu hình...</div>;
   }
 
   return (
-    <div className="w-[360px] text-xs pb-1">
+    <div className="w-full max-w-[380px] text-xs pb-1">
       {/* Header */}
       <header className="flex items-center justify-between pb-3 border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -314,28 +376,16 @@ export default function App() {
         </form>
 
         {urlResult && (
-          <div
-            className={`mt-2 p-2.5 rounded-lg border text-[11px] ${
-              urlResult.verdict === 'MALICIOUS'
-                ? 'bg-rose-950/40 border-rose-800 text-rose-300'
-                : urlResult.verdict === 'SUSPICIOUS'
-                ? 'bg-amber-950/40 border-amber-800 text-amber-300'
-                : 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
-            }`}
-          >
-            <div className="flex items-center justify-between font-bold mb-1">
-              <span>{urlResult.verdict} ({urlResult.riskScore}/100)</span>
-              <span>{urlResult.executionTimeMs}ms</span>
-            </div>
-            {urlResult.impersonatedBrand && (
-              <div className="font-semibold text-rose-400 mb-1">
-                ⚠️ Nhắm vào: {urlResult.impersonatedBrand}
-              </div>
-            )}
-            <div className="text-[10px] text-slate-300 line-clamp-2">
-              {urlResult.indicators[0]}
-            </div>
-          </div>
+          <PopupThreatReport
+            analysis={urlResult}
+            onClose={() => {
+              setUrlResult(null);
+              setTabProjectError(null);
+            }}
+            onShowOnTab={() => handleShowOnActiveTab(urlResult)}
+            isProjecting={projectingToTab}
+            projectError={tabProjectError}
+          />
         )}
       </div>
 

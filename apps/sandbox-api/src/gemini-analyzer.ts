@@ -1,11 +1,12 @@
 /**
  * ZeroLeak Lens — Multimodal Visual Phishing Analyzer
  * 
- * Epic 2.2: Phân tích Giả mạo Thị giác với Gemini 3.8 Flash / 3.5 Flash Lite
+ * Epic 2.2: Phân tích Giả mạo Thị giác với Gemini 3.8 Flash / 3.5 Flash Lite / 3.1 Flash Lite 
  * Uses official @google/genai SDK with Structured Outputs (responseSchema)
- * Automatically falls back between primary (gemini-3.8-flash) and fallback (gemini-3.5-flash-lite).
+ * Automatically falls back between primary (gemini-3.8-flash) and fallback (gemini-3.5-flash-lite /  3.1 Flash Lite ).
  */
 
+import './env.js';
 import { GoogleGenAI, Type } from '@google/genai';
 
 export interface VisualPhishingAnalysis {
@@ -19,7 +20,8 @@ export interface VisualPhishingAnalysis {
 
 export const GEMINI_MODELS = {
   PRIMARY_VISION: process.env.GEMINI_MODEL_VISION || 'gemini-3.8-flash',
-  FALLBACK_LITE: 'gemini-3.5-flash-lite',
+  FALLBACK_LITE: 'gemini-3.1-flash-lite',
+  SECONDARY_LITE: 'gemini-3.5-flash-lite',
 };
 
 export const visualPhishingResponseSchema = {
@@ -120,17 +122,18 @@ Hãy đối chiếu kỹ lưỡng giao diện trang web (nếu có ảnh chụp 
     };
   }
 
-  // Smart Model Routing (AGENTS.md Rule 4):
-  // Ưu tiên gemini-3.5-flash-lite (500 RPD) khi dev/test, chuyển sang gemini-3.8-flash khi lên sân khấu
-  const primaryModel = process.env.GEMINI_MODEL_VISION || (process.env.NODE_ENV === 'production' ? 'gemini-3.8-flash' : 'gemini-3.5-flash-lite');
-  const fallbackModel = 'gemini-3.5-flash-lite';
-  const modelsToAttempt = primaryModel === fallbackModel ? [primaryModel] : [primaryModel, fallbackModel];
+  const rawModel = (process.env.GEMINI_MODEL_VISION || 'gemini-3.8-flash').trim();
+  const preferredModel = rawModel.replace(/\s+/g, '-');
+  const candidateModels = [preferredModel, 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite'];
+  const modelsToAttempt = Array.from(new Set(candidateModels));
 
   let lastError: any = null;
 
   for (const model of modelsToAttempt) {
     const callController = new AbortController();
-    const callTimer = setTimeout(() => callController.abort(), 6000);
+    // Cho phép tối đa 9.5s cho mỗi model Gemini để hoàn tất xử lý ảnh chụp đa phương thức trên các trang ngân hàng lớn
+    const callTimeoutMs = model.includes('3.8') ? 5000 : 9500;
+    const callTimer = setTimeout(() => callController.abort(), callTimeoutMs);
 
     try {
       console.log(`[ZeroLeak Lens] 🤖 Đang phân tích qua mô hình Gemini: ${model}...`);

@@ -66,7 +66,7 @@ export function createApp(options: {
       return c.json({ error: { code: 'INVALID_URL', message: 'Trường "url" không được để trống.' } }, 400);
     }
 
-    const timeoutMs = typeof body?.timeoutMs === 'number' ? Math.min(body.timeoutMs, 5000) : 2500;
+    const timeoutMs = typeof body?.timeoutMs === 'number' ? Math.min(body.timeoutMs, 6000) : 3500;
     const noCache = Boolean(body?.noCache || body?.forceRefresh);
 
     try {

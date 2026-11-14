@@ -345,11 +345,12 @@ export async function captureUrlInSandbox(
     // 5. Screenshot capture in lightweight WebP format
     let screenshotBase64: string | undefined;
     try {
-      const isBlank = page.url() === 'about:blank';
-      if (status === 'SUCCESS' && !isBlank) {
+      const isBlank = !page.url() || page.url() === 'about:blank';
+      if (!isBlank && (status === 'SUCCESS' || status === 'NAVIGATION_TIMEOUT')) {
         const screenshotBuffer = await page.screenshot({
           type: 'webp',
-          quality: 75,
+          quality: 70,
+          timeout: 2500,
         });
         screenshotBase64 = screenshotBuffer.toString('base64');
       }

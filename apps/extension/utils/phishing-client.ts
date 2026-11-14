@@ -7,12 +7,15 @@
 
 import type { PhishingAnalysisResponse } from '@zeroleak/shared-types';
 
-const SANDBOX_API_ENDPOINT =
-  typeof process !== 'undefined' && process.env?.SANDBOX_API_URL
-    ? process.env.SANDBOX_API_URL
-    : 'http://localhost:8080/api/v1/analyze-url';
+const rawSandboxUrl =
+  (typeof process !== 'undefined' && process.env?.SANDBOX_API_URL) || 'http://localhost:8080';
 
-const TIMEOUT_MS = 8000;
+const SANDBOX_API_ENDPOINT = rawSandboxUrl.endsWith('/api/v1/analyze-url')
+  ? rawSandboxUrl
+  : `${rawSandboxUrl.replace(/\/+$/, '')}/api/v1/analyze-url`;
+
+// Tăng timeout lên 25s để đủ thời gian cho Playwright Sandbox (3-4s) + Gemini Multimodal Vision (5-8s) đối với các trang nặng/chậm
+const TIMEOUT_MS = 25000;
 
 const VIETNAMESE_BANKS: Array<{ brand: string; pattern: RegExp; officialDomains: string[] }> = [
   {
