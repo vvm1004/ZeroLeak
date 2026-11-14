@@ -8,21 +8,47 @@ import { analyzeVoiceWithAcoustic } from './voice-acoustic.js';
 import { MAX_VOICE_REQUEST_BYTES, parseVoiceRequest, VoiceInputError } from './voice-input.js';
 import { captureUrlInSandbox, type PlaywrightCaptureResult } from './playwright.js';
 import { coordinateUrlAnalysis, type UrlAnalysisOptions } from './url-analyzer.js';
+import { defaultUrlAnalysisCache, LruCache } from './cache.js';
 
 export function createApp(options: {
   analyzeVoice?: (input: AnalyzeVoiceRequest, signal: AbortSignal) => Promise<VoiceScamAnalysisResult>;
   analyzeUrl?: (url: string, opts?: UrlAnalysisOptions) => Promise<PhishingAnalysisResponse>;
   captureUrl?: (url: string, opts?: { timeoutMs?: number; viewport?: { width: number; height: number } }) => Promise<PlaywrightCaptureResult>;
+  cache?: LruCache<PhishingAnalysisResponse> | null;
 } = {}) {
   const app = new Hono();
   const analyze = options.analyzeVoice ?? analyzeVoiceWithAcoustic;
+  const urlCache = options.cache !== undefined ? options.cache : defaultUrlAnalysisCache;
   const analyzeUrlFn = options.analyzeUrl ?? ((url, opts) => coordinateUrlAnalysis(url, {
     ...opts,
+    cache: options.cache !== undefined ? options.cache : opts?.cache,
     captureUrl: options.captureUrl,
   }));
 
   app.use('*', cors({ origin: '*', allowMethods: ['GET', 'POST', 'OPTIONS'], allowHeaders: ['Content-Type', 'Authorization'] }));
-  app.get('/health', c => c.json({ status: 'ok', service: 'zeroleak-sandbox-api', timestamp: new Date().toISOString(), voice: { liveApi: typeof WebSocket === 'function', modelRoute: voiceModelRoute({}), contentEvidence: true, fileReview: true, localAcousticConfigured: Boolean(process.env.VOICE_ACOUSTIC_URL) } }));
+  app.get('/health', c => c.json({
+    status: 'ok',
+    service: 'zeroleak-sandbox-api',
+    timestamp: new Date().toISOString(),
+    cache: {
+      urlAnalysis: urlCache ? urlCache.stats() : null,
+    },
+    voice: {
+      liveApi: typeof WebSocket === 'function',
+      modelRoute: voiceModelRoute({}),
+      contentEvidence: true,
+      fileReview: true,
+      localAcousticConfigured: Boolean(process.env.VOICE_ACOUSTIC_URL),
+    },
+  }));
+
+  // Endpoint to clear LRU cache (useful for stage testing / reset)
+  app.post('/api/v1/clear-cache', (c) => {
+    if (urlCache) {
+      urlCache.clear();
+    }
+    return c.json({ status: 'ok', message: 'Cache đã được làm mới thành công.' });
+  });
 
   // ---------------------------------------------------------------------------
   // Epic 2: POST /api/v1/analyze-url (Playwright Sandbox + Gemini Visual Phishing)
@@ -41,9 +67,10 @@ export function createApp(options: {
     }
 
     const timeoutMs = typeof body?.timeoutMs === 'number' ? Math.min(body.timeoutMs, 5000) : 2500;
+    const noCache = Boolean(body?.noCache || body?.forceRefresh);
 
     try {
-      const result = await analyzeUrlFn(rawUrl, { timeoutMs, signal: c.req.raw.signal });
+      const result = await analyzeUrlFn(rawUrl, { timeoutMs, noCache, signal: c.req.raw.signal });
       return c.json(result);
     } catch (err: any) {
       const msg = err?.message || '';

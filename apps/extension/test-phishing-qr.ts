@@ -51,8 +51,22 @@ async function runTests() {
   }
   console.log('✓ Official domain classified as SAFE PASSED');
 
-  console.log(`\nExecution Latency: ${fakeVcb.executionTimeMs}ms (SLO < 3500ms -> Instant fallback compliant)`);
-  console.log('\n=== ALL 1.4 TESTS PASSED SUCCESSFULLY! ===');
+  // Test 5: Fake BIDV SmartBanking
+  console.log('\n[5] Testing Fake BIDV SmartBanking URL...');
+  const fakeBidv = localHeuristicFallback('https://bidv-smartbanking-otp.top/verify');
+  console.log(`Verdict: ${fakeBidv.verdict} | Risk Score: ${fakeBidv.riskScore}/100`);
+  if (fakeBidv.verdict !== 'MALICIOUS' || fakeBidv.impersonatedBrand !== 'BIDV SmartBanking') {
+    throw new Error(`Expected MALICIOUS BIDV SmartBanking, got ${fakeBidv.verdict} (${fakeBidv.impersonatedBrand})`);
+  }
+  console.log('✓ Fake BIDV detection PASSED');
+
+  // Test 6: Offline Resilience / Latency benchmark
+  console.log(`\nExecution Latency: ${fakeVcb.executionTimeMs}ms (SLO < 50ms -> Instant fallback compliant)`);
+  if (fakeVcb.executionTimeMs > 50) {
+    throw new Error(`Fallback latency ${fakeVcb.executionTimeMs}ms exceeded 50ms`);
+  }
+  console.log('✓ Fallback latency < 50ms verified');
+  console.log('\n=== ALL PHISHING HEURISTIC TESTS PASSED SUCCESSFULLY! ===');
 }
 
 runTests().catch((err) => {

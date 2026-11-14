@@ -12,6 +12,7 @@ import type { PhishingAnalysisResponse } from '@zeroleak/shared-types';
 import { captureUrlInSandbox, validateUrlSafety, type PlaywrightCaptureResult } from './playwright.js';
 import { checkUrlSafeBrowsing, type SafeBrowsingCheckResult } from './safebrowsing.js';
 import { analyzeVisualPhishing, type VisualPhishingAnalysis } from './gemini-analyzer.js';
+import { LruCache, normalizeUrlForCache, defaultUrlAnalysisCache } from './cache.js';
 
 export interface UrlAnalysisOptions {
   timeoutMs?: number;
@@ -21,6 +22,43 @@ export interface UrlAnalysisOptions {
   captureUrl?: (url: string, opts?: any) => Promise<PlaywrightCaptureResult>;
   checkSafeBrowsing?: (url: string, key?: string) => Promise<SafeBrowsingCheckResult>;
   analyzeGemini?: (params: any, opts?: any) => Promise<VisualPhishingAnalysis>;
+  cache?: LruCache<PhishingAnalysisResponse> | null;
+  noCache?: boolean;
+}
+
+const BANK_PATTERNS: Array<{ brand: string; pattern: RegExp; officialDomains: string[] }> = [
+  { brand: 'Vietcombank DigiBank', pattern: /(?:vietcombank|vcb)/i, officialDomains: ['vietcombank.com.vn'] },
+  { brand: 'Techcombank Mobile', pattern: /(?:techcombank|tcb)/i, officialDomains: ['techcombank.com.vn', 'techcombank.com'] },
+  { brand: 'MB Bank', pattern: /(?:mbbank|mb-bank)/i, officialDomains: ['mbbank.com.vn'] },
+  { brand: 'VPBank NEO', pattern: /(?:vpbank|vp-bank)/i, officialDomains: ['vpbank.com.vn'] },
+  { brand: 'BIDV SmartBanking', pattern: /(?:bidv|smartbanking)/i, officialDomains: ['bidv.com.vn'] },
+  { brand: 'Agribank', pattern: /agribank/i, officialDomains: ['agribank.com.vn'] },
+  { brand: 'ACB ONE', pattern: /(?:acb(?:bank)?|online\.acb)/i, officialDomains: ['acb.com.vn'] },
+  { brand: 'TPBank', pattern: /(?:tpbank|tpb)/i, officialDomains: ['tpbank.com.vn', 'tpb.vn'] },
+  { brand: 'Cổng Dịch vụ công Quốc gia', pattern: /(?:dichvucong|vneid|bocongan)/i, officialDomains: ['dichvucong.gov.vn', 'vneid.gov.vn', 'bocongan.gov.vn'] },
+  { brand: 'Facebook / Meta Login', pattern: /(?:facebook|fb-login|meta-security)/i, officialDomains: ['facebook.com', 'meta.com'] },
+  { brand: 'Google Account Authentication', pattern: /(?:google-login|gmail-verify|accounts-google)/i, officialDomains: ['google.com', 'accounts.google.com'] },
+];
+
+export function evaluateDomainBrandHeuristics(rawUrl: string, actualDomain: string): {
+  impersonatedBrand: string | null;
+  riskScore: number;
+  indicator: string | null;
+} {
+  const domain = (actualDomain || '').toLowerCase();
+  for (const item of BANK_PATTERNS) {
+    if (item.pattern.test(rawUrl)) {
+      const isOfficial = item.officialDomains.some((d) => domain === d || domain.endsWith(`.${d}`));
+      if (!isOfficial) {
+        return {
+          impersonatedBrand: item.brand,
+          riskScore: 92,
+          indicator: `CẢNH BÁO GIẢ MẠO: Tên miền ${domain} không thuộc ${item.brand} nhưng chứa từ khóa nhận diện!`,
+        };
+      }
+    }
+  }
+  return { impersonatedBrand: null, riskScore: 0, indicator: null };
 }
 
 export async function coordinateUrlAnalysis(
@@ -28,6 +66,20 @@ export async function coordinateUrlAnalysis(
   options: UrlAnalysisOptions = {}
 ): Promise<PhishingAnalysisResponse> {
   const startTime = Date.now();
+  const cacheKey = normalizeUrlForCache(rawUrl);
+  const cache = options.cache !== undefined ? options.cache : defaultUrlAnalysisCache;
+
+  // 0. Check In-Memory LRU Cache (< 5ms response for stage demo re-scans)
+  if (!options.noCache && cache) {
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      return {
+        ...cached,
+        url: rawUrl,
+        executionTimeMs: Date.now() - startTime,
+      };
+    }
+  }
   const captureSandbox = options.captureUrl ?? captureUrlInSandbox;
   const safeBrowsingCheck = options.checkSafeBrowsing ?? checkUrlSafeBrowsing;
   const geminiAnalyze = options.analyzeGemini ?? analyzeVisualPhishing;
@@ -127,6 +179,19 @@ export async function coordinateUrlAnalysis(
         riskScore = Math.max(riskScore, 50);
         if (verdict === 'SAFE') verdict = 'SUSPICIOUS';
       }
+
+      // Check domain brand heuristics if brand not identified yet
+      if (!impersonatedBrand) {
+        const brandCheck = evaluateDomainBrandHeuristics(rawUrl, captureResult.actualDomain);
+        if (brandCheck.impersonatedBrand) {
+          impersonatedBrand = brandCheck.impersonatedBrand;
+          riskScore = Math.max(riskScore, brandCheck.riskScore);
+          verdict = 'MALICIOUS';
+          if (brandCheck.indicator && !indicators.includes(brandCheck.indicator)) {
+            indicators.unshift(brandCheck.indicator);
+          }
+        }
+      }
     }
   }
 
@@ -134,7 +199,7 @@ export async function coordinateUrlAnalysis(
     indicators.push('Không phát hiện dấu hiệu giả mạo thương hiệu hoặc đánh cắp thông tin');
   }
 
-  return {
+  const result: PhishingAnalysisResponse = {
     url: rawUrl,
     finalRedirectUrl: captureResult.finalRedirectUrl,
     actualDomain: captureResult.actualDomain,
@@ -147,4 +212,11 @@ export async function coordinateUrlAnalysis(
     indicators,
     executionTimeMs: Date.now() - startTime,
   };
+
+  // Cache result for instant retrieval (< 50ms SLO)
+  if (!options.noCache && cache) {
+    cache.set(cacheKey, result);
+  }
+
+  return result;
 }

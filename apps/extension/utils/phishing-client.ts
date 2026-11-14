@@ -41,6 +41,41 @@ const VIETNAMESE_BANKS: Array<{ brand: string; pattern: RegExp; officialDomains:
     officialDomains: ['acb.com.vn'],
   },
   {
+    brand: 'BIDV SmartBanking',
+    pattern: /(?:bidv|smartbanking)/i,
+    officialDomains: ['bidv.com.vn'],
+  },
+  {
+    brand: 'Agribank E-Mobile Banking',
+    pattern: /agribank/i,
+    officialDomains: ['agribank.com.vn'],
+  },
+  {
+    brand: 'TPBank Mobile',
+    pattern: /(?:tpbank|tpb)/i,
+    officialDomains: ['tpbank.com.vn', 'tpb.vn'],
+  },
+  {
+    brand: 'VIB MyVIB',
+    pattern: /(?:vib(?:bank)?|myvib)/i,
+    officialDomains: ['vib.com.vn'],
+  },
+  {
+    brand: 'Sacombank Pay',
+    pattern: /(?:sacombank|sacombankpay)/i,
+    officialDomains: ['sacombank.com.vn', 'sacombank.com'],
+  },
+  {
+    brand: 'Ví MoMo',
+    pattern: /(?:momo\.vn|momo-pay|momo-wallet)/i,
+    officialDomains: ['momo.vn'],
+  },
+  {
+    brand: 'Ví ZaloPay',
+    pattern: /(?:zalopay|zalo-pay)/i,
+    officialDomains: ['zalopay.vn'],
+  },
+  {
     brand: 'Cổng Dịch vụ công Quốc gia',
     pattern: /(?:dichvucong|vneid|bocongan)/i,
     officialDomains: ['dichvucong.gov.vn', 'vneid.gov.vn', 'bocongan.gov.vn'],
