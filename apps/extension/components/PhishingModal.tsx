@@ -7,6 +7,17 @@ interface PhishingModalProps {
 }
 
 export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose }) => {
+  React.useEffect(() => {
+    if (!analysis) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [analysis, onClose]);
+
   if (!analysis) return null;
 
   const isMalicious = analysis.verdict === 'MALICIOUS';
@@ -59,6 +70,7 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
         padding: '20px',
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        pointerEvents: 'auto',
       }}
       onClick={onClose}
     >
@@ -74,6 +86,7 @@ export const PhishingModal: React.FC<PhishingModalProps> = ({ analysis, onClose 
           color: '#f8fafc',
           display: 'flex',
           flexDirection: 'column',
+          pointerEvents: 'auto',
         }}
         onClick={(e) => e.stopPropagation()}
       >

@@ -11,14 +11,17 @@ import {
   Lock,
   Eye,
   AlertTriangle,
+  AlertCircle,
   CheckCircle2,
   Sliders,
   QrCode,
   Search,
   ExternalLink,
   Mic,
+  Loader2,
 } from 'lucide-react';
 import { analyzeUrlWithSandbox } from '../../utils/phishing-client';
+import { decodeQrFromImageSource } from '../../utils/qr-scanner';
 
 export default function App() {
   const [policy, setPolicy] = useState<SecurityPolicy>(DEFAULT_SECURITY_POLICY);
@@ -27,6 +30,9 @@ export default function App() {
   const [urlToCheck, setUrlToCheck] = useState('');
   const [checkingUrl, setCheckingUrl] = useState(false);
   const [urlResult, setUrlResult] = useState<PhishingAnalysisResponse | null>(null);
+  const [scanningQr, setScanningQr] = useState(false);
+  const [qrStatusText, setQrStatusText] = useState<string | null>(null);
+  const [qrError, setQrError] = useState<string | null>(null);
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: 'GET_POLICY' }, (response) => {
@@ -69,10 +75,107 @@ export default function App() {
     });
   };
 
-  const triggerQrScanOnTab = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'TRIGGER_QR_SCAN' });
+  const handleDirectTabQrScan = async () => {
+    setScanningQr(true);
+    setQrStatusText('Đang chụp màn hình tab...');
+    setQrError(null);
+
+    try {
+      const dataUrl = await new Promise<string | null>((resolve) => {
+        chrome.tabs.captureVisibleTab({ format: 'png' }, (result) => {
+          if (chrome.runtime.lastError || !result) {
+            resolve(null);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      if (!dataUrl) {
+        setQrError('Không thể chụp ảnh tab này do giới hạn bảo mật của trình duyệt.');
+        setScanningQr(false);
+        return;
+      }
+
+      setQrStatusText('Đang giải mã mã QR...');
+      const qrResult = await decodeQrFromImageSource(dataUrl);
+
+      if (!qrResult || !qrResult.data) {
+        setQrError('Không phát hiện thấy mã QR rõ ràng trên màn hình. Hãy đảm bảo mã QR nằm trong khung hiển thị.');
+        setScanningQr(false);
+        return;
+      }
+
+      const qrData = qrResult.data.trim();
+      const isUrl = /^https?:\/\//i.test(qrData) || /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/i.test(qrData);
+
+      if (isUrl) {
+        const fullUrl = qrData.startsWith('http') ? qrData : `https://${qrData}`;
+        setUrlToCheck(fullUrl);
+        setCheckingUrl(true);
+        setQrStatusText('Đang phân tích an toàn liên kết...');
+        const analysis = await analyzeUrlWithSandbox(fullUrl, 'QR_CODE');
+        setUrlResult(analysis);
+      } else {
+        setUrlResult({
+          url: qrData,
+          finalRedirectUrl: qrData,
+          riskScore: 0,
+          verdict: 'SAFE',
+          impersonatedBrand: null,
+          actualDomain: 'Nội dung QR (Văn bản)',
+          hasPasswordInput: false,
+          hasOtpInput: false,
+          indicators: [`Nội dung mã QR: "${qrData}"`],
+          executionTimeMs: 12,
+        });
+      }
+    } catch (err: any) {
+      setQrError('Lỗi trong quá trình quét QR: ' + (err?.message || 'Không xác định'));
+    } finally {
+      setScanningQr(false);
+      setQrStatusText(null);
+    }
+  };
+
+  const triggerQrScanOnTab = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.id) return;
+
+    setQrError(null);
+
+    // If tab URL is restricted scheme where content script cannot be injected (blob:, chrome:, about:, etc.)
+    const isRestrictedScheme =
+      tab.url?.startsWith('blob:') ||
+      tab.url?.startsWith('chrome:') ||
+      tab.url?.startsWith('chrome-extension:') ||
+      tab.url?.startsWith('about:') ||
+      tab.url?.startsWith('edge:');
+
+    if (isRestrictedScheme) {
+      // Execute Direct Capture & Scan immediately inside popup
+      await handleDirectTabQrScan();
+      return;
+    }
+
+    // Try sending message to existing content script
+    chrome.tabs.sendMessage(tab.id, { type: 'TRIGGER_QR_SCAN' }, async () => {
+      if (chrome.runtime.lastError) {
+        // Content script not loaded yet (e.g. unrefreshed tab), attempt dynamic injection
+        try {
+          await chrome.scripting.executeScript({
+            target: { tabId: tab.id! },
+            files: ['content-scripts/content.js'],
+          });
+          setTimeout(() => {
+            chrome.tabs.sendMessage(tab.id!, { type: 'TRIGGER_QR_SCAN' });
+            window.close();
+          }, 150);
+        } catch {
+          // If dynamic injection also fails, fallback to direct tab capture
+          await handleDirectTabQrScan();
+        }
+      } else {
         window.close();
       }
     });
@@ -171,11 +274,23 @@ export default function App() {
       <div className="mt-3">
         <button
           onClick={triggerQrScanOnTab}
-          className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 rounded-xl font-medium transition-all text-[11px]"
+          disabled={scanningQr}
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 rounded-xl font-medium transition-all text-[11px] disabled:opacity-60"
         >
-          <QrCode className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Khoanh vùng quét mã QR trên màn hình</span>
+          {scanningQr ? (
+            <Loader2 className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+          ) : (
+            <QrCode className="w-3.5 h-3.5 text-emerald-400" />
+          )}
+          <span>{qrStatusText || 'Khoanh vùng quét mã QR trên màn hình'}</span>
         </button>
+
+        {qrError && (
+          <div className="mt-2 p-2 rounded-lg bg-rose-950/40 border border-rose-800 text-rose-300 text-[10px] flex items-start gap-1.5">
+            <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+            <span>{qrError}</span>
+          </div>
+        )}
       </div>
 
       {/* Quick URL Phishing Check */}

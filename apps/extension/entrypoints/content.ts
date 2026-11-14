@@ -22,6 +22,8 @@ import { analyzeUrlWithSandbox } from '../utils/phishing-client';
 
 export default defineContentScript({
   matches: ['<all_urls>'],
+  matchOriginAsFallback: true,
+  allFrames: true,
   runAt: 'document_start',
 
   main(ctx) {

@@ -52,6 +52,22 @@ export default defineBackground(() => {
       console.log('[ZeroLeak Background] Triggering interactive QR scan');
       chrome.tabs.sendMessage(tab.id, {
         type: 'TRIGGER_QR_SCAN',
+      }, () => {
+        if (chrome.runtime.lastError) {
+          chrome.scripting
+            .executeScript({
+              target: { tabId: tab.id! },
+              files: ['content-scripts/content.js'],
+            })
+            .then(() => {
+              setTimeout(() => {
+                chrome.tabs.sendMessage(tab.id!, { type: 'TRIGGER_QR_SCAN' });
+              }, 150);
+            })
+            .catch((err) => {
+              console.warn('[ZeroLeak Background] Dynamic script injection not supported on this tab:', err);
+            });
+        }
       });
     }
   });

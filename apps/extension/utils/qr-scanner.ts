@@ -60,8 +60,10 @@ export async function decodeQrFromImageSource(imageSrc: string): Promise<QrScanR
     img.onload = () => {
       try {
         const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth || img.width;
-        canvas.height = img.naturalHeight || img.height;
+        const origWidth = img.naturalWidth || img.width;
+        const origHeight = img.naturalHeight || img.height;
+        canvas.width = origWidth;
+        canvas.height = origHeight;
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
@@ -69,11 +71,34 @@ export async function decodeQrFromImageSource(imageSrc: string): Promise<QrScanR
           return;
         }
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        resolve(decodeQrFromImageData(imageData));
+        ctx.drawImage(img, 0, 0, origWidth, origHeight);
+        let imageData = ctx.getImageData(0, 0, origWidth, origHeight);
+        let result = decodeQrFromImageData(imageData);
+        if (result) {
+          resolve(result);
+          return;
+        }
+
+        // Multi-scale fallback: If image is high-res (>1200px), downscale to 1000px max
+        if (origWidth > 1200 || origHeight > 1200) {
+          const scale = 1000 / Math.max(origWidth, origHeight);
+          const scaledW = Math.round(origWidth * scale);
+          const scaledH = Math.round(origHeight * scale);
+
+          canvas.width = scaledW;
+          canvas.height = scaledH;
+          ctx.drawImage(img, 0, 0, scaledW, scaledH);
+          imageData = ctx.getImageData(0, 0, scaledW, scaledH);
+          result = decodeQrFromImageData(imageData);
+          if (result) {
+            resolve(result);
+            return;
+          }
+        }
+
+        resolve(null);
       } catch (e) {
-        console.error('[PhishGuard QR] Image processing error:', e);
+        console.error('[ZeroLeak QR] Image processing error:', e);
         resolve(null);
       }
     };
