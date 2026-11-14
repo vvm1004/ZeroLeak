@@ -268,7 +268,7 @@ export async function analyzeUrlWithSandbox(
       body: JSON.stringify({
         url,
         sourceContext,
-        timeoutMs: 2500,
+        timeoutMs: 6000,
       }),
       signal: controller.signal,
     });

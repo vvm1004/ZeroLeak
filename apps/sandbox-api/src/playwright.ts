@@ -350,12 +350,13 @@ export async function captureUrlInSandbox(
         const screenshotBuffer = await page.screenshot({
           type: 'webp',
           quality: 70,
-          timeout: 2500,
+          timeout: 4000,
         });
         screenshotBase64 = screenshotBuffer.toString('base64');
+        console.log(`[ZeroLeak Lens] 📸 Ảnh chụp Sandbox thành công (${Math.round(screenshotBuffer.length / 1024)}KB)`);
       }
-    } catch {
-      // Ignored if screenshot failed (e.g. empty or unreachable page)
+    } catch (shotErr: any) {
+      console.warn('[ZeroLeak Lens] ⚠️ Không chụp được ảnh Sandbox:', shotErr?.message);
     }
 
     return {
@@ -373,6 +374,7 @@ export async function captureUrlInSandbox(
       errorMessage,
     };
   } catch (err: any) {
+    console.error('[ZeroLeak Lens] ❌ Lỗi khởi chạy Playwright:', err?.message);
     return {
       url: rawUrl,
       finalRedirectUrl: rawUrl,

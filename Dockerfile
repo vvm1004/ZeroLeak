@@ -11,6 +11,9 @@ COPY . .
 # Cài đặt dependencies
 RUN pnpm install --no-frozen-lockfile
 
+# Cài đặt browser Chromium cho Playwright
+RUN pnpm --filter @zeroleak/sandbox-api exec playwright install chromium
+
 # Build shared-types và sandbox-api
 RUN pnpm --filter @zeroleak/shared-types build && pnpm --filter @zeroleak/sandbox-api build
 
