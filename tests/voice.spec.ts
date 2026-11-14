@@ -244,3 +244,18 @@ test('provider fixture shows the actual Flash fallback rather than claiming Live
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: testInfo.outputPath('voice-fallback-provenance.png'), fullPage: true });
 });
+
+
+test('Gemini task estimate is shown separately from a benign content verdict without a local worker', async () => {
+  await context.route('**/api/v1/analyze-voice', route => route.fulfill({status:200,json:{
+    riskScore:0,verdict:'SAFE',syntheticVoiceProbability:.9,detectedTactics:[],tacticEvidence:[],
+    transcriptSnippet:'Chiều nay họp nhóm nhé.',warningMessageVi:'Chưa thấy dấu hiệu lừa đảo trong đoạn này.',
+    executionTimeMs:1500,audioQuality:'CLEAR',assessmentSource:'GEMINI_AUDIO',analysisModel:'gemini-task-fixture',
+    analysisTransport:'LIVE_API',fallbackUsed:false,providerAttempts:[{model:'gemini-task-fixture',transport:'LIVE_API',status:'SUCCEEDED'}],contentAnalysis:{status:'AVAILABLE'},
+  }}));
+  await page.getByLabel('Chọn file âm thanh để phân tích 5 giây đầu').setInputFiles({name:'sample.wav',mimeType:'audio/wav',buffer:fixtureWav()});
+  await expect(page.getByRole('heading',{name:'Chưa thấy kịch bản lừa đảo'})).toBeVisible();
+  await expect(page.getByText('90% · ước lượng mô hình',{exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'Kiểm tra tín hiệu giọng nói'})).toHaveCount(0);
+  await expect(page.getByText(/Model phân tích nội dung:.*gemini-task-fixture/)).toBeVisible();
+});

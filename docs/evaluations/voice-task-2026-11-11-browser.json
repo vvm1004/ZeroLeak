@@ -1,0 +1,75 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "Two fixed known development clips through default task-aligned Gemini strategy; no retries, not unseen accuracy or physical calls",
+  "plannedCases": 2,
+  "maxProviderSessionUpperBound": 6,
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "scam": true,
+      "roundTripMs": 3404,
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 95,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "syntheticVoiceProbability": null,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "status": "RESULT"
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "scam": false,
+      "roundTripMs": 2429,
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "GEMINI_AUDIO",
+      "acousticAnalysis": null,
+      "detectedTactics": [],
+      "syntheticVoiceProbability": 0,
+      "localWorkerResultPresent": false,
+      "uiShowsSynthesisEstimate": true,
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "status": "RESULT"
+    }
+  ]
+}

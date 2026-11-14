@@ -59,9 +59,10 @@ function redact(text: string): string {
     .replace(/\b(?:AIza[\w-]+|sk-[\w-]+|ghp_[\w-]+|AQ\.[\w-]+)\b/g, '[KHÓA ĐÃ ẨN]');
 }
 
-export function parseVoiceResult(text: string, model: string, executionTimeMs: number): VoiceScamAnalysisResult {
+export function parseVoiceResult(text: string, model: string, executionTimeMs: number, assessSynthetic = false): VoiceScamAnalysisResult {
   let raw: Record<string, unknown>;
   try { raw = JSON.parse(text); } catch { throw new VoiceAnalysisError('INVALID_RESULT'); }
+  if (assessSynthetic && (!raw || typeof raw !== 'object' || !Object.hasOwn(raw, 'syntheticVoiceProbability'))) throw new VoiceAnalysisError('INVALID_RESULT');
   if (raw && typeof raw === 'object' && !Array.isArray(raw) && raw.findings !== undefined) {
     if (!SPEECH_ACTS.includes(raw.speechAct as typeof SPEECH_ACTS[number]) || !Array.isArray(raw.findings) || raw.findings.length > 4 ||
         raw.findings.some(item => !item || typeof item !== 'object' || !TACTICS.includes(item.tactic) || typeof item.quote !== 'string')) {
@@ -69,7 +70,7 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
     }
     const findings = raw.findings as { tactic: ScamTacticType; quote: string }[];
     raw = { ...raw, detectedTactics: findings.map(item => item.tactic), tacticEvidence: findings,
-      syntheticVoiceProbability: null,
+      syntheticVoiceProbability: assessSynthetic ? raw.syntheticVoiceProbability : null,
       warningMessageVi: raw.verdict === 'SAFE' ? 'Chưa thấy dấu hiệu lừa đảo trong đoạn này. Kết quả không xác minh danh tính người gọi.'
         : findings.some(item => item.tactic === 'OTP_OR_CREDENTIAL_ASK') ? 'Không chia sẻ OTP, mật khẩu hoặc mã xác thực. Hãy ngắt cuộc gọi và xác minh qua số chính thức.'
         : 'Tạm dừng cung cấp thông tin hoặc chuyển tiền. Xác minh yêu cầu qua kênh chính thức đã biết.' };
@@ -123,4 +124,13 @@ export function parseVoiceResult(text: string, model: string, executionTimeMs: n
   };
 }
 
+/** Task 2.4: Gemini assesses acoustic synthesis separately from the content verdict. */
+export const voiceTaskSchema = { ...schema,
+  properties: { ...schema.properties, syntheticVoiceProbability: { type: Type.NUMBER, nullable: true } },
+  required: [...schema.required, 'syntheticVoiceProbability'],
+};
+export const voiceTaskInstruction = instruction.replace(
+  'Chỉ đánh giá nội dung, không đoán giọng AI hoặc danh tính.',
+  'Đánh giá riêng dấu hiệu giọng tổng hợp từ âm thanh. Trả syntheticVoiceProbability từ 0 đến 1 hoặc null nếu chưa đủ bằng chứng. Đây là ước lượng chưa hiệu chuẩn, không xác minh danh tính. Không suy giọng giả từ nội dung OTP/chuyển tiền, không suy giọng thật từ lời nói bình thường. Không nghe rõ thì trả null. Điểm này không tự đổi riskScore, verdict hoặc detectedTactics.',
+);
 export { schema as voiceResultSchema, instruction as voiceResultInstruction };

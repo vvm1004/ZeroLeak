@@ -1,0 +1,48 @@
+{
+  "backendTests": 79,
+  "clientTests": 5,
+  "chromeFixtureTests": 13,
+  "backendBuild": "passed",
+  "backendAndCliTypecheck": "passed",
+  "realBrowserCases": 2,
+  "realBrowserContentCorrect": 2,
+  "realBrowserSynthesis": {
+    "unknown": 1,
+    "lowScoredSynthetic": 1,
+    "alerts": 0
+  },
+  "defaultStrategy": "gemini",
+  "realBrowserFallbackUsed": false,
+  "realBrowserLocalResultPresent": false,
+  "productionMatchesFrozenCandidateFiles": [
+    "app.ts",
+    "voice-acoustic.ts",
+    "voice-analyzer.ts",
+    "voice-evaluation.ts",
+    "voice-input.ts",
+    "voice-live-output.ts",
+    "voice-live.ts",
+    "voice-result.ts",
+    "voice-service.ts"
+  ],
+  "comparisonCalls": 40,
+  "developmentCalls": 4,
+  "browserCalls": 2,
+  "totalProviderCalls": 46,
+  "providerCallCap": 54,
+  "baselineCommit": "41354a70e24a8d1cd46687beb558258c02fb89ca",
+  "acousticHeadUnchanged": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "test6Accepted": false,
+  "cliDryRuns": {
+    "gemini": {
+      "strategy": "gemini",
+      "providerCalls": 0,
+      "setupSha256": "c25b226bc6d9d6aac00bf011b324e7899925ea54712515a2f989d4a677cc444e"
+    },
+    "hybrid": {
+      "strategy": "hybrid",
+      "providerCalls": 0,
+      "setupSha256": "d6245fa7afc67d235584b882a75e608daafc2d4b891773ccb5fa1cc8812f47f4"
+    }
+  }
+}

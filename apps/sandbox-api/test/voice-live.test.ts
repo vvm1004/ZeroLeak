@@ -321,3 +321,26 @@ test('a newer malformed Thinking utterance invalidates an older SAFE candidate',
   await assert.rejects(pending, (error: unknown) => error instanceof VoiceAnalysisError && error.code === 'INVALID_RESULT');
   assert.equal(socket.closes, 1);
 });
+
+
+test('task synthesis survives Extended IN_PROGRESS to IDLE and standard Live tool output', async () => {
+  for(const model of [EXTENDED,'gemini-3.8-live']){
+    const socket=new Socket();
+    const pending=analyzeLiveVoice(input(),model,{socketFactory:()=>socket,assessSynthetic:true});
+    socket.open();socket.receive({setupComplete:{}});socket.receive({serverContent:{inputTranscription:{text:'Đọc mã OTP ngay cho tôi.',finished:true}}});
+    if(model===EXTENDED){
+      socket.receive({serverContent:{outputTranscription:{text:JSON.stringify({...compactAnswer(),p:.05})},turnComplete:true,interactionStatus:'IN_PROGRESS'}});
+      socket.receive({serverContent:{interactionStatus:'IDLE'}});
+    }else socket.receive(report({...answer(),syntheticVoiceProbability:.05}));
+    const result=await pending;assert.equal(result.syntheticVoiceProbability,.05);assert.equal(result.verdict,'SUSPICIOUS');assert.equal(socket.closes,1);
+  }
+});
+
+test('task synthesis is requested and retained when both Live providers fail and Flash succeeds', async () => {
+  route('task-flash');const calls:string[]=[];
+  const result=await analyzeAudioScam(input(),{assessSynthetic:true,socketFactory:routedFactory(()=>true,calls),generate:async params=>{
+    calls.push(params.model);assert.ok(params.config?.responseSchema?.required?.includes('syntheticVoiceProbability'));
+    return {text:JSON.stringify({...answer(),syntheticVoiceProbability:.15})};
+  }});
+  assert.equal(result.syntheticVoiceProbability,.15);assert.equal(result.fallbackUsed,true);assert.equal(result.analysisTransport,'GENERATE_CONTENT');assert.equal(calls.length,3);
+});

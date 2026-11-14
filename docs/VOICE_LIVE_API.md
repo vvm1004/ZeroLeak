@@ -1,13 +1,15 @@
 # ZeroLeak Voice với Gemini 3.8 Live — 2026-11-11
 
+**Mặc định mới:** `VOICE_ANALYSIS_STRATEGY=gemini`, Gemini đánh giá cả nội dung và dấu hiệu tổng hợp, không gọi worker 8081. Xem [triển khai theo task và phép so sánh với hybrid](VOICE_TASK_COMPARISON.md). Các mô tả/số đo bên dưới lưu snapshot hybrid `41354a7`; task mode thêm `p` vào JSON gọn và trả `syntheticVoiceProbability` chưa hiệu chuẩn hoặc null.
+
 Đã sửa khác biệt với TASK: model mặc định thực sự là **`gemini-3.8-live-extended-thinking`**,
 gọi Live API bằng WebSocket. Không gửi tên Live model vào `generateContent`.
-**Bản tối ưu Extended hiện tại: 70 test backend, typecheck/build và hai ca Chrome với API thật qua.**
+**Snapshot hybrid `41354a7`: 70 test backend, typecheck/build và hai ca Chrome với API thật qua.**
 [Test A/B và sáu câu mới](VOICE_EXTENDED_IMPROVEMENTS.md) cải thiện số lượt có kết luận;
 **chưa nghiệm thu Test 6 dưới 3 giây**. 5 test client/12 E2E fixture của bản trước giữ làm lịch sử, không phải accuracy AI.
 Các kết quả Flash-Lite trong tài liệu trước không phải benchmark của 3.8.
 
-## Luồng hiện tại
+## Luồng hybrid đã đo ở bản 41354a7
 
 Extension → WAV PCM16 mono 16 kHz, 0,5–5 giây → `/api/v1/analyze-voice` → hai nhánh song song:
 

@@ -382,3 +382,36 @@ test('owned deadlines open cooldown while user cancellation releases a recovery 
   assert.equal((await analyzeAudioScam(payload(), { generate: async () => { calls++; return { text: JSON.stringify(answer()) }; } })).verdict, 'SUSPICIOUS');
   assert.equal(calls, 5);
 });
+
+
+test('default HTTP strategy returns Gemini synthesis and never contacts a configured local worker', async () => {
+  const oldSocket=globalThis.WebSocket,oldFetch=globalThis.fetch;
+  let localCalls=0;
+  class TaskSocket extends EventTarget {
+    static fail=false;readyState=0;binaryType: BinaryType='arraybuffer';task=false;
+    constructor(_url:string|URL){super();queueMicrotask(()=>{this.readyState=1;this.dispatchEvent(new Event('open'));});}
+    close(){this.readyState=3;}
+    receive(value:unknown){this.dispatchEvent(new MessageEvent('message',{data:JSON.stringify(value)}));}
+    send(data:string){const m=JSON.parse(data);
+      if(m.setup){this.task=m.setup.systemInstruction.parts[0].text.includes('p is your uncalibrated');queueMicrotask(()=>this.receive(TaskSocket.fail?{error:{code:503}}:{setupComplete:{}}));}
+      if(m.realtimeInput?.activityEnd)queueMicrotask(()=>this.receive({serverContent:{inputTranscription:{text:'Hãy đọc mã OTP 123456.',finished:true}}}));
+      if(m.clientContent)queueMicrotask(()=>this.receive({serverContent:{outputTranscription:{text:JSON.stringify({a:0,v:1,r:90,q:0,f:[[2,'Hãy đọc mã OTP']],...(this.task?{p:.05}:{})})},interactionStatus:'IDLE'}}));
+    }
+  }
+  globalThis.WebSocket=TaskSocket as unknown as typeof WebSocket;
+  globalThis.fetch=async()=>{localCalls++;return new Response(JSON.stringify({status:'AVAILABLE',source:'LOCAL_XLSR_AASIST',score:.95,scoreCalibrated:false,verdict:'SYNTHETIC_SUSPECTED',modelVersion:'a'.repeat(64),executionTimeMs:1}));};
+  process.env.GEMINI_API_KEY='fixture-only';process.env.GEMINI_MODEL_VOICE='gemini-task-http-live-extended-thinking';
+  delete process.env.VOICE_ANALYSIS_STRATEGY;delete process.env.VOICE_API_TOKEN;process.env.NODE_ENV='test';
+  process.env.VOICE_ACOUSTIC_URL='http://127.0.0.1:8081';
+  const post=()=>createApp().request('/api/v1/analyze-voice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload())});
+  try{
+    const response=await post();assert.equal(response.status,200);const body=await response.json();
+    assert.equal(body.syntheticVoiceProbability,.05);assert.equal(body.verdict,'SUSPICIOUS');assert.equal(body.assessmentSource,'GEMINI_AUDIO');
+    assert.equal(body.acousticAnalysis,undefined);assert.equal(localCalls,0);assert.equal(body.fallbackUsed,false);
+    process.env.VOICE_ANALYSIS_STRATEGY='hybrid';
+    const hybrid=await post();assert.equal(hybrid.status,200);const both=await hybrid.json();
+    assert.equal(both.syntheticVoiceProbability,null);assert.equal(both.acousticAnalysis.score,.95);assert.equal(both.assessmentSource,'HYBRID_AUDIO');assert.equal(localCalls,1);
+    process.env.VOICE_ANALYSIS_STRATEGY='gemini';process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK=process.env.GEMINI_MODEL_VOICE;process.env.GEMINI_MODEL_VOICE_FALLBACK=process.env.GEMINI_MODEL_VOICE;TaskSocket.fail=true;
+    const failed=await post();assert.equal(failed.status,502);const failure=await failed.json();assert.equal(failure.error.code,'PROVIDER_ERROR');assert.equal(failure.verdict,undefined);assert.equal(localCalls,1);
+  }finally{globalThis.WebSocket=oldSocket;globalThis.fetch=oldFetch;}
+});

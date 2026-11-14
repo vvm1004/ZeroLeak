@@ -9,17 +9,23 @@ import type { VoiceProviderAttempt } from '@zeroleak/shared-types';
 import { GoogleGenAI, type GenerateContentParameters } from '@google/genai';
 import { analyzeAudioScam, createVoiceGenerationRequest, parseVoiceResult, VoiceAnalysisError, voiceModelRoute } from '../src/voice-analyzer.js';
 import { analyzeLiveVoice, createVoiceLiveSetup, isLiveVoiceModel } from '../src/voice-live.js';
+import { analyzeVoiceWithAcoustic } from '../src/voice-acoustic.js';
+import { voiceAnalysisStrategy } from '../src/voice-service.js';
 import { parseVoiceRequest } from '../src/voice-input.js';
 import { summarizeVoiceEvaluation, type VoiceEvalCase, type VoiceEvalRow } from '../src/voice-evaluation.js';
 
 dotenv.config({ path: fileURLToPath(new URL('../../../.env', import.meta.url)), quiet: true });
 const { values } = parseArgs({ options: {
-  manifest: { type: 'string' }, output: { type: 'string' }, model: { type: 'string' },
+  strategy: { type: 'string' }, manifest: { type: 'string' }, output: { type: 'string' }, model: { type: 'string' },
   mode: { type: 'string', default: 'realtime' }, threshold: { type: 'string', default: '0.5' },
   limit: { type: 'string', default: '24' }, 'max-calls': { type: 'string', default: '32' },
   'interval-ms': { type: 'string', default: '6000' }, 'quality-timeout-ms': { type: 'string', default: '20000' },
   split: { type: 'string' }, ids: { type: 'string' }, 'dry-run': { type: 'boolean', default: false },
 } });
+const strategy = values.strategy ?? voiceAnalysisStrategy();
+if (!['gemini', 'hybrid'].includes(strategy)) throw new Error('strategy must be gemini or hybrid');
+if (values.mode === 'quality' && strategy === 'hybrid') throw new Error('Quality mode is single-model Gemini only; use review for hybrid.');
+const assessSynthetic = strategy === 'gemini';
 if (!values.manifest || !values.output) throw new Error('Required: --manifest <cases.json> --output <new-report.json>');
 if (!['quality', 'realtime', 'review'].includes(values.mode!)) throw new Error('mode must be quality, realtime or review');
 if (values.split && !['screening', 'dev', 'test'].includes(values.split)) throw new Error('Invalid split');
@@ -64,10 +70,10 @@ if (!output.endsWith('.json') || existsSync(output)) throw new Error('Output mus
 const configuredRoute = voiceModelRoute({ analysisMode: values.mode === 'review' ? 'review' : 'realtime' });
 const primaryModel = values.model ?? configuredRoute[0];
 const evaluationRoute = values.model ? [values.model] : configuredRoute;
-const definition = isLiveVoiceModel(primaryModel) ? createVoiceLiveSetup(primaryModel)
-  : createVoiceGenerationRequest({ mimeType: 'audio/wav', audioBase64: '' }, primaryModel, new AbortController().signal);
+const definition = isLiveVoiceModel(primaryModel) ? createVoiceLiveSetup(primaryModel, assessSynthetic)
+  : createVoiceGenerationRequest({ mimeType: 'audio/wav', audioBase64: '' }, primaryModel, new AbortController().signal, assessSynthetic);
 const meta = {
-  createdAt: new Date().toISOString(), dataset: manifest.name ?? 'local dataset',
+  createdAt: new Date().toISOString(), strategy, voiceScoreSource: assessSynthetic ? 'GEMINI_UNCALIBRATED' : 'LOCAL_XLSR_AASIST', dataset: manifest.name ?? 'local dataset',
   limitations: manifest.limitations ?? [], mode: values.mode, requestedModel: values.model ?? 'production-router',
   productionDeadlineMs: values.mode === 'review' ? 15000 : 3100, qualityDeadlineMs: values.mode === 'quality' ? qualityTimeout : null,
   threshold, thresholdWasTunedOnThisRun: false, maxProviderCalls: maxCalls,
@@ -75,7 +81,7 @@ const meta = {
   labelsSentToProvider: false, realApi: !values['dry-run'],
   manifestSha256: createHash('sha256').update(manifestBytes).digest('hex'),
   requestDefinitionSha256: createHash('sha256').update(JSON.stringify(definition)).digest('hex'),
-  analyzerCodeSha256: createHash('sha256').update(Buffer.concat(['voice-analyzer.ts','voice-live.ts','voice-live-output.ts','voice-result.ts','voice-input.ts'].map(file => readFileSync(new URL('../src/' + file, import.meta.url))))).digest('hex'),
+  analyzerCodeSha256: createHash('sha256').update(Buffer.concat(['voice-analyzer.ts','voice-live.ts','voice-live-output.ts','voice-result.ts','voice-input.ts','voice-service.ts','voice-acoustic.ts'].map(file => readFileSync(new URL('../src/' + file, import.meta.url))))).digest('hex'),
   selectedSplit: values.split ?? 'explicit selection', plannedCases: selected.length, sourceGroups: new Set(selected.map(row => row.originId)).size,
 };
 if (values['dry-run']) {
@@ -133,7 +139,9 @@ if (values['dry-run']) {
         const originalPrimary = process.env.GEMINI_MODEL_VOICE, originalFallback = process.env.GEMINI_MODEL_VOICE_FALLBACK;
         const originalReview = process.env.GEMINI_MODEL_VOICE_REVIEW, originalLiveFallback = process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK;
         if (values.model) { process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK = values.model; process.env.GEMINI_MODEL_VOICE = values.model; process.env.GEMINI_MODEL_VOICE_FALLBACK = values.model; process.env.GEMINI_MODEL_VOICE_REVIEW = values.model; }
-        try { result = await analyzeAudioScam(input, { generate, socketFactory }); }
+        try { result = assessSynthetic
+          ? await analyzeAudioScam(input, { generate, socketFactory, assessSynthetic: true })
+          : await analyzeVoiceWithAcoustic(input, new AbortController().signal, { content: (audio, signal) => analyzeAudioScam(audio, { generate, socketFactory, signal }) }); }
         finally {
           if (originalLiveFallback === undefined) delete process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK; else process.env.GEMINI_MODEL_VOICE_LIVE_FALLBACK = originalLiveFallback;
           if (originalReview === undefined) delete process.env.GEMINI_MODEL_VOICE_REVIEW; else process.env.GEMINI_MODEL_VOICE_REVIEW = originalReview;
@@ -141,21 +149,21 @@ if (values['dry-run']) {
           if (originalFallback === undefined) delete process.env.GEMINI_MODEL_VOICE_FALLBACK; else process.env.GEMINI_MODEL_VOICE_FALLBACK = originalFallback;
         }
       } else if (isLiveVoiceModel(values.model!)) {
-        result = await analyzeLiveVoice(input, values.model!, { budgetMs: qualityTimeout, socketFactory });
+        result = await analyzeLiveVoice(input, values.model!, { budgetMs: qualityTimeout, socketFactory, assessSynthetic });
       } else {
         const controller = new AbortController();
         let rejectTimeout!: () => void;
         const timeout = new Promise<never>((_, reject) => { rejectTimeout = () => reject(new VoiceAnalysisError('TIMEOUT')); });
         const timer = setTimeout(() => { controller.abort(); rejectTimeout(); }, qualityTimeout);
         try {
-          const request = createVoiceGenerationRequest(input, values.model!, controller.signal);
+          const request = createVoiceGenerationRequest(input, values.model!, controller.signal, assessSynthetic);
           request.config!.httpOptions!.timeout = qualityTimeout;
           const response = await Promise.race([generate(request), timeout]);
-          result = parseVoiceResult(response.text ?? '', values.model!, Math.round(performance.now() - started));
+          result = parseVoiceResult(response.text ?? '', values.model!, Math.round(performance.now() - started), assessSynthetic);
         } finally { clearTimeout(timer); }
       }
       row.providerAttempts = result.providerAttempts;
-      row.syntheticScore = result.syntheticVoiceProbability;
+      row.syntheticScore = assessSynthetic ? result.syntheticVoiceProbability : result.acousticAnalysis?.status === 'AVAILABLE' ? result.acousticAnalysis.score : null;
       row.contentVerdict = result.verdict;
       row.contentAlert = result.riskScore === null || result.audioQuality === 'UNUSABLE' ? null : result.detectedTactics.length > 0;
       row.detectedTactics = result.detectedTactics;

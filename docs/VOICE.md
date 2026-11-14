@@ -1,5 +1,7 @@
 # ZeroLeak Voice
 
+**Luồng mặc định theo task:** `VOICE_ANALYSIS_STRATEGY=gemini`, Gemini đánh giá cả nội dung và dấu hiệu giọng tổng hợp; không cần worker Python. `hybrid` giữ bản cũ để so sánh. Xem [kết quả và cách chuyển](VOICE_TASK_COMPARISON.md).
+
 **Model hiện tại:** [Gemini 3.8 Live Extended Thinking theo TASK](VOICE_LIVE_API.md).
 
 **Cập nhật tiếp theo 2026-11-11:** [backoff, readiness và kiểm thử theo nhịp live](VOICE_FOLLOWUP.md).
@@ -9,8 +11,8 @@ Xem thêm [cách test bằng chứng, lỗi Gemini và review file](VOICE_TESTIN
 Review là tùy chọn thử nghiệm tối đa 15 giây; thu micro/tab giữ deadline cũ.
 
 Mục 2.4 của TASK.md: thu âm, phân tích âm thanh bằng Gemini, và cảnh báo trong extension.
-Đã có [detector âm học V3 chạy local bằng PyTorch](VOICE_DETECTOR_V3.md), kết hợp với Gemini phân tích
-nội dung. Xem hướng dẫn V3 để chạy worker, kết quả benchmark và giới hạn; phần Gemini vẫn hoạt động
+Có [detector âm học V3 chạy local bằng PyTorch](VOICE_DETECTOR_V3.md) trong chế độ `hybrid`, kết hợp với Gemini phân tích
+nội dung. Chế độ `gemini` không gọi detector này. Xem hướng dẫn V3 để chạy worker, kết quả benchmark và giới hạn; phần Gemini vẫn hoạt động
 khi chưa bật worker. [Báo cáo đối chiếu ban đầu](VOICE_IMPROVEMENTS.md) lưu lại các bước trước V2.
 
 ## Chạy local
@@ -66,12 +68,12 @@ Chấp nhận PCM16 mono 16 kHz dài 0,5–5 giây, tối đa 160.044 byte. Serv
 số frame và tín hiệu im lặng. WAV được chọn để mỗi cửa sổ đều đọc độc lập, tránh gửi các fragment WebM
 không có header. File WebM/MP3 có thể chọn trong giao diện nếu Chrome giải mã được; server nhận WAV đã chuyển.
 
-Schema Gemini mới chỉ đánh giá nội dung; trường `syntheticVoiceProbability` giữ để tương thích nhưng
-được trả null. Xem `acousticAnalysis` để đánh giá giọng tổng hợp từ worker local.
+Ở chế độ mặc định `gemini`, model đánh giá cả hai và trả `syntheticVoiceProbability` từ 0 đến 1 hoặc null khi chưa đủ bằng chứng. Đây là ước lượng chưa hiệu chuẩn; UNKNOWN nội dung không tự xóa ước lượng âm học. Không suy giọng giả từ lời đòi OTP.
+Ở chế độ `hybrid`, Gemini chỉ đánh giá nội dung, trường này null; xem `acousticAnalysis` từ worker V3. Hợp đồng kết quả giữ nguyên, không cần thay client.
 
 Kết quả có `riskScore`, `verdict`, `syntheticVoiceProbability`, `detectedTactics`, `transcriptSnippet`,
 `warningMessageVi`, `audioQuality`, `assessmentSource`, `analysisModel`, `executionTimeMs`.
-Khi bật detector local, có thêm `acousticAnalysis`; nguồn đánh giá có thể là `HYBRID_AUDIO` hoặc
+Khi chọn `hybrid` và cấu hình detector local, có thêm `acousticAnalysis`; nguồn đánh giá có thể là `HYBRID_AUDIO` hoặc
 `LOCAL_ACOUSTIC`. Cảnh báo giọng tổng hợp và nội dung lừa đảo được hiển thị riêng.
 `UNKNOWN` và giá trị `null` biểu diễn chưa đủ bằng chứng; không thay bằng kết luận an toàn.
 Lỗi có dạng `{ "error": { "code": "...", "message": "..." } }` và HTTP 400/401/413/415/429/502/503/504.
@@ -95,7 +97,7 @@ không thay thế bộ hủy/timeout độc lập 3.100 ms của ứng dụng.
 - `SAFE` nghĩa là chưa thấy dấu hiệu trong đoạn ngắn, không xác minh danh tính hoặc bảo đảm an toàn.
 - Nhận diện lời thoại lừa đảo và dấu hiệu giọng nhân tạo là hai kênh bằng chứng riêng. Prompt yêu cầu
   không suy ra giọng giả chỉ vì nội dung có OTP/chuyển tiền. Đầu ra vẫn có thể sai.
-- `DEEPFAKE_SCAM` được giữ theo hợp đồng chung; giao diện mô tả là **Nguy cơ giả giọng / lừa đảo**.
+- `DEEPFAKE_SCAM` được giữ theo hợp đồng chung; giao diện mô tả là **Nguy cơ lừa đảo qua cuộc gọi**.
 - 5 giây thu âm và thời gian phân tích là hai phần khác nhau. Mục tiêu <3 giây cần đo sau khi đủ audio,
   không thể diễn giải là cảnh báo trong 3 giây đầu của một cửa sổ thu dài 5 giây.
 - Không lưu bản thu, transcript hoặc kết quả vào Chrome storage/database/telemetry. Chỉ địa chỉ dịch vụ
