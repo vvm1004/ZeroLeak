@@ -5,6 +5,8 @@
   "private": true,
   "description": "ZeroLeak Chrome Extension (WXT, Manifest V3)",
   "scripts": {
+    "prebuild": "pnpm --filter @zeroleak/shared-types build",
+    "predev": "pnpm --filter @zeroleak/shared-types build",
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "build": "wxt build",

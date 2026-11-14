@@ -2,24 +2,37 @@ import { defineConfig } from 'wxt';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const rootEnvPath = path.resolve(process.cwd(), '../../.env');
-if (fs.existsSync(rootEnvPath) && typeof process.loadEnvFile === 'function') {
-  try {
-    process.loadEnvFile(rootEnvPath);
-  } catch {
-   
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+const candidateEnvPaths = [
+  path.resolve(configDir, '../../.env'),
+  path.resolve(configDir, '.env'),
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(process.cwd(), '../../.env'),
+];
+
+for (const envPath of candidateEnvPaths) {
+  if (fs.existsSync(envPath) && typeof process.loadEnvFile === 'function') {
+    try {
+      process.loadEnvFile(envPath);
+      break;
+    } catch {
+      // ignore
+    }
   }
 }
+
+const sandboxApiUrl =
+  process.env.SANDBOX_API_URL ||
+  'https://zeroleak-sandbox-api-968014036408.asia-southeast1.run.app';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   vite: () => ({
     plugins: [react()],
     define: {
-      'process.env.SANDBOX_API_URL': JSON.stringify(
-        process.env.SANDBOX_API_URL || 'http://localhost:8080'
-      ),
+      'process.env.SANDBOX_API_URL': JSON.stringify(sandboxApiUrl),
     },
   }),
   manifest: {

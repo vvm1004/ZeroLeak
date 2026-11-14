@@ -1,0 +1,48 @@
+1
+00:00:00,500 --> 00:00:06,580
+ZeroLeak: Nền tảng an ninh mạng lai Edge-Cloud toàn diện (GDG DevFest 2026)
+
+2
+00:00:07,800 --> 00:00:13,800
+Thực trạng: Nhân viên sao chép hợp đồng chứa CCCD, SĐT và API Key bí mật dán vào AI
+
+3
+00:00:13,000 --> 00:00:18,820
+ZeroLeak Vault: Khử định danh PII tức thì tại biên (On-Device DLP) thành token an toàn
+
+4
+00:00:18,200 --> 00:00:24,930
+AI Cloud chỉ nhận token [ZL_...]. Trình duyệt tự động khôi phục dữ liệu gốc trên DOM
+
+5
+00:00:25,500 --> 00:00:31,920
+Hiểm họa Quishing: Kẻ tấn công tạo mã QR dẫn về trang đăng nhập giả mạo Facebook
+
+6
+00:00:33,200 --> 00:00:41,330
+ZeroLeak Lens: Cloud Sandbox Playwright & Gemini Flash cảnh báo giả mạo 95/100
+
+7
+00:00:43,000 --> 00:00:50,420
+Khoanh vùng trực quan: Quét và giải mã QR trực tiếp trên màn hình trong 2 giây
+
+8
+00:00:55,500 --> 00:01:01,550
+ZeroLeak Voice: Phòng thủ trước tội phạm lừa đảo cuộc gọi Deepfake công nghệ cao
+
+9
+00:01:07,500 --> 00:01:15,090
+Engine âm học phát hiện chính xác 100% giọng nói AI tổng hợp (Synthetic Voice)
+
+10
+00:01:19,500 --> 00:01:26,590
+Thử nghiệm cuộc gọi tống tiền: Đe dọa khóa tài khoản ngân hàng và ép cung cấp OTP
+
+11
+00:01:32,500 --> 00:01:40,310
+BÁO ĐỘNG ĐỎ: Nguy cơ lừa đảo 100/100! Thao túng tâm lý và Deepfake cực kỳ nguy hiểm
+
+12
+00:01:45,500 --> 00:01:54,010
+ZeroLeak: Zero Data Exposed. Zero Credentials Stolen. Bảo vệ an toàn số kỷ nguyên AI!
+

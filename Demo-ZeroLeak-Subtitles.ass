@@ -1,0 +1,27 @@
+[Script Info]
+Title: ZeroLeak GDG DevFest Demo
+ScriptType: v4.00+
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+PlayResX: 1920
+PlayResY: 1080
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Segoe UI,30,&H00FFFFFF,&H000000FF,&H00101010,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,1.2,2,40,40,55,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.50,0:00:06.58,Default,,0,0,0,,ZeroLeak: Nền tảng an ninh mạng lai Edge-Cloud toàn diện (GDG DevFest 2026)
+Dialogue: 0,0:00:07.80,0:00:13.80,Default,,0,0,0,,Thực trạng: Nhân viên sao chép hợp đồng chứa CCCD, SĐT và API Key bí mật dán vào AI
+Dialogue: 0,0:00:13.00,0:00:18.82,Default,,0,0,0,,ZeroLeak Vault: Khử định danh PII tức thì tại biên (On-Device DLP) thành token an toàn
+Dialogue: 0,0:00:18.20,0:00:24.93,Default,,0,0,0,,AI Cloud chỉ nhận token [ZL_...]. Trình duyệt tự động khôi phục dữ liệu gốc trên DOM
+Dialogue: 0,0:00:25.50,0:00:31.92,Default,,0,0,0,,Hiểm họa Quishing: Kẻ tấn công tạo mã QR dẫn về trang đăng nhập giả mạo Facebook
+Dialogue: 0,0:00:33.20,0:00:41.33,Default,,0,0,0,,ZeroLeak Lens: Cloud Sandbox Playwright & Gemini Flash cảnh báo giả mạo 95/100
+Dialogue: 0,0:00:43.00,0:00:50.42,Default,,0,0,0,,Khoanh vùng trực quan: Quét và giải mã QR trực tiếp trên màn hình trong 2 giây
+Dialogue: 0,0:00:55.50,0:01:01.55,Default,,0,0,0,,ZeroLeak Voice: Phòng thủ trước tội phạm lừa đảo cuộc gọi Deepfake công nghệ cao
+Dialogue: 0,0:01:07.50,0:01:15.09,Default,,0,0,0,,Engine âm học phát hiện chính xác 100% giọng nói AI tổng hợp (Synthetic Voice)
+Dialogue: 0,0:01:19.50,0:01:26.59,Default,,0,0,0,,Thử nghiệm cuộc gọi tống tiền: Đe dọa khóa tài khoản ngân hàng và ép cung cấp OTP
+Dialogue: 0,0:01:32.50,0:01:40.31,Default,,0,0,0,,BÁO ĐỘNG ĐỎ: Nguy cơ lừa đảo 100/100! Thao túng tâm lý và Deepfake cực kỳ nguy hiểm
+Dialogue: 0,0:01:45.50,0:01:54.01,Default,,0,0,0,,ZeroLeak: Zero Data Exposed. Zero Credentials Stolen. Bảo vệ an toàn số kỷ nguyên AI!

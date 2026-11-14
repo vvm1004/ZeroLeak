@@ -3,7 +3,10 @@ import type { VoiceScamAnalysisResult } from '@zeroleak/shared-types';
 import { audioToBase64, encodeVoiceWav, VOICE_SAMPLE_RATE } from './voice-audio';
 
 export interface VoiceSettings { apiBase: string; token: string }
-export const DEFAULT_VOICE_SETTINGS: VoiceSettings = { apiBase: 'http://localhost:8080', token: '' };
+export const DEFAULT_VOICE_SETTINGS: VoiceSettings = {
+  apiBase: (typeof process !== 'undefined' && process.env?.SANDBOX_API_URL) || 'https://zeroleak-sandbox-api-968014036408.asia-southeast1.run.app',
+  token: '',
+};
 
 function validAcoustic(value: unknown): boolean {
   if (value === undefined) return true;

@@ -8,7 +8,8 @@
 import type { PhishingAnalysisResponse } from '@zeroleak/shared-types';
 
 const rawSandboxUrl =
-  (typeof process !== 'undefined' && process.env?.SANDBOX_API_URL) || 'http://localhost:8080';
+  (typeof process !== 'undefined' && process.env?.SANDBOX_API_URL) ||
+  'https://zeroleak-sandbox-api-968014036408.asia-southeast1.run.app';
 
 const SANDBOX_API_ENDPOINT = rawSandboxUrl.endsWith('/api/v1/analyze-url')
   ? rawSandboxUrl
