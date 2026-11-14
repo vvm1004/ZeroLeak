@@ -6,14 +6,87 @@ import type { AnalyzeVoiceRequest, VoiceScamAnalysisResult } from '@zeroleak/sha
 import { VoiceAnalysisError, voiceModelRoute } from './voice-analyzer.js';
 import { analyzeVoiceWithAcoustic } from './voice-acoustic.js';
 import { MAX_VOICE_REQUEST_BYTES, parseVoiceRequest, VoiceInputError } from './voice-input.js';
+import { captureUrlInSandbox, type PlaywrightCaptureResult } from './playwright.js';
 
 export function createApp(options: {
   analyzeVoice?: (input: AnalyzeVoiceRequest, signal: AbortSignal) => Promise<VoiceScamAnalysisResult>;
+  captureUrl?: (url: string, opts?: { timeoutMs?: number; viewport?: { width: number; height: number } }) => Promise<PlaywrightCaptureResult>;
 } = {}) {
   const app = new Hono();
   const analyze = options.analyzeVoice ?? analyzeVoiceWithAcoustic;
+  const captureSandbox = options.captureUrl ?? captureUrlInSandbox;
+
   app.use('*', cors({ origin: '*', allowMethods: ['GET', 'POST', 'OPTIONS'], allowHeaders: ['Content-Type', 'Authorization'] }));
   app.get('/health', c => c.json({ status: 'ok', service: 'zeroleak-sandbox-api', timestamp: new Date().toISOString(), voice: { liveApi: typeof WebSocket === 'function', modelRoute: voiceModelRoute({}), contentEvidence: true, fileReview: true, localAcousticConfigured: Boolean(process.env.VOICE_ACOUSTIC_URL) } }));
+
+  // ---------------------------------------------------------------------------
+  // Epic 2.1: POST /api/v1/analyze-url (Playwright Headless Sandbox)
+  // ---------------------------------------------------------------------------
+  app.post('/api/v1/analyze-url', async (c) => {
+    let body: any;
+    try {
+      body = await c.req.json();
+    } catch {
+      return c.json({ error: { code: 'INVALID_JSON', message: 'Yêu cầu định dạng JSON hợp lệ.' } }, 400);
+    }
+
+    const rawUrl = typeof body?.url === 'string' ? body.url.trim() : '';
+    if (!rawUrl) {
+      return c.json({ error: { code: 'INVALID_URL', message: 'Trường "url" không được để trống.' } }, 400);
+    }
+
+    const timeoutMs = typeof body?.timeoutMs === 'number' ? Math.min(body.timeoutMs, 5000) : 2000;
+
+    const captureResult = await captureSandbox(rawUrl, { timeoutMs });
+
+    if (captureResult.status === 'BLOCKED_SSRF') {
+      return c.json({
+        error: {
+          code: 'SSRF_BLOCKED',
+          message: captureResult.errorMessage || 'URL bị chặn bởi bộ lọc chống tấn công SSRF.',
+        },
+      }, 400);
+    }
+
+    const indicators: string[] = [];
+    if (captureResult.hasPasswordInput) indicators.push('Phát hiện ô nhập mật khẩu (<input type="password">)');
+    if (captureResult.hasOtpInput) indicators.push('Phát hiện trường nhập mã OTP / mã xác thực hai lớp');
+    if (captureResult.hasSeedPhraseInput) indicators.push('CẢNH BÁO NGUY HIỂM: Phát hiện ô yêu cầu nhập Seed Phrase / Recovery Phrase');
+    if (captureResult.status === 'NAVIGATION_TIMEOUT') indicators.push('Trang web phản hồi chậm hoặc hết thời gian chờ tải');
+    if (captureResult.status === 'UNREACHABLE') indicators.push(`Không thể kết nối đến máy chủ: ${captureResult.errorMessage || ''}`);
+
+    let riskScore = 0;
+    let verdict: 'SAFE' | 'SUSPICIOUS' | 'MALICIOUS' = 'SAFE';
+
+    if (captureResult.hasSeedPhraseInput) {
+      riskScore = 95;
+      verdict = 'MALICIOUS';
+    } else if (captureResult.hasPasswordInput && captureResult.hasOtpInput) {
+      riskScore = 75;
+      verdict = 'SUSPICIOUS';
+    } else if (captureResult.hasPasswordInput || captureResult.hasOtpInput) {
+      riskScore = 50;
+      verdict = 'SUSPICIOUS';
+    }
+
+    return c.json({
+      url: captureResult.url,
+      finalRedirectUrl: captureResult.finalRedirectUrl,
+      actualDomain: captureResult.actualDomain,
+      pageTitle: captureResult.pageTitle,
+      hasPasswordInput: captureResult.hasPasswordInput,
+      hasOtpInput: captureResult.hasOtpInput,
+      hasSeedPhraseInput: captureResult.hasSeedPhraseInput,
+      domSummary: captureResult.domSummary,
+      screenshotBase64: captureResult.screenshotBase64,
+      riskScore,
+      verdict,
+      impersonatedBrand: null,
+      indicators,
+      executionTimeMs: captureResult.executionTimeMs,
+      sandboxStatus: captureResult.status,
+    });
+  });
   app.use('/api/v1/analyze-voice', async (c, next) => {
     c.header('Cache-Control', 'no-store');
     c.header('X-Content-Type-Options', 'nosniff');

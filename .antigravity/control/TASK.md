@@ -75,12 +75,12 @@
 *Phụ trách chính: Dev 2 (Backend & Cloud Lead)*
 
 ### 2.1. Máy chủ Cô lập Playwright Headless (ZeroLeak Lens)
-* [ ] 🔴 **[P0]** Khởi tạo server **Hono** (hoặc **Fastify**) bằng TypeScript tại `apps/sandbox-api/src/index.ts` với endpoint `POST /api/v1/analyze-url`.
-* [ ] 🔴 **[P0]** Viết mô-đun `playwright.ts` mở URL mục tiêu trong Headless Chromium cô lập:
-  * [ ] Thiết lập bộ lọc chống SSRF, viewport `1280x720` và timeout tải trang tối đa $2000\text{ ms}$.
-  * [ ] Thu thập chuỗi chuyển hướng (`finalRedirectUrl`), tiêu đề trang (`pageTitle`).
-  * [ ] Bóc tách cấu trúc DOM để kiểm tra sự tồn tại của `<input type="password">`, ô nhập mã OTP hoặc Seed Phrase.
-  * [ ] Chụp ảnh màn hình trang web nén sang định dạng **WebP Base64** nhẹ.
+* [x] 🔴 **[P0]** Khởi tạo server **Hono** (hoặc **Fastify**) bằng TypeScript tại `apps/sandbox-api/src/index.ts` với endpoint `POST /api/v1/analyze-url`.
+* [x] 🔴 **[P0]** Viết mô-đun `playwright.ts` mở URL mục tiêu trong Headless Chromium cô lập:
+  * [x] Thiết lập bộ lọc chống SSRF, viewport `1280x720` và timeout tải trang tối đa $2000\text{ ms}$.
+  * [x] Thu thập chuỗi chuyển hướng (`finalRedirectUrl`), tiêu đề trang (`pageTitle`).
+  * [x] Bóc tách cấu trúc DOM để kiểm tra sự tồn tại của `<input type="password">`, ô nhập mã OTP hoặc Seed Phrase.
+  * [x] Chụp ảnh màn hình trang web nén sang định dạng **WebP Base64** nhẹ.
 
 ### 2.2. Phân tích Giả mạo Thị giác với Gemini 3.8 Flash / 3.5 Flash Lite & Safe Browsing v4
 * [ ] 🔴 **[P0]** Viết mô-đun `gemini-analyzer.ts` sử dụng `@google/genai` SDK gọi mô hình `gemini-3.8-flash` (tự động fallback sang `gemini-3.5-flash-lite` khi test DEV).
