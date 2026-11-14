@@ -1,0 +1,402 @@
+{
+  "name": "Content controls v1 test, interleaved scam/benign before predictions",
+  "limitations": [
+    "All synthetic, one voice, authored scenarios; no human/call generalization claim.",
+    "Clean and Opus copies share twelve test texts and are correlated.",
+    "Expected tactic lists are author annotations, not independent adjudication."
+  ],
+  "cases": [
+    {
+      "id": "test_bank_otp_clean",
+      "file": "audio/test_bank_otp_clean.wav",
+      "sha256": "9d31c87bacfd03249416b4d13b3dcb41e1cfa64aa4e9d6a9b0fbe13ca259e815",
+      "originId": "test_bank_otp",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_otp_warning_clean",
+      "file": "audio/test_otp_warning_clean.wav",
+      "sha256": "f02cea727730b884e9a0be1a0c3d34767255fd84b5343374dab5c64c6d07137c",
+      "originId": "test_otp_warning",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_bank_otp_opus",
+      "file": "audio/test_bank_otp_opus.wav",
+      "sha256": "7cb63f997eaecf6b6098399c524925551f2f05a685b44c73518cabd6c5fee51a",
+      "originId": "test_bank_otp",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_otp_warning_opus",
+      "file": "audio/test_otp_warning_opus.wav",
+      "sha256": "33242695a987ba837d7f06c137c3b189c70bf413af84510a9fc4dc00df5551d0",
+      "originId": "test_otp_warning",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_boss_secret_clean",
+      "file": "audio/test_boss_secret_clean.wav",
+      "sha256": "5bbc4c7da5af79c27a65598714ba22c0c72a645e7593bc80bddcdaea52c0eb4c",
+      "originId": "test_boss_secret",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_password_advice_clean",
+      "file": "audio/test_password_advice_clean.wav",
+      "sha256": "a0a7cffee7990ea8a88a863d1b1ae6a872834332cfdaff2cbc542fb54a91fc62",
+      "originId": "test_password_advice",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_boss_secret_opus",
+      "file": "audio/test_boss_secret_opus.wav",
+      "sha256": "070ea1b2942b0d0a08bd34b308c372a4d8551f4177c78d2995c7f1730b0ff059",
+      "originId": "test_boss_secret",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_password_advice_opus",
+      "file": "audio/test_password_advice_opus.wav",
+      "sha256": "bcfe00bce642987d25cf250912a0e635ce5f4434f67e99613f79700479cecade",
+      "originId": "test_password_advice",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_police_password_clean",
+      "file": "audio/test_police_password_clean.wav",
+      "sha256": "ac15075abbac997d69cfa6f00922d18b58d30657168ba1ecac3ca5dd424ed5b8",
+      "originId": "test_police_password",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_news_quote_clean",
+      "file": "audio/test_news_quote_clean.wav",
+      "sha256": "513bd430e838d1e751460df468896dad26985b69fb735485247c6757e7fb4fb7",
+      "originId": "test_news_quote",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_police_password_opus",
+      "file": "audio/test_police_password_opus.wav",
+      "sha256": "a9eefaa5a4369fdb09f730d1b3f195cb20abd8471880d588533a6686641a48f6",
+      "originId": "test_police_password",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_news_quote_opus",
+      "file": "audio/test_news_quote_opus.wav",
+      "sha256": "8a7e0ae5fa65e221b77959e4d8ef85622d6d4bed9b8a6f9b574009cab38fea12",
+      "originId": "test_news_quote",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_password_clean",
+      "file": "audio/test_password_clean.wav",
+      "sha256": "9cafec8082878b0bc18bada90ce00a6205b7489b6e9d2db7d8a8c07d1102565a",
+      "originId": "test_password",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_meeting_urgent_clean",
+      "file": "audio/test_meeting_urgent_clean.wav",
+      "sha256": "036dcf7445d2ca66c97714468860805285bf281c9c75adaa821c59aae23f6f70",
+      "originId": "test_meeting_urgent",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_password_opus",
+      "file": "audio/test_password_opus.wav",
+      "sha256": "64b22cbae7776f6dd763c40b53df93aed789804131dedf1bb16bfe9811ff679e",
+      "originId": "test_password",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_meeting_urgent_opus",
+      "file": "audio/test_meeting_urgent_opus.wav",
+      "sha256": "d1fba86f49e9b9703d7afc741e90b1446932d37c711491f71e9ba99ee5334c42",
+      "originId": "test_meeting_urgent",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_coercion_clean",
+      "file": "audio/test_coercion_clean.wav",
+      "sha256": "d7629e2bc0b45a7ec0891342517f502ebe8907da08bdea2d7beedcddae0f6745",
+      "originId": "test_coercion",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_transfer_normal_clean",
+      "file": "audio/test_transfer_normal_clean.wav",
+      "sha256": "caf85aa4f6a4a8bba464e6c43eb2cc9327a177ae2c3c0421b55d8dd02be66b8a",
+      "originId": "test_transfer_normal",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_coercion_opus",
+      "file": "audio/test_coercion_opus.wav",
+      "sha256": "f7ad24921239ed0752163b2e4b619c7b2e172d0aeef1e5d161cb5e7fc2e56c63",
+      "originId": "test_coercion",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_transfer_normal_opus",
+      "file": "audio/test_transfer_normal_opus.wav",
+      "sha256": "58b060e215440c591f09aec88017a8843fd27716dd6219136c687ec8d7c50572",
+      "originId": "test_transfer_normal",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_code_request_clean",
+      "file": "audio/test_code_request_clean.wav",
+      "sha256": "fd352117bc1c67cb13ecb6f61718685ef13dc582c427deb6b217cfa924f6cff5",
+      "originId": "test_code_request",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_staff_normal_clean",
+      "file": "audio/test_staff_normal_clean.wav",
+      "sha256": "7f0072ee2a105d2464bd07a8008eeb3a389c30244cc718ecfe6a696524b81bca",
+      "originId": "test_staff_normal",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "clean",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_code_request_opus",
+      "file": "audio/test_code_request_opus.wav",
+      "sha256": "3301016acec16e31b8adb971f171105a2e848e348d2ef735d261fffaff1742dc",
+      "originId": "test_code_request",
+      "label": "synthetic",
+      "scamLabel": true,
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    },
+    {
+      "id": "test_staff_normal_opus",
+      "file": "audio/test_staff_normal_opus.wav",
+      "sha256": "ee79425d68d1fd5f32433ab376c641af1e1246f952816eea39789b3503e71805",
+      "originId": "test_staff_normal",
+      "label": "synthetic",
+      "scamLabel": false,
+      "expectedTactics": [],
+      "split": "test",
+      "family": "macOS-Linh",
+      "condition": "opus16k",
+      "cohort": "content-controls-v1",
+      "source": "Locally authored educational security scenario; synthesized with installed macOS voice",
+      "license": "Local evaluation only; no raw audio redistributed"
+    }
+  ]
+}

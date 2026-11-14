@@ -1,0 +1,22 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "realLocalWorker": false,
+  "geminiMocked": false,
+  "scenario": "dev_otp_request_clean",
+  "requestedMode": "review",
+  "status": 200,
+  "assessmentSource": "GEMINI_AUDIO",
+  "contentAnalysis": {
+    "status": "AVAILABLE"
+  },
+  "contentVerdict": "SUSPICIOUS",
+  "detectedTactics": [
+    "OTP_OR_CREDENTIAL_ASK",
+    "URGENCY_PRESSURE"
+  ],
+  "acousticVerdict": null,
+  "modelVersion": null,
+  "roundTripMs": 3250,
+  "scope": "Integration smoke only, not a new accuracy benchmark"
+}

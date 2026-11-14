@@ -1,0 +1,10 @@
+{
+  "realLocalWorker": true,
+  "contentDependency": "forced unavailable for integration test, no Gemini calls",
+  "assessmentSource": "LOCAL_ACOUSTIC",
+  "contentVerdict": "UNKNOWN",
+  "acousticVerdict": "SYNTHETIC_SUSPECTED",
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "roundTripMs": 671,
+  "caseId": "audit_v4_VIVOSDEV01_0_synthetic_clean"
+}

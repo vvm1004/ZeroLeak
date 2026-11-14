@@ -1,0 +1,34 @@
+{
+  "headSha256": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+  "candidates": [
+    {
+      "regularization": 0.01,
+      "tp": 56,
+      "tn": 56,
+      "fp": 0,
+      "fn": 0,
+      "balancedAccuracy": 1.0
+    },
+    {
+      "regularization": 0.1,
+      "tp": 56,
+      "tn": 56,
+      "fp": 0,
+      "fn": 0,
+      "balancedAccuracy": 1.0
+    },
+    {
+      "regularization": 1.0,
+      "tp": 56,
+      "tn": 56,
+      "fp": 0,
+      "fn": 0,
+      "balancedAccuracy": 1.0
+    }
+  ],
+  "testUsedForSelection": false,
+  "decisionThresholdsPreset": [
+    0.2,
+    0.8
+  ]
+}

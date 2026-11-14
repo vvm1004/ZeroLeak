@@ -1,0 +1,36 @@
+{
+  "release": false,
+  "headSha256": "c9a06c82ce8426f920d2cca9f4827a94bcc08c07e33fe82b16092578d786ede1",
+  "policySha256": "3db5cb1fec4f9ef2c0ff24b5938262d0fda4e23fd2b4ed2c3ecf4f774381f432",
+  "checks": [
+    {
+      "name": "new human false alerts do not increase",
+      "passed": true
+    },
+    {
+      "name": "new synthetic alerts do not decrease",
+      "passed": true
+    },
+    {
+      "name": "new diagnostic balanced accuracy does not decrease",
+      "passed": true
+    },
+    {
+      "name": "audit human false alerts do not increase",
+      "passed": true
+    },
+    {
+      "name": "audit low-scored synthetic do not increase",
+      "passed": false
+    },
+    {
+      "name": "V2 human false alerts remain zero",
+      "passed": true
+    },
+    {
+      "name": "V2 synthetic alerts at least 58",
+      "passed": true
+    }
+  ],
+  "action": "Retain V2; first V3 candidate rejected. No test-threshold tuning."
+}

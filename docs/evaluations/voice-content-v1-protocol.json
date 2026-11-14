@@ -1,0 +1,159 @@
+{
+  "definedBeforePredictions": true,
+  "dev": [
+    [
+      "dev_otp_request",
+      "Đọc mã OTP ngay để tôi xác minh.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "dev_ceo",
+      "Anh là giám đốc. Chuyển tiền ngay, đừng gọi lại.",
+      true,
+      [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "dev_authority",
+      "Tôi là công an, đọc mật khẩu để điều tra.",
+      true,
+      [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "dev_remote",
+      "Cài ứng dụng này rồi đọc mật khẩu cho tôi.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "dev_warning",
+      "Không cung cấp mã OTP cho bất kỳ ai.",
+      false,
+      []
+    ],
+    [
+      "dev_meeting",
+      "Chúng ta họp lúc chín giờ sáng mai nhé.",
+      false,
+      []
+    ],
+    [
+      "dev_quote",
+      "Kẻ lừa đảo nói: đọc OTP ngay. Đừng làm theo.",
+      false,
+      []
+    ],
+    [
+      "dev_identity",
+      "Tôi là giám đốc. Hôm nay họp vào buổi chiều.",
+      false,
+      []
+    ]
+  ],
+  "test": [
+    [
+      "test_bank_otp",
+      "Tôi là nhân viên ngân hàng. Gửi mã OTP cho tôi.",
+      true,
+      [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "test_boss_secret",
+      "Sếp đây. Chuyển tiền gấp và giữ bí mật.",
+      true,
+      [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "test_police_password",
+      "Công an đây. Cung cấp mật khẩu ngay để xác minh.",
+      true,
+      [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "test_password",
+      "Cho tôi biết mật khẩu đăng nhập của bạn.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "test_coercion",
+      "Chuyển tiền ngay, nếu không tài khoản bị khóa.",
+      true,
+      [
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "test_code_request",
+      "Gửi mã xác thực vừa nhận cho anh nhé.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "test_otp_warning",
+      "Ngân hàng không bao giờ yêu cầu bạn cung cấp OTP.",
+      false,
+      []
+    ],
+    [
+      "test_password_advice",
+      "Đừng gửi mật khẩu cho người gọi điện lạ.",
+      false,
+      []
+    ],
+    [
+      "test_news_quote",
+      "Ví dụ lừa đảo là câu: chuyển tiền ngay cho tôi.",
+      false,
+      []
+    ],
+    [
+      "test_meeting_urgent",
+      "Nhớ tham gia cuộc họp gấp chiều nay nhé.",
+      false,
+      []
+    ],
+    [
+      "test_transfer_normal",
+      "Tôi đã chuyển khoản tiền ăn trưa cho bạn rồi.",
+      false,
+      []
+    ],
+    [
+      "test_staff_normal",
+      "Tôi là nhân viên ngân hàng. Chúc bạn ngày tốt lành.",
+      false,
+      []
+    ]
+  ],
+  "testPolicy": "Use dev only to select prompt/model. Freeze candidate before viewing test predictions. Test scenarios are authored, synthetic only, not independent external real-call validation.",
+  "sources": "Locally authored educational scenarios, no live identifiers or real recipients",
+  "maxProviderCallsThisIteration": 64,
+  "realtimeDeadlineMs": 3100,
+  "qualityDiagnosticDeadlineMs": 15000
+}

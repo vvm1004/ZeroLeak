@@ -1,0 +1,5 @@
+# Isolated offline research tools; not production Node dependencies.
+# Versions used on macOS arm64, Python 3.13.7 (2026-11-10).
+torch==2.15.0
+numpy==2.5.4
+transformers==4.57.6

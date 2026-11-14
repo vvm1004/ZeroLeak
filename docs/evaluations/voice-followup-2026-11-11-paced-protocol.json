@@ -1,0 +1,11 @@
+{
+  "definedBeforePacedPredictions": true,
+  "selection": "Lexicographically first and last existing v4-fresh origins, all labels and channels",
+  "origins": [
+    "v4_VIVOSDEV01_0",
+    "v4_VIVOSDEV17_2"
+  ],
+  "intervalMs": 5000,
+  "deadlineMs": 2800,
+  "purpose": "Compare admission and latency at live-window cadence; no threshold/head tuning"
+}

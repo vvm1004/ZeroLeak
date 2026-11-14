@@ -1,0 +1,371 @@
+{
+  "meta": {
+    "createdAt": "2026-11-10T17:20:28.688Z",
+    "dataset": "Vietnamese scam content controls v1",
+    "limitations": [
+      "All synthetic, one voice, authored scenarios; no human/call generalization claim.",
+      "Clean and Opus copies share twelve test texts and are correlated.",
+      "Expected tactic lists are author annotations, not independent adjudication."
+    ],
+    "mode": "quality",
+    "requestedModel": "gemini-3.1-flash-lite",
+    "productionDeadlineMs": 3100,
+    "qualityDeadlineMs": 15000,
+    "threshold": 0.5,
+    "thresholdWasTunedOnThisRun": false,
+    "maxProviderCalls": 8,
+    "modelRoute": [
+      "gemini-3.1-flash-lite"
+    ],
+    "labelsSentToProvider": false,
+    "realApi": true,
+    "manifestSha256": "f5368df46a7f7fd8c1fac9f220241a05087b578eff13a40fd79af31e7d2c6e30",
+    "requestDefinitionSha256": "95f470ec5adb099656b0b2b8c6a5c22d2434e6d1085a5078f8383bde4e22908a",
+    "analyzerCodeSha256": "d00c8060fec5e50ff4c580d0be038ccf10c371e6c37f7e6b69540bba09940ba4",
+    "selectedSplit": "dev",
+    "plannedCases": 8,
+    "sourceGroups": 8
+  },
+  "providerCalls": 8,
+  "notAttempted": [],
+  "summary": {
+    "attempted": 8,
+    "sourceGroups": 8,
+    "human": 0,
+    "synthetic": 8,
+    "threshold": 0.5,
+    "assessed": 0,
+    "unknownHuman": 0,
+    "unknownSynthetic": 8,
+    "tp": 0,
+    "tn": 0,
+    "fp": 0,
+    "fn": 0,
+    "coverage": 0,
+    "selectiveAccuracy": null,
+    "falsePositiveRateAmongAssessedHuman": null,
+    "falseNegativeRateAmongAssessedSynthetic": null,
+    "fakeDetectionYieldAllSynthetic": 0,
+    "falseAlertsAllHuman": null,
+    "latencyMedianMs": 3526.5,
+    "latencyMaxMs": 5016,
+    "latencyP95Ms": null,
+    "errorCounts": {
+      "TIMEOUT": 0,
+      "PROVIDER_ERROR": 0,
+      "INVALID_RESULT": 0,
+      "INPUT_ERROR": 0
+    },
+    "tactics": {
+      "annotated": 8,
+      "exactMatches": 7
+    },
+    "content": {
+      "labeled": 8,
+      "tp": 4,
+      "tn": 3,
+      "fp": 1,
+      "fn": 0,
+      "unknown": 0,
+      "coverage": 1
+    }
+  },
+  "byCondition": {
+    "clean": {
+      "attempted": 8,
+      "sourceGroups": 8,
+      "human": 0,
+      "synthetic": 8,
+      "threshold": 0.5,
+      "assessed": 0,
+      "unknownHuman": 0,
+      "unknownSynthetic": 8,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": null,
+      "latencyMedianMs": 3526.5,
+      "latencyMaxMs": 5016,
+      "latencyP95Ms": null,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 0,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 8,
+        "exactMatches": 7
+      },
+      "content": {
+        "labeled": 8,
+        "tp": 4,
+        "tn": 3,
+        "fp": 1,
+        "fn": 0,
+        "unknown": 0,
+        "coverage": 1
+      }
+    }
+  },
+  "byCohort": {
+    "content-controls-v1": {
+      "attempted": 8,
+      "sourceGroups": 8,
+      "human": 0,
+      "synthetic": 8,
+      "threshold": 0.5,
+      "assessed": 0,
+      "unknownHuman": 0,
+      "unknownSynthetic": 8,
+      "tp": 0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "coverage": 0,
+      "selectiveAccuracy": null,
+      "falsePositiveRateAmongAssessedHuman": null,
+      "falseNegativeRateAmongAssessedSynthetic": null,
+      "fakeDetectionYieldAllSynthetic": 0,
+      "falseAlertsAllHuman": null,
+      "latencyMedianMs": 3526.5,
+      "latencyMaxMs": 5016,
+      "latencyP95Ms": null,
+      "errorCounts": {
+        "TIMEOUT": 0,
+        "PROVIDER_ERROR": 0,
+        "INVALID_RESULT": 0,
+        "INPUT_ERROR": 0
+      },
+      "tactics": {
+        "annotated": 8,
+        "exactMatches": 7
+      },
+      "content": {
+        "labeled": 8,
+        "tp": 4,
+        "tn": 3,
+        "fp": 1,
+        "fn": 0,
+        "unknown": 0,
+        "coverage": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "originId": "dev_otp_request",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3688,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ],
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ]
+    },
+    {
+      "id": "dev_ceo_clean",
+      "originId": "dev_ceo",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4025,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "expectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ]
+    },
+    {
+      "id": "dev_authority_clean",
+      "originId": "dev_authority",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2453,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "expectedTactics": [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    },
+    {
+      "id": "dev_remote_clean",
+      "originId": "dev_remote",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4574,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "expectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    },
+    {
+      "id": "dev_warning_clean",
+      "originId": "dev_warning",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 5016,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "expectedTactics": []
+    },
+    {
+      "id": "dev_meeting_clean",
+      "originId": "dev_meeting",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 1961,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "expectedTactics": []
+    },
+    {
+      "id": "dev_quote_clean",
+      "originId": "dev_quote",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2433,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "expectedTactics": []
+    },
+    {
+      "id": "dev_identity_clean",
+      "originId": "dev_identity",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "quality",
+      "cohort": "content-controls-v1",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3365,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "expectedTactics": []
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "definedBeforePredictions": true,
+  "purpose": "Fresh authored semantic regression test after promoting the old urgent-meeting failure to development; not external human-call validation",
+  "cases": [
+    [
+      "work_deadline",
+      "Báo cáo cần nộp gấp, chiều nay họp nhé.",
+      false,
+      []
+    ],
+    [
+      "authority_secret",
+      "Cán bộ đây, gửi mật khẩu đăng nhập cho tôi ngay.",
+      true,
+      [
+        "AUTHORITY_IMPERSONATION",
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "group_documents",
+      "Mau gửi tài liệu cuộc họp cho nhóm hôm nay.",
+      false,
+      []
+    ],
+    [
+      "boss_transfer",
+      "Sếp yêu cầu chuyển khoản gấp và đừng nói với ai.",
+      true,
+      [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "luggage",
+      "Khẩn trương tới quầy để nhận lại hành lý.",
+      false,
+      []
+    ],
+    [
+      "confirmation_code",
+      "Đọc mã xác nhận vừa gửi về điện thoại cho tôi.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK"
+      ]
+    ],
+    [
+      "learning",
+      "Tôi đang hướng dẫn cách nhận biết cuộc gọi xin mật khẩu.",
+      false,
+      []
+    ],
+    [
+      "password_pressure",
+      "Đọc mật khẩu tài khoản ngay, đừng gọi xác minh.",
+      true,
+      [
+        "OTP_OR_CREDENTIAL_ASK",
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "do_not_tell",
+      "Đừng đọc mã xác thực cho người tự xưng cán bộ.",
+      false,
+      []
+    ],
+    [
+      "fee_threat",
+      "Nộp phí ngay nếu không sẽ bị bắt.",
+      true,
+      [
+        "URGENCY_PRESSURE"
+      ]
+    ],
+    [
+      "verify_first",
+      "Nếu ai giục chuyển tiền ngay, hãy gọi lại người quen.",
+      false,
+      []
+    ],
+    [
+      "unlock",
+      "Chuyển tiền ngay để mở khóa tài khoản.",
+      true,
+      [
+        "URGENCY_PRESSURE"
+      ]
+    ]
+  ],
+  "voice": "macOS Linh, rate190",
+  "candidateCodeSha256": "fd415191424ffef34c72c00c6eed8d9b9f80f4b10bb1cb287d97a6e999082e38",
+  "gates": {
+    "falseAlertsMaximum": 0,
+    "scamAlertsMinimum": 5,
+    "assessedContentMinimum": 10
+  },
+  "unknownIsNotCorrect": true,
+  "noTestPromptTuning": true,
+  "providerCallUpperBoundThisIteration": 40
+}

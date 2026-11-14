@@ -2,12 +2,15 @@
   "name": "@zeroleak/sandbox-api",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Playwright Headless Sandbox & Gemini 2.5 Flash Visual Phishing Detector",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "eval:voice": "tsx scripts/evaluate-voice.ts"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",

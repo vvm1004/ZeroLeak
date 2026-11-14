@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-11T07:12:53.780129+00:00",
+  "branch": "feat/zeroleak-voice",
+  "softwareTests": {
+    "backend": 45,
+    "python": 13,
+    "extension": 4,
+    "fixtureBrowserE2E": 11,
+    "total": 73,
+    "passed": true
+  },
+  "cliErrorAccountingFixturePassed": true,
+  "checks": {
+    "backendBuild": true,
+    "evaluationCliTypecheck": true,
+    "pythonSyntax": true
+  },
+  "retainedChanges": [
+    "Per-model transient-provider cooldown with one recovery probe",
+    "Worker readiness reflects engine errors and successful recovery",
+    "Runtime evaluation separates admission/timeout errors from successful latency and supports live pacing"
+  ],
+  "rejectedChanges": [
+    "Six alternative acoustic-head candidates rejected on calibration",
+    "Fixed inference-thread candidate rejected on runtime deadline observations"
+  ],
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "headReplaced": false,
+  "acousticAccuracyImprovementClaimed": false,
+  "pacedRuntime": {
+    "human": 6,
+    "synthetic": 6,
+    "syntheticAlerts": 3,
+    "humanFalseAlerts": 0,
+    "unknownHuman": 1,
+    "unknownSynthetic": 3,
+    "errors": 0,
+    "lowScoredSynthetic": 0,
+    "roundTripMedianMs": 633.53,
+    "roundTripMaxMs": 804.89,
+    "successfulRoundTripMedianMs": 633.53,
+    "successfulRoundTripMaxMs": 804.89,
+    "errorCounts": {}
+  },
+  "remainingLimits": [
+    "Burst-load requests can timeout or receive BUSY",
+    "Gemini availability/deadline not guaranteed",
+    "Voice-clone detection with noise remains weak",
+    "Physical-call Test 6 not accepted"
+  ]
+}

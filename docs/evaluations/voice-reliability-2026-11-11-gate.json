@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "noFalseAlerts": true,
+    "atLeastFiveScamAlerts": false,
+    "atLeastTenAssessed": false
+  },
+  "passed": false,
+  "content": {
+    "labeled": 12,
+    "tp": 3,
+    "tn": 5,
+    "fp": 0,
+    "fn": 0,
+    "unknown": 4,
+    "coverage": 0.6666666666666666
+  },
+  "unknownNotCorrect": true,
+  "scope": "Twelve new synthetic authored sentences, one voice; no real-call accuracy claim",
+  "onFailure": "Do not claim model-quality acceptance; retain conservative software guards and count unknown/errors."
+}

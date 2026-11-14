@@ -1,0 +1,2517 @@
+{
+  "headSha256": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+  "vadSha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720",
+  "manifestSha256": "539c99f84086c0c1dbd83b1862a402ee29b7b07526a3257c50572544db1fc390",
+  "summary": {
+    "human": 64,
+    "synthetic": 64,
+    "syntheticAlerts": 58,
+    "humanFalseAlerts": 0,
+    "unknownHuman": 6,
+    "unknownSynthetic": 6,
+    "errors": 0,
+    "lowScoredSynthetic": 0,
+    "roundTripMedianMs": 480.8,
+    "roundTripMaxMs": 1934.48
+  },
+  "stress": [
+    {
+      "id": "tone220",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": null,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 31
+      },
+      "roundTripMs": 32.19
+    },
+    {
+      "id": "tone1000",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": null,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 27
+      },
+      "roundTripMs": 28.51
+    },
+    {
+      "id": "noise_quiet",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": null,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 27
+      },
+      "roundTripMs": 28.46
+    },
+    {
+      "id": "noise_loud",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": null,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 29
+      },
+      "roundTripMs": 30.06
+    },
+    {
+      "id": "silence",
+      "httpStatus": 400,
+      "result": {
+        "error": "HTTP_ERROR"
+      },
+      "roundTripMs": 1.48
+    }
+  ],
+  "results": [
+    {
+      "id": "vivos_test_056_human_clean",
+      "originId": "vivos_test_056",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.01735298032504654,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 1907
+      },
+      "roundTripMs": 1934.48
+    },
+    {
+      "id": "vivos_test_056_human_opus",
+      "originId": "vivos_test_056",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.01759634967922237,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 563
+      },
+      "roundTripMs": 566.21
+    },
+    {
+      "id": "vivos_test_056_synthetic_clean",
+      "originId": "vivos_test_056",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9913198845918587,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 474
+      },
+      "roundTripMs": 475.22
+    },
+    {
+      "id": "vivos_test_056_synthetic_opus",
+      "originId": "vivos_test_056",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9965046681550891,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 419
+      },
+      "roundTripMs": 419.97
+    },
+    {
+      "id": "vivos_test_057_human_clean",
+      "originId": "vivos_test_057",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016578768039166504,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 478
+      },
+      "roundTripMs": 479.74
+    },
+    {
+      "id": "vivos_test_057_human_opus",
+      "originId": "vivos_test_057",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016632056246804017,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 448
+      },
+      "roundTripMs": 448.77
+    },
+    {
+      "id": "vivos_test_057_synthetic_clean",
+      "originId": "vivos_test_057",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9975410634104491,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 365
+      },
+      "roundTripMs": 366.56
+    },
+    {
+      "id": "vivos_test_057_synthetic_opus",
+      "originId": "vivos_test_057",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9982850306035408,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 369
+      },
+      "roundTripMs": 369.96
+    },
+    {
+      "id": "vivos_test_058_human_clean",
+      "originId": "vivos_test_058",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.017932540347898828,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 499
+      },
+      "roundTripMs": 500.54
+    },
+    {
+      "id": "vivos_test_058_human_opus",
+      "originId": "vivos_test_058",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.021270152167792742,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 495
+      },
+      "roundTripMs": 496.84
+    },
+    {
+      "id": "vivos_test_058_synthetic_clean",
+      "originId": "vivos_test_058",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.992477725364061,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 456
+      },
+      "roundTripMs": 457.68
+    },
+    {
+      "id": "vivos_test_058_synthetic_opus",
+      "originId": "vivos_test_058",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9946678589742949,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 455
+      },
+      "roundTripMs": 455.9
+    },
+    {
+      "id": "vivos_test_059_human_clean",
+      "originId": "vivos_test_059",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02051907680797138,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 452
+      },
+      "roundTripMs": 452.94
+    },
+    {
+      "id": "vivos_test_059_human_opus",
+      "originId": "vivos_test_059",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.021775677776775623,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 451
+      },
+      "roundTripMs": 451.91
+    },
+    {
+      "id": "vivos_test_059_synthetic_clean",
+      "originId": "vivos_test_059",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9991615699308046,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 441
+      },
+      "roundTripMs": 442.07
+    },
+    {
+      "id": "vivos_test_059_synthetic_opus",
+      "originId": "vivos_test_059",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9992602606566282,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 505
+      },
+      "roundTripMs": 506.14
+    },
+    {
+      "id": "vivos_test_060_human_clean",
+      "originId": "vivos_test_060",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02375960602523045,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 509
+      },
+      "roundTripMs": 510.04
+    },
+    {
+      "id": "vivos_test_060_human_opus",
+      "originId": "vivos_test_060",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02647837446727187,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 497
+      },
+      "roundTripMs": 498.76
+    },
+    {
+      "id": "vivos_test_060_synthetic_clean",
+      "originId": "vivos_test_060",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.815466474871247,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 433
+      },
+      "roundTripMs": 434.62
+    },
+    {
+      "id": "vivos_test_060_synthetic_opus",
+      "originId": "vivos_test_060",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.8683050740729692,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 436
+      },
+      "roundTripMs": 437.59
+    },
+    {
+      "id": "vivos_test_061_human_clean",
+      "originId": "vivos_test_061",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.03898136294202861,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 403
+      },
+      "roundTripMs": 404.23
+    },
+    {
+      "id": "vivos_test_061_human_opus",
+      "originId": "vivos_test_061",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.056495236495789115,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 403
+      },
+      "roundTripMs": 404.09
+    },
+    {
+      "id": "vivos_test_061_synthetic_clean",
+      "originId": "vivos_test_061",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9992561469567148,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 356
+      },
+      "roundTripMs": 357.0
+    },
+    {
+      "id": "vivos_test_061_synthetic_opus",
+      "originId": "vivos_test_061",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9990756833939278,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 361
+      },
+      "roundTripMs": 362.31
+    },
+    {
+      "id": "vivos_test_062_human_clean",
+      "originId": "vivos_test_062",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.025809220979904002,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 437
+      },
+      "roundTripMs": 438.62
+    },
+    {
+      "id": "vivos_test_062_human_opus",
+      "originId": "vivos_test_062",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.03786682307308674,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 459
+      },
+      "roundTripMs": 459.8
+    },
+    {
+      "id": "vivos_test_062_synthetic_clean",
+      "originId": "vivos_test_062",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9966094242157195,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 405
+      },
+      "roundTripMs": 406.29
+    },
+    {
+      "id": "vivos_test_062_synthetic_opus",
+      "originId": "vivos_test_062",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9984586704780841,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 392
+      },
+      "roundTripMs": 392.79
+    },
+    {
+      "id": "vivos_test_063_human_clean",
+      "originId": "vivos_test_063",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.22255022581736253,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 495
+      },
+      "roundTripMs": 496.41
+    },
+    {
+      "id": "vivos_test_063_human_opus",
+      "originId": "vivos_test_063",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.3200129137450522,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 496
+      },
+      "roundTripMs": 497.38
+    },
+    {
+      "id": "vivos_test_063_synthetic_clean",
+      "originId": "vivos_test_063",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9997478941879736,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 390
+      },
+      "roundTripMs": 391.6
+    },
+    {
+      "id": "vivos_test_063_synthetic_opus",
+      "originId": "vivos_test_063",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9997551740963586,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 390
+      },
+      "roundTripMs": 391.63
+    },
+    {
+      "id": "vivos_test_064_human_clean",
+      "originId": "vivos_test_064",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.06802821594090243,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 355
+      },
+      "roundTripMs": 355.81
+    },
+    {
+      "id": "vivos_test_064_human_opus",
+      "originId": "vivos_test_064",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.08464961389753432,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 362
+      },
+      "roundTripMs": 362.99
+    },
+    {
+      "id": "vivos_test_064_synthetic_clean",
+      "originId": "vivos_test_064",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.881557809841723,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 332
+      },
+      "roundTripMs": 333.29
+    },
+    {
+      "id": "vivos_test_064_synthetic_opus",
+      "originId": "vivos_test_064",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9802473779510286,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 334
+      },
+      "roundTripMs": 335.53
+    },
+    {
+      "id": "vivos_test_065_human_clean",
+      "originId": "vivos_test_065",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.015313380579359962,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 395
+      },
+      "roundTripMs": 395.95
+    },
+    {
+      "id": "vivos_test_065_human_opus",
+      "originId": "vivos_test_065",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016242014333768436,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 392
+      },
+      "roundTripMs": 392.79
+    },
+    {
+      "id": "vivos_test_065_synthetic_clean",
+      "originId": "vivos_test_065",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9995282075077472,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 282
+      },
+      "roundTripMs": 283.19
+    },
+    {
+      "id": "vivos_test_065_synthetic_opus",
+      "originId": "vivos_test_065",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9994660902170945,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 284
+      },
+      "roundTripMs": 285.22
+    },
+    {
+      "id": "vivos_test_066_human_clean",
+      "originId": "vivos_test_066",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.2647563110394972,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 393
+      },
+      "roundTripMs": 394.06
+    },
+    {
+      "id": "vivos_test_066_human_opus",
+      "originId": "vivos_test_066",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.2957426391345238,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 409
+      },
+      "roundTripMs": 409.73
+    },
+    {
+      "id": "vivos_test_066_synthetic_clean",
+      "originId": "vivos_test_066",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.982675195596619,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 390
+      },
+      "roundTripMs": 391.62
+    },
+    {
+      "id": "vivos_test_066_synthetic_opus",
+      "originId": "vivos_test_066",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9922232261493927,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 390
+      },
+      "roundTripMs": 391.07
+    },
+    {
+      "id": "vivos_test_067_human_clean",
+      "originId": "vivos_test_067",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.2558701024550114,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 399
+      },
+      "roundTripMs": 400.3
+    },
+    {
+      "id": "vivos_test_067_human_opus",
+      "originId": "vivos_test_067",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.3510147540369996,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 401
+      },
+      "roundTripMs": 402.17
+    },
+    {
+      "id": "vivos_test_067_synthetic_clean",
+      "originId": "vivos_test_067",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9998411989165079,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 324
+      },
+      "roundTripMs": 325.24
+    },
+    {
+      "id": "vivos_test_067_synthetic_opus",
+      "originId": "vivos_test_067",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9998578957296428,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 321
+      },
+      "roundTripMs": 322.37
+    },
+    {
+      "id": "vivos_test_068_human_clean",
+      "originId": "vivos_test_068",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.025638854695302565,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 436
+      },
+      "roundTripMs": 436.98
+    },
+    {
+      "id": "vivos_test_068_human_opus",
+      "originId": "vivos_test_068",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.025007852003315626,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 435
+      },
+      "roundTripMs": 435.96
+    },
+    {
+      "id": "vivos_test_068_synthetic_clean",
+      "originId": "vivos_test_068",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.965846520038528,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 358
+      },
+      "roundTripMs": 358.67
+    },
+    {
+      "id": "vivos_test_068_synthetic_opus",
+      "originId": "vivos_test_068",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9679247702778482,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 355
+      },
+      "roundTripMs": 356.26
+    },
+    {
+      "id": "vivos_test_069_human_clean",
+      "originId": "vivos_test_069",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.009817766817982215,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 441
+      },
+      "roundTripMs": 442.3
+    },
+    {
+      "id": "vivos_test_069_human_opus",
+      "originId": "vivos_test_069",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.010723700819924189,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 408
+      },
+      "roundTripMs": 409.09
+    },
+    {
+      "id": "vivos_test_069_synthetic_clean",
+      "originId": "vivos_test_069",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9990114031375471,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 341
+      },
+      "roundTripMs": 341.59
+    },
+    {
+      "id": "vivos_test_069_synthetic_opus",
+      "originId": "vivos_test_069",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9989208795438782,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 337
+      },
+      "roundTripMs": 337.68
+    },
+    {
+      "id": "vivos_test_070_human_clean",
+      "originId": "vivos_test_070",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.027276424159465844,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 455
+      },
+      "roundTripMs": 455.95
+    },
+    {
+      "id": "vivos_test_070_human_opus",
+      "originId": "vivos_test_070",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.028151308470359484,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 451
+      },
+      "roundTripMs": 452.06
+    },
+    {
+      "id": "vivos_test_070_synthetic_clean",
+      "originId": "vivos_test_070",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9977202738734777,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 393
+      },
+      "roundTripMs": 393.91
+    },
+    {
+      "id": "vivos_test_070_synthetic_opus",
+      "originId": "vivos_test_070",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9991553405026017,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 393
+      },
+      "roundTripMs": 393.69
+    },
+    {
+      "id": "vivos_test_071_human_clean",
+      "originId": "vivos_test_071",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.03911032882099164,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 497
+      },
+      "roundTripMs": 498.41
+    },
+    {
+      "id": "vivos_test_071_human_opus",
+      "originId": "vivos_test_071",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.039694300185878995,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 609
+      },
+      "roundTripMs": 610.1
+    },
+    {
+      "id": "vivos_test_071_synthetic_clean",
+      "originId": "vivos_test_071",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.4713534999898494,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 474
+      },
+      "roundTripMs": 475.75
+    },
+    {
+      "id": "vivos_test_071_synthetic_opus",
+      "originId": "vivos_test_071",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.5508043323585621,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 490
+      },
+      "roundTripMs": 490.97
+    },
+    {
+      "id": "vivos_test_072_human_clean",
+      "originId": "vivos_test_072",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02591404053136536,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 433
+      },
+      "roundTripMs": 434.47
+    },
+    {
+      "id": "vivos_test_072_human_opus",
+      "originId": "vivos_test_072",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.025785935360268252,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 432
+      },
+      "roundTripMs": 432.71
+    },
+    {
+      "id": "vivos_test_072_synthetic_clean",
+      "originId": "vivos_test_072",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.997887689419343,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 405
+      },
+      "roundTripMs": 406.3
+    },
+    {
+      "id": "vivos_test_072_synthetic_opus",
+      "originId": "vivos_test_072",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999322883907016,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 418
+      },
+      "roundTripMs": 418.83
+    },
+    {
+      "id": "vivos_test_073_human_clean",
+      "originId": "vivos_test_073",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.026711993560018518,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 548
+      },
+      "roundTripMs": 549.38
+    },
+    {
+      "id": "vivos_test_073_human_opus",
+      "originId": "vivos_test_073",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.027590122810792282,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 498
+      },
+      "roundTripMs": 499.55
+    },
+    {
+      "id": "vivos_test_073_synthetic_clean",
+      "originId": "vivos_test_073",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9887323078939123,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 582
+      },
+      "roundTripMs": 583.64
+    },
+    {
+      "id": "vivos_test_073_synthetic_opus",
+      "originId": "vivos_test_073",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9919913667098016,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 541
+      },
+      "roundTripMs": 542.57
+    },
+    {
+      "id": "vivos_test_074_human_clean",
+      "originId": "vivos_test_074",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.015197761851712163,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 483
+      },
+      "roundTripMs": 484.7
+    },
+    {
+      "id": "vivos_test_074_human_opus",
+      "originId": "vivos_test_074",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.017762641814016784,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 517
+      },
+      "roundTripMs": 518.91
+    },
+    {
+      "id": "vivos_test_074_synthetic_clean",
+      "originId": "vivos_test_074",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.7698594354058944,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 456
+      },
+      "roundTripMs": 457.39
+    },
+    {
+      "id": "vivos_test_074_synthetic_opus",
+      "originId": "vivos_test_074",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.7143458071869901,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 409
+      },
+      "roundTripMs": 410.11
+    },
+    {
+      "id": "vivos_test_075_human_clean",
+      "originId": "vivos_test_075",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.017032217660782775,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 423
+      },
+      "roundTripMs": 424.6
+    },
+    {
+      "id": "vivos_test_075_human_opus",
+      "originId": "vivos_test_075",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.015289356137422263,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 416
+      },
+      "roundTripMs": 417.54
+    },
+    {
+      "id": "vivos_test_075_synthetic_clean",
+      "originId": "vivos_test_075",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9992142368407226,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 324
+      },
+      "roundTripMs": 324.78
+    },
+    {
+      "id": "vivos_test_075_synthetic_opus",
+      "originId": "vivos_test_075",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "vivos",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9992474771012805,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 342
+      },
+      "roundTripMs": 343.45
+    },
+    {
+      "id": "fleurs_test_000_human_clean",
+      "originId": "fleurs_test_000",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.028385248999198007,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 547
+      },
+      "roundTripMs": 548.51
+    },
+    {
+      "id": "fleurs_test_000_human_opus",
+      "originId": "fleurs_test_000",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.032414426723421694,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 500
+      },
+      "roundTripMs": 500.92
+    },
+    {
+      "id": "fleurs_test_000_synthetic_clean",
+      "originId": "fleurs_test_000",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9786332801755294,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 482
+      },
+      "roundTripMs": 483.62
+    },
+    {
+      "id": "fleurs_test_000_synthetic_opus",
+      "originId": "fleurs_test_000",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9907577356645622,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 478
+      },
+      "roundTripMs": 479.3
+    },
+    {
+      "id": "fleurs_test_001_human_clean",
+      "originId": "fleurs_test_001",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.01579552643336119,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 480
+      },
+      "roundTripMs": 481.86
+    },
+    {
+      "id": "fleurs_test_001_human_opus",
+      "originId": "fleurs_test_001",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016285613864931294,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 492
+      },
+      "roundTripMs": 493.21
+    },
+    {
+      "id": "fleurs_test_001_synthetic_clean",
+      "originId": "fleurs_test_001",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9991470271837377,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 515
+      },
+      "roundTripMs": 516.4
+    },
+    {
+      "id": "fleurs_test_001_synthetic_opus",
+      "originId": "fleurs_test_001",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9993008756446249,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 504
+      },
+      "roundTripMs": 505.39
+    },
+    {
+      "id": "fleurs_test_002_human_clean",
+      "originId": "fleurs_test_002",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016309147736846195,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 888
+      },
+      "roundTripMs": 890.16
+    },
+    {
+      "id": "fleurs_test_002_human_opus",
+      "originId": "fleurs_test_002",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016982563491824924,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 486
+      },
+      "roundTripMs": 487.0
+    },
+    {
+      "id": "fleurs_test_002_synthetic_clean",
+      "originId": "fleurs_test_002",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.6449284269728076,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 539
+      },
+      "roundTripMs": 540.32
+    },
+    {
+      "id": "fleurs_test_002_synthetic_opus",
+      "originId": "fleurs_test_002",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "UNKNOWN",
+        "score": 0.6918128020773487,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 497
+      },
+      "roundTripMs": 498.53
+    },
+    {
+      "id": "fleurs_test_003_human_clean",
+      "originId": "fleurs_test_003",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.07672327619976987,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 500
+      },
+      "roundTripMs": 501.82
+    },
+    {
+      "id": "fleurs_test_003_human_opus",
+      "originId": "fleurs_test_003",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.08097021974378593,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 518
+      },
+      "roundTripMs": 518.95
+    },
+    {
+      "id": "fleurs_test_003_synthetic_clean",
+      "originId": "fleurs_test_003",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999502240728682,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 526
+      },
+      "roundTripMs": 527.67
+    },
+    {
+      "id": "fleurs_test_003_synthetic_opus",
+      "originId": "fleurs_test_003",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9995304687818768,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 558
+      },
+      "roundTripMs": 559.64
+    },
+    {
+      "id": "fleurs_test_004_human_clean",
+      "originId": "fleurs_test_004",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.026268920793193925,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 566
+      },
+      "roundTripMs": 568.57
+    },
+    {
+      "id": "fleurs_test_004_human_opus",
+      "originId": "fleurs_test_004",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02662509250982859,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 495
+      },
+      "roundTripMs": 496.09
+    },
+    {
+      "id": "fleurs_test_004_synthetic_clean",
+      "originId": "fleurs_test_004",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9870589453160783,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 525
+      },
+      "roundTripMs": 526.14
+    },
+    {
+      "id": "fleurs_test_004_synthetic_opus",
+      "originId": "fleurs_test_004",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9821852665027707,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 537
+      },
+      "roundTripMs": 538.25
+    },
+    {
+      "id": "fleurs_test_005_human_clean",
+      "originId": "fleurs_test_005",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.012675195438492758,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 484
+      },
+      "roundTripMs": 485.59
+    },
+    {
+      "id": "fleurs_test_005_human_opus",
+      "originId": "fleurs_test_005",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.01520871568469498,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 481
+      },
+      "roundTripMs": 482.79
+    },
+    {
+      "id": "fleurs_test_005_synthetic_clean",
+      "originId": "fleurs_test_005",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9983237378489845,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 486
+      },
+      "roundTripMs": 487.17
+    },
+    {
+      "id": "fleurs_test_005_synthetic_opus",
+      "originId": "fleurs_test_005",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9979235486086505,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 494
+      },
+      "roundTripMs": 495.6
+    },
+    {
+      "id": "fleurs_test_006_human_clean",
+      "originId": "fleurs_test_006",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.020053528920401555,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 510
+      },
+      "roundTripMs": 511.42
+    },
+    {
+      "id": "fleurs_test_006_human_opus",
+      "originId": "fleurs_test_006",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.021259956686259532,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 491
+      },
+      "roundTripMs": 492.63
+    },
+    {
+      "id": "fleurs_test_006_synthetic_clean",
+      "originId": "fleurs_test_006",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9308385173215427,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 498
+      },
+      "roundTripMs": 498.97
+    },
+    {
+      "id": "fleurs_test_006_synthetic_opus",
+      "originId": "fleurs_test_006",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9192472830583407,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 474
+      },
+      "roundTripMs": 475.53
+    },
+    {
+      "id": "fleurs_test_007_human_clean",
+      "originId": "fleurs_test_007",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.03808595108397717,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 488
+      },
+      "roundTripMs": 489.88
+    },
+    {
+      "id": "fleurs_test_007_human_opus",
+      "originId": "fleurs_test_007",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.04083913272762228,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 484
+      },
+      "roundTripMs": 485.31
+    },
+    {
+      "id": "fleurs_test_007_synthetic_clean",
+      "originId": "fleurs_test_007",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9984070233260124,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 497
+      },
+      "roundTripMs": 498.39
+    },
+    {
+      "id": "fleurs_test_007_synthetic_opus",
+      "originId": "fleurs_test_007",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999255349381208,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 498
+      },
+      "roundTripMs": 499.03
+    },
+    {
+      "id": "fleurs_test_008_human_clean",
+      "originId": "fleurs_test_008",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.011484742536216305,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 502
+      },
+      "roundTripMs": 503.24
+    },
+    {
+      "id": "fleurs_test_008_human_opus",
+      "originId": "fleurs_test_008",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.01310455688079717,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 491
+      },
+      "roundTripMs": 491.96
+    },
+    {
+      "id": "fleurs_test_008_synthetic_clean",
+      "originId": "fleurs_test_008",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9017748426852459,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 500
+      },
+      "roundTripMs": 501.22
+    },
+    {
+      "id": "fleurs_test_008_synthetic_opus",
+      "originId": "fleurs_test_008",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.8988685382373884,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 495
+      },
+      "roundTripMs": 496.47
+    },
+    {
+      "id": "fleurs_test_009_human_clean",
+      "originId": "fleurs_test_009",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.02066313800150089,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 503
+      },
+      "roundTripMs": 504.58
+    },
+    {
+      "id": "fleurs_test_009_human_opus",
+      "originId": "fleurs_test_009",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.024885967258024177,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 494
+      },
+      "roundTripMs": 495.63
+    },
+    {
+      "id": "fleurs_test_009_synthetic_clean",
+      "originId": "fleurs_test_009",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9994873709379832,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 503
+      },
+      "roundTripMs": 504.23
+    },
+    {
+      "id": "fleurs_test_009_synthetic_opus",
+      "originId": "fleurs_test_009",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9994900015464806,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 514
+      },
+      "roundTripMs": 515.08
+    },
+    {
+      "id": "fleurs_test_010_human_clean",
+      "originId": "fleurs_test_010",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.0460236949615034,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 513
+      },
+      "roundTripMs": 514.77
+    },
+    {
+      "id": "fleurs_test_010_human_opus",
+      "originId": "fleurs_test_010",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.04764532225425467,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 550
+      },
+      "roundTripMs": 551.39
+    },
+    {
+      "id": "fleurs_test_010_synthetic_clean",
+      "originId": "fleurs_test_010",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.903684388687982,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 657
+      },
+      "roundTripMs": 658.4
+    },
+    {
+      "id": "fleurs_test_010_synthetic_opus",
+      "originId": "fleurs_test_010",
+      "label": "synthetic",
+      "family": "Piper-VIVOS",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9149737424259714,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 655
+      },
+      "roundTripMs": 656.25
+    },
+    {
+      "id": "fleurs_test_011_human_clean",
+      "originId": "fleurs_test_011",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.04754887873745841,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 635
+      },
+      "roundTripMs": 635.99
+    },
+    {
+      "id": "fleurs_test_011_human_opus",
+      "originId": "fleurs_test_011",
+      "label": "human",
+      "family": "fleurs",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.04751758106551515,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 612
+      },
+      "roundTripMs": 613.65
+    },
+    {
+      "id": "fleurs_test_011_synthetic_clean",
+      "originId": "fleurs_test_011",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "clean",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9994097599009273,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 691
+      },
+      "roundTripMs": 693.43
+    },
+    {
+      "id": "fleurs_test_011_synthetic_opus",
+      "originId": "fleurs_test_011",
+      "label": "synthetic",
+      "family": "VieNeu-Nano",
+      "cohort": "fleurs",
+      "condition": "opus",
+      "httpStatus": 200,
+      "result": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9994443370353341,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 805
+      },
+      "roundTripMs": 807.33
+    }
+  ]
+}

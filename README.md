@@ -1,5 +1,7 @@
 # 🛡️ ZeroLeak
 
+Hướng dẫn chạy và giới hạn của tính năng **ZeroLeak Voice**: [docs/VOICE.md](docs/VOICE.md).
+
 > **Hệ thống Bảo mật Lai (Hybrid Edge-Cloud Security Platform)**
 > 
 > *GDG DevFest Miền Trung 2026 — Track: Cybersecurity*

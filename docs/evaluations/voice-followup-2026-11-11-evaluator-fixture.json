@@ -1,0 +1,88 @@
+{
+  "requestIntervalMs": 0,
+  "latencyScope": "roundTrip includes rejected requests; successfulRoundTrip excludes errors, error counts remain in denominators",
+  "headSha256": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+  "manifestSha256": "f98e929a1c568f97668e4cb88d5488de534803be1def8d08104db6895270da2d",
+  "cohort": null,
+  "throughHttp": true,
+  "deadlineMs": 2800,
+  "summary": {
+    "human": 3,
+    "synthetic": 1,
+    "syntheticAlerts": 1,
+    "humanFalseAlerts": 0,
+    "unknownHuman": 3,
+    "unknownSynthetic": 0,
+    "errors": 3,
+    "lowScoredSynthetic": 0,
+    "roundTripMedianMs": 0.675,
+    "roundTripMaxMs": 25.65,
+    "successfulRoundTripMedianMs": 25.65,
+    "successfulRoundTripMaxMs": 25.65,
+    "errorCounts": {
+      "BUSY": 1,
+      "INVALID_RESULT": 1,
+      "UNAVAILABLE": 1
+    }
+  },
+  "results": [
+    {
+      "id": "audit_v4_VIVOSDEV01_0_human_clean",
+      "originId": "v4_VIVOSDEV01_0",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "v4-fresh",
+      "condition": "clean",
+      "status": "ERROR",
+      "score": null,
+      "verdict": "UNKNOWN",
+      "httpStatus": 429,
+      "errorCode": "BUSY",
+      "roundTripMs": 0.74
+    },
+    {
+      "id": "audit_v4_VIVOSDEV01_0_human_phone8k",
+      "originId": "v4_VIVOSDEV01_0",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "v4-fresh",
+      "condition": "phone8k",
+      "status": "ERROR",
+      "score": null,
+      "verdict": "UNKNOWN",
+      "httpStatus": 503,
+      "errorCode": "UNAVAILABLE",
+      "roundTripMs": 0.61
+    },
+    {
+      "id": "audit_v4_VIVOSDEV01_0_human_room_noise15db",
+      "originId": "v4_VIVOSDEV01_0",
+      "label": "human",
+      "family": "vivos",
+      "cohort": "v4-fresh",
+      "condition": "room_noise15db",
+      "status": "ERROR",
+      "score": null,
+      "verdict": "UNKNOWN",
+      "httpStatus": 200,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 0.5
+    },
+    {
+      "id": "audit_v4_VIVOSDEV01_0_synthetic_clean",
+      "originId": "v4_VIVOSDEV01_0",
+      "label": "synthetic",
+      "family": "VieNeu-Turbo-Clone",
+      "cohort": "v4-fresh",
+      "condition": "clean",
+      "status": "OK",
+      "score": 0.9,
+      "verdict": "SYNTHETIC_SUSPECTED",
+      "httpStatus": 200,
+      "errorCode": null,
+      "roundTripMs": 25.65
+    }
+  ],
+  "fixtureOnly": true,
+  "scope": "CLI HTTP error classification and latency accounting only; not AI accuracy"
+}

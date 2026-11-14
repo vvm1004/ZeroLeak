@@ -1,0 +1,40 @@
+{
+  "calls": 2,
+  "providerResponsesNotUsedForAccuracy": true,
+  "results": [
+    {
+      "case": "vivos_test_057_synthetic_clean",
+      "httpStatus": 200,
+      "assessmentSource": "HYBRID_AUDIO",
+      "contentVerdict": "SAFE",
+      "riskScore": 0,
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9975410634104491,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 2201
+      },
+      "roundTripMs": 2611.25
+    },
+    {
+      "case": "vivos_test_057_human_clean",
+      "httpStatus": 200,
+      "assessmentSource": "HYBRID_AUDIO",
+      "contentVerdict": "SAFE",
+      "riskScore": 0,
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.016578768039166504,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "f5cb4184c76c1ee33f695d35ac3f77f343a57a5c281d97cf6f353bceebae08e1",
+        "executionTimeMs": 508
+      },
+      "roundTripMs": 2008.4
+    }
+  ]
+}
