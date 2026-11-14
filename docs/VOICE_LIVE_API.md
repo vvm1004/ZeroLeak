@@ -2,7 +2,9 @@
 
 Đã sửa khác biệt với TASK: model mặc định thực sự là **`gemini-3.8-live-extended-thinking`**,
 gọi Live API bằng WebSocket. Không gửi tên Live model vào `generateContent`.
-**63 test backend, 5 test client và 12 Chrome E2E qua; chưa nghiệm thu Test 6 dưới 3 giây.**
+**Bản tối ưu Extended hiện tại: 70 test backend, typecheck/build và hai ca Chrome với API thật qua.**
+[Test A/B và sáu câu mới](VOICE_EXTENDED_IMPROVEMENTS.md) cải thiện số lượt có kết luận;
+**chưa nghiệm thu Test 6 dưới 3 giây**. 5 test client/12 E2E fixture của bản trước giữ làm lịch sử, không phải accuracy AI.
 Các kết quả Flash-Lite trong tài liệu trước không phải benchmark của 3.8.
 
 ## Luồng hiện tại
@@ -24,9 +26,13 @@ Raw Google gửi `voiceActivity.type`; SDK đổi thành `voiceActivityType`. C�
 không giả định `inputTranscription.finished` luôn có mặt.
 
 Live không có bảo đảm `responseSchema` như Flash. Extended dùng cấu hình AUDIO, thinking LOW và
-`outputAudioTranscription`: chỉ JSON **do model tạo** được parse/kiểm tra. Không dùng transcription
-đầu vào hoặc thought summary làm kết quả. Đợi `interactionStatus: IDLE`; `turnComplete` với
-`IN_PROGRESS` chưa hoàn tất. Giữ một JSON hợp lệ đã phát để đợi IDLE, bỏ lời đệm. Standard Live
+`outputAudioTranscription`: chỉ JSON **do model tạo** được parse/kiểm tra. Extended trả bộ mã gọn
+`a,v,r,q,f`; backend giải mã về schema công khai như trước. Cùng phiên Live cung cấp input ASR cho
+transcript và kiểm tra quote, tránh yêu cầu model đọc lại toàn bộ lời thoại trong JSON đầu ra. ASR
+không quyết định verdict/risk/tactics và không phải bằng chứng kiểm định độc lập. Không dùng input
+transcription hoặc thought summary làm kết quả. Đợi cả ACK và ASR không rỗng trước khi yêu cầu đánh giá. Đợi `interactionStatus: IDLE`; `turnComplete` với
+`IN_PROGRESS` chưa hoàn tất. Giữ một JSON hợp lệ đã phát để đợi IDLE; nếu một đầu ra mới không rỗng bị lỗi thì xóa candidate cũ,
+không trả lại SAFE trước đó. Không có JSON hợp lệ thì báo lỗi, không lấy lời đệm làm kết quả. Standard Live
 còn hỗ trợ hàm báo cáo `NON_BLOCKING`; ACK rồi đóng sau khi nhận báo cáo cuối hợp lệ.
 Đã thử TEXT modality nhưng dịch vụ từ chối; không dùng cách đó trong bản giữ lại.
 
@@ -52,6 +58,9 @@ Khi Gemini không khả dụng chỉ hiển thị local riêng, nội dung UNKNO
 `/health` báo route/capability cấu hình, không chứng nhận quota hoặc độ chính xác của provider.
 
 ## Kiểm chứng với dịch vụ thật
+
+**Kết quả bản tối ưu mới nhất:** [A/B, fresh và Chrome](VOICE_EXTENDED_IMPROVEMENTS.md).
+Các phép đo tiếp theo trong mục này thuộc bản Live ban đầu, được giữ nguyên kể cả ca thất bại.
 
 [Model access](evaluations/voice-live-2026-11-11-model-access.json) xác nhận API key nhận được hai model
 3.8 với `bidiGenerateContent`, còn Flash-Lite với `generateContent`. Đây chỉ là kiểm tra khả dụng cấu hình.

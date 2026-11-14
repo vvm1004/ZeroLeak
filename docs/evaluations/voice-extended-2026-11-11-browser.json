@@ -1,0 +1,85 @@
+{
+  "realBrowser": true,
+  "realApi": true,
+  "providerMocked": false,
+  "physicalCall": false,
+  "scope": "Two fixed known development clips through Chrome and actual API after compact Extended integration; no retries, not unseen accuracy or physical calls",
+  "plannedCases": 2,
+  "maxProviderSessionUpperBound": 6,
+  "results": [
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "scam": true,
+      "roundTripMs": 3251,
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 95,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "acousticAnalysis": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999993987135756,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 2097
+      },
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "status": "RESULT"
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "scam": false,
+      "roundTripMs": 2918,
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "analysisTransport": "LIVE_API",
+      "fallbackUsed": false,
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "acousticAnalysis": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999983414669831,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 641
+      },
+      "detectedTactics": [],
+      "semanticCorrect": true,
+      "uiShowsActualModel": true,
+      "status": "RESULT"
+    }
+  ]
+}

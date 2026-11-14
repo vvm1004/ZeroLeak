@@ -26,6 +26,7 @@ function answer() {
   return { speechAct: 'DIRECT_REQUEST', transcriptSnippet: 'Đọc mã OTP ngay cho tôi.', riskScore: 90,
     verdict: 'SUSPICIOUS', audioQuality: 'CLEAR', findings: [{ tactic: 'OTP_OR_CREDENTIAL_ASK', quote: 'Đọc mã OTP ngay cho tôi' }] };
 }
+function compactAnswer() { return { a: 0, v: 1, r: 90, q: 0, f: [[2, 'Đọc mã OTP ngay']] }; }
 function report(args: unknown = answer()) {
   return { toolCall: { functionCalls: [{ id: 'report-1', name: 'report_voice_assessment', args }] } };
 }
@@ -82,10 +83,11 @@ test('Thinking turnComplete while IN_PROGRESS cannot complete the assessment', a
   const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
   void pending.then(() => { settled = true; }, () => { settled = true; });
   socket.open(); socket.receive({ setupComplete: {} });
+  socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.' } } });
   socket.receive({ voiceActivity: { type: 'ACTIVITY_END' } });
   socket.receive({ serverContent: { turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
   await Promise.resolve(); assert.equal(settled, false); assert.equal(socket.closes, 0);
-  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(answer()) }, turnComplete: true, interactionStatus: 'IDLE' } }); assert.equal((await pending).verdict, 'SUSPICIOUS');
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()) }, turnComplete: true, interactionStatus: 'IDLE' } }); assert.equal((await pending).verdict, 'SUSPICIOUS');
 });
 
 test('abort closes a connecting socket and late setup cannot upload audio', async () => {
@@ -120,7 +122,7 @@ test('malformed, cancelled or unexpected tools cannot yield a content assessment
     { serverContent: { turnComplete: true, interactionStatus: 'IDLE' } }]) {
     const socket = new Socket();
     const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
-    socket.open(); socket.receive({ setupComplete: {} }); socket.receive({ serverContent: { inputTranscription: { finished: true } } }); socket.receive(message);
+    socket.open(); socket.receive({ setupComplete: {} }); socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.', finished: true } } }); socket.receive(message);
     await assert.rejects(pending, (error: unknown) => error instanceof VoiceAnalysisError && error.code === 'INVALID_RESULT');
     assert.equal(socket.closes, 1);
   }
@@ -138,8 +140,8 @@ function routedFactory(fail: (model: string) => boolean, calls: string[]): Voice
     calls.push(model); const socket = new Socket();
     socket.onSend = message => {
       if (message.setup) queueMicrotask(() => socket.receive(fail(model) ? { error: { code: 503 } } : { setupComplete: {} }));
-      if (message.realtimeInput?.activityEnd) queueMicrotask(() => socket.receive({ serverContent: { inputTranscription: { finished: true } } }));
-      if (message.clientContent?.turnComplete) queueMicrotask(() => socket.receive(model.endsWith('-extended-thinking') ? { serverContent: { outputTranscription: { text: JSON.stringify(answer()) }, turnComplete: true, interactionStatus: 'IDLE' } } : report()));
+      if (message.realtimeInput?.activityEnd) queueMicrotask(() => socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.', finished: true } } }));
+      if (message.clientContent?.turnComplete) queueMicrotask(() => socket.receive(model.endsWith('-extended-thinking') ? { serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()) }, turnComplete: true, interactionStatus: 'IDLE' } } : report()));
     };
     queueMicrotask(() => socket.open());
     return socket;
@@ -206,10 +208,10 @@ test('only final model-generated JSON can be read from output transcription; fil
   const socket = new Socket();
   const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
   socket.open(); socket.receive({ setupComplete: {} });
-  socket.receive({ serverContent: { inputTranscription: { finished: true } } });
+  socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.', finished: true } } });
   socket.receive({ serverContent: { outputTranscription: { text: 'Đang xem xét bản ghi.' }, turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
-  socket.receive({ serverContent: { modelTurn: { parts: [{ thought: true, text: 'Internal reasoning' }] }, outputTranscription: { text: JSON.stringify(answer()).slice(0, 50) } } });
-  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(answer()).slice(50) }, turnComplete: true, interactionStatus: 'IDLE' } });
+  socket.receive({ serverContent: { modelTurn: { parts: [{ thought: true, text: 'Internal reasoning' }] }, outputTranscription: { text: JSON.stringify(compactAnswer()).slice(0, 50) } } });
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()).slice(50) }, turnComplete: true, interactionStatus: 'IDLE' } });
   const result = await pending;
   assert.equal(result.verdict, 'SUSPICIOUS'); assert.equal(result.analysisModel, EXTENDED);
   assert.ok(!JSON.stringify(result).includes('Internal reasoning'));
@@ -224,7 +226,7 @@ test('raw Google ACTIVITY_END acknowledgement works when transcription has no fi
   assert.ok(!socket.sent.some(message => message.clientContent));
   socket.receive({ voiceActivity: { type: 'ACTIVITY_END', audioOffset: '1s' } });
   assert.equal(socket.sent.filter(message => message.clientContent?.turnComplete).length, 1);
-  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(answer()) }, turnComplete: true, interactionStatus: 'IDLE' } });
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()) }, turnComplete: true, interactionStatus: 'IDLE' } });
   assert.equal((await pending).analysisModel, EXTENDED);
 });
 
@@ -261,8 +263,9 @@ test('a validated JSON utterance still waits for Thinking IDLE before returning'
   const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
   void pending.then(() => { settled = true; });
   socket.open(); socket.receive({ setupComplete: {} });
+  socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.' } } });
   socket.receive({ voiceActivity: { type: 'ACTIVITY_END' } });
-  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(answer()) }, turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()) }, turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
   await Promise.resolve(); assert.equal(settled, false);
   socket.receive({ serverContent: { turnComplete: true, interactionStatus: 'IDLE' } });
   assert.equal((await pending).verdict, 'SUSPICIOUS');
@@ -277,4 +280,44 @@ test('Extended JSON success is attributed to the primary with no hidden Flash ca
   assert.equal(result.analysisTransport, 'LIVE_API'); assert.equal(result.fallbackUsed, false);
   assert.deepEqual(result.providerAttempts, [{ model: 'gemini-primary-json-live-extended-thinking', transport: 'LIVE_API', status: 'SUCCEEDED' }]);
   assert.equal(calls.length, 1);
+});
+
+
+test('Extended waits for delayed ASR after ACTIVITY_END and requests exactly one assessment', async () => {
+  const socket = new Socket();
+  const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
+  socket.open(); socket.receive({ setupComplete: {} });
+  socket.receive({ voiceActivity: { type: 'ACTIVITY_END' } });
+  assert.equal(socket.sent.filter(message => message.clientContent).length, 0);
+  socket.receive({ serverContent: { inputTranscription: { text: 'Đọc mã OTP ngay cho tôi.' } } });
+  socket.receive({ voiceActivity: { type: 'ACTIVITY_END' } });
+  const prompts = socket.sent.filter(message => message.clientContent);
+  assert.equal(prompts.length, 1);
+  assert.ok(prompts[0].clientContent.turns[0].parts[0].text.includes(JSON.stringify({ transcript: 'Đọc mã OTP ngay cho tôi.' })));
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify(compactAnswer()) }, interactionStatus: 'IDLE' } });
+  assert.equal((await pending).verdict, 'SUSPICIOUS');
+});
+
+test('missing input ASR times out without asking the model to invent quote evidence', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const socket = new Socket();
+  const pending = analyzeLiveVoice(input(), EXTENDED, { budgetMs: 120, socketFactory: () => socket });
+  const failed = assert.rejects(pending, (error: unknown) => error instanceof VoiceAnalysisError && error.code === 'TIMEOUT');
+  socket.open(); socket.receive({ setupComplete: {} }); socket.receive({ voiceActivity: { type: 'ACTIVITY_END' } });
+  socket.receive({ serverContent: { inputTranscription: { text: ' ', finished: true } } });
+  assert.equal(socket.sent.filter(message => message.clientContent).length, 0);
+  t.mock.timers.tick(120); await failed;
+  assert.equal(socket.closes, 1);
+});
+
+test('a newer malformed Thinking utterance invalidates an older SAFE candidate', async () => {
+  const socket = new Socket();
+  const pending = analyzeLiveVoice(input(), EXTENDED, { socketFactory: () => socket });
+  socket.open(); socket.receive({ setupComplete: {} });
+  socket.receive({ serverContent: { inputTranscription: { text: 'Họp chiều nay nhé.', finished: true } } });
+  socket.receive({ serverContent: { outputTranscription: { text: JSON.stringify({ a: 3, v: 0, r: 0, q: 0, f: [] }) }, turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
+  socket.receive({ serverContent: { outputTranscription: { text: '{invalid' }, turnComplete: true, interactionStatus: 'IN_PROGRESS' } });
+  socket.receive({ serverContent: { turnComplete: true, interactionStatus: 'IDLE' } });
+  await assert.rejects(pending, (error: unknown) => error instanceof VoiceAnalysisError && error.code === 'INVALID_RESULT');
+  assert.equal(socket.closes, 1);
 });

@@ -1,0 +1,447 @@
+{
+  "model": "gemini-3.8-live-extended-thinking",
+  "scope": "Small synthetic one-voice content/protocol regression, not real-call deepfake accuracy or statistical model superiority",
+  "pairedInputs": true,
+  "fallbackAllowed": false,
+  "baselineCodeSha256": "ea318eb19559e8b2e20617cc9721c10a2cb9f0d7bb239692732ef5b0ed21ab71",
+  "candidateCodeSha256": "102221468589e11b02f819022c23ab5fea0df4af2a028ac8ef03df355f47d656",
+  "baselineSetupSha256": "4be8f8b87a181fde21fcc79bd349c8810b5c37d5df1a9040382c5fb9791aad86",
+  "candidateSetupSha256": "d6245fa7afc67d235584b882a75e608daafc2d4b891773ccb5fa1cc8812f47f4",
+  "protocolSha256": "63880e03fa0530ca2be11f52b6d15fee878b7d81eeb529194283ed01f941d6e7",
+  "plannedJobs": 16,
+  "providerCalls": 16,
+  "results": [
+    {
+      "id": "dev_meeting_clean",
+      "mode": "realtime",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "50fe65960db11e108103674bb3d989c944741238631bcdcfafa2c06a810c206b",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 2190,
+      "phases": {
+        "openMs": 251,
+        "setupMs": 873,
+        "audioAckMs": 1784,
+        "firstOutputMs": 2170,
+        "idleMs": 2187
+      },
+      "outputChars": 174,
+      "sourceChars": 35
+    },
+    {
+      "id": "dev_meeting_clean",
+      "mode": "realtime",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "50fe65960db11e108103674bb3d989c944741238631bcdcfafa2c06a810c206b",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3113,
+      "phases": {
+        "openMs": 177,
+        "setupMs": 901
+      },
+      "outputChars": 0,
+      "sourceChars": 0
+    },
+    {
+      "id": "dev_meeting_clean",
+      "mode": "review",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "50fe65960db11e108103674bb3d989c944741238631bcdcfafa2c06a810c206b",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "alert": false,
+      "tactics": [],
+      "evidenceCount": 0,
+      "roundTripMs": 2663,
+      "phases": {
+        "openMs": 174,
+        "setupMs": 1139,
+        "audioAckMs": 2023,
+        "firstOutputMs": 2532,
+        "idleMs": 2655
+      },
+      "outputChars": 41,
+      "sourceChars": 35
+    },
+    {
+      "id": "dev_meeting_clean",
+      "mode": "review",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "50fe65960db11e108103674bb3d989c944741238631bcdcfafa2c06a810c206b",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 2711,
+      "phases": {
+        "openMs": 159,
+        "setupMs": 1384,
+        "audioAckMs": 2214,
+        "firstOutputMs": 2659,
+        "idleMs": 2709
+      },
+      "outputChars": 174,
+      "sourceChars": 35
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "realtime",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3108,
+      "phases": {
+        "openMs": 237,
+        "setupMs": 638,
+        "audioAckMs": 2439
+      },
+      "outputChars": 0,
+      "sourceChars": 32
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "realtime",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3107,
+      "phases": {
+        "openMs": 483,
+        "setupMs": 1053
+      },
+      "outputChars": 0,
+      "sourceChars": 0
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 2305,
+      "phases": {
+        "openMs": 261,
+        "setupMs": 811,
+        "audioAckMs": 1812,
+        "firstOutputMs": 2255,
+        "idleMs": 2303
+      },
+      "outputChars": 274,
+      "sourceChars": 32
+    },
+    {
+      "id": "dev_otp_request_clean",
+      "mode": "review",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "25cc0955b6455afd533cb6eda2d822a220127fe084ea0fe4f2f67fd4d7d8b2c1",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 2185,
+      "phases": {
+        "openMs": 504,
+        "setupMs": 1020,
+        "audioAckMs": 2008,
+        "idleMs": 2183
+      },
+      "outputChars": 0,
+      "sourceChars": 32
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3108,
+      "phases": {
+        "openMs": 413,
+        "setupMs": 976,
+        "audioAckMs": 1897
+      },
+      "outputChars": 0,
+      "sourceChars": 36
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "realtime",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "alert": false,
+      "tactics": [],
+      "evidenceCount": 0,
+      "roundTripMs": 2770,
+      "phases": {
+        "openMs": 191,
+        "setupMs": 711,
+        "audioAckMs": 1736,
+        "firstOutputMs": 2720,
+        "idleMs": 2768
+      },
+      "outputChars": 41,
+      "sourceChars": 36
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "review",
+      "impl": "candidate",
+      "scamLabel": false,
+      "inputSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "status": "OK",
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "alert": false,
+      "tactics": [],
+      "evidenceCount": 0,
+      "roundTripMs": 2478,
+      "phases": {
+        "openMs": 165,
+        "setupMs": 736,
+        "audioAckMs": 1631,
+        "firstOutputMs": 2436,
+        "idleMs": 2477
+      },
+      "outputChars": 41,
+      "sourceChars": 36
+    },
+    {
+      "id": "dev_warning_clean",
+      "mode": "review",
+      "impl": "baseline",
+      "scamLabel": false,
+      "inputSha256": "89df433d755f4e41a764242e3ee7bcfb1286193823347ddce530bf1b20c248ac",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "INVALID_RESULT",
+      "roundTripMs": 2106,
+      "phases": {
+        "openMs": 143,
+        "setupMs": 679,
+        "audioAckMs": 1610,
+        "firstOutputMs": 2061,
+        "idleMs": 2105
+      },
+      "outputChars": 180,
+      "sourceChars": 36
+    },
+    {
+      "id": "dev_ceo_clean",
+      "mode": "realtime",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "alert": true,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "evidenceCount": 1,
+      "roundTripMs": 2579,
+      "phases": {
+        "openMs": 162,
+        "setupMs": 632,
+        "audioAckMs": 1649,
+        "firstOutputMs": 2577,
+        "idleMs": 2577
+      },
+      "outputChars": 81,
+      "sourceChars": 48
+    },
+    {
+      "id": "dev_ceo_clean",
+      "mode": "realtime",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 3105,
+      "phases": {
+        "openMs": 152,
+        "setupMs": 679,
+        "audioAckMs": 1644
+      },
+      "outputChars": 0,
+      "sourceChars": 48
+    },
+    {
+      "id": "dev_ceo_clean",
+      "mode": "review",
+      "impl": "baseline",
+      "scamLabel": true,
+      "inputSha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "status": "ERROR",
+      "verdict": null,
+      "riskScore": null,
+      "alert": null,
+      "errorCode": "TIMEOUT",
+      "roundTripMs": 15009,
+      "phases": {
+        "openMs": 153,
+        "setupMs": 705,
+        "audioAckMs": 1647
+      },
+      "outputChars": 0,
+      "sourceChars": 48
+    },
+    {
+      "id": "dev_ceo_clean",
+      "mode": "review",
+      "impl": "candidate",
+      "scamLabel": true,
+      "inputSha256": "65384eba7f8ad3c189b0829dfbffca14ac89a732d5ea3ab8ade99a4ab118bfa2",
+      "status": "OK",
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "alert": true,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "evidenceCount": 1,
+      "roundTripMs": 3499,
+      "phases": {
+        "openMs": 179,
+        "setupMs": 640,
+        "audioAckMs": 1665,
+        "firstOutputMs": 3452,
+        "idleMs": 3498
+      },
+      "outputChars": 72,
+      "sourceChars": 48
+    }
+  ],
+  "notAttempted": [],
+  "summary": {
+    "baseline": {
+      "realtime": {
+        "cases": 4,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 4,
+        "providerErrors": 3,
+        "invalidFormat": 1,
+        "formatValid": 0,
+        "assessed": 0,
+        "coverage": 0,
+        "roundTripMedianMs": 3106,
+        "assessedMedianMs": null
+      },
+      "review": {
+        "cases": 4,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 4,
+        "providerErrors": 1,
+        "invalidFormat": 3,
+        "formatValid": 0,
+        "assessed": 0,
+        "coverage": 0,
+        "roundTripMedianMs": 2508,
+        "assessedMedianMs": null
+      }
+    },
+    "candidate": {
+      "realtime": {
+        "cases": 4,
+        "tp": 1,
+        "tn": 1,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 2,
+        "providerErrors": 2,
+        "invalidFormat": 0,
+        "formatValid": 2,
+        "assessed": 2,
+        "coverage": 0.5,
+        "roundTripMedianMs": 2939,
+        "assessedMedianMs": 2674.5
+      },
+      "review": {
+        "cases": 4,
+        "tp": 1,
+        "tn": 2,
+        "fp": 0,
+        "fn": 0,
+        "unknown": 1,
+        "providerErrors": 0,
+        "invalidFormat": 1,
+        "formatValid": 3,
+        "assessed": 3,
+        "coverage": 0.75,
+        "roundTripMedianMs": 2570.5,
+        "assessedMedianMs": 2663
+      }
+    }
+  },
+  "acceptance": {
+    "checks": {
+      "allJobsAttempted": true,
+      "realtime": {
+        "noAdditionalFalseAlerts": true,
+        "noAdditionalConfidentMisses": true,
+        "noCoverageLoss": true
+      },
+      "review": {
+        "noAdditionalFalseAlerts": true,
+        "noAdditionalConfidentMisses": true,
+        "noCoverageLoss": true
+      },
+      "measuredBenefit": true
+    },
+    "passed": true,
+    "additionalAssessedCases": 5,
+    "latencyGain": false
+  }
+}

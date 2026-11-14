@@ -75,7 +75,7 @@ const meta = {
   labelsSentToProvider: false, realApi: !values['dry-run'],
   manifestSha256: createHash('sha256').update(manifestBytes).digest('hex'),
   requestDefinitionSha256: createHash('sha256').update(JSON.stringify(definition)).digest('hex'),
-  analyzerCodeSha256: createHash('sha256').update(Buffer.concat(['voice-analyzer.ts','voice-live.ts','voice-result.ts'].map(file => readFileSync(new URL('../src/' + file, import.meta.url))))).digest('hex'),
+  analyzerCodeSha256: createHash('sha256').update(Buffer.concat(['voice-analyzer.ts','voice-live.ts','voice-live-output.ts','voice-result.ts','voice-input.ts'].map(file => readFileSync(new URL('../src/' + file, import.meta.url))))).digest('hex'),
   selectedSplit: values.split ?? 'explicit selection', plannedCases: selected.length, sourceGroups: new Set(selected.map(row => row.originId)).size,
 };
 if (values['dry-run']) {

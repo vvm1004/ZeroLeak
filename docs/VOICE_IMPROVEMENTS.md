@@ -1,5 +1,7 @@
 # Cải thiện Voice sau screening — 2026-11-10
 
+**Cập nhật mới nhất:** [tối ưu trực tiếp Gemini 3.8 Extended, A/B và sáu câu mới](VOICE_EXTENDED_IMPROVEMENTS.md).
+
 **Cập nhật model:** [Gemini 3.8 Live Extended Thinking](VOICE_LIVE_API.md).
 Các phép đo/luồng Flash bên dưới được giữ làm lịch sử; head âm học V3 không thay đổi.
 
