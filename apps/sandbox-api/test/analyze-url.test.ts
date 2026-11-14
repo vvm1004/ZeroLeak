@@ -9,6 +9,9 @@ import {
   captureUrlInSandbox,
   closeBrowser,
 } from '../src/playwright.js';
+import { checkUrlSafeBrowsing } from '../src/safebrowsing.js';
+import { analyzeVisualPhishing, visualPhishingResponseSchema } from '../src/gemini-analyzer.js';
+import { coordinateUrlAnalysis } from '../src/url-analyzer.js';
 
 describe('Epic 2.1: SSRF Protection & URL Safety Filter', () => {
   test('blocks private IPv4 addresses', () => {
@@ -268,5 +271,123 @@ describe('Epic 2.1: Playwright Headless Real Sandbox Execution', () => {
 
     assert.equal(result.status, 'BLOCKED_SSRF');
     assert.ok(result.errorMessage?.includes('SSRF'));
+  });
+});
+
+describe('Epic 2.2: Google Safe Browsing API v4 & Gemini Visual Phishing', () => {
+  test('checkUrlSafeBrowsing handles missing key gracefully without throwing', async () => {
+    const result = await checkUrlSafeBrowsing('https://testsafebrowsing.appspot.com/s/malware.html', undefined);
+    assert.equal(result.isKnownThreat, false);
+    assert.equal(result.threatType, null);
+    assert.ok(typeof result.executionTimeMs === 'number');
+  });
+
+  test('visualPhishingResponseSchema has required structured output schema', () => {
+    assert.equal(visualPhishingResponseSchema.type, 'OBJECT');
+    assert.ok(visualPhishingResponseSchema.properties.riskScore);
+    assert.ok(visualPhishingResponseSchema.properties.verdict);
+    assert.ok(visualPhishingResponseSchema.properties.indicators);
+    assert.deepEqual(visualPhishingResponseSchema.required, ['riskScore', 'verdict', 'indicators']);
+  });
+
+  test('analyzeVisualPhishing with mock generator parses structured JSON response correctly', async () => {
+    const mockAnalysis = {
+      riskScore: 98,
+      verdict: 'MALICIOUS',
+      impersonatedBrand: 'Vietcombank DigiBank',
+      indicators: [
+        'Logo và giao diện khớp 100% với Vietcombank DigiBank',
+        'Tên miền vcb-confirm.top là tên miền giả mạo',
+      ],
+    };
+
+    const result = await analyzeVisualPhishing(
+      {
+        url: 'https://vcb-confirm.top',
+        finalRedirectUrl: 'https://vcb-confirm.top/login.php',
+        actualDomain: 'vcb-confirm.top',
+        pageTitle: 'Vietcombank DigiBank Online',
+        hasPasswordInput: true,
+        hasOtpInput: true,
+        domSummary: 'VCB login inputs',
+        screenshotBase64: 'UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//739w==',
+      },
+      {
+        generate: async () => ({ text: JSON.stringify(mockAnalysis) }),
+      }
+    );
+
+    assert.equal(result.riskScore, 98);
+    assert.equal(result.verdict, 'MALICIOUS');
+    assert.equal(result.impersonatedBrand, 'Vietcombank DigiBank');
+    assert.equal(result.indicators.length, 2);
+    assert.equal(result.modelUsed, 'custom-generator');
+  });
+
+  test('coordinateUrlAnalysis combines Safe Browsing, Playwright, and Gemini into full report', async () => {
+    const result = await coordinateUrlAnalysis('https://vcb-login-fake.top', {
+      captureUrl: async (url) => ({
+        url,
+        finalRedirectUrl: url,
+        actualDomain: 'vcb-login-fake.top',
+        pageTitle: 'VCB DigiBank Login',
+        hasPasswordInput: true,
+        hasOtpInput: true,
+        hasSeedPhraseInput: false,
+        domSummary: 'VCB Login Form',
+        screenshotBase64: 'fake-webp',
+        executionTimeMs: 100,
+        status: 'SUCCESS',
+      }),
+      checkSafeBrowsing: async () => ({
+        isKnownThreat: false,
+        threatType: null,
+        executionTimeMs: 10,
+      }),
+      analyzeGemini: async () => ({
+        riskScore: 95,
+        verdict: 'MALICIOUS',
+        impersonatedBrand: 'Vietcombank DigiBank',
+        indicators: [
+          'Giao diện mô phỏng Vietcombank',
+          'Tên miền lạ chứa từ khóa nhạy cảm',
+        ],
+      }),
+    });
+
+    assert.equal(result.url, 'https://vcb-login-fake.top');
+    assert.equal(result.actualDomain, 'vcb-login-fake.top');
+    assert.equal(result.verdict, 'MALICIOUS');
+    assert.equal(result.riskScore, 95);
+    assert.equal(result.impersonatedBrand, 'Vietcombank DigiBank');
+    assert.ok(result.hasPasswordInput);
+    assert.ok(result.hasOtpInput);
+    assert.ok(result.indicators.some((i) => i.includes('Vietcombank')));
+  });
+
+  test('coordinateUrlAnalysis flags Safe Browsing threat immediately as MALICIOUS (100/100)', async () => {
+    const result = await coordinateUrlAnalysis('https://malware-known.test', {
+      captureUrl: async (url) => ({
+        url,
+        finalRedirectUrl: url,
+        actualDomain: 'malware-known.test',
+        pageTitle: 'Malware Site',
+        hasPasswordInput: false,
+        hasOtpInput: false,
+        hasSeedPhraseInput: false,
+        domSummary: '',
+        executionTimeMs: 50,
+        status: 'SUCCESS',
+      }),
+      checkSafeBrowsing: async () => ({
+        isKnownThreat: true,
+        threatType: 'SOCIAL_ENGINEERING',
+        executionTimeMs: 15,
+      }),
+    });
+
+    assert.equal(result.verdict, 'MALICIOUS');
+    assert.equal(result.riskScore, 100);
+    assert.ok(result.indicators.some((i) => i.includes('Google Safe Browsing')));
   });
 });

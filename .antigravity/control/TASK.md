@@ -83,9 +83,9 @@
   * [x] Chụp ảnh màn hình trang web nén sang định dạng **WebP Base64** nhẹ.
 
 ### 2.2. Phân tích Giả mạo Thị giác với Gemini 3.8 Flash / 3.5 Flash Lite & Safe Browsing v4
-* [ ] 🔴 **[P0]** Viết mô-đun `gemini-analyzer.ts` sử dụng `@google/genai` SDK gọi mô hình `gemini-3.8-flash` (tự động fallback sang `gemini-3.5-flash-lite` khi test DEV).
-* [ ] 🔴 **[P0]** Cấu hình **Structured Outputs (`responseSchema`)** ép kết quả trả về đúng chuẩn JSON: `riskScore` ($0\text{–}100$), `verdict` (`SAFE` | `SUSPICIOUS` | `MALICIOUS`), `impersonatedBrand`, và danh sách `indicators` bằng tiếng Việt rõ ràng.
-* [ ] 🟡 **[P1]** Tích hợp **Google Safe Browsing API v4** (`safebrowsing.ts`) kiểm tra nhanh danh sách đen toàn cầu của Google trước khi mở Playwright.
+* [x] 🔴 **[P0]** Viết mô-đun `gemini-analyzer.ts` sử dụng `@google/genai` SDK gọi mô hình `gemini-3.8-flash` (tự động fallback sang `gemini-3.5-flash-lite` khi test DEV).
+* [x] 🔴 **[P0]** Cấu hình **Structured Outputs (`responseSchema`)** ép kết quả trả về đúng chuẩn JSON: `riskScore` ($0\text{–}100$), `verdict` (`SAFE` | `SUSPICIOUS` | `MALICIOUS`), `impersonatedBrand`, và danh sách `indicators` bằng tiếng Việt rõ ràng.
+* [x] 🟡 **[P1]** Tích hợp **Google Safe Browsing API v4** (`safebrowsing.ts`) kiểm tra nhanh danh sách đen toàn cầu của Google trước khi mở Playwright.
 
 ### 2.3. Tối ưu Tốc độ, Dự phòng & Triển khai Cloud Run
 * [ ] 🔴 **[P0]** Cài đặt **In-Memory LRU Cache** lưu kết quả phân tích theo URL để các lần quét lặp lại khi demo trên sân khấu trả về tức thì trong $< 50\text{ ms}$.
