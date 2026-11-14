@@ -1,3 +1,4 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import assert from 'node:assert/strict';
 import { afterEach, test } from 'node:test';
 import type { AnalyzeVoiceRequest } from '@zeroleak/shared-types';
@@ -244,7 +245,7 @@ test('collection timeouts retain attempt provenance and open provider backoff wi
   });
   for (let i = 0; i < 3; i++) {
     const pending = analyze();
-    t.mock.timers.tick(3100);
+    t.mock.timers.tick(VOICE_ANALYSIS_TIMEOUTS.realtime.model);
     await new Promise(resolve => setImmediate(resolve));
     t.mock.timers.tick(20);
     const result = await pending;

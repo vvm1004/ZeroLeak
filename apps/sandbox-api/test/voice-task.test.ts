@@ -43,3 +43,34 @@ test('Gemini strategy is the default; legacy hybrid is explicit and invalid sett
  process.env.VOICE_ANALYSIS_STRATEGY='hybrid';assert.equal(voiceAnalysisStrategy(),'hybrid');
  process.env.VOICE_ANALYSIS_STRATEGY='invalid';assert.throws(()=>voiceAnalysisStrategy(),VoiceAnalysisError);
 });
+
+
+test('CEO title, secrecy and ordinary deadlines cannot establish fraud without a sensitive action', () => {
+ const benign = [
+  ['Anh là giám đốc đây, việc này tuyệt đối bí mật.', 'Anh là giám đốc đây'],
+  ['Giám đốc yêu cầu họp gấp ngay chiều nay.', 'yêu cầu họp gấp ngay'],
+  ['Tôi là tổng giám đốc, đừng nói chuyện này với ai.', 'Tôi là tổng giám đốc'],
+  ['Anh là sếp đây, giữ kín lịch công tác nhé.', 'Anh là sếp đây'],
+ ];
+ for (const [transcript, quote] of benign) {
+  const parsed = parseCompactVoiceResult(JSON.stringify({a:0,v:2,r:90,q:0,f:[[0,quote]],p:.9}),transcript,model,10,true);
+  assert.equal(parsed.verdict,'UNKNOWN');assert.equal(parsed.riskScore,null);assert.deepEqual(parsed.detectedTactics,[]);
+  assert.equal(parsed.syntheticVoiceProbability,.9);assert.match(parsed.warningMessageVi,/chưa đủ/);
+ }
+});
+
+test('the CEO evidence guard preserves supported money, credential and remote-access alerts', () => {
+ for (const transcript of [
+  'Anh là giám đốc, chuyển khoản cho anh ngay.',
+  'Anh là giám đốc, đọc mã OTP cho anh ngay.',
+  'Anh là giám đốc, gửi mật khẩu cho anh ngay.',
+  'Anh là giám đốc, bật truy cập từ xa ngay.',
+ ]) {
+  const result=parseCompactVoiceResult(JSON.stringify({a:0,v:2,r:90,q:0,f:[[0,transcript.split(' ').slice(0,5).join(' ')]],p:.05}),transcript,model,10,true);
+  assert.equal(result.verdict,'DEEPFAKE_SCAM');assert.deepEqual(result.detectedTactics,['CEO_FRAUD']);
+  assert.equal(result.syntheticVoiceProbability,.05);
+ }
+ // A guard abstains; it must not rewrite a provider UNKNOWN into SAFE or an alert.
+ const unknown=parseCompactVoiceResult(JSON.stringify({a:4,v:3,r:null,q:0,f:[],p:null}),'Anh là giám đốc, chuyển khoản ngay.',model,10,true);
+ assert.equal(unknown.verdict,'UNKNOWN');
+});

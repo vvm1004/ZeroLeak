@@ -1,0 +1,3031 @@
+{
+  "protocol": {
+    "fixedBeforePredictions": true,
+    "models": [
+      "gemini-3.8-live-extended-thinking",
+      "gemini-3.1-flash-lite"
+    ],
+    "manifestSha256": "81f08c3a8477750b41734a79305a767b1a71c48f22a5e0cb5d4cb1cb92c825a3",
+    "sourceManifestSha256": "7b3f47f8041a2a00989b21dc92bb0467e5b219dc9c352e92b7793c10b7aa87c7",
+    "selectedIds": [
+      "ab_v3_VIVOSDEV07_2_human_clean",
+      "ab_v3_VIVOSDEV07_2_synthetic_clean",
+      "ab_v3_VIVOSDEV08_2_human_clean",
+      "ab_v3_VIVOSDEV08_2_synthetic_clean",
+      "ab_v3_VIVOSDEV01_0_human_clean",
+      "ab_v3_VIVOSDEV01_0_synthetic_clean",
+      "ab_v3_VIVOSDEV02_1_human_clean",
+      "ab_v3_VIVOSDEV02_1_synthetic_clean",
+      "ab_v3_VIVOSDEV13_0_human_clean",
+      "ab_v3_VIVOSDEV13_0_synthetic_clean",
+      "ab_v3_VIVOSDEV16_0_human_clean",
+      "ab_v3_VIVOSDEV16_0_synthetic_clean",
+      "ab_v3_VIVOSDEV17_1_human_clean",
+      "ab_v3_VIVOSDEV17_1_synthetic_clean",
+      "ab_v3_VIVOSDEV01_1_human_clean",
+      "ab_v3_VIVOSDEV01_1_synthetic_clean",
+      "d_code_clean",
+      "d_pay_clean",
+      "d_advice_clean",
+      "d_deadline_clean",
+      "t_bank_clean",
+      "t_boss_clean",
+      "t_police_clean",
+      "t_remote_clean",
+      "t_secret_clean",
+      "t_threat_clean",
+      "t_refuse_clean",
+      "t_quote_clean",
+      "t_done_clean",
+      "t_internal_clean",
+      "t_warning_clean",
+      "t_schedule_clean",
+      "ab_v3_VIVOSDEV01_0_human_phone8k",
+      "ab_v3_VIVOSDEV01_0_human_room_noise15db",
+      "ab_v3_VIVOSDEV01_0_synthetic_phone8k",
+      "ab_v3_VIVOSDEV01_0_synthetic_room_noise15db",
+      "ab_v3_VIVOSDEV01_1_human_phone8k",
+      "ab_v3_VIVOSDEV01_1_human_room_noise15db",
+      "ab_v3_VIVOSDEV01_1_synthetic_phone8k",
+      "ab_v3_VIVOSDEV01_1_synthetic_room_noise15db",
+      "t_bank_phone8k",
+      "t_boss_phone8k",
+      "t_police_phone8k",
+      "t_remote_phone8k",
+      "t_refuse_phone8k",
+      "t_quote_phone8k",
+      "t_done_phone8k",
+      "t_internal_phone8k"
+    ],
+    "seed": 20261113,
+    "mode": "realtime",
+    "modelDeadlineMs": 8000,
+    "intervalMs": 6000,
+    "maxCalls": 96,
+    "retries": 0,
+    "fallback": false,
+    "acousticHumanThreshold": 0.2,
+    "acousticSyntheticThreshold": 0.8,
+    "selection": "All32 clean cases plus16 preselected channel variants;48 cases x2 models. Dev8, test40. No threshold/prompt tuning on test.",
+    "comparison": "Existing production routes: Live compact+ASR versus generateContent structured output; not a transport/prompt-controlled pure model benchmark.",
+    "gate": "Require full paired completion. Candidate must not add human acoustic false alerts, benign content false alerts, lose scam/clone detections or content coverage, or increase provider errors. Require a measured gain in detection or >=20% lower median latency before proposing follow-up. No automatic promotion. Conflicting improvements => inconclusive.",
+    "dataPolicy": "No labels, source IDs, filenames, speaker IDs or dataset text sent to provider. Only canonical audio and existing production instructions. No private data."
+  },
+  "analyzerCodeSha256": "b24a5e72f67700b48b111b5b7b5bf31bab309b6cca29809c0ae365c04581b3f5",
+  "providerCalls": 71,
+  "plannedCalls": 96,
+  "completed": 71,
+  "notAttempted": [
+    {
+      "id": "ab_v3_VIVOSDEV17_1_synthetic_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_police_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_room_noise15db",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_internal_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_room_noise15db",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV02_1_synthetic_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_bank_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_remote_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_done_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_quote_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_police_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV13_0_synthetic_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_room_noise15db",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_boss_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_remote_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_phone8k",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_room_noise15db",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV16_0_synthetic_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_threat_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "ab_v3_VIVOSDEV16_0_human_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_schedule_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    },
+    {
+      "id": "t_quote_clean",
+      "model": "gemini-3.1-flash-lite",
+      "reason": "THREE_CONSECUTIVE_ERRORS"
+    }
+  ],
+  "byModel": {
+    "gemini-3.8-live-extended-thinking": {
+      "overall": {
+        "attempted": 48,
+        "sourceGroups": 24,
+        "human": 12,
+        "synthetic": 36,
+        "threshold": 0.8,
+        "assessed": 9,
+        "unknownHuman": 9,
+        "unknownSynthetic": 30,
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 6,
+        "coverage": 0.1875,
+        "selectiveAccuracy": 0.3333333333333333,
+        "falsePositiveRateAmongAssessedHuman": 0,
+        "falseNegativeRateAmongAssessedSynthetic": 1,
+        "fakeDetectionYieldAllSynthetic": 0,
+        "falseAlertsAllHuman": 0,
+        "latencyMedianMs": 2722,
+        "latencyMaxMs": 7106,
+        "latencyP95Ms": 4975,
+        "errorCounts": {
+          "TIMEOUT": 0,
+          "PROVIDER_ERROR": 0,
+          "INVALID_RESULT": 0,
+          "INPUT_ERROR": 0
+        },
+        "tactics": {
+          "annotated": 0,
+          "exactMatches": 0
+        },
+        "content": {
+          "labeled": 24,
+          "tp": 12,
+          "tn": 8,
+          "fp": 0,
+          "fn": 0,
+          "unknown": 4,
+          "coverage": 0.8333333333333334
+        },
+        "providerSuccessful": 48,
+        "contentCorrectAllLabeled": 20
+      },
+      "bySplit": {
+        "dev": {
+          "attempted": 8,
+          "sourceGroups": 6,
+          "human": 2,
+          "synthetic": 6,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 2,
+          "unknownSynthetic": 6,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 3447,
+          "latencyMaxMs": 5833,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 4,
+            "tp": 2,
+            "tn": 1,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 1,
+            "coverage": 0.75
+          },
+          "providerSuccessful": 8,
+          "contentCorrectAllLabeled": 3
+        },
+        "test": {
+          "attempted": 40,
+          "sourceGroups": 18,
+          "human": 10,
+          "synthetic": 30,
+          "threshold": 0.8,
+          "assessed": 9,
+          "unknownHuman": 7,
+          "unknownSynthetic": 24,
+          "tp": 0,
+          "tn": 3,
+          "fp": 0,
+          "fn": 6,
+          "coverage": 0.225,
+          "selectiveAccuracy": 0.3333333333333333,
+          "falsePositiveRateAmongAssessedHuman": 0,
+          "falseNegativeRateAmongAssessedSynthetic": 1,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2655,
+          "latencyMaxMs": 7106,
+          "latencyP95Ms": 4353,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 20,
+            "tp": 10,
+            "tn": 7,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 3,
+            "coverage": 0.85
+          },
+          "providerSuccessful": 40,
+          "contentCorrectAllLabeled": 17
+        }
+      },
+      "byCondition": {
+        "clean": {
+          "attempted": 32,
+          "sourceGroups": 24,
+          "human": 8,
+          "synthetic": 24,
+          "threshold": 0.8,
+          "assessed": 5,
+          "unknownHuman": 6,
+          "unknownSynthetic": 21,
+          "tp": 0,
+          "tn": 2,
+          "fp": 0,
+          "fn": 3,
+          "coverage": 0.15625,
+          "selectiveAccuracy": 0.4,
+          "falsePositiveRateAmongAssessedHuman": 0,
+          "falseNegativeRateAmongAssessedSynthetic": 1,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2809,
+          "latencyMaxMs": 7106,
+          "latencyP95Ms": 5833,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 16,
+            "tp": 8,
+            "tn": 4,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 4,
+            "coverage": 0.75
+          },
+          "providerSuccessful": 32,
+          "contentCorrectAllLabeled": 12
+        },
+        "phone8k": {
+          "attempted": 12,
+          "sourceGroups": 10,
+          "human": 2,
+          "synthetic": 10,
+          "threshold": 0.8,
+          "assessed": 2,
+          "unknownHuman": 2,
+          "unknownSynthetic": 8,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 2,
+          "coverage": 0.16666666666666666,
+          "selectiveAccuracy": 0,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": 1,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2784,
+          "latencyMaxMs": 4975,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 8,
+            "tp": 4,
+            "tn": 4,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 0,
+            "coverage": 1
+          },
+          "providerSuccessful": 12,
+          "contentCorrectAllLabeled": 8
+        },
+        "room_noise15db": {
+          "attempted": 4,
+          "sourceGroups": 2,
+          "human": 2,
+          "synthetic": 2,
+          "threshold": 0.8,
+          "assessed": 2,
+          "unknownHuman": 1,
+          "unknownSynthetic": 1,
+          "tp": 0,
+          "tn": 1,
+          "fp": 0,
+          "fn": 1,
+          "coverage": 0.5,
+          "selectiveAccuracy": 0.5,
+          "falsePositiveRateAmongAssessedHuman": 0,
+          "falseNegativeRateAmongAssessedSynthetic": 1,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2607.5,
+          "latencyMaxMs": 3322,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 0,
+            "tp": 0,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 0,
+            "coverage": null
+          },
+          "providerSuccessful": 4,
+          "contentCorrectAllLabeled": 0
+        }
+      },
+      "byCohort": {
+        "acoustic-pairs": {
+          "attempted": 24,
+          "sourceGroups": 8,
+          "human": 12,
+          "synthetic": 12,
+          "threshold": 0.8,
+          "assessed": 9,
+          "unknownHuman": 9,
+          "unknownSynthetic": 6,
+          "tp": 0,
+          "tn": 3,
+          "fp": 0,
+          "fn": 6,
+          "coverage": 0.375,
+          "selectiveAccuracy": 0.3333333333333333,
+          "falsePositiveRateAmongAssessedHuman": 0,
+          "falseNegativeRateAmongAssessedSynthetic": 1,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2667,
+          "latencyMaxMs": 4148,
+          "latencyP95Ms": 3982,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 0,
+            "tp": 0,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 0,
+            "coverage": null
+          },
+          "providerSuccessful": 24,
+          "contentCorrectAllLabeled": 0
+        },
+        "fresh-authored-content": {
+          "attempted": 24,
+          "sourceGroups": 16,
+          "human": 0,
+          "synthetic": 24,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 0,
+          "unknownSynthetic": 24,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": null,
+          "latencyMedianMs": 2905,
+          "latencyMaxMs": 7106,
+          "latencyP95Ms": 5833,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 24,
+            "tp": 12,
+            "tn": 8,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 4,
+            "coverage": 0.8333333333333334
+          },
+          "providerSuccessful": 24,
+          "contentCorrectAllLabeled": 20
+        }
+      }
+    },
+    "gemini-3.1-flash-lite": {
+      "overall": {
+        "attempted": 23,
+        "sourceGroups": 18,
+        "human": 8,
+        "synthetic": 15,
+        "threshold": 0.8,
+        "assessed": 0,
+        "unknownHuman": 8,
+        "unknownSynthetic": 15,
+        "tp": 0,
+        "tn": 0,
+        "fp": 0,
+        "fn": 0,
+        "coverage": 0,
+        "selectiveAccuracy": null,
+        "falsePositiveRateAmongAssessedHuman": null,
+        "falseNegativeRateAmongAssessedSynthetic": null,
+        "fakeDetectionYieldAllSynthetic": 0,
+        "falseAlertsAllHuman": 0,
+        "latencyMedianMs": 3493,
+        "latencyMaxMs": 8014,
+        "latencyP95Ms": 8013,
+        "errorCounts": {
+          "TIMEOUT": 7,
+          "PROVIDER_ERROR": 4,
+          "INVALID_RESULT": 0,
+          "INPUT_ERROR": 0
+        },
+        "tactics": {
+          "annotated": 0,
+          "exactMatches": 0
+        },
+        "content": {
+          "labeled": 12,
+          "tp": 3,
+          "tn": 5,
+          "fp": 0,
+          "fn": 0,
+          "unknown": 4,
+          "coverage": 0.6666666666666666
+        },
+        "providerSuccessful": 12,
+        "contentCorrectAllLabeled": 8
+      },
+      "bySplit": {
+        "dev": {
+          "attempted": 8,
+          "sourceGroups": 6,
+          "human": 2,
+          "synthetic": 6,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 2,
+          "unknownSynthetic": 6,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 3410,
+          "latencyMaxMs": 8012,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 3,
+            "PROVIDER_ERROR": 1,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 4,
+            "tp": 1,
+            "tn": 1,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 2,
+            "coverage": 0.5
+          },
+          "providerSuccessful": 4,
+          "contentCorrectAllLabeled": 2
+        },
+        "test": {
+          "attempted": 15,
+          "sourceGroups": 12,
+          "human": 6,
+          "synthetic": 9,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 6,
+          "unknownSynthetic": 9,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 3939,
+          "latencyMaxMs": 8014,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 4,
+            "PROVIDER_ERROR": 3,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 8,
+            "tp": 2,
+            "tn": 4,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 2,
+            "coverage": 0.75
+          },
+          "providerSuccessful": 8,
+          "contentCorrectAllLabeled": 6
+        }
+      },
+      "byCondition": {
+        "clean": {
+          "attempted": 20,
+          "sourceGroups": 17,
+          "human": 7,
+          "synthetic": 13,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 7,
+          "unknownSynthetic": 13,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 3308,
+          "latencyMaxMs": 8014,
+          "latencyP95Ms": 8012,
+          "errorCounts": {
+            "TIMEOUT": 5,
+            "PROVIDER_ERROR": 4,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 10,
+            "tp": 3,
+            "tn": 4,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 3,
+            "coverage": 0.7
+          },
+          "providerSuccessful": 11,
+          "contentCorrectAllLabeled": 7
+        },
+        "phone8k": {
+          "attempted": 3,
+          "sourceGroups": 3,
+          "human": 1,
+          "synthetic": 2,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 1,
+          "unknownSynthetic": 2,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 8007,
+          "latencyMaxMs": 8013,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 2,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 2,
+            "tp": 0,
+            "tn": 1,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 1,
+            "coverage": 0.5
+          },
+          "providerSuccessful": 1,
+          "contentCorrectAllLabeled": 1
+        },
+        "room_noise15db": {
+          "attempted": 0,
+          "sourceGroups": 0,
+          "human": 0,
+          "synthetic": 0,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 0,
+          "unknownSynthetic": 0,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": null,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": null,
+          "falseAlertsAllHuman": null,
+          "latencyMedianMs": null,
+          "latencyMaxMs": null,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 0,
+            "PROVIDER_ERROR": 0,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 0,
+            "tp": 0,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 0,
+            "coverage": null
+          },
+          "providerSuccessful": 0,
+          "contentCorrectAllLabeled": 0
+        }
+      },
+      "byCohort": {
+        "acoustic-pairs": {
+          "attempted": 11,
+          "sourceGroups": 7,
+          "human": 8,
+          "synthetic": 3,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 8,
+          "unknownSynthetic": 3,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": 0,
+          "latencyMedianMs": 2912,
+          "latencyMaxMs": 8014,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 4,
+            "PROVIDER_ERROR": 3,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 0,
+            "tp": 0,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 0,
+            "coverage": null
+          },
+          "providerSuccessful": 4,
+          "contentCorrectAllLabeled": 0
+        },
+        "fresh-authored-content": {
+          "attempted": 12,
+          "sourceGroups": 11,
+          "human": 0,
+          "synthetic": 12,
+          "threshold": 0.8,
+          "assessed": 0,
+          "unknownHuman": 0,
+          "unknownSynthetic": 12,
+          "tp": 0,
+          "tn": 0,
+          "fp": 0,
+          "fn": 0,
+          "coverage": 0,
+          "selectiveAccuracy": null,
+          "falsePositiveRateAmongAssessedHuman": null,
+          "falseNegativeRateAmongAssessedSynthetic": null,
+          "fakeDetectionYieldAllSynthetic": 0,
+          "falseAlertsAllHuman": null,
+          "latencyMedianMs": 3972,
+          "latencyMaxMs": 8013,
+          "latencyP95Ms": null,
+          "errorCounts": {
+            "TIMEOUT": 3,
+            "PROVIDER_ERROR": 1,
+            "INVALID_RESULT": 0,
+            "INPUT_ERROR": 0
+          },
+          "tactics": {
+            "annotated": 0,
+            "exactMatches": 0
+          },
+          "content": {
+            "labeled": 12,
+            "tp": 3,
+            "tn": 5,
+            "fp": 0,
+            "fn": 0,
+            "unknown": 4,
+            "coverage": 0.6666666666666666
+          },
+          "providerSuccessful": 8,
+          "contentCorrectAllLabeled": 8
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "ab_v3_VIVOSDEV07_2_synthetic_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "condition": "clean",
+      "family": "VieNeu-Nano-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2709,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV07_2_synthetic_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "condition": "clean",
+      "family": "VieNeu-Nano-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2409,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV07_2_human_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3043,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV07_2_human_clean",
+      "originId": "v3_VIVOSDEV07_2",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4148,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_advice_clean",
+      "originId": "d_advice",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4766,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_advice_clean",
+      "originId": "d_advice",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 3493,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "PROVIDER_ERROR"
+        }
+      ]
+    },
+    {
+      "id": "d_code_clean",
+      "originId": "d_code",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8009,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "d_code_clean",
+      "originId": "d_code",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2917,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_pay_clean",
+      "originId": "d_pay",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3586,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_pay_clean",
+      "originId": "d_pay",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3289,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV08_2_human_clean",
+      "originId": "v3_VIVOSDEV08_2",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8011,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV08_2_human_clean",
+      "originId": "v3_VIVOSDEV08_2",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2969,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_deadline_clean",
+      "originId": "d_deadline",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 5833,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "d_deadline_clean",
+      "originId": "d_deadline",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3327,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV08_2_synthetic_clean",
+      "originId": "v3_VIVOSDEV08_2",
+      "condition": "clean",
+      "family": "VieNeu-Nano-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8012,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV08_2_synthetic_clean",
+      "originId": "v3_VIVOSDEV08_2",
+      "condition": "clean",
+      "family": "VieNeu-Nano-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3308,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_clean",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3982,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_clean",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2278,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_phone8k",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "phone8k",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8007,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_phone8k",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "phone8k",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3916,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV13_0_human_clean",
+      "originId": "v3_VIVOSDEV13_0",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2538,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV13_0_human_clean",
+      "originId": "v3_VIVOSDEV13_0",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8014,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "t_internal_clean",
+      "originId": "t_internal",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2233,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_internal_clean",
+      "originId": "t_internal",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2202,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV17_1_human_clean",
+      "originId": "v3_VIVOSDEV17_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2516,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV17_1_human_clean",
+      "originId": "v3_VIVOSDEV17_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2912,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_warning_clean",
+      "originId": "t_warning",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8012,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "t_warning_clean",
+      "originId": "t_warning",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3913,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_refuse_phone8k",
+      "originId": "t_refuse",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2306,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_refuse_phone8k",
+      "originId": "t_refuse",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3939,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_secret_clean",
+      "originId": "t_secret",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3282,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_secret_clean",
+      "originId": "t_secret",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3323,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_boss_clean",
+      "originId": "t_boss",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2972,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_boss_clean",
+      "originId": "t_boss",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SUSPICIOUS",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4702,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD",
+        "URGENCY_PRESSURE"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_done_clean",
+      "originId": "t_done",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4005,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_done_clean",
+      "originId": "t_done",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2152,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_clean",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2082,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_clean",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 2064,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "PROVIDER_ERROR"
+        }
+      ]
+    },
+    {
+      "id": "t_refuse_clean",
+      "originId": "t_refuse",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 5496,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_refuse_clean",
+      "originId": "t_refuse",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2223,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV02_1_human_clean",
+      "originId": "v3_VIVOSDEV02_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3958,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV02_1_human_clean",
+      "originId": "v3_VIVOSDEV02_1",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 2299,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "PROVIDER_ERROR"
+        }
+      ]
+    },
+    {
+      "id": "t_bank_phone8k",
+      "originId": "t_bank",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "TIMEOUT",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 8013,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "TIMEOUT"
+        }
+      ]
+    },
+    {
+      "id": "t_bank_phone8k",
+      "originId": "t_bank",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2874,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_clean",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2725,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_clean",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.1-flash-lite",
+      "model": "gemini-3.1-flash-lite",
+      "status": "PROVIDER_ERROR",
+      "syntheticScore": null,
+      "contentVerdict": null,
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": null,
+      "latencyMs": 1761,
+      "providerCalls": 1,
+      "providerStatus": 503,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "transport": "GENERATE_CONTENT",
+          "status": "FAILED",
+          "reason": "PROVIDER_ERROR"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV17_1_synthetic_clean",
+      "originId": "v3_VIVOSDEV17_1",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2244,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_police_phone8k",
+      "originId": "t_police",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4975,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_human_room_noise15db",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "room_noise15db",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2482,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_internal_phone8k",
+      "originId": "t_internal",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2026,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "room_noise15db",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3322,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "phone8k",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2084,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV02_1_synthetic_clean",
+      "originId": "v3_VIVOSDEV02_1",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2607,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_bank_clean",
+      "originId": "t_bank",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2893,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_remote_clean",
+      "originId": "t_remote",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2685,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_phone8k",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "phone8k",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2959,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_done_phone8k",
+      "originId": "t_done",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2346,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_quote_phone8k",
+      "originId": "t_quote",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2694,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_police_clean",
+      "originId": "t_police",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 4353,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV13_0_synthetic_clean",
+      "originId": "v3_VIVOSDEV13_0",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0.01,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2475,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_1_synthetic_room_noise15db",
+      "originId": "v3_VIVOSDEV01_1",
+      "condition": "room_noise15db",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0.1,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2496,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_clean",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3111,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_boss_phone8k",
+      "originId": "t_boss",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3356,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "CEO_FRAUD"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_remote_phone8k",
+      "originId": "t_remote",
+      "condition": "phone8k",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 95,
+      "audioQuality": "CLEAR",
+      "latencyMs": 3602,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_phone8k",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "phone8k",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0.05,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2625,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_room_noise15db",
+      "originId": "v3_VIVOSDEV01_0",
+      "condition": "room_noise15db",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0,
+      "contentVerdict": "UNKNOWN",
+      "contentAlert": null,
+      "riskScore": null,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2719,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV16_0_synthetic_clean",
+      "originId": "v3_VIVOSDEV16_0",
+      "condition": "clean",
+      "family": "VieNeu-Turbo-Clone",
+      "label": "synthetic",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2528,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_threat_clean",
+      "originId": "t_threat",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": true,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "DEEPFAKE_SCAM",
+      "contentAlert": true,
+      "riskScore": 90,
+      "audioQuality": "CLEAR",
+      "latencyMs": 7106,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [
+        "AUTHORITY_IMPERSONATION"
+      ],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "ab_v3_VIVOSDEV16_0_human_clean",
+      "originId": "v3_VIVOSDEV16_0",
+      "condition": "clean",
+      "family": "vivos",
+      "label": "human",
+      "scamLabel": null,
+      "mode": "realtime",
+      "cohort": "acoustic-pairs",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": 0.1,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2444,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_schedule_clean",
+      "originId": "t_schedule",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2525,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "t_quote_clean",
+      "originId": "t_quote",
+      "condition": "clean",
+      "family": "macOS-Linh",
+      "label": "synthetic",
+      "scamLabel": false,
+      "mode": "realtime",
+      "cohort": "fresh-authored-content",
+      "requestedModel": "gemini-3.8-live-extended-thinking",
+      "model": "gemini-3.8-live-extended-thinking",
+      "status": "OK",
+      "syntheticScore": null,
+      "contentVerdict": "SAFE",
+      "contentAlert": false,
+      "riskScore": 0,
+      "audioQuality": "CLEAR",
+      "latencyMs": 2366,
+      "providerCalls": 1,
+      "providerStatus": null,
+      "detectedTactics": [],
+      "providerAttempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "prepared": 80,
+  "selected": 48,
+  "naturalSpeakers": {
+    "dev": [
+      "VIVOSDEV07",
+      "VIVOSDEV08"
+    ],
+    "test": [
+      "VIVOSDEV01",
+      "VIVOSDEV02",
+      "VIVOSDEV13",
+      "VIVOSDEV16",
+      "VIVOSDEV17"
+    ]
+  },
+  "sourceGroups": 24,
+  "selectedBySplit": {
+    "dev": 8,
+    "test": 40
+  },
+  "selectedByCondition": {
+    "clean": 32,
+    "phone8k": 12,
+    "room_noise15db": 4
+  },
+  "selectedByLabel": {
+    "human": 12,
+    "synthetic": 36
+  },
+  "contentLabelMatrix": {
+    "human:None": 24,
+    "synthetic:None": 24,
+    "synthetic:True": 16,
+    "synthetic:False": 16
+  },
+  "pairedDurationEqual": true,
+  "physicalCapture": false
+}

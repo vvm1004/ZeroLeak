@@ -1,0 +1,15 @@
+{
+  "fixedBeforeCalls": true,
+  "maxGoogleSessions": 6,
+  "retries": 0,
+  "fallback": false,
+  "purpose": "Integration regression, not new accuracy evaluation",
+  "cases": [
+    "t_bank_clean",
+    "t_boss_clean",
+    "t_refuse_clean",
+    "t_schedule_clean",
+    "ab_v3_VIVOSDEV01_0_human_clean",
+    "ab_v3_VIVOSDEV01_0_synthetic_clean"
+  ]
+}

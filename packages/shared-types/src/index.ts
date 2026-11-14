@@ -130,6 +130,9 @@ export type AcousticVoiceAnalysis = {
   /** Uncalibrated classifier output, not a probability of fraud or identity. */
   score: number | null; // null with UNKNOWN when insufficient speech is detected
   scoreCalibrated: false;
+  /** Input windows checked (including silence); a positive score is their maximum, not a probability. */
+  windowCount?: number;
+  audioDurationSeconds?: number;
   source: 'LOCAL_XLSR_AASIST';
   modelVersion: string;
   executionTimeMs: number;

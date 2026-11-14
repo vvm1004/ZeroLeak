@@ -1,0 +1,213 @@
+{
+  "protocol": {
+    "fixedBeforePredictions": true,
+    "maxSessions": 8,
+    "model": "gemini-3.8-live-extended-thinking",
+    "budgetMs": 8000,
+    "retries": 0,
+    "fallback": false,
+    "comparison": "One provider output per case, replay identical compact JSON+ASR through original and revised parser. No raw provider text saved.",
+    "source": "8 fresh self-authored Linh TTS clips, 4 benign and 4 scam, labels fixed before prediction.",
+    "gate": "8 successful replayable calls, at least1 unsupported benign warning becomes UNKNOWN, no lost scam warning and no added benign warning.",
+    "scope": "Evidence guard only; UNKNOWN is abstention, not SAFE. Not human/clone accuracy or independent real-world benchmark."
+  },
+  "sessions": 8,
+  "rows": [
+    {
+      "id": "intro",
+      "scamLabel": false,
+      "status": "OK",
+      "inputSha256": "c90e534d7e97153acbd8ff34afae7a34444222356b6e42ae38ef44b1ad31895f",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "UNKNOWN",
+        "riskScore": null,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "UNKNOWN",
+        "riskScore": null,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "sourceChars": 47,
+      "roundTripMs": 2292
+    },
+    {
+      "id": "meeting",
+      "scamLabel": false,
+      "status": "OK",
+      "inputSha256": "46125e8bb6e4d584b19e6ef5d17b2d5fea3e4f491b71302468e5a37349b67cd2",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "UNKNOWN",
+        "riskScore": null,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "sourceChars": 46,
+      "roundTripMs": 3508
+    },
+    {
+      "id": "launch",
+      "scamLabel": false,
+      "status": "OK",
+      "inputSha256": "480160bce18c1cc32de908ad2398be6dfecca7b6bb199effe11f443a92b005f7",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "UNKNOWN",
+        "riskScore": null,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "sourceChars": 51,
+      "roundTripMs": 2157
+    },
+    {
+      "id": "pay",
+      "scamLabel": true,
+      "status": "OK",
+      "inputSha256": "a682fb7b1d983e7fc2441da386fcaea3fd6773672fe6f0a0fc1bcb92ba449585",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "sourceChars": 50,
+      "roundTripMs": 4790
+    },
+    {
+      "id": "otp",
+      "scamLabel": true,
+      "status": "OK",
+      "inputSha256": "9848f5c92d2811f0e2068ec4968453cb08870a9f9e43e66d8d0bbdd924d1c877",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "DEEPFAKE_SCAM",
+        "riskScore": 90,
+        "tactics": [
+          "CEO_FRAUD",
+          "OTP_OR_CREDENTIAL_ASK"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "DEEPFAKE_SCAM",
+        "riskScore": 90,
+        "tactics": [
+          "CEO_FRAUD",
+          "OTP_OR_CREDENTIAL_ASK"
+        ],
+        "voiceScore": null
+      },
+      "sourceChars": 51,
+      "roundTripMs": 3660
+    },
+    {
+      "id": "password",
+      "scamLabel": true,
+      "status": "OK",
+      "inputSha256": "b1e455857c8f8f790881de4459d7a2ec15321639b811b32b80b58eadbe771d22",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "DEEPFAKE_SCAM",
+        "riskScore": 90,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "DEEPFAKE_SCAM",
+        "riskScore": 90,
+        "tactics": [
+          "CEO_FRAUD"
+        ],
+        "voiceScore": null
+      },
+      "sourceChars": 51,
+      "roundTripMs": 4360
+    },
+    {
+      "id": "remote",
+      "scamLabel": true,
+      "status": "OK",
+      "inputSha256": "1a4842fd2f950fbe8e9a0a0ad3cac26a53ed97b7a8987f9fa0274ba8bef8c516",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "URGENCY_PRESSURE"
+        ],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "SUSPICIOUS",
+        "riskScore": 60,
+        "tactics": [
+          "URGENCY_PRESSURE"
+        ],
+        "voiceScore": null
+      },
+      "sourceChars": 47,
+      "roundTripMs": 2331
+    },
+    {
+      "id": "advice",
+      "scamLabel": false,
+      "status": "OK",
+      "inputSha256": "64be58fa895202145cfc1d1aa101729a236ba7fdbd5647e38d7da93110a92743",
+      "replayMatched": true,
+      "baseline": {
+        "verdict": "SAFE",
+        "riskScore": 0,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "revised": {
+        "verdict": "SAFE",
+        "riskScore": 0,
+        "tactics": [],
+        "voiceScore": null
+      },
+      "sourceChars": 51,
+      "roundTripMs": 2451
+    }
+  ],
+  "gate": {
+    "removedBenignWarnings": 2,
+    "lostScamWarnings": 0,
+    "addedBenignWarnings": 0,
+    "passed": true
+  }
+}

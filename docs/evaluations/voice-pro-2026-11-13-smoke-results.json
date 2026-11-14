@@ -1,0 +1,238 @@
+{
+  "plan": {
+    "fixedBeforeCalls": true,
+    "maxGoogleSessions": 6,
+    "retries": 0,
+    "fallback": false,
+    "purpose": "Integration regression, not new accuracy evaluation",
+    "cases": [
+      "t_bank_clean",
+      "t_boss_clean",
+      "t_refuse_clean",
+      "t_schedule_clean",
+      "ab_v3_VIVOSDEV01_0_human_clean",
+      "ab_v3_VIVOSDEV01_0_synthetic_clean"
+    ]
+  },
+  "started": true,
+  "occupiedPortRejected": true,
+  "reusedWorkerPreserved": true,
+  "rows": [
+    {
+      "id": "t_bank_clean",
+      "analysisMode": "realtime",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999953261611082,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 419,
+        "windowCount": 1,
+        "audioDurationSeconds": 3.207
+      },
+      "roundTripMs": 5202
+    },
+    {
+      "id": "t_boss_clean",
+      "analysisMode": "realtime",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 95,
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999957736924376,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 639,
+        "windowCount": 1,
+        "audioDurationSeconds": 3.0641875
+      },
+      "roundTripMs": 3339
+    },
+    {
+      "id": "t_refuse_clean",
+      "analysisMode": "realtime",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999990924756934,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 562,
+        "windowCount": 1,
+        "audioDurationSeconds": 2.64975
+      },
+      "roundTripMs": 3137
+    },
+    {
+      "id": "t_schedule_clean",
+      "analysisMode": "realtime",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.9999909345364284,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 739,
+        "windowCount": 1,
+        "audioDurationSeconds": 2.9493125
+      },
+      "roundTripMs": 3616
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_human_clean",
+      "analysisMode": "review",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "contentAnalysis": {
+        "status": "AVAILABLE"
+      },
+      "assessmentSource": "HYBRID_AUDIO",
+      "analysisModel": "gemini-3.8-live-extended-thinking",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "SUCCEEDED"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "NO_SYNTHETIC_EVIDENCE",
+        "score": 0.031680977139399775,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 1003,
+        "windowCount": 1,
+        "audioDurationSeconds": 4.5625
+      },
+      "roundTripMs": 7976
+    },
+    {
+      "id": "ab_v3_VIVOSDEV01_0_synthetic_clean",
+      "analysisMode": "review",
+      "status": "OK",
+      "httpStatus": 200,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "contentAnalysis": {
+        "status": "UNAVAILABLE",
+        "reason": "INVALID_RESULT"
+      },
+      "assessmentSource": "LOCAL_ACOUSTIC",
+      "analysisModel": "local-xlsr-aasist-linear",
+      "attempts": [
+        {
+          "model": "gemini-3.8-live-extended-thinking",
+          "transport": "LIVE_API",
+          "status": "FAILED",
+          "reason": "INVALID_RESULT"
+        }
+      ],
+      "acoustic": {
+        "status": "AVAILABLE",
+        "verdict": "SYNTHETIC_SUSPECTED",
+        "score": 0.999975248437214,
+        "scoreCalibrated": false,
+        "source": "LOCAL_XLSR_AASIST",
+        "modelVersion": "e6206d556dddca31b396dfc7d0f58c1af204dee502e11a98ec7e4dadc12a9f0f",
+        "executionTimeMs": 1146,
+        "windowCount": 1,
+        "audioDurationSeconds": 4.5625
+      },
+      "roundTripMs": 5832
+    }
+  ],
+  "cleanup": true,
+  "health": {
+    "strategy": "hybrid",
+    "models": [
+      "gemini-3.8-live-extended-thinking"
+    ],
+    "localConfigured": true,
+    "timeouts": {
+      "realtime": {
+        "model": 8000,
+        "route": 8300,
+        "client": 9000
+      },
+      "review": {
+        "model": 15000,
+        "route": 15300,
+        "client": 16000
+      }
+    }
+  },
+  "contentRegressions": 0,
+  "passed": true
+}

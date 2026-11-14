@@ -1,10 +1,17 @@
+import { VOICE_ANALYSIS_TIMEOUTS } from '@zeroleak/shared-types';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { AcousticVoiceAnalysis, AnalyzeVoiceRequest, VoiceScamAnalysisResult } from '@zeroleak/shared-types';
 import { VoiceAnalysisError } from '../src/voice-analyzer.js';
-import { analyzeVoiceWithAcoustic, analyzeLocalAcoustic, localAcousticEndpoint, validateAcousticResult } from '../src/voice-acoustic.js';
+import { analyzeVoiceWithAcoustic, analyzeLocalAcoustic, localAcousticEndpoint, validateAcousticResult, voiceAcousticWindows } from '../src/voice-acoustic.js';
 
-const input: AnalyzeVoiceRequest = { mimeType: 'audio/wav', audioBase64: '' };
+function audio(seconds=1,review=false):AnalyzeVoiceRequest{
+ const wav=Buffer.alloc(44+Math.round(seconds*16000)*2);wav.write('RIFF');wav.writeUInt32LE(wav.length-8,4);wav.write('WAVEfmt ',8);wav.writeUInt32LE(16,16);
+ wav.writeUInt16LE(1,20);wav.writeUInt16LE(1,22);wav.writeUInt32LE(16000,24);wav.writeUInt32LE(32000,28);wav.writeUInt16LE(2,32);wav.writeUInt16LE(16,34);wav.write('data',36);wav.writeUInt32LE(wav.length-44,40);
+ for(let i=44;i<wav.length;i+=2)wav.writeInt16LE(4000,i);
+ return {mimeType:'audio/wav',audioBase64:wav.toString('base64'),...(review?{analysisMode:'review' as const}:{})};
+}
+const input=audio();
 const acoustic = (score: number | null = .95): AcousticVoiceAnalysis => ({ status: 'AVAILABLE', score,
   verdict: score === null ? 'UNKNOWN' : score >= .8 ? 'SYNTHETIC_SUSPECTED' : score <= .2 ? 'NO_SYNTHETIC_EVIDENCE' : 'UNKNOWN',
   scoreCalibrated: false, source: 'LOCAL_XLSR_AASIST', modelVersion: 'a'.repeat(64), executionTimeMs: 450 });
@@ -119,7 +126,7 @@ test('a hanging content branch cannot discard completed acoustic evidence at the
     content: async (_input, signal) => { child = signal; return new Promise(() => {}); },
     acoustic: async () => acoustic(.95),
   });
-  await Promise.resolve(); t.mock.timers.tick(3100);
+  await Promise.resolve(); t.mock.timers.tick(VOICE_ANALYSIS_TIMEOUTS.realtime.model);
   await new Promise(resolve => setImmediate(resolve)); t.mock.timers.tick(20);
   const result = await pending;
   assert.equal(result.assessmentSource, 'LOCAL_ACOUSTIC');
@@ -133,7 +140,7 @@ test('a hanging acoustic branch cannot discard completed content at the collecti
   const pending = analyzeVoiceWithAcoustic(input, new AbortController().signal, {
     content: async () => content(), acoustic: async () => new Promise(() => {}),
   });
-  await Promise.resolve(); t.mock.timers.tick(3100);
+  await Promise.resolve(); t.mock.timers.tick(VOICE_ANALYSIS_TIMEOUTS.realtime.model);
   const result = await pending;
   assert.equal(result.assessmentSource, 'GEMINI_AUDIO'); assert.equal(result.verdict, 'SAFE');
   assert.deepEqual(result.acousticAnalysis, { status: 'UNAVAILABLE' });
@@ -171,4 +178,42 @@ test('a busy local worker is retried once within the existing budget, not indefi
     globalThis.fetch = originalFetch;
     if (originalEndpoint === undefined) delete process.env.VOICE_ACOUSTIC_URL; else process.env.VOICE_ACOUSTIC_URL = originalEndpoint;
   }
+});
+
+
+test('hybrid retains a Gemini result that arrives after the obsolete3.1s cutoff',async t=>{
+ t.mock.timers.enable({apis:['setTimeout']});let settled=false;
+ const pending=analyzeVoiceWithAcoustic(input,new AbortController().signal,{
+  content:async()=>{await new Promise(resolve=>setTimeout(resolve,4500));return content();},
+  acoustic:async()=>acoustic(.95),
+ });
+ void pending.then(()=>{settled=true;});
+ await Promise.resolve();t.mock.timers.tick(3100);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(settled,false);t.mock.timers.tick(1400);
+ const result=await pending;assert.equal(result.assessmentSource,'HYBRID_AUDIO');
+ assert.equal(result.contentAnalysis?.status,'AVAILABLE');assert.equal(result.verdict,'SAFE');
+ assert.equal(result.acousticAnalysis?.status,'AVAILABLE');
+});
+
+
+test('review acoustic windows cover the whole15s file and retain a short last tail',()=>{
+ for(const seconds of [5.1,7,10.1,10.6,15]){
+  const source=audio(seconds,true),windows=voiceAcousticWindows(source),data=Buffer.from(source.audioBase64,'base64').subarray(44);
+  assert.equal(windows.length,Math.ceil(seconds/5));
+  const last=Buffer.from(windows.at(-1)!.audioBase64,'base64').subarray(44);
+  assert.ok(last.length>=16000&&last.length<=160000);
+  assert.deepEqual(last,data.subarray(data.length-last.length));
+ }
+});
+
+test('a synthetic segment at the end is retained and missing speech cannot create a low score',async()=>{
+ const previous=globalThis.fetch,endpoint=process.env.VOICE_ACOUSTIC_URL;process.env.VOICE_ACOUSTIC_URL='http://127.0.0.1:8081';
+ try{
+  let calls=0;const scores=[.05,.1,.95];globalThis.fetch=async(_url,init)=>{assert.ok(JSON.parse(String(init?.body)).audioBase64.length<=213392);return new Response(JSON.stringify(acoustic(scores[calls++])));};
+  const detected=await analyzeLocalAcoustic(audio(15,true),new AbortController().signal);
+  assert.equal(calls,3);assert.equal(detected.status,'AVAILABLE');if(detected.status==='AVAILABLE'){assert.equal(detected.score,.95);assert.equal(detected.windowCount,3);assert.equal(detected.audioDurationSeconds,15);}
+  calls=0;globalThis.fetch=async()=>new Response(JSON.stringify(acoustic(calls++===0?.05:null)));
+  const uncertain=await analyzeLocalAcoustic(audio(10,true),new AbortController().signal);
+  assert.equal(uncertain.status,'AVAILABLE');if(uncertain.status==='AVAILABLE'){assert.equal(uncertain.verdict,'UNKNOWN');assert.equal(uncertain.score,null);}
+ }finally{globalThis.fetch=previous;if(endpoint===undefined)delete process.env.VOICE_ACOUSTIC_URL;else process.env.VOICE_ACOUSTIC_URL=endpoint;}
 });

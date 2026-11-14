@@ -1,0 +1,14 @@
+{
+  "fixedBeforePredictions": true,
+  "model": "gemini-3.8-live-extended-thinking",
+  "thinking": "LOW",
+  "budgetMs": 8000,
+  "maxSessions": 12,
+  "retries": 0,
+  "fallback": false,
+  "source": "Self-authored macOS Linh Vietnamese TTS. Prefix and target are consecutive 5s clips.",
+  "order": "One prefix call each; same target audio baseline/candidate order alternates per case.",
+  "context": "Previous returned redacted ASR only, no labels/scores/tactics, max300 chars.",
+  "gate": "All12callsOK; no additional benign alert, no lost scam alert; at least one gain: expected tactic recovered or false alert removed.",
+  "scope": "Small controlled context probe; not real-world accuracy or clone benchmark."
+}

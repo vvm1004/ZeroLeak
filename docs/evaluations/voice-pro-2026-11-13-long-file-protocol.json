@@ -1,0 +1,31 @@
+{
+  "fixedBeforeCalls": true,
+  "localOnly": true,
+  "purpose": "15s transport/coverage regression; concatenation and padding are controlled, not independent real-call or clone-accuracy evidence",
+  "cases": [
+    {
+      "id": "human15",
+      "file": "/private/tmp/zeroleak-voice-pro-20261113/long-audio/human15.wav",
+      "sha256": "c98efceb2e37f7af3335b28ec2e5ad3cb48c3317a463ccb12d58034e4edc570f",
+      "expected": "No synthetic alert expected; concatenated public human controls"
+    },
+    {
+      "id": "clone15",
+      "file": "/private/tmp/zeroleak-voice-pro-20261113/long-audio/clone15.wav",
+      "sha256": "26e29fb11326b93c55f9b6eafe593495ecec2b07d0b1e76211f1329e50fe563e",
+      "expected": "Known generated clips; UNKNOWN allowed, no new accuracy claim"
+    },
+    {
+      "id": "late_tts15",
+      "file": "/private/tmp/zeroleak-voice-pro-20261113/long-audio/late_tts15.wav",
+      "sha256": "6fb65ad0d65ffa8fd069d733567a98d69e9522f49b19c016271203bd321f794b",
+      "expected": "A known TTS segment at10..15s must be checked, not silently truncated"
+    },
+    {
+      "id": "silence15",
+      "file": "/private/tmp/zeroleak-voice-pro-20261113/long-audio/silence15.wav",
+      "sha256": "1e2887335b9404e6ac1a21189bcc326091244ea117699cd69ad41f9be8c8f73c",
+      "expected": "Missing speech in later windows must not create a whole-file low-score conclusion"
+    }
+  ]
+}

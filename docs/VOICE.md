@@ -1,5 +1,11 @@
 # ZeroLeak Voice
 
+**Bản chạy tăng cường 2026-11-13:** [Voice Pro — một lệnh, Gemini + detector âm học và kết quả6/10 clip clone đối chiếu](VOICE_PRO.md). Đây là chế độ hybrid opt-in; Gemini-only vẫn giữ nguyên.
+
+**Đối chiếu model 2026-11-13:** [80 clip, 71 lượt Google thật và quyết định giữ Extended](VOICE_MODEL_AB.md). Chưa có bằng chứng tăng phát hiện clone; xem riêng dữ liệu thiếu nhãn và các lượt Flash-Lite bị dừng.
+
+**Cập nhật 2026-11-13:** [giảm cảnh báo CEO thiếu bằng chứng và kết quả 20 phiên Google](VOICE_EVIDENCE_GUARD.md). Không bật phương án thêm ASR đoạn trước vì chưa có lợi ích đo được.
+
 **Sửa timeout tab/micro:** [budget realtime 8 giây và kiểm thử trước/sau](VOICE_LIVE_TIMEOUT.md). Giữ cửa sổ audio 5 giây; chưa đạt Test 6 dưới 3 giây.
 
 **Demo mới nhất:** [lệnh kiểm tra trước demo và kịch bản](VOICE_DEMO.md); [đo native Chrome tab, sửa constraints và giới hạn timeout](VOICE_TAB_ACCEPTANCE.md). Test 6 dưới 3 giây vẫn chưa đạt.
@@ -69,6 +75,18 @@ Tính năng không thu âm nền khi trang Voice đã đóng, và không thu cu�
 HTTPS bắt buộc cho máy chủ từ xa. Khi `NODE_ENV=production`, phải đặt `VOICE_API_TOKEN` trên server
 và nhập cùng mã truy cập ở trang Voice. Không công khai một API không có giới hạn chi phí/quota bổ sung;
 giới hạn đồng thời hiện tại chỉ áp dụng trên từng tiến trình, không thay thế gateway/rate limit khi triển khai diện rộng.
+
+## Lịch sử và cảnh báo trong phiên
+
+Lịch sử trong RAM giữ tối đa 20 lượt kết quả/lỗi/hủy, không giữ raw audio hoặc embedding.
+Cảnh báo nội dung có bằng chứng khớp transcript và điểm cao nhất của một đoạn được giữ riêng;
+SAFE/UNKNOWN hoặc lỗi ở lượt sau không xóa cảnh báo đã có. Đây là thông tin lịch sử, không phải
+điểm tổng hợp hay kết luận toàn bộ cuộc gọi. Ước lượng giọng tổng hợp không tự tạo cờ lừa đảo.
+Sóng âm phản ánh cảnh báo đã ghi nhận của phiên; phần kết quả gần nhất vẫn cập nhật độc lập.
+
+Nếu một đoạn chờ bị thay bởi đoạn mới hơn do dịch vụ xử lý chậm, UI đếm đoạn chưa gửi.
+Bắt đầu phiên mới/chọn file mới/đóng trang xóa lịch sử. Không ghi history vào chrome.storage,
+localStorage hoặc gửi history trở lại API. Xem [cách trình diễn](VOICE_DEMO.md).
 
 ## API
 

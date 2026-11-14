@@ -1,0 +1,194 @@
+{
+  "protocol": {
+    "fixedBeforePredictions": true,
+    "model": "gemini-3.8-live-extended-thinking",
+    "thinking": "LOW",
+    "budgetMs": 8000,
+    "maxSessions": 12,
+    "retries": 0,
+    "fallback": false,
+    "source": "Self-authored macOS Linh Vietnamese TTS. Prefix and target are consecutive 5s clips.",
+    "order": "One prefix call each; same target audio baseline/candidate order alternates per case.",
+    "context": "Previous returned redacted ASR only, no labels/scores/tactics, max300 chars.",
+    "gate": "All12callsOK; no additional benign alert, no lost scam alert; at least one gain: expected tactic recovered or false alert removed.",
+    "scope": "Small controlled context probe; not real-world accuracy or clone benchmark."
+  },
+  "sessions": 12,
+  "rows": [
+    {
+      "id": "role_money",
+      "part": "prefix",
+      "variant": "prefix",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "CEO_FRAUD"
+      ],
+      "voiceScore": null,
+      "sourceChars": 47,
+      "roundTripMs": 3235
+    },
+    {
+      "id": "role_money",
+      "part": "target",
+      "variant": "baseline",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "SUSPICIOUS",
+      "riskScore": 60,
+      "tactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "voiceScore": null,
+      "sourceChars": 53,
+      "roundTripMs": 2819
+    },
+    {
+      "id": "role_money",
+      "part": "target",
+      "variant": "candidate",
+      "status": "OK",
+      "contextChars": 47,
+      "verdict": "SUSPICIOUS",
+      "riskScore": 80,
+      "tactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "voiceScore": null,
+      "sourceChars": 53,
+      "roundTripMs": 5261
+    },
+    {
+      "id": "quoted_money",
+      "part": "prefix",
+      "variant": "prefix",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "sourceChars": 47,
+      "roundTripMs": 2796
+    },
+    {
+      "id": "quoted_money",
+      "part": "target",
+      "variant": "candidate",
+      "status": "OK",
+      "contextChars": 47,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 90,
+      "tactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "voiceScore": null,
+      "sourceChars": 48,
+      "roundTripMs": 4754
+    },
+    {
+      "id": "quoted_money",
+      "part": "target",
+      "variant": "baseline",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "SUSPICIOUS",
+      "riskScore": 75,
+      "tactics": [
+        "URGENCY_PRESSURE"
+      ],
+      "voiceScore": null,
+      "sourceChars": 48,
+      "roundTripMs": 2628
+    },
+    {
+      "id": "bank_code",
+      "part": "prefix",
+      "variant": "prefix",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": null,
+      "sourceChars": 44,
+      "roundTripMs": 2411
+    },
+    {
+      "id": "bank_code",
+      "part": "target",
+      "variant": "baseline",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 100,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "voiceScore": null,
+      "sourceChars": 40,
+      "roundTripMs": 3110
+    },
+    {
+      "id": "bank_code",
+      "part": "target",
+      "variant": "candidate",
+      "status": "OK",
+      "contextChars": 44,
+      "verdict": "DEEPFAKE_SCAM",
+      "riskScore": 95,
+      "tactics": [
+        "OTP_OR_CREDENTIAL_ASK"
+      ],
+      "voiceScore": null,
+      "sourceChars": 40,
+      "roundTripMs": 2235
+    },
+    {
+      "id": "refusal",
+      "part": "prefix",
+      "variant": "prefix",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "voiceScore": null,
+      "sourceChars": 37,
+      "roundTripMs": 2273
+    },
+    {
+      "id": "refusal",
+      "part": "target",
+      "variant": "candidate",
+      "status": "OK",
+      "contextChars": 37,
+      "verdict": "UNKNOWN",
+      "riskScore": null,
+      "tactics": [],
+      "voiceScore": null,
+      "sourceChars": 47,
+      "roundTripMs": 4168
+    },
+    {
+      "id": "refusal",
+      "part": "target",
+      "variant": "baseline",
+      "status": "OK",
+      "contextChars": 0,
+      "verdict": "SAFE",
+      "riskScore": 0,
+      "tactics": [],
+      "voiceScore": 0.05,
+      "sourceChars": 47,
+      "roundTripMs": 2235
+    }
+  ],
+  "gate": {
+    "gains": 0,
+    "regressions": 0,
+    "passed": false
+  }
+}

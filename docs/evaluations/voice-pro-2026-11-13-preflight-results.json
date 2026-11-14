@@ -1,0 +1,9 @@
+{
+  "fixture": true,
+  "providerCalls": 0,
+  "validHybridPassed": true,
+  "badHeadRejected": true,
+  "wrongStrategyRejected": true,
+  "analyzerInvocations": 0,
+  "passed": true
+}
